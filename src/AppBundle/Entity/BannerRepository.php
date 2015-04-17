@@ -23,16 +23,16 @@ class BannerRepository extends EntityRepository
             }
 
             $format = null;
-            if ($formatS != null){
+            if ($formatS != null && $formatS != 0){
                 $format .=" b.type='small'  ";
             }
-            if ($formatM != null){
+            if ($formatM != null && $formatM != 0){
                 $format .= ($format == null ? '' : ' OR ')." b.type='3x6'  ";
             }
-            if ($formatL != null){
+            if ($formatL != null && $formatL != 0){
                 $format .= ($format == null ? '' : ' OR ')." b.type='big'  ";
             }
-            if ($formatL != null){
+            if ($formatSB != null && $formatSB != 0){
                 $format .= ($format == null ? '' : ' OR ')." b.type='cityboard'  ";
             }
 
