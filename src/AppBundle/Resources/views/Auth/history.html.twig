@@ -1,0 +1,44 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div>
+            <div style="padding: 20px">
+                <h1>История заказов</h1>
+                <table style="width: 800px">
+                    <tr>
+                        <th style="text-align: left">Дата заказа</th>
+                        <th style="text-align: left">Сумма заказа</th>
+                        <th style="text-align: left">Excel</th>
+                        <th style="text-align: left">Статус</th>
+                    </tr>
+                    {% for o in orders %}
+                        <tr>
+                            <td>{{ o.created | date('d.m.Y') }}</td>
+                            <td>{{ o.fullPrice }}</td>
+                            <td><a href="{{ path('basket_export_excel',{'orderId' : o.orderGroup }) }}">Скачать</a></td>
+                            <td><span style="color: #003300">Новая</span></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .container{
+            min-width: 800px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "AdminBundle::layout.html.twig" %}
+
+{% block breadcrumb %}
+    <a href="{{ path('banner_list') }}"><span class="btn btn-primary right-btn">В список</span></a>
+    <ul class="breadcrumb well">
+        <li><a href="{{ path('banner_list') }}">Список баннеров</a></li>
+        <li>Изменение<span class="divider"></span></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="well">
+        <form method="POST">
+            {{ form_widget(form) }}
+        </form>
+        <div class="minimap"></div>
+    </div>
+    <div class="well">
+    <iframe src="{{ path('admin_banner_month_list',{'id' : app.request.attributes.get('_route_params').id }) }}" class="frame"></iframe>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/admin/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('bundles/admin/ckeditor/styles.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{#<link href="{{ asset('bundles/app/ckeditor/contents.css') }}" rel="stylesheet">#}
+<style>
+    .frame{
+        width: 100%;
+    }
+</style>
+{% endblock %}

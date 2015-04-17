@@ -1,0 +1,22 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="container">
+    <div>
+        <div style="padding: 20px">
+            Спасибо. Ваш заказ оформлен Вы можете скачать его по <a href="{{ path('basket_export_excel',{'orderId' : group }) }}" target="_blank">ссылке</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .container{
+            min-width: 800px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+{% endblock %}

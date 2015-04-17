@@ -1,0 +1,90 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script src="{{ asset('bundles/app/dw_tooltips/js/dw_tooltip_c.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $(document).on('mouseenter','.thumbnail',function (e) {
+                $("#large").css("top",(e.pageY+5)+"px").css("left", (e.pageX+5)+"px").html("<img src="+ $(this).attr("alt") +" /><br/>").fadeIn("slow");
+            });
+            $(document).on('mouseleave','.thumbnail',function () {
+                $("#large").fadeOut("fast");
+            });
+        });
+
+
+        ymaps.ready(init);
+        var myMap,
+                myPlacemark;
+
+        function init(){
+            myMap = new ymaps.Map("map", {
+                center: [55.76, 37.64],
+                zoom: 7,
+                controls: ['default']
+            });
+
+//            myMap.controls.remove('geolocationControl');
+            myMap.controls.add('geolocationControl');
+            myMap.controls.remove('fullscreenControl');
+            myMap.controls.remove('searchControl');
+            myMap.controls.remove('trafficControl');
+            myMap.controls.remove('rulerControl');
+
+
+
+            {% for c in objects %}
+            myPlacemark = new ymaps.Placemark([{{ c.latitude }}, {{ c.longitude }}], {
+                iconContent: '{{ c.title }}',
+                hintContent: '{{ c.title }}',
+                balloonContent: '<div>' +
+                '<table><tr>' +
+                '<td><img class="thumbnail" alt="{{ c.img }}" src="{{ c.img }}" style="width: 100px" /></td>' +
+                '<td><b>{{ c.title | raw }}</b><br /><b>Адрес:</b> {{ c.adrs | raw }}<br /><b>Стоимость:</b> {{ c.price }} руб.</td>' +
+                '</tr></table>' +
+                '</div>'
+            },{
+                iconLayout: 'default#image',
+                iconImageHref: '{{ asset('bundles/app/images/schit.gif') }}',
+                iconImageSize: [16, 16],
+                iconImageOffset: [-8, -8]
+//                    preset: 'islands#redSmallPoint',
+//                    iconColor: '#920055'
+            });
+            myMap.geoObjects.add(myPlacemark);
+            {% endfor %}
+        }
+    </script>
+    <style>
+        #map{
+            width: 800px;
+            height: 500px;
+            border: 1px solid #333333;
+            margin: 0 auto;
+        }
+        #large {
+            display: none;
+            position: absolute;
+            color: #FFFFFF;
+            background: #ffffff;
+            padding: 5px;
+            border: 1px solid #898989;
+        }
+        #large img{
+            width: 500px;
+        }
+        .thumbnail{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div id="map"></div>
+    <p id="large"></p>
+
+</div>
+
+</body>

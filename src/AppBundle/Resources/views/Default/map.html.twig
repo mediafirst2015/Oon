@@ -1,0 +1,409 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-9">
+            <img src="{{ asset('bundles/app/images/tooltip.png') }}" style="margin-left: 175px;width: 500px;margin-bottom: 10px; opacity: 0.8;margin-bottom: -45px;z-index: 99999;position: relative;"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="box">
+                <form method="GET" id="form">
+                    <div class="form">
+                        <h2 class="green">Фильтры</h2>
+                        <input type="text" placeholder="Улица" id="street" name="street" value="{{ params.street }}">
+                        <select name="area">
+                            <option value="" disabled selected>Округ</option>
+                            <option value="" selected>Все округа</option>
+                            <option value="ЦАО" {{ params.area == 'ЦАО' ? 'selected="selected"' }}>ЦАО</option>
+                            <option value="СВАО" {{ params.area == 'СВАО' ? 'selected="selected"' }}>СВАО</option>
+                            <option value="ВАО" {{ params.area == 'ВАО' ? 'selected="selected"' }}>ВАО</option>
+                            <option value="ЮВАО" {{ params.area == 'ЮВАО' ? 'selected="selected"' }}>ЮВАО</option>
+                            <option value="ЮАО" {{ params.area == 'ЮАО' ? 'selected="selected"' }}>ЮАО</option>
+                            <option value="ЮЗАО" {{ params.area == 'ЮЗАО' ? 'selected="selected"' }}>ЮЗАО</option>
+                            <option value="ЗАО" {{ params.area == 'ЗАО' ? 'selected="selected"' }}>ЗАО</option>
+                            <option value="CЗАО" {{ params.area == 'CЗАО' ? 'selected="selected"' }}>CЗАО</option>
+                            <option value="CАО" {{ params.area == 'CАО' ? 'selected="selected"' }}>CАО</option>
+                        </select>
+                        <br />
+                        <select name="format">
+                            <option value="" disabled selected>Формат</option>
+                            <option value="" selected>Все форматы</option>
+                            <option value="3x6" {{ params.area == '3x6' ? 'selected="selected"' }}>3х6</option>
+                            <option value="small" {{ params.area == 'small' ? 'selected="selected"' }}>Малые форматы</option>
+                            <option value="big" {{ params.area == 'big' ? 'selected="selected"' }}>Большие форматы</option>
+                            <option value="citybord" {{ params.area == 'citybord' ? 'selected="selected"' }}>Ситиборды</option>
+                        </select>
+                        <br />
+                        <select>
+                            <option value="" disabled selected>Тип</option>
+                            <option value="" selected>Все типы</option>
+                            <option value="1">3х6</option>
+                            <option value="2">Малые</option>
+                        </select>
+                        <div class="check-group">
+                            Свет
+                            <div class="check"></div>
+                            <input type="hidden" name="light" value="0">
+                        </div>
+                        <div class="slider-group">
+                            <span class="caption">GRP</span>
+                            <span id="grp-amount" class="val"></span>
+                            <span class="slider" id="grp"></span>
+                            <input type="hidden" name="grp-min" id="grp-min" value="0">
+                            <input type="hidden" name="grp-max" id="grp-max" value="3">
+                        </div>
+                        <div class="slider-group">
+                            <span class="caption">OTS</span>
+                            <span id="ots-amount" class="val"></span>
+                            <span class="slider"  id="ots"></span>
+                            <input type="hidden" name="ots-min" id="ots-min" value="0">
+                            <input type="hidden" name="ots-max" id="ots-max" value="500">
+                        </div>
+                        <div class="slider-group">
+                            <span class="caption">Стоимость</span>
+                            <span id="price-amount" class="val"></span>
+                            <span class="slider" id="price"></span>
+                            <input type="hidden" name="price-min" id="price-min" value="0">
+                            <input type="hidden" name="price-max" id="price-max" value="1000">
+                        </div>
+                        <br/>
+                        <br/>
+                        <div style="text-align: right">
+                        <span class="btn" id="form-submit">
+                            Найти
+                        </span>
+                        </div>
+                        <br/>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div id="submap">
+                <div id="map"></div>
+            </div>
+            <br />
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table">
+                <tr>
+                    <th>№</th>
+                    <th>Город</th>
+                    <th>Округ</th>
+                    <th>Адрес</th>
+                    <th>Гид</th>
+                    <th>Период</th>
+                    <th>Сторона</th>
+                    <th>Формат</th>
+                    <th>Тип</th>
+                    <th>Свет</th>
+                    <th>GRP</th>
+                    <th>OTS</th>
+                    <th>Стоимость</th>
+                    <th>Налог</th>
+                    <th>Фото</th>
+                    <th>Карта</th>
+                    <th>Статус</th>
+                    <th></th>
+                </tr>
+                {% for k,l in lists %}
+                    <tr>
+                        <td>{{ k+1 }}</td>
+                        <td>Москва</td>
+                        <td>{{ l.area }}</td>
+                        <td>{{ l.adrs }}</td>
+                        <td>{{ l.id }}</td>
+                        <td>Май</td>
+                        <td>{{ l.side }}</td>
+                        <td>{{ l.format }}</td>
+                        <td>{{ l.type }}</td>
+                        <td>{{ l.light == 1 ? 'да' : 'нет' }}</td>
+                        <td>{{ l.grp }}</td>
+                        <td>{{ l.ots }}</td>
+                        <td>{{ l.price }}</td>
+                        <td>{{ l.price/0.20 }}</td>
+                        <td style="text-align: center">
+                            <a href="{{ l.img }}" class="fancybox" data-fancybox-group="gallery">
+                                <img src="{{ asset('bundles/app/images/img-icon.png') }}" class="icon">
+                            </a>
+                        </td>
+                        <td style="text-align: center"><img src="{{ asset('bundles/app/images/adrs-icon.png') }}" class="icon"></td>
+                        <td>Свободно</td>
+                        <td style="text-align: center">
+                            <a href="{{ path('basket_remove', { 'itemId' : l.id } ) }}">
+                                <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon">
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr class="bottom-line">
+                    <td colspan="5" class="itog">Средняя стоимость размещения за поверхность:</td>
+                    <td style="text-align: center">{{ price }}&nbsp;р.</td>
+                    <td colspan="4" style="background: #FFF; border: 0"></td>
+                    <td style="background: #FFF; border: 0" colspan="2">
+                        <b class="green">ИТОГО:</b>
+                    </td>
+                    <td>
+                        <b>{{ fullPrice }}&nbsp;р.</b>
+                    </td>
+                    <td>
+                        <b>{{ fullPrice }}&nbsp;р.</b>
+                    </td>
+                    <td></td>
+                    <td colspan="3" style="text-align: right; color: #CC0000">
+                        <a href="#" style="color: #CC0000">Обнулить заказ</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="itog">Процентное соотношение сторон A/B в программе:</td>
+                    <td style="text-align: center">{{ side }}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="itog">Средний показатель GRP за программу:</td>
+                    <td style="text-align: center">{{ grp }}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="itog">Средний показатель OTS за программу:</td>
+                    <td style="text-align: center">{{ ots }}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="itog">CRT за программу:</td>
+                    <td style="text-align: center">0</td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="itog">Количество поверхностей:</td>
+                    <td style="text-align: center">{{ count }}</td>
+                </tr>
+            </table>
+            <br />
+            <br />
+            <div style="text-align: right">
+                <span class="btn2" style="font-size: 16px" data-toggle="modal" data-target=".bs-example-modal-sm">
+                        Получить медиа план
+                </span>
+            </div>
+            <br />
+            <br />
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/app/kladrapi/jquery.kladr.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('#form-submit').click(function(){
+               $('#form').submit();
+            });
+
+            var map;
+            var objects;
+            var clusterer = null;
+            ym.ready(init);
+            function init(){
+                map = new ym.Map('map', {
+                {% if thisBanner != null %}
+                    center: [{{ thisBanner.latitude }}, {{ thisBanner.longitude }}],
+                {% else %}
+                    center: [55.755381, 37.619044],
+                {% endif %}
+                    zoom: 13,
+                    controls: ['typeSelector','zoomControl']
+                });
+                var filter =
+                        'id={{ id }}'+
+                        '&street={{ params.street }}'+
+                        '&area={{ params.area }}'+
+                        '&format={{ params.format }}'+
+                        '&type='+
+                        '&light='+
+                        '&grpMin={{ params.grpMin }}'+
+                        '&grpMax={{ params.grpMax }}'+
+                        '&otsMin={{ params.otsMin }}'+
+                        '&otsMax={{ params.otsMax }}'+
+                        '&priceMin={{ params.priceMin }}'+
+                        '&priceMax={{ params.priceMax }}';
+                objects = getObjects(filter);
+            }
+
+            function getObjects(filter){
+                $.ajax({
+                    url: '{{ path('get_objects') }}',
+                    processData: false,
+                    method: 'POST',
+                    data: filter,
+                    success: function(msg){
+                        objects = msg.data;
+                        var placemarks = [];
+                        for (var i = 0, l = objects.length; i < l; i++) {
+                            placemarks[i] = new ym.GeoObject({
+                                geometry: {
+                                    type: "Point",
+                                    coordinates: objects[i].coords //Массив
+                                },
+                                properties:{
+                                    hintContent: objects[i].alt, //Подсказка
+                                    balloonContent: objects[i].content
+                                }
+                            },{
+
+                                preset: 'islands#Icon',
+                                iconColor: '#016b04'
+
+                            });
+                        }
+                        var clusterer = new ym.Clusterer({
+                            preset: 'islands#darkGreenClusterIcons'
+                        });
+                        clusterer.events
+                            // Можно слушать сразу несколько событий, указывая их имена в массиве.
+                                .add(['mouseenter', 'mouseleave'], function (e) {
+                                    var target = e.get('target'),
+                                            type = e.get('type');
+                                    if (typeof target.getGeoObjects != 'undefined') {
+                                        // Событие произошло на кластере.
+                                        if (type == 'mouseenter') {
+                                            target.options.set('preset', 'islands#greenClusterIcons');
+                                        } else {
+                                            target.options.set('preset', 'islands#darkGreenClusterIcons');
+                                        }
+                                    }
+//                                    }else{
+//                                        if (type == 'mouseenter') {
+//                                            var id = target.options.get('did');
+//                                        } else {
+//                                            var id = target.options.get('did');
+//                                        }
+//                                        alert(id);
+//
+//                                    }
+                                });
+//                        clussterer.removeAll();
+                        clusterer.add(placemarks);
+                        map.geoObjects.add(clusterer);
+                    }
+                });
+            }
+
+
+            $('#excel').click(function () {
+                var area = $('#area').val();
+                var format = $('#format').val();
+                var type = $('#type').val();
+                var light = $('#light').val();
+                var grpMin = $("#grp").slider("values", 0) / 100;
+                var grpMax = $("#grp").slider("values", 1) / 100;
+                var otsMin = $("#ots").slider("values", 0);
+                var otsMax = $("#ots").slider("values", 1);
+
+                var filter =
+                        'street='+street+
+                        'area='+area+
+                        '&format='+format+
+                        '&type='+type+
+                        '&light='+light+
+                        '&grpMin='+grpMin+
+                        '&grpMax='+grpMax+
+                        '&otsMin='+otsMin+
+                        '&otsMax='+otsMax;
+                var url = '{{ path('all_export') }}?'+filter;
+                window.location.href = url;
+            });
+
+            $('#street' ).kladr({
+                token: '541ee4ac7c52392c7d8b457e',
+                key: '181d5e2c44994c335e5e81e9ae46e79a67b6b495',
+                type: $.kladr.type.street,
+                parentType: $.kladr.type.city,
+                parentId: '7700000000000',
+                select: function(obj){
+                    $('#street').val(obj.name);
+//                    $('#street').refresh();
+                },
+                {#close: function(){#}
+                    {#$.ajax({#}
+                        {#url: '{{ path('get_coords') }}',#}
+                        {#processData: false,#}
+                        {#method: 'POST',#}
+                        {#data: 'street='+$('#street').val(),#}
+                        {#success: function(msg){#}
+                            {#coords = msg.data;#}
+                            {#map.setCenter(coords);#}
+                        {#}#}
+                    {#});#}
+                {#}#}
+            });
+
+            $('body').on('click','.addbasket', function(){
+                $.ajax({
+                    url: Routing.generate('basket_add', {'itemId': $(this).attr('data-id')}),
+                    method: 'POST',
+                    success: function(msg){
+
+                    }
+                });
+            });
+
+        });
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/app/kladrapi/jquery.kladr.css') }}" rel="stylesheet" media="all">
+    <style>
+        .container{
+            min-width: 800px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .thrumb{
+            width: 300px;
+            border-radius: 10px;
+        }
+        .ymaps-2-1-23-balloon__content ymaps{
+            height: 550px !important;
+        }
+        .map-setting tr td:first-child{
+            width: 150px;
+            padding-left: 20px;
+        }
+        .map-title{
+            font-size: 16px;
+            padding: 5px;
+            padding-bottom: 15px;
+            padding-top: 15px;
+        }
+        .map-month{
+            transform: rotate(270deg);
+            /*transform-origin: left top 0;*/
+            padding-bottom: 5px;
+        }
+        #submap{
+            display: inline-block;
+            box-shadow: 0 1px 16px 0 rgba(1, 1, 1, 0.51);
+            width: 100%;
+        }
+        #map{
+            -moz-border-radius: 14px 14px 14px 14px; /* Firefox */
+            -webkit-border-radius: 14px 14px 14px 14px; /* Safari, Chrome */
+            -khtml-border-radius: 14px 14px 14px 14px; /* KHTML */
+            border-radius: 14px 14px 14px 14px; /* CSS3 */
+            overflow: hidden;
+            position: relative;
+            -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+            width: 100%;
+            height: 650px
+        }
+        /*transform: rotate(-40deg);*/
+    </style>
+{% endblock %}

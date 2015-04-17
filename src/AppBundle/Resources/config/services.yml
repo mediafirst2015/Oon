@@ -1,0 +1,23 @@
+services:
+    default.timestampable:
+        class: Gedmo\Timestampable\TimestampableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ @annotation_reader ] ]
+
+    gedmo.listener.sortable:
+        class: Gedmo\Sortable\SortableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ @annotation_reader ] ]
+
+    twig.extension.stringloader:
+        class: Twig_Extension_StringLoader
+        tags:
+            - { name: 'twig.extension' }
+
+    basket.service:
+        class: Vidal\MainBundle\Service\Basket
+        arguments: [ @doctrine.orm.entity_manager, @session ]

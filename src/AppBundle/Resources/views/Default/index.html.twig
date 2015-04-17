@@ -1,0 +1,390 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="slider-image">
+                <div class="title">Тут некий текст</div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="box">
+                <div class="form">
+                    <div class="title">Закажите свой медиа-план!</div>
+                    <select>
+                        <option value="0" disabled selected>Город</option>
+                        <option value="1">Москва</option>
+                        <option value="2">Подольс</option>
+                    </select>
+                    <br />
+                    <select>
+                        <option value="0" disabled selected>Округ</option>
+                        <option value="ЦАО">ЦАО</option>
+                        <option value="СВАО">СВАО</option>
+                        <option value="ВАО">ВАО</option>
+                        <option value="ЮВАО">ЮВАО</option>
+                        <option value="ЮАО">ЮАО</option>
+                        <option value="ЮЗАО">ЮЗАО</option>
+                        <option value="ЗАО">ЗАО</option>
+                        <option value="CЗАО">CЗАО</option>
+                        <option value="CАО">CАО</option>
+                    </select>
+                    <br />
+                    <select>
+                        <option value="0" disabled selected>Формат</option>
+                        <option value="3x6">3х6</option>
+                        <option value="small">Малые форматы</option>
+                        <option value="big">Большие форматы</option>
+                        <option value="citybord">Ситиборды</option>
+                    </select>
+                    <input type="text" placeholder="Количество конструкций">
+                    <div class="input-group">
+                        <input type="text" class="mini" placeholder="Email">
+                        <input type="text" class="mini" placeholder="Телефон">
+                    </div>
+                    <br />
+                    <br />
+                        <span class="btn2">
+                            Заказать
+                        </span>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="pink">
+                МЕДИА-ПЛАН ПО НАРУЖКЕ ЗА ТРИ МИНУТЫ!
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="box">
+                <div class="form">
+                    <div class="title">Поиск щитов по параметрам</div>
+                    <br />
+                    <select>
+                        <option value="0" disabled selected>Город</option>
+                        <option value="1">Москва</option>
+                        <option value="2">Подольск</option>
+                    </select>
+                    <br />
+                    <select>
+                        <option value="0" disabled selected>Округ</option>
+                        <option value="ЦАО">ЦАО</option>
+                        <option value="СВАО">СВАО</option>
+                        <option value="ВАО">ВАО</option>
+                        <option value="ЮВАО">ЮВАО</option>
+                        <option value="ЮАО">ЮАО</option>
+                        <option value="ЮЗАО">ЮЗАО</option>
+                        <option value="ЗАО">ЗАО</option>
+                        <option value="CЗАО">CЗАО</option>
+                        <option value="CАО">CАО</option>
+
+                    </select>
+                    <br />
+                    <input type="text" placeholder="Улица" id="street">
+                    {#<div class="check-group">#}
+                    {#Пакеты#}
+                    {#<div class="check"></div>#}
+                    {#<input type="hidden" name="packets" value="0">#}
+                    {#</div>#}
+                    <div class="input-group" style="padding-left: 20px">
+                        Период
+                        с
+                        <select class="mini">
+                            <option value="1" >Янв</option>
+                            <option value="2" >Фев</option>
+                            <option value="3" >Мар</option>
+                            <option value="4" >Апр</option>
+                            <option value="5" >Май</option>
+                            <option value="6" >Июн</option>
+                            <option value="7" >Июл</option>
+                            <option value="8" >Авг</option>
+                            <option value="9" >Сен</option>
+                            <option value="10">Окт</option>
+                            <option value="11">Ноя</option>
+                            <option value="12">Дек</option>
+                        </select>
+                        по
+                        <select class="mini">
+                            <option value="1" >Янв</option>
+                            <option value="2" >Фев</option>
+                            <option value="3" >Мар</option>
+                            <option value="4" >Апр</option>
+                            <option value="5" >Май</option>
+                            <option value="6" >Июн</option>
+                            <option value="7" >Июл</option>
+                            <option value="8" >Авг</option>
+                            <option value="9" >Сен</option>
+                            <option value="10">Окт</option>
+                            <option value="11">Ноя</option>
+                            <option value="12">Дек</option>
+                        </select>
+                    </div>
+                    <div class="slider-group">
+                        <span class="caption">GRP</span>
+                        <span id="grp-amount" class="val"></span>
+                        <span class="slider" id="grp"></span>
+                    </div>
+                    <div class="slider-group">
+                        <span class="caption">OTS</span>
+                        <span id="ots-amount" class="val"></span>
+                        <span class="slider"  id="ots"></span>
+                    </div>
+                    <div class="slider-group">
+                        <span class="caption">Стоимость</span>
+                        <span id="price-amount" class="val"></span>
+                        <span class="slider" id="price"></span>
+                    </div>
+                    <div class="check-btn-group">
+                        <span class="check-btn">
+                            Щиты 3х6
+                            <input type="hidden" value="0">
+                        </span>
+                        <span class="check-btn">
+                            Большие форматы
+                            <input type="hidden" value="0">
+                        </span>
+                        <span class="check-btn">
+                            Ситиборды
+                            <input type="hidden" value="0">
+                        </span>
+                        <span class="check-btn">
+                            Малые форматы
+                            <input type="hidden" value="0">
+                        </span>
+                    </div>
+                    <br />
+                    <br />
+                    <div style="text-align: right">
+                        <span class="btn2">
+                            Найти
+                        </span>
+                    </div>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="box">
+                <div class="form">
+                    <div class="title">Поиск щитов на карте</div>
+                    <br />
+                    <select>
+                        <option value="0" disabled selected>Город</option>
+                        <option value="1">Москва</option>
+                        <option value="2">Подольск</option>
+                    </select>
+                    <input type="text" placeholder="Улица" id="street2">
+                    <br />
+                    <div style="text-align: center">
+                        <img src="{{ asset('bundles/app/images/map.png') }}" class="round" style="height: 255px; width: 320px;"/>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <div style="text-align: right">
+                        <span class="btn2">
+                            Заказать
+                        </span>
+                    </div>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="box">
+                <div class="form" style="  height: 625px;">
+                    <div class="title pink">Горящие предложения</div>
+                    <br />
+                    {% for b in banners %}
+                        <div class="hot-box-mini">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="hot-img">
+                                            <img class="img" src="{{ b.img }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <table class="hot-params">
+                                            <tr>
+                                                <td colspan="2">{{ b.adrs }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Формат</td>
+                                                <td style="text-align: right">{{ b.format }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Цена</td>
+                                                <td style="text-align: right"><b class="pink">{{ b.price }}&nbsp;р.</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Период</td>
+                                                <td style="text-align: right"><b class="pink">Апрель</b></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    {% endfor %}
+                    <div style="text-align: right">
+                        <a href="{{ path('hot') }}" class="pink" style="font-size: 23px">Показать ВСЕ</a>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="box">
+                <div class="form">
+                    <div class="title">Почему МЫ ?</div>
+                    <br />
+                    <table class="we">
+                        <tr>
+                            <td style="text-align: center; width: 20%; vertical-align: top;">
+                                <img src="{{ asset('bundles/app/images/like.png') }}"/>
+                                <br />
+                                <div style="text-align: left">
+                                    Синхронизация конструкций о наличии/стоимости в on-line режиме с владельцами конструкций
+                                </div>
+
+                            </td>
+                            <td style="text-align: center; width: 20%; vertical-align: top;">
+                                <img src="{{ asset('bundles/app/images/like.png') }}"/>
+                                <br />
+                                <div style="text-align: left">
+                                    Взаимодействие с более чем 90 регионами по всей России
+                                </div>
+                            </td>
+                            <td style="text-align: center; width: 20%; vertical-align: top;">
+                                <img src="{{ asset('bundles/app/images/like.png') }}"/>
+                                <br />
+                                <div style="text-align: left">
+                                    Наличие полного пакета Эспар Аналитик:<br />
+                                    1. ODA Plan - оценка дневного охвата и частоты в наружной рекламе<br />
+                                    2. Poster Track - эффективность компаний в наружной рекламе (узнаваемость и запоминаемость)<br />
+                                    3. ODA Plan Plus - тагетирование наружной рекламы по целевой аудитории
+                                </div
+                            </td>
+                            <td style="text-align: center; width: 20%; vertical-align: top;">
+                                <img src="{{ asset('bundles/app/images/like.png') }}"/>
+                                <br />
+                                <div style="text-align: left">
+                                    Собственная производственная база
+                                </div>
+                            </td>
+                            <td style="text-align: center; width: 20%; vertical-align: top;">
+                                <img src="{{ asset('bundles/app/images/like.png') }}"/>
+                                <br />
+                                <div style="text-align: left">
+                                    Наличие в группе креативного агентства
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+                </div>
+            </div>
+            <div class="box" style="margin-top: 30px; background: #FFF">
+                <div class="form">
+                    <div class="title">Нас выбрали</div>
+                    <br />
+                    <div style="text-align: center">
+                        <img src="{{ asset('bundles/app/images/clients.png') }}" style="width: 100%;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="box">
+                <div class="form">
+                    <div class="title">Отзывы клиентов</div>
+
+                </div>
+            </div>
+            {#<div style="text-align: center">#}
+            {#<span class="btn-basket">Корзина пуста</span>#}
+            {#</div>#}
+            {#<br />#}
+            {#<br />#}
+        </div>
+    </div>
+
+
+{% endblock %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <link href="{{ asset('bundles/app/kladrapi/jquery.kladr.css') }}" rel="stylesheet" media="all">
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('bundles/app/kladrapi/jquery.kladr.min.js') }}" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+
+                $('#street' ).kladr({
+                    token: '541ee4ac7c52392c7d8b457e',
+                    key: '181d5e2c44994c335e5e81e9ae46e79a67b6b495',
+                    type: $.kladr.type.street,
+                    parentType: $.kladr.type.city,
+                    parentId: '7700000000000',
+                    select: function(obj){
+                        $('#street').val(obj.typeShort+' '+obj.name);
+                    },
+                    close: function(){
+                        $.ajax({
+                            url: '{{ path('get_coords') }}',
+                            processData: false,
+                            method: 'POST',
+                            data: 'street='+$('#street').val(),
+                            success: function(msg){
+                                coords = msg.data;
+                                map.setCenter(coords);
+                            }
+                        });
+                    }
+                });
+                $('#street2' ).kladr({
+                    token: '541ee4ac7c52392c7d8b457e',
+                    key: '181d5e2c44994c335e5e81e9ae46e79a67b6b495',
+                    type: $.kladr.type.street,
+                    parentType: $.kladr.type.city,
+                    parentId: '7700000000000',
+                    select: function(obj){
+                        $('#street').val(obj.typeShort+' '+obj.name);
+                    },
+                    close: function(){
+                        $.ajax({
+                            url: '{{ path('get_coords') }}',
+                            processData: false,
+                            method: 'POST',
+                            data: 'street='+$('#street2').val(),
+                            success: function(msg){
+                                coords = msg.data;
+                                map.setCenter(coords);
+                            }
+                        });
+                    }
+                });
+
+            });
+        </script>
+    {% endblock %}

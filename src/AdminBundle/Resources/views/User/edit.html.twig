@@ -1,0 +1,30 @@
+{% extends "AdminBundle::layout.html.twig" %}
+
+{% block breadcrumb %}
+    <a href="{{ path('user_list') }}"><span class="btn btn-primary right-btn">В список</span></a>
+    <ul class="breadcrumb well">
+        <li><a href="{{ path('user_list') }}">Список пользователей</a></li>
+        <li>Изменение<span class="divider"></span></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    {#<div class="well">#}
+        {#<iframe src="{{ path('admin_file_list') }}" class="frame"></iframe>#}
+    {#</div>#}
+    <div class="well">
+        <form method="POST">
+            {{ form_widget(form) }}
+        </form>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .frame{
+            width: 100%;
+        }
+    </style>
+
+{% endblock %}

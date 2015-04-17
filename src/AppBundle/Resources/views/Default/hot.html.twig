@@ -1,0 +1,96 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="box">
+                <form method="GET" id="form">
+                    <div class="form">
+                        <div class="title" style="font-size: 20px">Поиск горящих предложений</div>
+                        <br />
+                        <select name="city">
+                            <option value="0" disabled selected>Город</option>
+                            <option value="Москва">Москва</option>
+                            <option value="Подольск">Подольск</option>
+                        </select>
+                        <select name="area">
+                            <option value="0" disabled selected>Округ</option>
+                            <option value="ЦАО">ЦАО</option>
+                            <option value="СВАО">СВАО</option>
+                            <option value="ВАО">ВАО</option>
+                            <option value="ЮВАО">ЮВАО</option>
+                            <option value="ЮАО">ЮАО</option>
+                            <option value="ЮЗАО">ЮЗАО</option>
+                            <option value="ЗАО">ЗАО</option>
+                            <option value="CЗАО">CЗАО</option>
+                            <option value="CАО">CАО</option>
+                        </select>
+                        <input type="text" placeholder="Улица" id="street" name="street">
+                        <div class="check-group">
+                            Пакеты
+                            <div class="check"></div>
+                            <input type="hidden" name="packet" value="0">
+                        </div>
+                        <select name="type">
+                            <option value="0" disabled selected>Типы конструкций</option>
+                            <option value="1">Щиты</option>
+                        </select>
+                        <br />
+                        <br />
+                        <div style="text-align: right">
+                        <span class="btn2" id="form-submit">
+                            Найти
+                        </span>
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            {% for b in banners %}
+                <div class="hot-box">
+                    <a href="{{ path('map',{'bannerId' : b.id}) }}">
+                        <div class="hot-img">
+                            <img class="img" src="{{ b.img }}">
+                            <img class="hot-icon" src="{{ asset('bundles/app/images/hot.png') }}">
+                        </div>
+                        <br />
+                        <table class="hot-params">
+                            <tr>
+                                <td>Адрес</td>
+                                <td>{{ b.adrs }}</td>
+                            </tr>
+                            <tr>
+                                <td>Формат</td>
+                                <td>{{ b.format }}</td>
+                            </tr>
+                            <tr>
+                                <td>Цена</td>
+                                <td><b class="pink">{{ b.price }} р.</b></td>
+                            </tr>
+                            <tr>
+                                <td>Период</td>
+                                <td><b class="pink">Апрель</b></td>
+                            </tr>
+                        </table>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <br />
+    <br />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+           $('#form-submit').click(function(){
+                $('#form').submit();
+           });
+        });
+    </script>
+{% endblock %}

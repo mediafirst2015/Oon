@@ -1,0 +1,25 @@
+<div class="popup auth">
+    <h2>Авторизация</h2>
+    <div class="popup-content">
+        <form method="POST" action="{{ path('login_check') }}">
+            <table>
+                <tr>
+                    <td>E-mail:</td>
+                    <td><input type="text" name="_username"></td>
+                </tr>
+                <tr>
+                    <td>Пароль:</td>
+                    <td><input type="password" name="_password"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: right">
+                        <button type="button" class="popupCancel">Отмена</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="submit">Войти</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <br/>
+    </div>
+</div>

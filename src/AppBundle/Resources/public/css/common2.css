@@ -1,0 +1,80 @@
+body{
+    margin: 0;
+}
+header{
+    margin: 0 auto;
+    width: 1024px;
+}
+.block{
+    width: 1024px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+.icon1{
+    display: inline-block;
+    background: url('/bundles/app/design/icons.png') 0 0;
+    width: 32px;
+    height: 32px;
+    float: left;
+    margin-top: 5px;
+}
+.icon2{
+    display: inline-block;
+    background: url('/bundles/app/design/icons.png') 0 -32px;
+    width: 32px;
+    height: 32px;
+    float: left;
+    margin-top: 5px;
+}
+.icon3{
+    display: inline-block;
+    background: url('/bundles/app/design/icons.png') 0 -64px;
+    width: 32px;
+    height: 32px;
+    float: left;
+    margin-top: 5px;
+}
+.icon4{
+    display: inline-block;
+    background: url('/bundles/app/design/icons.png') 0 -107px;
+    width: 32px;
+    height: 32px;
+    float: left;
+    margin-top: 5px;
+}
+input[type=text]{
+    background: #e8e8e8;
+    border-left: 1px solid #c0c0c0;
+    border-top: 1px solid #c0c0c0;
+    border-right: 1px solid #f6f6f6;
+    border-bottom: 1px solid #f6f6f6;
+    border-radius: 20px;
+    height: 40px;
+    width: 250px;
+    padding-left: 10px;
+    outline: none;
+}
+.box-circle{
+    background: #e8e8e8;
+    border-left: 1px solid #c0c0c0;
+    border-top: 1px solid #c0c0c0;
+    border-right: 1px solid #f6f6f6;
+    border-bottom: 1px solid #f6f6f6;
+    border-radius: 20px;
+    height: 40px;
+    width: 250px;
+    padding-left: 10px;
+    outline: none;
+}
+.menu{
+    float: right;
+    list-style: none;
+}
+.menu li{
+    display: inline;
+    padding: 5px 10px;
+}
+.menu li:hover{
+    color: #c2407f;
+    cursor: pointer;
+}

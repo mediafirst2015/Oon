@@ -1,0 +1,202 @@
+{#{% extends "TwigBundle::layout.html.twig" %}#}
+<html>
+<head>
+    {% block head %}
+    {% block javascripts %}
+    <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+        <script src="{{ asset('bundles/app/dw_tooltips/js/dw_tooltip_c.js') }}" type="text/javascript"></script>
+
+        <script src="{{ asset('bundles/app/javascripts/jquery-1.11.1.js') }}"></script>
+
+        <script src="{{ asset('bundles/app/fancyBox/source/jquery.fancybox.js') }}"></script>
+        <script src="{{ asset('bundles/app/fancyBox/lib/jquery.mousewheel-3.0.6.pack.js') }}"></script>
+
+        <script src="{{ asset('bundles/app/js/bootstrap.min.js') }}"></script>
+        <script src="//api-maps.yandex.ru/2.1/?load=package.full&lang=ru-RU&ns=ym" type="text/javascript"></script>
+
+        <script type="text/javascript" src="{{ asset('bundles/app/jqueryui/jquery-ui.min.js') }}"></script>
+
+
+        {#<script type="text/javascript" src="{{ asset('bundles/app/javascripts/script.js') }}"></script>#}
+
+        {#<link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/jqueryui/jquery-ui.theme.css') }}" media="screen" />#}
+        <script>
+            $(document).ready(function(){
+                $('.fancybox').fancybox(
+                        {
+                            openEffect  : 'none',
+                            closeEffect	: 'none',
+
+                            helpers : {
+                                title : {
+                                    type : 'over'
+                                }
+                            }
+                        }
+                );
+//                $('.fancybox').click(function(){return false});
+                /* кастомный checkbox */
+                $('.check-group').click(function(){
+                    if ($(this).children('input[type=hidden]').val() == 0){
+                        $(this).children('.check').addClass('active');
+                        $(this).children('input[type=hidden]').val(1);
+                    }else{
+                        $(this).children('.check').removeClass('active');
+                        $(this).children('input[type=hidden]').val(0);
+                    }
+                });
+                $('.check-btn').click(function(){
+                    if ($(this).children('input[type=hidden]').val() == 0){
+                        $(this).addClass('active');
+                        $(this).children('input[type=hidden]').val(1);
+                    }else{
+                        $(this).removeClass('active');
+                        $(this).children('input[type=hidden]').val(0);
+                    }
+                });
+                $( "#grp" ).slider({
+                    range: true,
+                    min: 0,
+                    max: 300,
+                    values: [ 0, 300 ],
+                    slide: function( event, ui ) {
+                        $( "#grp-amount" ).html( "" + ui.values[ 0 ]/100 + " - " + ui.values[ 1 ]/100 );
+                        $( "#grp-min" ).val(ui.values[ 0 ]/100);
+                        $( "#grp-max" ).val(ui.values[ 1 ]/100);
+                    }
+                });
+                $( "#grp-amount" ).html( "" + $( "#grp" ).slider( "values", 0 )/100 +
+                " - " + $( "#grp" ).slider( "values", 1 )/100 );
+
+                $( "#ots" ).slider({
+                    range: true,
+                    min: 0,
+                    max: 500,
+                    values: [ 0, 500 ],
+                    slide: function( event, ui ) {
+                        $( "#ots-amount" ).html( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                        $( "#ots-min" ).val(ui.values[ 0 ]);
+                        $( "#ots-max" ).val(ui.values[ 1 ]);
+                    }
+                });
+                $( "#ots-amount" ).html( "" + $( "#ots" ).slider( "values", 0 ) +
+                " - " + $( "#ots" ).slider( "values", 1 ) );
+
+                $( "#price" ).slider({
+                    range: true,
+                    min: 0,
+                    max: 1000,
+                    values: [ 0, 1000 ],
+                    slide: function( event, ui ) {
+                        $( "#price-amount" ).html( "" + ui.values[ 0 ] + " т.р. - " + ui.values[ 1 ] + ' т.р.' );
+                        $( "#price-min" ).val(ui.values[ 0 ]);
+                        $( "#price-max" ).val(ui.values[ 1 ]);
+                    }
+                });
+                $( "#price-amount" ).html( "" + $( "#price" ).slider( "values", 0 ) +
+                " т.р. - " + $( "#price" ).slider( "values", 1 ) + ' т.р.' );
+
+            });
+        </script>
+    {% endblock %}
+    {% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/normalize.css') }}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/bootstrap.min.css') }}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/jqueryui/jquery-ui.css') }}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/fancyBox/source/jquery.fancybox.css') }}" media="screen" />
+        {% stylesheets filter='less'  '@AppBundle/Resources/public/less/*' %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="all" />
+        {% endstylesheets %}
+    {% endblock %}
+
+    {% block title %}
+        <title>Карта ООН</title>
+    {% endblock %}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    <div class="body">
+        <header>
+            <div class="row">
+                <div class="col-sm-4">
+                    <a href="{{ path('homepage') }}"><img src="{{ asset('bundles/app/images/logo.png') }}" id="logo"></a>
+                </div>
+                <div class="col-sm-5">
+                    <img src="{{ asset('bundles/app/images/top-img.png') }}" id="top-img">
+                </div>
+                <div class="col-sm-3" style="text-align: right">
+                    <span id="phone">8 495 987 35 95</span>
+                    <br />
+                    <span class="btn" data-toggle="modal" data-target=".set-contacts">
+                        СВЯЗАТЬСЯ С НАМИ
+                    </span>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <div class="top-menu">
+                <a href="{{ path('about') }}"><span class="btn-top-menu">О нас</span></a>
+                <a href="#"><span class="btn-top-menu">Клиенты</span></a>
+                <a href="{{ path('contacts') }}"><span class="btn-top-menu">Контакты</span></a>
+                &nbsp;&nbsp;&nbsp;
+                <span class="btn-top-menu-search">
+                    Поиск щитов
+                    <div class="dropdown">
+                        <a href="{{ path('search') }}"><span>Поиск по параметрам</span></a> <br />
+                        <a href="{{ path('map') }}"><span>Поиск по карте</span></a> <br />
+                        <a href="{{ path('hot') }}"><span>Горячие предложения</span></a>
+                    </div>
+                </span>
+
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    <footer>
+        <div  class="row">
+            <div class="col-lg-3">
+                <div class="title">
+                    Заказчикам:
+                </div>
+                Техтребования<br />
+                Поиск щитов<br />
+                Отзывы<br />
+                Производство
+            </div>
+            <div class="col-lg-3">
+                <div class="title">
+                    Владельцам:
+                </div>
+                Сотрудничество
+            </div>
+            <div class="col-lg-3">
+                <div class="title">
+                    Контакты:
+                </div>
+                РОССИЯ		105120,
+                Москва,<br />
+                4-й Сыромятнический
+                переулок, дом 1/8,<br />
+                строение 6
+            </div>
+            <div class="col-lg-3" style="text-align: center">
+                <div class="title"></div>
+                <br />
+                8 495 987 35 95<br />
+                info@mediafirst.ru
+            </div>
+        </div>
+    </footer>
+
+{% endblock %}
+
+{% if not is_granted('ROLE_USER') %}
+    {#{% include 'AppBundle:Auth:login.html.twig' %}#}
+{% endif %}
+{% include 'AppBundle::popup.html.twig' %}
+</body>
+</html>

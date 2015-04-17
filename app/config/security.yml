@@ -1,0 +1,33 @@
+#jms_security_extra:
+#    secure_all_services: false
+#    expressions: true
+
+security:
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: sha512
+            encode-as-base64: true
+            iterations: 10
+
+    role_hierarchy:
+        ROLE_OPERATOR: [ROLE_USER]
+        ROLE_ADMIN: [ROLE_OPERATOR]
+
+    providers:
+        main:
+            entity: { class: AppBundle:User, property: username }
+
+    firewalls:
+        everything:
+            pattern: ^/
+            form_login:
+                check_path: /login_check
+                login_path: /login
+            logout: true
+            security: true
+            anonymous: true
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+    access_control:
+        - { path: /.*, role: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -1,0 +1,154 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-4">
+            <select>
+                <option value="null" disabled>Город</option>
+                <option>Москва</option>
+                <option>Подольск</option>
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <select>
+                <option value="null" disabled>Округ</option>
+                <option>СВАО</option>
+                <option>ЮВАО</option>
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <input type="text" placeholder="Улица">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <h2  class="green">Период</h2>
+            <span class="check-btn">
+                Январь
+                <input type="hidden" name="month-1" value="0">
+            </span>
+            <span class="check-btn">
+                Февраль
+                <input type="hidden" name="month-2" value="0">
+            </span>
+            <span class="check-btn">
+                Март
+                <input type="hidden" name="month-3" value="0">
+            </span>
+            <span class="check-btn">
+                Апрель
+                <input type="hidden" name="month-4" value="0">
+            </span>
+            <span class="check-btn">
+                Май
+                <input type="hidden" name="month-5" value="0">
+            </span>
+            <span class="check-btn">
+                Июнь
+                <input type="hidden" name="month-6" value="0">
+            </span>
+            <span class="check-btn">
+                Июль
+                <input type="hidden" name="month-7" value="0">
+            </span>
+            <span class="check-btn">
+                Август
+                <input type="hidden" name="month-8" value="0">
+            </span>
+            <span class="check-btn">
+                Сентябрь
+                <input type="hidden" name="month-9" value="0">
+            </span>
+            <span class="check-btn">
+                Октябрь
+                <input type="hidden" name="month-10" value="0">
+            </span>
+            <span class="check-btn">
+                Ноябрь
+                <input type="hidden" name="month-11" value="0">
+            </span>
+            <span class="check-btn">
+                Декабрь
+                <input type="hidden" name="month-12" value="0">
+            </span>
+        </div>
+        <div class="col-sm-6">
+            <h2 class="green">Типы конструкций</h2>
+            <span class="check-btn">
+                Пакеты
+                <input type="hidden" name="month-12" value="0">
+            </span>
+            <br />
+            <span class="check-btn">
+                Щиты 3х6
+                <input type="hidden" name="month-12" value="0">
+            </span>
+            <span class="check-btn">
+                Ситиборды
+                <input type="hidden" name="month-12" value="0">
+            </span>
+            <br />
+            <span class="check-btn">
+                Большие форматы
+                <input type="hidden" name="month-12" value="0">
+            </span>
+            <span class="check-btn">
+                Малые форматы
+                <input type="hidden" name="month-12" value="0">
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <h2 class="green">Дополнительно</h2>
+            <div class="check-group">
+                Только щиты с подстветкой
+                <div class="check"></div>
+                <input type="hidden" name="isLight" value="0">
+            </div>
+            <div class="check-group">
+                Только поверхности с картами
+                <div class="check"></div>
+                <input type="hidden" name="isMap" value="0">
+            </div>
+            <div class="check-group">
+                Исключить призмы и скроллеры
+                <div class="check"killall></div>
+                <input type="hidden" name="isScroll" value="0">
+            </div>
+            <br />
+            <br />
+            <input type="text" placeholder="ID конструкции">
+        </div>
+        <div class="col-sm-3"></div>
+        <div class="col-sm-5">
+            <div class="slider-group">
+                GRP
+                <span id="grp-amount"></span>
+                <span  id="grp"></span>
+            </div>
+            <div class="slider-group">
+                OTS
+                <span id="ots-amount"></span>
+                <span  id="ots"></span>
+            </div>
+            <div class="slider-group">
+                Стоимость
+                <span id="price-amount"></span>
+                <span  id="price"></span>
+            </div>
+            <br/>
+            <br/>
+            <div class="input-group" style="padding-left: 20px">
+                Сторона
+                А
+                <input type="text" class="mini">
+                В
+                <input type="text" class="mini">
+            </div>
+            <div style="text-align: right">
+                <span class="btn">Найти</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}

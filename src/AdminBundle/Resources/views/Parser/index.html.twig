@@ -1,0 +1,29 @@
+{% extends "AdminBundle::layout.html.twig" %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb well">
+        <li>Массовое добавление баннерных мест</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="well">
+        <form method="post">
+            <div class="form-group">
+                <label class="control-label required" for="appbundle_banner_url">
+                    Ссылка
+                </label>
+                <input type="text" id="appbundle_banner_url" name="appbundle_banner[url]" required="required" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label required" for="appbundle_banner_url">
+                    Файл (JSON или XML)
+                </label>
+                <input type="file" id="appbundle_banner_file" name="appbundle_banner[file]" required="required" class="form-control">
+            </div>
+            <div class="form-group">
+                <button type="submit" id="appbundle_banner_submit" name="appbundle_banner[submit]" class="btn btn-primary">Сохранить</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

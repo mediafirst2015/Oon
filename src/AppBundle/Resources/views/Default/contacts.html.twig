@@ -1,0 +1,57 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+    <h2 class="green">Контакты</h2>
+    <br />
+    <br />
+    <table style="width: 100%">
+        <tr>
+            <td style="width: 800px">
+                <img src="{{ asset('bundles/app/assets/contacts-map.png') }}" style="width: 800px;box-shadow: 0 1px 16px 0 rgba(1, 1, 1, 0.51); border-radius: 10px">
+            </td>
+            <td style="padding-left: 20px; vertical-align: top">
+                <p style="color:  #737272;font-size: 24px;">
+                    <span  class="green">Москва,</span><br />
+                    Сыромятнический 4-й пер., 1/8, стр. 6, под. 6, эт. 2
+                </p>
+                <br />
+                <br />
+                <table style="width: 100%; color:  #737272;">
+                    <tr>
+                        <td>
+                            <img src="{{ asset('bundles/app/assets/contacts-circle-1.png') }}"> Чкаловская..........................................
+                        </td>
+                        <td>
+                            330 м
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="{{ asset('bundles/app/assets/contacts-circle-2.png') }}"> Курская.................................................
+                        </td>
+                        <td>
+                            350 м
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="{{ asset('bundles/app/assets/contacts-circle-3.png') }}"> Курская.................................................
+                        </td>
+                        <td>
+                            450 м
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <br />
+                <p style="color:  #737272;font-size: 24px;">
+                    info@mediafirst.ru <br />
+                    ryabova.t@mediafirst.ru <br />
+                    8 495 987 35 95
+                </p>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <br/>
+{% endblock %}

@@ -1,0 +1,97 @@
+{#{% extends "TwigBundle::layout.html.twig" %}#}
+<html>
+<head>
+    {% block head %}
+    {% block javascripts %}
+    <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+        <script src="{{ asset('bundles/app/dw_tooltips/js/dw_tooltip_c.js') }}" type="text/javascript"></script>
+
+        <script src="{{ asset('bundles/app/javascripts/jquery-1.11.1.js') }}"></script>
+        <script src="//api-maps.yandex.ru/2.1/?load=package.full&lang=ru-RU&ns=ym" type="text/javascript"></script>
+        <script type="text/javascript" src="{{ asset('bundles/app/fancyBox/source/jquery.fancybox.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/app/jqueryui/jquery-ui.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/app/javascripts/script.js') }}"></script>
+
+    {% endblock %}
+    {% block stylesheets %}
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/jqueryui/jquery-ui.min.css') }}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/jqueryui/jquery-ui.theme.css') }}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/fancyBox/source/jquery.fancybox.css') }}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/common2.css') }}" media="screen" />
+        <style>
+
+        </style>
+    {% endblock %}
+
+    {% block title %}
+        <title>Карта ООН</title>
+    {% endblock %}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="flash-message">
+            <em>Notice</em>: {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {% block content_header %}
+        <header>
+            <table class="top">
+                <tr>
+                    <td style="width: 250px">
+                        <a href="{{ path('homepage') }}"><img src="{{ asset('bundles/app/design/logo.png') }}" id="logo" style="width: 200px"></a>
+                    </td>
+                    <td style="width: 375px; vertical-align: middle">
+                        <img src="{{ asset('bundles/app/design/marker.png') }}" style="width: 20px;  margin-bottom: -11px;">
+                        <input type="text" placeholder="Ваш регион">
+                    <td style="width: 399px">
+                        <table style="width: 100%">
+                            <tr>
+                                <td><span class="icon1"></span></td>
+                                <td>8 495 987 35 95</td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon2"></span></td>
+                                <td>ryabova.t@mediafirst.ru</td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="icon3"></span></td>
+                                <td><a href="http://www.mediafirst.ru">www.mediafirst.ru</a></td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon4"></span></td>
+                            </tr>
+                        </table>
+                        <br />
+                        <br />
+                    </td>
+                </tr>
+            </table>
+        </header>
+    {% endblock %}
+    <div class="block">
+        <img src="{{ asset('bundles/app/design/bg.png') }}" id="logo" style="width: 984px">
+        <ul class="menu">
+            <li>О проекте</li>
+            <li>Производство</li>
+            <li>Сотрудничество</li>
+            <li>Аналитика</li>
+            <li>Контакты</li>
+        </ul>
+    </div>
+    {% block content %}{% endblock %}
+    {#</div>#}
+{% endblock %}
+
+{#{% if not is_granted('ROLE_USER') %}#}
+{#{% include 'AppBundle:Auth:login.html.twig' %}#}
+{#{% endif %}#}
+</body>
+</html>

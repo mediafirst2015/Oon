@@ -1,0 +1,26 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+        <div>
+            <div style="padding: 20px">
+                <h1>{{ page.title | raw}}</h1>
+                {{ page.body | raw }}
+            </div>
+        </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .container{
+            min-width: 800px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+{% endblock %}

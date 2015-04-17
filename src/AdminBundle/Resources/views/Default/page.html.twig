@@ -1,0 +1,11 @@
+{% extends "AdminBundle::layout.html.twig" %}
+
+{% block breadcrumb %}
+    <div class="well panel-title">{{ page.title | raw }}</div>
+{% endblock %}
+
+{% block content %}
+    <div class="well">
+        {{ page.body | raw }}
+    </div>
+{% endblock %}

@@ -1,0 +1,73 @@
+<h2>{{ object.title }}</h2>
+<a href="{{ object.img }}" class="fancybox"><img src="{{ object.img }}" class="thumbnail" style="max-width: 500px"></a>
+<table>
+    <tr>
+        <td class="label"><label>Стоимость</label></td>
+        <td class="value">{{ object.price }} р.</td>
+    </tr>
+    <tr>
+        <td class="label"><label>Сторона</label></td>
+        <td class="value">{{ object.side }}</td>
+    </tr>
+    <tr>
+        <td class="label"><label>Формат</label></td>
+        <td class="value">{{ object.format }}</td>
+    </tr>
+    <tr>
+        <td class="label"><label>Тип</label></td>
+        <td class="value">{{ object.type }}</td>
+    </tr>
+    <tr>
+        <td class="label"><label>Свет</label></td>
+        <td class="value">{{ object.grp ? 'да' : 'нет' }}</td>
+    </tr>
+    <tr>
+        <td class="label"><label>GRP</label></td>
+        <td class="value">{{ object.grp }}</td>
+    </tr>
+    <tr>
+        <td class="label"><label>OTS</label></td>
+        <td class="value">{{ object.ots }}</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+       <td colspan="2">
+            <table class="months">
+                <tr>
+                    <th class="tdmonth">Янв</th>
+                    <th class="tdmonth">Фев</th>
+                    <th class="tdmonth">Мар</th>
+                    <th class="tdmonth">Апр</th>
+                    <th class="tdmonth">Май</th>
+                    <th class="tdmonth">Июн</th>
+                    <th class="tdmonth">Июл</th>
+                    <th class="tdmonth">Авг</th>
+                    <th class="tdmonth">Сен</th>
+                    <th class="tdmonth">Окт</th>
+                    <th class="tdmonth">Ноя</th>
+                    <th class="tdmonth">Дек</th>
+                </tr>
+                <tr>
+                    <td class="month active">&nbsp;</td>
+                    <td class="month active">&nbsp;</td>
+                    <td class="month active">&nbsp;</td>
+                    <td class="month active">&nbsp;</td>
+                    <td class="month active">&nbsp;</td>
+                    <td class="month active">&nbsp;</td>
+                    <td class="month active">&nbsp;</td>
+                    <td class="month active">&nbsp;</td>
+                    <td class="month active">&nbsp;</td>
+                    <td class="month active">&nbsp;</td>
+                    <td class="month active">&nbsp;</td>
+                    <td class="month active">&nbsp;</td>
+                </tr>
+            </table>
+       </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><a href="{{ path('basket_add',{'itemId' : object.id }) }}">Добавить в заказ</a></td>
+    </tr>
+</table>
