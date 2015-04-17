@@ -24,20 +24,20 @@ class BannerRepository extends EntityRepository
 
             $format = null;
             if ($formatS != null && $formatS != 0){
-                $format .=" b.type='small'  ";
+                $format .=" b.format='small'  ";
             }
             if ($formatM != null && $formatM != 0){
-                $format .= ($format == null ? '' : ' OR ')." b.type='3x6'  ";
+                $format .= ($format == null ? '' : ' OR ')." b.format='3x6'  ";
             }
             if ($formatL != null && $formatL != 0){
-                $format .= ($format == null ? '' : ' OR ')." b.type='big'  ";
+                $format .= ($format == null ? '' : ' OR ')." b.format='big'  ";
             }
             if ($formatSB != null && $formatSB != 0){
-                $format .= ($format == null ? '' : ' OR ')." b.type='cityboard'  ";
+                $format .= ($format == null ? '' : ' OR ')." b.format='cityboard'  ";
             }
 
             if ($format != null ){
-                $qb->andWhere("AND ($format)");
+                $qb->andWhere("( $format )");
             }
             if ($type != null ){
                 $qb->andWhere("b.type = '$type'");
