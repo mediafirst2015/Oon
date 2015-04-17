@@ -1,0 +1,90 @@
+<table class="table">
+    <tr>
+        <th>№</th>
+        <th>Город</th>
+        <th>Округ</th>
+        <th>Адрес</th>
+        <th>Гид</th>
+        <th>Период</th>
+        <th>Сторона</th>
+        <th>Формат</th>
+        <th>Тип</th>
+        <th>Свет</th>
+        <th>GRP</th>
+        <th>OTS</th>
+        <th>Стоимость</th>
+        <th>Налог</th>
+        <th>Фото</th>
+        <th>Карта</th>
+        <th>Статус</th>
+        <th></th>
+    </tr>
+    {% for k,l in lists %}
+        <tr>
+            <td>{{ k+1 }}</td>
+            <td>Москва</td>
+            <td>{{ l.area }}</td>
+            <td>{{ l.adrs }}</td>
+            <td>{{ l.id }}</td>
+            <td>Май</td>
+            <td>{{ l.side }}</td>
+            <td>{{ l.format }}</td>
+            <td>{{ l.type }}</td>
+            <td>{{ l.light == 1 ? 'да' : 'нет' }}</td>
+            <td>{{ l.grp }}</td>
+            <td>{{ l.ots }}</td>
+            <td>{{ l.price }}</td>
+            <td>{{ l.price/0.20 }}</td>
+            <td style="text-align: center">
+                <a href="{{ l.img }}" class="fancybox" data-fancybox-group="gallery">
+                    <img src="{{ asset('bundles/app/images/img-icon.png') }}" class="icon">
+                </a>
+            </td>
+            <td style="text-align: center"><img src="{{ asset('bundles/app/images/adrs-icon.png') }}" class="icon"></td>
+            <td>Свободно</td>
+            <td style="text-align: center">
+                <a href="{{ path('basket_remove', { 'itemId' : l.id } ) }}">
+                    <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon">
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    <tr class="bottom-line">
+        <td colspan="5" class="itog">Средняя стоимость размещения за поверхность:</td>
+        <td style="text-align: center">{{ price }}&nbsp;р.</td>
+        <td colspan="4" style="background: #FFF; border: 0"></td>
+        <td style="background: #FFF; border: 0" colspan="2">
+            <b class="green">ИТОГО:</b>
+        </td>
+        <td>
+            <b>{{ fullPrice }}&nbsp;р.</b>
+        </td>
+        <td>
+            <b>{{ fullPrice }}&nbsp;р.</b>
+        </td>
+        <td></td>
+        <td colspan="3" style="text-align: right; color: #CC0000">
+            <a href="#" style="color: #CC0000">Обнулить заказ</a>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5" class="itog">Процентное соотношение сторон A/B в программе:</td>
+        <td style="text-align: center">{{ side }}</td>
+    </tr>
+    <tr>
+        <td colspan="5" class="itog">Средний показатель GRP за программу:</td>
+        <td style="text-align: center">{{ grp }}</td>
+    </tr>
+    <tr>
+        <td colspan="5" class="itog">Средний показатель OTS за программу:</td>
+        <td style="text-align: center">{{ ots }}</td>
+    </tr>
+    <tr>
+        <td colspan="5" class="itog">CRT за программу:</td>
+        <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+        <td colspan="5" class="itog">Количество поверхностей:</td>
+        <td style="text-align: center">{{ count }}</td>
+    </tr>
+</table>

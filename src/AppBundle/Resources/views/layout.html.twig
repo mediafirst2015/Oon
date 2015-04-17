@@ -57,48 +57,6 @@
                         $(this).children('input[type=hidden]').val(0);
                     }
                 });
-                $( "#grp" ).slider({
-                    range: true,
-                    min: 0,
-                    max: 300,
-                    values: [ 0, 300 ],
-                    slide: function( event, ui ) {
-                        $( "#grp-amount" ).html( "" + ui.values[ 0 ]/100 + " - " + ui.values[ 1 ]/100 );
-                        $( "#grp-min" ).val(ui.values[ 0 ]/100);
-                        $( "#grp-max" ).val(ui.values[ 1 ]/100);
-                    }
-                });
-                $( "#grp-amount" ).html( "" + $( "#grp" ).slider( "values", 0 )/100 +
-                " - " + $( "#grp" ).slider( "values", 1 )/100 );
-
-                $( "#ots" ).slider({
-                    range: true,
-                    min: 0,
-                    max: 500,
-                    values: [ 0, 500 ],
-                    slide: function( event, ui ) {
-                        $( "#ots-amount" ).html( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-                        $( "#ots-min" ).val(ui.values[ 0 ]);
-                        $( "#ots-max" ).val(ui.values[ 1 ]);
-                    }
-                });
-                $( "#ots-amount" ).html( "" + $( "#ots" ).slider( "values", 0 ) +
-                " - " + $( "#ots" ).slider( "values", 1 ) );
-
-                $( "#price" ).slider({
-                    range: true,
-                    min: 0,
-                    max: 1000,
-                    values: [ 0, 1000 ],
-                    slide: function( event, ui ) {
-                        $( "#price-amount" ).html( "" + ui.values[ 0 ] + " т.р. - " + ui.values[ 1 ] + ' т.р.' );
-                        $( "#price-min" ).val(ui.values[ 0 ]);
-                        $( "#price-max" ).val(ui.values[ 1 ]);
-                    }
-                });
-                $( "#price-amount" ).html( "" + $( "#price" ).slider( "values", 0 ) +
-                " т.р. - " + $( "#price" ).slider( "values", 1 ) + ' т.р.' );
-
             });
         </script>
     {% endblock %}

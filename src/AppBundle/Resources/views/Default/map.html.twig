@@ -45,29 +45,29 @@
                         </select>
                         <div class="check-group">
                             Свет
-                            <div class="check"></div>
-                            <input type="hidden" name="light" value="0">
+                            <div class="check {{ params.light == 1 ? 'active' : '' }}"></div>
+                            <input type="hidden" name="light" value="{{ params.light == 1 ? 1 : 0 }}">
                         </div>
                         <div class="slider-group">
                             <span class="caption">GRP</span>
                             <span id="grp-amount" class="val"></span>
                             <span class="slider" id="grp"></span>
-                            <input type="hidden" name="grp-min" id="grp-min" value="0">
-                            <input type="hidden" name="grp-max" id="grp-max" value="3">
+                            <input type="hidden" name="grp-min" id="grp-min" value="{{ params.grpMin != null ? params.grpMin : 0 }}">
+                            <input type="hidden" name="grp-max" id="grp-max" value="{{ params.grpMax != null ? params.grpMax : 3 }}">
                         </div>
                         <div class="slider-group">
                             <span class="caption">OTS</span>
                             <span id="ots-amount" class="val"></span>
                             <span class="slider"  id="ots"></span>
-                            <input type="hidden" name="ots-min" id="ots-min" value="0">
-                            <input type="hidden" name="ots-max" id="ots-max" value="500">
+                            <input type="hidden" name="ots-min" id="ots-min" value="{{ params.otsMin != null ? params.otsMin : 0 }}">
+                            <input type="hidden" name="ots-max" id="ots-max" value="{{ params.otsMax != null ? params.otsMax : 500 }}">
                         </div>
                         <div class="slider-group">
                             <span class="caption">Стоимость</span>
                             <span id="price-amount" class="val"></span>
                             <span class="slider" id="price"></span>
-                            <input type="hidden" name="price-min" id="price-min" value="0">
-                            <input type="hidden" name="price-max" id="price-max" value="1000">
+                            <input type="hidden" name="price-min" id="price-min" value="{{ params.priceMin != null ? params.priceMin : 0 }}">
+                            <input type="hidden" name="price-max" id="price-max" value="{{ params.priceMax != null ? params.priceMax : 1000 }}">
                         </div>
                         <br/>
                         <br/>
@@ -91,6 +91,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
+            <div id="basket-table">
             <table class="table">
                 <tr>
                     <th>№</th>
@@ -157,7 +158,7 @@
                     </td>
                     <td></td>
                     <td colspan="3" style="text-align: right; color: #CC0000">
-                        <a href="#" style="color: #CC0000">Обнулить заказ</a>
+                        <a href="{{ path('basket_clear') }}" style="color: #CC0000">Обнулить заказ</a>
                     </td>
                 </tr>
                 <tr>
@@ -181,6 +182,7 @@
                     <td style="text-align: center">{{ count }}</td>
                 </tr>
             </table>
+            </div>
             <br />
             <br />
             <div style="text-align: right">
@@ -213,10 +215,14 @@
                 map = new ym.Map('map', {
                 {% if thisBanner != null %}
                     center: [{{ thisBanner.latitude }}, {{ thisBanner.longitude }}],
+                    zoom: 15,
+                {% elseif pos.x != null and pos.y != null %}
+                    center: [{{ pos.x }}, {{ pos.y }}],
+                    zoom: 12,
                 {% else %}
                     center: [55.755381, 37.619044],
+                    zoom: 9,
                 {% endif %}
-                    zoom: 13,
                     controls: ['typeSelector','zoomControl']
                 });
                 var filter =
@@ -327,20 +333,7 @@
                 parentId: '7700000000000',
                 select: function(obj){
                     $('#street').val(obj.name);
-//                    $('#street').refresh();
-                },
-                {#close: function(){#}
-                    {#$.ajax({#}
-                        {#url: '{{ path('get_coords') }}',#}
-                        {#processData: false,#}
-                        {#method: 'POST',#}
-                        {#data: 'street='+$('#street').val(),#}
-                        {#success: function(msg){#}
-                            {#coords = msg.data;#}
-                            {#map.setCenter(coords);#}
-                        {#}#}
-                    {#});#}
-                {#}#}
+                }
             });
 
             $('body').on('click','.addbasket', function(){
@@ -348,10 +341,52 @@
                     url: Routing.generate('basket_add', {'itemId': $(this).attr('data-id')}),
                     method: 'POST',
                     success: function(msg){
-
+                        $('#basket-table').html(msg);
                     }
                 });
             });
+
+            $( "#grp" ).slider({
+                range: true,
+                min: 0,
+                max: 300,
+                values: [ {{ params.grpMin != null ? params.grpMin*100 : 0 }}, {{ params.grpMax != null ? params.grpMax*100 : 300 }} ],
+                slide: function( event, ui ) {
+                    $( "#grp-amount" ).html( "" + ui.values[ 0 ]/100 + " - " + ui.values[ 1 ]/100 );
+                    $( "#grp-min" ).val(ui.values[ 0 ]/100);
+                    $( "#grp-max" ).val(ui.values[ 1 ]/100);
+                }
+            });
+            $( "#grp-amount" ).html( "" + $( "#grp" ).slider( "values", 0 )/100 +
+            " - " + $( "#grp" ).slider( "values", 1 )/100 );
+
+            $( "#ots" ).slider({
+                range: true,
+                min: 0,
+                max: 500,
+                values: [ {{ params.otsMin != null ? params.otsMin : 0 }}, {{ params.otsMax != null ? params.otsMax : 500 }} ],
+                slide: function( event, ui ) {
+                    $( "#ots-amount" ).html( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                    $( "#ots-min" ).val(ui.values[ 0 ]);
+                    $( "#ots-max" ).val(ui.values[ 1 ]);
+                }
+            });
+            $( "#ots-amount" ).html( "" + $( "#ots" ).slider( "values", 0 ) +
+            " - " + $( "#ots" ).slider( "values", 1 ) );
+
+            $( "#price" ).slider({
+                range: true,
+                min: 0,
+                max: 1000,
+                values: [ {{ params.priceMin != null ? params.priceMin : 0 }}, {{ params.priceMax != null ? params.priceMax : 1000 }} ],
+                slide: function( event, ui ) {
+                    $( "#price-amount" ).html( "" + ui.values[ 0 ] + " т.р. - " + ui.values[ 1 ] + ' т.р.' );
+                    $( "#price-min" ).val(ui.values[ 0 ]);
+                    $( "#price-max" ).val(ui.values[ 1 ]);
+                }
+            });
+            $( "#price-amount" ).html( "" + $( "#price" ).slider( "values", 0 ) +
+            " т.р. - " + $( "#price" ).slider( "values", 1 ) + ' т.р.' );
 
         });
     </script>
