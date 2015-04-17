@@ -39,7 +39,7 @@ assetic:
         cssrewrite: ~
         less:
             node: /usr/bin/node
-            node_paths: [%rootPath%node_modules]
+            node_paths: [%root_path%node_modules]
             apply_to: "\.less$"
 
 
