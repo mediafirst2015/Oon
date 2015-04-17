@@ -36,7 +36,11 @@ class MapController extends Controller
         if ($area == 'null'){
             $area = null;
         }
-        $format = $request->request->get('format');
+        $formatS = $request->request->get('formatS');
+        $formatM = $request->request->get('formatM');
+        $formatL = $request->request->get('formatL');
+        $formatSB = $request->request->get('formatSB');
+
         $type = $request->request->get('type');
         $light = $request->request->get('light');
         if ($light == 'on'){
@@ -56,7 +60,7 @@ class MapController extends Controller
         $id = $request->request->get('id');
 
 
-        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->filter($id,$street,$area,$format,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax);
+        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->filter($id,$street,$area,$formatS,$formatM,$formatL,$formatSB,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax);
         $objects = array();
         if ($banners != null){
             foreach ($banners as $banner){

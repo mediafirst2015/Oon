@@ -80,7 +80,10 @@ class DefaultController extends Controller
             'priceMin' => $request->query->get('price-min'),
             'priceMax' => $request->query->get('price-max'),
             'area' => $request->query->get('area'),
-            'format' => $request->query->get('format'),
+            'formatS' => $request->query->get('formatS'),
+            'formatM' => $request->query->get('formatM'),
+            'formatL' => $request->query->get('formatL'),
+            'formatSB' => $request->query->get('formatSB'),
             'light' => $request->query->get('light'),
             'street' => $request->query->get('street'),
         );

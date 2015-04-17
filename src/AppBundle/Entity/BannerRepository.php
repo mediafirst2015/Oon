@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityRepository;
 
 class BannerRepository extends EntityRepository
 {
-    public function filter($id, $street, $area,$format,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax)
+    public function filter($id, $street, $area,$formatS,$formatM,$formatL,$formatSB,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax)
     {
 
         $qb = $this->_em->createQueryBuilder();
@@ -21,8 +21,23 @@ class BannerRepository extends EntityRepository
             if ($street != null ){
                 $qb->andWhere("b.adrs LIKE '%$street%'");
             }
+
+            $format = null;
+            if ($formatS != null){
+                $format .=" b.type='small'  ";
+            }
+            if ($formatM != null){
+                $format .= ($format == null ? '' : ' OR ')." b.type='3x6'  ";
+            }
+            if ($formatL != null){
+                $format .= ($format == null ? '' : ' OR ')." b.type='big'  ";
+            }
+            if ($formatL != null){
+                $format .= ($format == null ? '' : ' OR ')." b.type='cityboard'  ";
+            }
+
             if ($format != null ){
-                $qb->andWhere("b.format = '$format'");
+                $qb->andWhere("AND ($format)");
             }
             if ($type != null ){
                 $qb->andWhere("b.type = '$type'");

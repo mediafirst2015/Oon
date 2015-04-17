@@ -28,21 +28,42 @@
                             <option value="CАО" {{ params.area == 'CАО' ? 'selected="selected"' }}>CАО</option>
                         </select>
                         <br />
-                        <select name="format">
-                            <option value="" disabled selected>Формат</option>
-                            <option value="" selected>Все форматы</option>
-                            <option value="3x6" {{ params.area == '3x6' ? 'selected="selected"' }}>3х6</option>
-                            <option value="small" {{ params.area == 'small' ? 'selected="selected"' }}>Малые форматы</option>
-                            <option value="big" {{ params.area == 'big' ? 'selected="selected"' }}>Большие форматы</option>
-                            <option value="citybord" {{ params.area == 'citybord' ? 'selected="selected"' }}>Ситиборды</option>
-                        </select>
-                        <br />
-                        <select>
-                            <option value="" disabled selected>Тип</option>
-                            <option value="" selected>Все типы</option>
-                            <option value="1">3х6</option>
-                            <option value="2">Малые</option>
-                        </select>
+                        {#<select name="format">#}
+                            {#<option value="" disabled selected>Формат</option>#}
+                            {#<option value="" selected>Все форматы</option>#}
+                            {#<option value="3x6" {{ params.format == '3x6' ? 'selected="selected"' }}>3х6</option>#}
+                            {#<option value="small" {{ params.format == 'small' ? 'selected="selected"' }}>Малые форматы</option>#}
+                            {#<option value="big" {{ params.format == 'big' ? 'selected="selected"' }}>Большие форматы</option>#}
+                            {#<option value="citybord" {{ params.format == 'citybord' ? 'selected="selected"' }}>Ситиборды</option>#}
+                        {#</select>#}
+                        {#<br />#}
+                        {#<select>#}
+                            {#<option value="" disabled selected>Тип</option>#}
+                            {#<option value="" selected>Все типы</option>#}
+                            {#<option value="1">3х6</option>#}
+                            {#<option value="2">Малые</option>#}
+                        {#</select>#}
+                        <div class="check-group">
+                            Формат 3х6
+                            <div class="check {{ params.formatM == 1 ? 'active' : '' }}"></div>
+                            <input type="hidden" name="formatM" value="{{ params.formatM == 1 ? 1 : 0 }}">
+                        </div>
+                        <div class="check-group">
+                            Малые форматы
+                            <div class="check {{ params.formatS == 1 ? 'active' : '' }}"></div>
+                            <input type="hidden" name="formatS" value="{{ params.formatS == 1 ? 1 : 0 }}">
+                        </div>
+                        <div class="check-group">
+                            Большие форматы
+                            <div class="check {{ params.formatL == 1 ? 'active' : '' }}"></div>
+                            <input type="hidden" name="formatL" value="{{ params.formatL == 1 ? 1 : 0 }}">
+                        </div>
+                        <div class="check-group">
+                            Ситиборды
+                            <div class="check {{ params.formatSB == 1 ? 'active' : '' }}"></div>
+                            <input type="hidden" name="formatSB" value="{{ params.formatSB == 1 ? 1 : 0 }}">
+                        </div>
+
                         <div class="check-group">
                             Свет
                             <div class="check {{ params.light == 1 ? 'active' : '' }}"></div>
@@ -229,7 +250,10 @@
                         'id={{ id }}'+
                         '&street={{ params.street }}'+
                         '&area={{ params.area }}'+
-                        '&format={{ params.format }}'+
+                        '&formatS={{ params.formatS }}'+
+                        '&formatM={{ params.formatM }}'+
+                        '&formatL={{ params.formatL }}'+
+                        '&formatSB={{ params.formatSB }}'+
                         '&type='+
                         '&light='+
                         '&grpMin={{ params.grpMin }}'+
