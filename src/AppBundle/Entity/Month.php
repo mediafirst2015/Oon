@@ -26,8 +26,7 @@ class Month extends BaseEntity
     protected $date;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=2)
-     * @Assert\NotBlank( message = "поле стоимость обязательно для заполнения" )
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     protected $price;
 
@@ -36,21 +35,6 @@ class Month extends BaseEntity
      */
     protected $status = 1;
 
-    /**
-     * @return mixed
-     */
-    public function getMap()
-    {
-        return $this->map;
-    }
-
-    /**
-     * @param mixed $map
-     */
-    public function setMap($map)
-    {
-        $this->map = $map;
-    }
 
     /**
      * @return mixed

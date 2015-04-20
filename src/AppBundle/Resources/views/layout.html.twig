@@ -57,6 +57,18 @@
                         $(this).children('input[type=hidden]').val(0);
                     }
                 });
+
+                function orderRefresh(){
+                    $.ajax({
+                        url: Routing.generate('order_price'),
+                        method: 'GET',
+                        success: function(msg){
+                            $('#order-btn').html('Заказ на сумму '+msg+' р.');
+                            $('#order-btn').css('display','block');
+                        }
+                    });
+                }
+                orderRefresh();
             });
         </script>
     {% endblock %}
@@ -109,7 +121,9 @@
                         <a href="{{ path('hot') }}"><span>Горячие предложения</span></a>
                     </div>
                 </span>
-
+                <a href="{{ path('map') }}#basket">
+                    <div class="btn-pink" id="order-btn" style="float: right; margin-top: -10px; display: none;"></div>
+                </a>
             </div>
             {% block content %}{% endblock %}
         </div>

@@ -67,6 +67,32 @@ h1.pink {
   text-decoration: none;
   color: #ffffff;
 }
+.btn-pink {
+  background: #e7208b;
+  background-image: -webkit-linear-gradient(top, #e7208b, #88004b);
+  background-image: -moz-linear-gradient(top, #e7208b, #88004b);
+  background-image: -ms-linear-gradient(top, #e7208b, #88004b);
+  background-image: -o-linear-gradient(top, #e7208b, #88004b);
+  background-image: linear-gradient(to bottom, #e7208b, #88004b);
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn-pink:hover {
+  background: #53b853;
+  background-image: -webkit-linear-gradient(top, #d6177e, #6f003d);
+  background-image: -moz-linear-gradient(top, #d6177e, #6f003d);
+  background-image: -ms-linear-gradient(top, #d6177e, #6f003d);
+  background-image: -o-linear-gradient(top, #d6177e, #6f003d);
+  background-image: linear-gradient(to bottom, #d6177e, #6f003d);
+  text-decoration: none;
+  color: #ffffff;
+}
 .top-menu {
   margin: 20px 0;
 }
@@ -408,4 +434,27 @@ input.mini {
 }
 .ymaps-2-1-23-input__control {
   box-shadow: none;
+}
+.addBasket {
+  height: 25px;
+  width: 25px;
+  box-shadow: none;
+}
+.month-table {
+  width: 100%;
+}
+.month-table tr td {
+  vertical-align: middle;
+  line-height: 25px;
+  width: 14px;
+}
+.icheck {
+  display: inline-block;
+  margin-top: -45px;
+  z-index: 999;
+  position: absolute;
+  background: #FFF;
+  padding: 10px 20px;
+  opacity: 0.8;
+  border-radius: 10px;
 }

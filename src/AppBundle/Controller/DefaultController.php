@@ -143,6 +143,7 @@ class DefaultController extends Controller
                 }
                 $price += $val['price'];
             }
+            $lists = $basket;
             $grp = $grp / $i;
             $ots = $ots / $i;
             $fullprice = $price;

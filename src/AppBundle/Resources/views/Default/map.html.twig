@@ -105,12 +105,21 @@
         <div class="col-lg-9">
             <div id="submap">
                 <div id="map"></div>
+                <div class="icheck">
+                    Показать <b>Все</b>
+                    {% if app.request.query.all.my is defined and app.request.query.all.my == 1 %}
+                        <a href="?my=0"><img src="{{ asset('bundles/app/images/icheck-act.png') }}" style="margin-top: -5px;"></a>
+                    {% else %}
+                            <a href="?my=1"><img src="{{ asset('bundles/app/images/icheck.png') }}" style="margin-top: -5px;"></a>
+                    {% endif %}
+                    <b>Выбранные</b>
+                </div>
             </div>
             <br />
             <br />
         </div>
     </div>
-    <div class="row">
+    <div class="row" id="basket">
         <div class="col-sm-12">
             <div id="basket-table">
             <table class="table">
@@ -136,12 +145,12 @@
                 </tr>
                 {% for k,l in lists %}
                     <tr>
-                        <td>{{ k+1 }}</td>
+                        <td>{{ k }}</td>
                         <td>Москва</td>
                         <td>{{ l.area }}</td>
                         <td>{{ l.adrs }}</td>
                         <td>{{ l.id }}</td>
-                        <td>Май</td>
+                        <td>{{ l.monthStr }}</td>
                         <td>{{ l.side }}</td>
                         <td>{{ l.format }}</td>
                         <td>{{ l.type }}</td>
@@ -158,7 +167,7 @@
                         <td style="text-align: center"><img src="{{ asset('bundles/app/images/adrs-icon.png') }}" class="icon"></td>
                         <td>Свободно</td>
                         <td style="text-align: center">
-                            <a href="{{ path('basket_remove', { 'itemId' : l.id } ) }}">
+                            <a href="{{ path('basket_remove', { 'itemId' : k } ) }}">
                                 <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon">
                             </a>
                         </td>
@@ -266,16 +275,23 @@
             }
 
             function getObjects(filter){
+                {% if app.request.query.all.my is defined and app.request.query.all.my == 1 %}
+                    var url = '{{ path('get_my_objects') }}';
+                {% else %}
+                    var url = '{{ path('get_objects') }}';
+                {% endif %}
                 $.ajax({
-                    url: '{{ path('get_objects') }}',
+                    url: url,
                     processData: false,
                     method: 'POST',
                     data: filter,
                     success: function(msg){
                         objects = msg.data;
                         var placemarks = [];
-                        for (var i = 0, l = objects.length; i < l; i++) {
-                            placemarks[i] = new ym.GeoObject({
+                        var j = 0;
+                        for (var i in objects) {
+                            console.log(objects[i]);
+                            placemarks[j] = new ym.GeoObject({
                                 geometry: {
                                     type: "Point",
                                     coordinates: objects[i].coords //Массив
@@ -290,6 +306,7 @@
                                 iconColor: '#016b04'
 
                             });
+                            j ++ ;
                         }
                         var clusterer = new ym.Clusterer({
                             preset: 'islands#darkGreenClusterIcons'
@@ -360,12 +377,14 @@
                 }
             });
 
-            $('body').on('click','.addbasket', function(){
+            $('#map').on('click','input.addBasket', function(){
+                console.log('jk');
                 $.ajax({
-                    url: Routing.generate('basket_add', {'itemId': $(this).attr('data-id')}),
+                    url: Routing.generate('basket_add', {'itemId': $(this).attr('data-id'), 'month': $(this).attr('data-month')}),
                     method: 'POST',
                     success: function(msg){
                         $('#basket-table').html(msg);
+                        orderRefresh();
                     }
                 });
             });

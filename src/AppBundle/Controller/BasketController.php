@@ -25,10 +25,32 @@ class BasketController extends Controller
         return array('lists' => $lists);
     }
 
+
     /**
-     * @Route("/basket-add/{itemId}", name="basket_add", options={"expose" = true})
+     * @Route("/order-price", name="order_price", options={"expose" = true})
      */
-    public function addAction(Request $request, $itemId){
+    public function orderPriceAction(Request $request){
+        $session = $request->getSession();
+        $fullprice = 0;
+        $basket = $session->get('lists');
+        if ($basket){
+            foreach ($basket as $key=>$val){
+                $fullprice += $val['price'];
+            }
+        }
+        return new Response($fullprice);
+    }
+
+
+    /**
+     * @Route("/basket-add/{itemId}/{month}/{year}", name="basket_add", options={"expose" = true}, defaults={"year" = null})
+     */
+    public function addAction(Request $request, $itemId, $month, $year = null){
+        $nowDate = new \DateTime();
+        if ($year == null){
+            $year = $nowDate->format('Y');
+        }
+
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
         $lists = $session->get('lists');
@@ -38,16 +60,23 @@ class BasketController extends Controller
         }else{
             $banner = $em->getRepository('AppBundle:Banner')->findOneById($itemId);
             if ($banner){
-                $lists[$itemId] = array(
+                $lists[$itemId.'-'.$month.'-'.$year] = array(
+                    'id' => $banner->getId(),
                     'area' => $banner->getArea(),
                     'adrs' => $banner->getAdrs(),
                     'img'  => $banner->getImg(),
                     'price'=> $banner->getPrice(),
+                    'light'=> $banner->getLight(),
                     'longitude'=>$banner->getLongitude(),
                     'latitude'=>$banner->getLatitude(),
                     'side'=>$banner->getSide(),
                     'grp'=>$banner->getGrp(),
                     'ots'=>$banner->getOts(),
+                    'format'=>$banner->getFormat(),
+                    'type'=>$banner->getFormat(),
+                    'month'=>$month,
+                    'monthStr'=>$this->getMonth($month),
+                    'year'=>$year,
                     'months' => serialize(array()),
                 );
             }
@@ -78,6 +107,7 @@ class BasketController extends Controller
                 }
                 $price += $val['price'];
             }
+            $lists = $basket;
             $grp = $grp / $i;
             $ots = $ots / $i;
             $fullprice = $price;
@@ -451,6 +481,35 @@ class BasketController extends Controller
             case 25: return 'Y';
             case 26: return 'Z';
             default: return false;
+        }
+    }
+
+    public function getMonth($month){
+        switch ($month) {
+            case 1:
+                return 'Январь';
+            case 2:
+                return 'Февраль';
+            case 3:
+                return 'Март';
+            case 4:
+                return 'Апрель';
+            case 5:
+                return 'Май';
+            case 6:
+                return 'Июнь';
+            case 7:
+                return 'Июль';
+            case 8:
+                return 'Август';
+            case 9:
+                return 'Сентябрь';
+            case 10:
+                return 'Октябрь';
+            case 11:
+                return 'Ноябрь';
+            case 12:
+                return 'Декабрь';
         }
     }
 }

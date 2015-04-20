@@ -64,105 +64,89 @@ class MapController extends Controller
         $objects = array();
         if ($banners != null){
             foreach ($banners as $banner){
-                $adrs = $banner->getAdrs();
-                $img = $banner->getImg();
-                $img = str_replace(' ','%20', $img);
-                $id = $banner->getId();
-                $date = new \DateTime();
-//                $price = $banner->getMonth($date);
-//                $price = $price->getPrice();
-                $price = $banner->getPrice();
-                $side = $banner->getSide();
+                $adrs   = $banner->getAdrs();
+                $img    = $banner->getImg();
+                $img    = str_replace(' ','%20', $img);
+                $id     = $banner->getId();
+                $price  = $banner->getPrice();
+                $side   = $banner->getSide();
                 $format = $banner->getFormat();
-                $type = $banner->getType();
-                $light = ($banner->getLight() == 0 ? 'Нет' : 'Да');
-                $grp = $banner->getGrp();
-                $ots = $banner->getOts();
+                $type   = $banner->getType();
+                $light  = ($banner->getLight() == 0 ? 'Нет' : 'Да');
+                $grp    = $banner->getGrp();
+                $ots    = $banner->getOts();
+                $months = $banner->getMonths();
 
+                $params = array(
+                    'adrs'   => $adrs,
+                    'img'    => $img,
+                    'id'     => $id,
+                    'price'  => $price,
+                    'side'   => $side,
+                    'format' => $format,
+                    'type'   => $type,
+                    'light'  => $light,
+                    'grp'    => $grp,
+                    'ots'    => $ots,
+                    'months' => $months
+                );
                 $objects[] = array(
                     'coords' => [ $banner->getLatitude(), $banner->getLongitude()],
                     'alt' => $banner->getAdrs(),
-                    'content' =>
-                        "
-                        <input type='hidden' class='dataId' value='$id'>
-                        <div class='map-title'>
-	                    Адрес
-                        $adrs
-                        </div>
-                        <div style='text-align: center; margin-bottom: 5px'>
-                            <img src='$img' class='thrumb'/>
-                        </div>
-                        <table class='map-setting' style='margin: 0 auto'>
-                            <tr>
-                                <td>Стоимость</td>
-                                <td>$price р.</td>
-                            </tr>
-                            <tr>
-                                <td>Сторона</td>
-                                <td>$side</td>
-                            </tr>
-                            <tr>
-                                <td>Формат</td>
-                                <td>$format</td>
-                            </tr>
-                            <tr>
-                                <td>Тип</td>
-                                <td>$type</td>
-                            </tr>
-                            <tr>
-                                <td>Свет</td>
-                                <td>$light</td>
-                            </tr>
-                            <tr>
-                                <td>GRP</td>
-                                <td>$grp</td>
-                            </tr>
-                            <tr>
-                                <td>OTS</td>
-                                <td>$ots</td>
-                            </tr>
-                        </table>
-                        <br />
-                        <table style='margin: 0 auto'>
-                        <tr>
-                            <td class='map-month' >янв</td>
-                            <td class='map-month' >фев</td>
-                            <td class='map-month' >мар</td>
-                            <td class='map-month' >апр</td>
-                            <td class='map-month' >май</td>
-                            <td class='map-month' >июн</td>
-                            <td class='map-month' >июл</td>
-                            <td class='map-month' >авг</td>
-                            <td class='map-month' >сен</td>
-                            <td class='map-month' >окт</td>
-                            <td class='map-month' >ноя</td>
-                            <td class='map-month' >дек</td>
-                        </tr>
-                        <tr>
-                            <td><img src='/bundles/app/images/month-act.png' /></td>
-                            <td><img src='/bundles/app/images/month-act.png' /></td>
-                            <td><img src='/bundles/app/images/month-act.png' /></td>
-                            <td><img src='/bundles/app/images/month-act.png' /></td>
-                            <td><img src='/bundles/app/images/month-act.png' /></td>
-                            <td><img src='/bundles/app/images/month-act.png' /></td>
-                            <td><img src='/bundles/app/images/month-act.png' /></td>
-                            <td><img src='/bundles/app/images/month-act.png' /></td>
-                            <td><img src='/bundles/app/images/month-act.png' /></td>
-                            <td><img src='/bundles/app/images/month-act.png' /></td>
-                            <td><img src='/bundles/app/images/month-act.png' /></td>
-                            <td><img src='/bundles/app/images/month-act.png' /></td>
-                        </tr>
-                        </table>
-                        <br />
-                        <div style='text-align: right'>
-                        <span class='btn addbasket' style='font-size: 15px'  data-id=\"$id\">Добавить в заказ</span>
-                        </div>
-                                                "
+                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
                 );
             }
         }
         $objects = array('data' => $objects);
 
+        return new JsonResponse($objects);
+    }
+
+    /**
+     * @Route("/get-my-objects", name="get_my_objects")
+     */
+    public function getMyObjectsAction(Request $request){
+        $session = $request->getSession();
+        $banners = $session->get('lists');
+        $objects = array();
+        if ($banners != null){
+            foreach ($banners as $banner){
+                $b = $banner;
+                $banner = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($banner['id']);
+                $adrs   = $banner->getAdrs();
+                $img    = $banner->getImg();
+                $img    = str_replace(' ','%20', $img);
+                $id     = $banner->getId();
+                $price  = $banner->getPrice();
+                $side   = $banner->getSide();
+                $format = $banner->getFormat();
+                $type   = $banner->getType();
+                $light  = ($banner->getLight() == 0 ? 'Нет' : 'Да');
+                $grp    = $banner->getGrp();
+                $ots    = $banner->getOts();
+                $months = $banner->getMonths();
+
+                $params = array(
+                    'adrs'   => $adrs,
+                    'img'    => $img,
+                    'id'     => $id,
+                    'price'  => $price,
+                    'side'   => $side,
+                    'format' => $format,
+                    'type'   => $type,
+                    'light'  => $light,
+                    'grp'    => $grp,
+                    'ots'    => $ots,
+                    'months' => $months
+                );
+                $objects[$id] = array(
+                    'coords' => [ $banner->getLatitude(), $banner->getLongitude()],
+                    'alt' => $banner->getAdrs(),
+                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
+                );
+            }
+        }
+        $objects = array('data' => $objects);
         return new JsonResponse($objects);
     }
 
