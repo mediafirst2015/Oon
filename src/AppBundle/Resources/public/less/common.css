@@ -337,7 +337,7 @@ input.mini {
 .dropdown {
   position: absolute;
   width: 200px;
-  height: 200px;
+  height: 130px;
   display: none;
   background: #ebebeb;
   color: #737272;
@@ -459,4 +459,7 @@ input.mini {
   padding: 10px 20px;
   opacity: 0.8;
   border-radius: 10px;
+}
+.table-info label {
+  width: 345px;
 }
