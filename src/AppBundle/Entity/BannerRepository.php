@@ -18,9 +18,9 @@ class BannerRepository extends EntityRepository
             if ($area != null ){
                 $qb->andWhere("b.area = '$area'");
             }
-            if ($street != null ){
-                $qb->andWhere("b.adrs LIKE '%$street%'");
-            }
+//            if ($street != null ){
+//                $qb->andWhere("b.adrs LIKE '%$street%'");
+//            }
 
             $format = null;
             if ($formatS != null && $formatS != 0){

@@ -37,76 +37,77 @@
     </tr>
 </table>
 <br />
+{{ dump(myBasket) }}
 <table style='margin: 0 auto' class="month-table">
     <tr>
         <td>Янв</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="1">
+            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="1" {{ myBasket[id~'1-2015'] is defined ? 'checked="checked"' }}>
         </td>
         <td>{{ price }}&nbsp;р.</td>
         <td>Фев</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="2">
+            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="2" {{ myBasket[id~'2-2015'] is defined ? 'checked="checked"' }}>
         </td>
         <td>{{ price }}&nbsp;р.</td>
     </tr>
     <tr>
         <td>Мар</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="3">
+            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="3" {{ myBasket[id~'3-2015'] is defined ? 'checked="checked"' }}>
         </td>
         <td>{{ price }}&nbsp;р.</td>
         <td>Апр</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="4">
+            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="4" {{ myBasket[id~'4-2015'] is defined ? 'checked="checked"' }}>
         </td>
         <td>{{ price }}&nbsp;р.</td>
     </tr>
     <tr>
         <td>Май</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="5">
+            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="5" {{ myBasket[id~'5-2015'] is defined ? 'checked="checked"' }}>
         </td>
         <td>{{ price }}&nbsp;р.</td>
         <td>Июн</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="6">
+            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="6" {{ myBasket[id~'6-2015'] is defined ? 'checked="checked"' }}>
         </td>
         <td>{{ price }}&nbsp;р.</td>
     </tr>
     <tr>
         <td>Июл</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="7">
+            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="7" {{ myBasket[id~'7-2015'] is defined ? 'checked="checked"' }}>
         </td>
         <td>{{ price }}&nbsp;р.</td>
         <td>Авг</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="8">
+            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="8" {{ myBasket[id~'8-2015'] is defined ? 'checked="checked"' }}>
         </td>
         <td>{{ price }}&nbsp;р.</td>
     </tr>
     <tr>
         <td>Сен</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="9">
+            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="9" {{ myBasket[id~'9-2015'] is defined ? 'checked="checked"' }}>
         </td>
         <td>{{ price }}&nbsp;р.</td>
         <td>Окт</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="10">
+            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="10" {{ myBasket[id~'10-2015'] is defined ? 'checked="checked"' }}>
         </td>
         <td>{{ price }}&nbsp;р.</td>
     </tr>
     <tr>
         <td>Ноя</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="11">
+            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="11" {{ myBasket[id~'11-2015'] is defined ? 'checked="checked"' }}>
         </td>
         <td>{{ price }}&nbsp;р.</td>
         <td>Дек</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="12">
+            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="12" {{ myBasket[id~'12-2015'] is defined ? 'checked="checked"' }}>
         </td>
         <td>{{ price }}&nbsp;р.</td>
     </tr>

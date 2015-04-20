@@ -31,6 +31,8 @@ class MapController extends Controller
      */
     public function getObjectsAction(Request $request){
 
+        $session = $request->getSession();
+        $myBasket = $session->get('lists');
         $area = $request->request->get('area');
         $street = $request->request->get('street');
         if ($area == 'null'){
@@ -88,7 +90,8 @@ class MapController extends Controller
                     'light'  => $light,
                     'grp'    => $grp,
                     'ots'    => $ots,
-                    'months' => $months
+                    'months' => $months,
+                    'myBasket' => $myBasket
                 );
                 $objects[] = array(
                     'coords' => [ $banner->getLatitude(), $banner->getLongitude()],
