@@ -50,41 +50,48 @@
         </tr>
     {% endfor %}
     <tr class="bottom-line">
-        <td colspan="5" class="itog">Средняя стоимость размещения за поверхность:</td>
-        <td style="text-align: center">{{ price }}&nbsp;р.</td>
-        <td colspan="4" style="background: #FFF; border: 0"></td>
+        <td colspan="10" style="background: #FFF; border: 0"></td>
         <td style="background: #FFF; border: 0" colspan="2">
             <b class="green">ИТОГО:</b>
         </td>
-        <td>
+        <td style="background: none;">
             <b>{{ fullPrice }}&nbsp;р.</b>
         </td>
-        <td>
+        <td style="background: none;">
             <b>{{ fullPrice }}&nbsp;р.</b>
         </td>
-        <td></td>
-        <td colspan="3" style="text-align: right; color: #CC0000">
-            <a href="#" style="color: #CC0000">Обнулить заказ</a>
+        <td style="background: none;"></td>
+        <td colspan="3" style="text-align: right; color: #CC0000; background: none; border: 0;">
+            <a href="{{ path('basket_clear') }}" style="color: #CC0000">Обнулить заказ</a>
         </td>
-    </tr>
-    <tr>
-        <td colspan="5" class="itog">Процентное соотношение сторон A/B в программе:</td>
-        <td style="text-align: center">{{ side }}</td>
-    </tr>
-    <tr>
-        <td colspan="5" class="itog">Средний показатель GRP за программу:</td>
-        <td style="text-align: center">{{ grp }}</td>
-    </tr>
-    <tr>
-        <td colspan="5" class="itog">Средний показатель OTS за программу:</td>
-        <td style="text-align: center">{{ ots }}</td>
-    </tr>
-    <tr>
-        <td colspan="5" class="itog">CRT за программу:</td>
-        <td style="text-align: center">0</td>
-    </tr>
-    <tr>
-        <td colspan="5" class="itog">Количество поверхностей:</td>
-        <td style="text-align: center">{{ count }}</td>
     </tr>
 </table>
+
+<div style="color: #555555; font-size: 13px">
+    <b>ПОКАЗАТЕЛИ ЭФФЕКТИВНОСТИ</b>
+    <div style="font-size: 7px;">&nbsp;</div>
+    <div>
+        <label>Средняя стоимость размещения за поверхность:</label>
+        {{ price }} р.
+    </div>
+    <div>
+        <label>Процентное соотношение сторон A/B в программе:</label>
+        {{ side }}
+    </div>
+    <div>
+        <label>Средний показатель GRP за программу:</label>
+        {{ grp }}
+    </div>
+    <div>
+        <label>Средний показатель OTS за программу:</label>
+        {{ ots }}
+    </div>
+    <div>
+        <label>CРТ за программу:</label>
+        {{ ( ots / price )|number_format(3, '.', ',') }}
+    </div>
+    <div>
+        <label>Количество поверхностей:</label>
+        {{ count }}
+    </div>
+</div>

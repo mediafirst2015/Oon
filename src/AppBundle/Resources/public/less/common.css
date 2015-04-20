@@ -17,6 +17,7 @@ h1.pink {
   padding-bottom: 250px;
 }
 .btn {
+  border: 0;
   background: #65be65;
   background-image: -webkit-linear-gradient(top, #65be65, #016b04);
   background-image: -moz-linear-gradient(top, #65be65, #016b04);
@@ -42,6 +43,7 @@ h1.pink {
   color: #ffffff;
 }
 .btn2 {
+  border: 0;
   background: #65be65;
   background-image: -webkit-linear-gradient(top, #65be65, #016b04);
   background-image: -moz-linear-gradient(top, #65be65, #016b04);
