@@ -10,22 +10,23 @@
                         <br />
                         <select name="city">
                             <option value="0" disabled selected>Город</option>
+                            <option value="0" selected>Все города</option>
                             <option value="Москва">Москва</option>
                             <option value="Подольск">Подольск</option>
                         </select>
                         <select name="area">
                             <option value="0" disabled selected>Округ</option>
-                            <option value="ЦАО">ЦАО</option>
-                            <option value="СВАО">СВАО</option>
-                            <option value="ВАО">ВАО</option>
-                            <option value="ЮВАО">ЮВАО</option>
-                            <option value="ЮАО">ЮАО</option>
-                            <option value="ЮЗАО">ЮЗАО</option>
-                            <option value="ЗАО">ЗАО</option>
-                            <option value="CЗАО">CЗАО</option>
-                            <option value="CАО">CАО</option>
+                            <option value="ЦАО"  {{ app.request.query.all.area=='ЦАО' ? 'selected="selected"' : '' }}>ЦАО</option>
+                            <option value="СВАО" {{ app.request.query.all.area=='СВАО' ? 'selected="selected"' : '' }}>СВАО</option>
+                            <option value="ВАО"  {{ app.request.query.all.area=='ВАО' ? 'selected="selected"' : '' }}>ВАО</option>
+                            <option value="ЮВАО" {{ app.request.query.all.area=='ЮВАО' ? 'selected="selected"' : '' }}>ЮВАО</option>
+                            <option value="ЮАО"  {{ app.request.query.all.area=='ЮАО' ? 'selected="selected"' : '' }}>ЮАО</option>
+                            <option value="ЮЗАО" {{ app.request.query.all.area=='ЮЗАО' ? 'selected="selected"' : '' }}>ЮЗАО</option>
+                            <option value="ЗАО"  {{ app.request.query.all.area=='ЗАО' ? 'selected="selected"' : '' }}>ЗАО</option>
+                            <option value="CЗАО" {{ app.request.query.all.area=='CЗАО' ? 'selected="selected"' : '' }}>CЗАО</option>
+                            <option value="CАО"  {{ app.request.query.all.area=='CАО' ? 'selected="selected"' : '' }}>CАО</option>
                         </select>
-                        <input type="text" placeholder="Улица" id="street" name="street">
+                        <input type="text" placeholder="Улица" id="street" name="street" value="{{ app.request.query.all.street is defined ? app.request.query.all.street : '' }}" >
                         <div class="check-group">
                             Пакеты
                             <div class="check"></div>

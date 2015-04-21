@@ -217,8 +217,9 @@ class BasketController extends Controller
         if ($request->getMethod() == 'POST'){
             return new JsonResponse(array('status' => $status, 'count' => $count));
         }else{
-            $referer = $request->headers->get('referer');
-            return $this->redirect($referer);
+//            $referer = $request->headers->get('referer');
+//            return $this->redirect($referer);
+            return $this->redirect($this->generateUrl('map').'#basket');
         }
 
     }

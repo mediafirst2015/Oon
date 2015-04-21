@@ -64,8 +64,10 @@
                         url: Routing.generate('order_price'),
                         method: 'GET',
                         success: function(msg){
-                            $('#order-btn').html('Выбрано на сумму '+msg+'р.');
-                            $('#order-btn').css('display','block');
+                            if (msg != 0 && msg != '0'){
+                                $('#order-btn').html('Выбрано на сумму '+msg+'р.');
+                                $('#order-btn').css('display','block');
+                            }
                         }
                     });
                 }
@@ -122,6 +124,7 @@
                         <a href="{{ path('hot') }}"><span>Горячие предложения</span></a>
                     </div>
                 </span>
+
                 <a href="{{ path('map') }}?my=1#basket">
                     <div class="btn-pink" id="order-btn" style="float: right; margin-top: -10px; display: none;"></div>
                 </a>
@@ -133,7 +136,7 @@
         <div  class="row">
             <div class="col-lg-3">
                 <div class="title">
-                    Заказчикам:
+                    Заказчикам
                 </div>
                 Техтребования<br />
                 Поиск щитов<br />
@@ -142,13 +145,13 @@
             </div>
             <div class="col-lg-3">
                 <div class="title">
-                    Владельцам:
+                    Владельцам
                 </div>
                 Сотрудничество
             </div>
             <div class="col-lg-3">
                 <div class="title">
-                    Контакты:
+                    Контакты
                 </div>
                 РОССИЯ		105120,
                 Москва,<br />
