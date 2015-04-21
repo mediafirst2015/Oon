@@ -51,31 +51,45 @@
         <div class="col-sm-8">
             {% for b in banners %}
                 <div class="hot-box">
-                    <a href="{{ path('map',{'bannerId' : b.id}) }}">
-                        <div class="hot-img">
-                            <img class="img" src="{{ b.img }}">
-                            <img class="hot-icon" src="{{ asset('bundles/app/images/hot.png') }}">
-                        </div>
+                    <div class="hot-img">
+                        <a href="{{ b.img }}" class="fancybox"><img class="img" src="{{ b.img }}"></a>
+                        <img class="hot-icon" src="{{ asset('bundles/app/images/hot.png') }}">
+                    </div>
+                    <br />
+                    <table class="hot-params">
+                        <tr>
+                            <td>Адрес</td>
+                            <td>{{ b.adrs }}</td>
+                        </tr>
+                        <tr>
+                            <td>Формат</td>
+                            <td>{{ b.format }}</td>
+                        </tr>
+                        <tr>
+                            <td>Цена</td>
+                            <td><b class="pink">{{ b.price }} р.</b></td>
+                        </tr>
+                        <tr>
+                            <td>Период</td>
+                            <td><b class="pink">Апрель</b></td>
+                        </tr>
+                    </table>
+                    <div>
                         <br />
-                        <table class="hot-params">
+                        <table style="width: 100%">
                             <tr>
-                                <td>Адрес</td>
-                                <td>{{ b.adrs }}</td>
-                            </tr>
-                            <tr>
-                                <td>Формат</td>
-                                <td>{{ b.format }}</td>
-                            </tr>
-                            <tr>
-                                <td>Цена</td>
-                                <td><b class="pink">{{ b.price }} р.</b></td>
-                            </tr>
-                            <tr>
-                                <td>Период</td>
-                                <td><b class="pink">Апрель</b></td>
+                                <td style="width: 50%">
+                                    <a href="{{ path('map',{'bannerId' : b.id}) }}">
+                                        <span class="btn2">На карте</span>
+                                    </a>
+                                </td>
+                                <td style="text-align: right">
+                                    <span class="btn-pink">Заказать</span>
+                                </td>
                             </tr>
                         </table>
-                    </a>
+                        <br />
+                    </div>
                 </div>
             {% endfor %}
         </div>
@@ -88,9 +102,9 @@
     {{ parent() }}
     <script>
         $(document).ready(function(){
-           $('#form-submit').click(function(){
+            $('#form-submit').click(function(){
                 $('#form').submit();
-           });
+            });
         });
     </script>
 {% endblock %}

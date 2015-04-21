@@ -176,27 +176,10 @@
                 <div class="form">
                     <div class="title">Поиск щитов на карте</div>
                     <br />
-                    <select>
-                        <option value="0" disabled selected>Город</option>
-                        <option value="1">Москва</option>
-                        <option value="2">Подольск</option>
-                    </select>
-                    <input type="text" placeholder="Улица" id="street2">
-                    <br />
                     <div style="text-align: center">
-                        <img src="{{ asset('bundles/app/images/map.png') }}" class="round" style="height: 255px; width: 320px;"/>
-                    </div>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <div style="text-align: right">
-                        <span class="btn2">
-                            Заказать
-                        </span>
+                        <a href="{{ path('map') }}">
+                            <img src="{{ asset('bundles/app/images/map.png') }}" class="round"/>
+                        </a>
                     </div>
                     <br />
                     <br />
@@ -210,34 +193,36 @@
                     <br />
                     {% for b in banners %}
                         <div class="hot-box-mini">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <div class="hot-img">
-                                            <img class="img" src="{{ b.img }}">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <table class="hot-params">
-                                            <tr>
-                                                <td colspan="2">{{ b.adrs }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Формат</td>
-                                                <td style="text-align: right">{{ b.format }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Цена</td>
-                                                <td style="text-align: right"><b class="pink">{{ b.price }}&nbsp;р.</b></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Период</td>
-                                                <td style="text-align: right"><b class="pink">Апрель</b></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
+                            <a href="{{ path('hot') }}">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="hot-img">
+                                                <img class="img" src="{{ b.img }}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <table class="hot-params">
+                                                <tr>
+                                                    <td colspan="2">{{ b.adrs }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Формат</td>
+                                                    <td style="text-align: right">{{ b.format }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Цена</td>
+                                                    <td style="text-align: right"><b class="pink">{{ b.price }}&nbsp;р.</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Период</td>
+                                                    <td style="text-align: right"><b class="pink">Апрель</b></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </a>
                         </div>
                     {% endfor %}
                     <div style="text-align: right">
