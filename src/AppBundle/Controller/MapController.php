@@ -17,13 +17,15 @@ class MapController extends Controller
      * @Route("/get-more-info" , name="get_more_info", options={ "expose" = true })
      */
     public function getMoreInfoAction(Request $request){
-        $id = $request->request->get('id');
+        $session = $request->getSession();
+        $myBasket = $session->get('lists');
+        $id = $request->request->get('itemId');
         if ($id != null){
             $object = $this->getDoctrine()->getRepository('AppBundle:Banner')->find($id);
         }else{
             $object = null;
         }
-        return $this->render("AppBundle:Default:getInfo.html.twig", array('object' => $object));
+        return $this->render("AppBundle:Map:getInfo.html.twig", array('object' => $object,'myBasket' => $myBasket));
     }
 
     /**
@@ -96,7 +98,8 @@ class MapController extends Controller
                 $objects[] = array(
                     'coords' => [ $banner->getLatitude(), $banner->getLongitude()],
                     'alt' => $banner->getAdrs(),
-                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
+                    'id' => $banner->getId(),
+//                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
                 );
             }
         }
@@ -145,7 +148,7 @@ class MapController extends Controller
                 $objects[$id] = array(
                     'coords' => [ $banner->getLatitude(), $banner->getLongitude()],
                     'alt' => $banner->getAdrs(),
-                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
+//                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
                 );
             }
         }

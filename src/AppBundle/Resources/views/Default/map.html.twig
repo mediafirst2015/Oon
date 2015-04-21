@@ -215,7 +215,11 @@
                     </div>
                     <div>
                         <label>CРТ за программу:</label>
-                        {{ ( ots / price )|number_format(3, '.', ',') }}
+                        {% if price != 0 %}
+                            {{ ( ots / price )|number_format(3, '.', ',') }}
+                        {% else %}
+                            0
+                        {% endif %}
                     </div>
                     <div>
                         <label>Количество поверхностей:</label>
@@ -319,21 +323,43 @@
                         var placemarks = [];
                         var j = 0;
                         for (var i in objects) {
+                            console.log('ID -> '+objects[i].id);
                             placemarks[j] = new ym.GeoObject({
-                                geometry: {
-                                    type: "Point",
-                                    coordinates: objects[i].coords //Массив
-                                },
-                                properties:{
-                                    hintContent: objects[i].alt, //Подсказка
-                                    balloonContent: objects[i].content
-//                                    balloonContent : ''
-                                }
-                            },{
-                                iconLayout: 'default#image',
-                                iconImageHref: '/bundles/app/images/mapIcon3.png',
-                                iconImageSize: [16, 16]
-                            });
+                                        geometry: {
+                                            type: "Point",
+                                            coordinates: objects[i].coords //Массив
+                                        },
+                                        properties:{
+                                            hintContent: objects[i].alt, //Подсказка
+//                                    balloonContent: objects[i].content
+                                            balloonContent : '',
+                                            itemId: objects[i].id
+
+                                        }
+                                    },{
+                                        balloonPanelMaxMapArea: 0,
+                                        openEmptyBalloon: true,
+                                        iconLayout: 'default#image',
+                                        iconImageHref: '/bundles/app/images/mapIcon3.png',
+                                        iconImageSize: [16, 16],
+                                    }
+                            );
+//                            placemarks[j].events.add('balloonopen', function (e) {
+//                                placemarks[j].properties.set('balloonContent', "Идет загрузка данных...");
+//                                $.ajax({
+//                                    url: Routing.generate('get_more_info'),
+//                                    data: 'itemId='+placemarks[j].itemId,
+//                                    method: 'POST',
+//                                    success: function(msg){
+//                                        placemark.properties.set('balloonContent', msg);
+//                                    },
+//                                    error: function(){
+//                                        placemark.properties.set('balloonContent', 'Не удалось загрузить контент');
+//                                    }
+//
+//                                });
+//                            });
+
                             j ++ ;
                         }
                         var clusterer = new ym.Clusterer({
@@ -341,31 +367,46 @@
                         });
                         clusterer.events
                             // Можно слушать сразу несколько событий, указывая их имена в массиве.
-                                .add(['mouseenter', 'mouseleave','click'], function (e) {
+                                .add(['mouseenter', 'mouseleave'], function (e) {
                                     var target = e.get('target'),
                                             type = e.get('type');
                                     if (typeof target.getGeoObjects != 'undefined') {
                                         // Событие произошло на кластере.
-                                        if (type == 'click') {
+                                        if (type == 'mouseenter') {
                                             target.options.set('preset', 'islands#greenClusterIcons');
+                                        } else {
+                                            target.options.set('preset', 'islands#darkGreenClusterIcons');
                                         }
                                     }
-//                                    else{
+//                                    }else{
 //                                        if (type == 'mouseenter') {
-//                                            var html = '';
-//                                            $.ajax({
-//                                                url: Routing.generate('get_more_info'),
-//                                                data: 'itemId='+'2',
-//                                                method: 'POST',
-//                                                success: function(msg){
-//                                                    html = msg;
-//                                                }
-//                                            });
-//                                            target.properties.set('balloonContent',html);
+//                                            var id = target.options.get('did');
+//                                        } else {
+//                                            var id = target.options.get('did');
 //                                        }
+//                                        alert(id);
+//
 //                                    }
                                 });
-//                        clussterer.removeAll();
+
+                        clusterer.events.add('balloonopen',function(e){
+                            var target = e.get('target');
+                            console.log(s = target);
+                            if (typeof target.getGeoObjects == 'undefined') {
+                                // Событие произошло на точке.
+                                $.ajax({
+                                    url: Routing.generate('get_more_info'),
+                                    data: 'itemId='+ s.properties.get('itemId'),
+                                    method: 'POST',
+                                    success: function(msg){
+                                        target.properties.set('balloonContent', msg);
+                                    },
+                                    error: function(){
+                                        target.properties.set('balloonContent', 'Не удалось загрузить контент');
+                                    }
+                                });
+                            }
+                        });
                         clusterer.add(placemarks);
                         map.geoObjects.add(clusterer);
                     }

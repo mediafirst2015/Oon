@@ -1,115 +1,114 @@
-<input type='hidden' class='dataId' value='$id'>
+<input type='hidden' class='dataId' value='{{ object.id }}'>
 <div class='map-title'>
     Адрес
-    {{ adrs }}
+    {{ object.adrs }}
 </div>
 <div style='text-align: center; margin-bottom: 5px'>
-    <a href="{{ img }}" class="fancybox"><img src='{{ img }}' class='thrumb'/></a>
+    <a href="{{ object.img }}" class="fancybox"><img src='{{ object.img }}' class='thrumb'/></a>
 </div>
 <table class='map-setting' style='margin: 0 auto'>
     <tr>
         <td>Стоимость</td>
-        <td>{{ price }} р.</td>
+        <td>{{ object.price }} р.</td>
     </tr>
     <tr>
         <td>Сторона</td>
-        <td>{{ side }}</td>
+        <td>{{ object.side }}</td>
     </tr>
     <tr>
         <td>Формат</td>
-        <td>{{ format }}</td>
+        <td>{{ object.format }}</td>
     </tr>
     <tr>
         <td>Тип</td>
-        <td>{{ type }}</td>
+        <td>{{ object.type }}</td>
     </tr>
     <tr>
         <td>Свет</td>
-        <td>{{ light }}</td>
+        <td>{{ object.light }}</td>
     </tr>
     <tr>
         <td>GRP</td>
-        <td>{{ grp }}</td>
+        <td>{{ object.grp }}</td>
     </tr>
     <tr>
         <td>OTS</td>
-        <td>{{ ots }}</td>
+        <td>{{ object.ots }}</td>
     </tr>
 </table>
 <br />
-{{ dump(myBasket) }}
 <table style='margin: 0 auto' class="month-table">
     <tr>
         <td>Янв</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="1" {{ myBasket[id~'1-2015'] is defined ? 'checked="checked"' }}>
+            <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="1" {{ myBasket[object.id~'-1-2015'] is defined ? 'checked="checked"' }}>
         </td>
-        <td>{{ price }}&nbsp;р.</td>
+        <td>{{ object.price }}&nbsp;р.</td>
         <td>Фев</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="2" {{ myBasket[id~'2-2015'] is defined ? 'checked="checked"' }}>
+            <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="2" {{ myBasket[object.id~'-2-2015'] is defined ? 'checked="checked"' }}>
         </td>
-        <td>{{ price }}&nbsp;р.</td>
+        <td>{{ object.price }}&nbsp;р.</td>
     </tr>
     <tr>
         <td>Мар</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="3" {{ myBasket[id~'3-2015'] is defined ? 'checked="checked"' }}>
+            <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="3" {{ myBasket[object.id~'-3-2015'] is defined ? 'checked="checked"' }}>
         </td>
-        <td>{{ price }}&nbsp;р.</td>
+        <td>{{ object.price }}&nbsp;р.</td>
         <td>Апр</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="4" {{ myBasket[id~'4-2015'] is defined ? 'checked="checked"' }}>
+            <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="4" {{ myBasket[object.id~'-4-2015'] is defined ? 'checked="checked"' }}>
         </td>
-        <td>{{ price }}&nbsp;р.</td>
+        <td>{{ object.price }}&nbsp;р.</td>
     </tr>
     <tr>
         <td>Май</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="5" {{ myBasket[id~'5-2015'] is defined ? 'checked="checked"' }}>
+            <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="5" {{ myBasket[object.id~'-5-2015'] is defined ? 'checked="checked"' }}>
         </td>
-        <td>{{ price }}&nbsp;р.</td>
+        <td>{{ object.price }}&nbsp;р.</td>
         <td>Июн</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="6" {{ myBasket[id~'6-2015'] is defined ? 'checked="checked"' }}>
+            <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="6" {{ myBasket[object.id~'-6-2015'] is defined ? 'checked="checked"' }}>
         </td>
-        <td>{{ price }}&nbsp;р.</td>
+        <td>{{ object.price }}&nbsp;р.</td>
     </tr>
     <tr>
         <td>Июл</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="7" {{ myBasket[id~'7-2015'] is defined ? 'checked="checked"' }}>
+            <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="7" {{ myBasket[object.id~'-7-2015'] is defined ? 'checked="checked"' }}>
         </td>
-        <td>{{ price }}&nbsp;р.</td>
+        <td>{{ object.price }}&nbsp;р.</td>
         <td>Авг</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="8" {{ myBasket[id~'8-2015'] is defined ? 'checked="checked"' }}>
+            <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="8" {{ myBasket[object.id~'-8-2015'] is defined ? 'checked="checked"' }}>
         </td>
-        <td>{{ price }}&nbsp;р.</td>
+        <td>{{ object.price }}&nbsp;р.</td>
     </tr>
     <tr>
         <td>Сен</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="9" {{ myBasket[id~'9-2015'] is defined ? 'checked="checked"' }}>
+            <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="9" {{ myBasket[object.id~'-9-2015'] is defined ? 'checked="checked"' }}>
         </td>
-        <td>{{ price }}&nbsp;р.</td>
+        <td>{{ object.price }}&nbsp;р.</td>
         <td>Окт</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="10" {{ myBasket[id~'10-2015'] is defined ? 'checked="checked"' }}>
+            <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="10" {{ myBasket[object.id~'-10-2015'] is defined ? 'checked="checked"' }}>
         </td>
-        <td>{{ price }}&nbsp;р.</td>
+        <td>{{ object.price }}&nbsp;р.</td>
     </tr>
     <tr>
         <td>Ноя</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="11" {{ myBasket[id~'11-2015'] is defined ? 'checked="checked"' }}>
+            <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="11" {{ myBasket[object.id~'-11-2015'] is defined ? 'checked="checked"' }}>
         </td>
-        <td>{{ price }}&nbsp;р.</td>
+        <td>{{ object.price }}&nbsp;р.</td>
         <td>Дек</td>
         <td>
-            <input type="checkbox" class="addBasket" data-id="{{ id }}" data-month="12" {{ myBasket[id~'12-2015'] is defined ? 'checked="checked"' }}>
+            <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="12" {{ myBasket[object.id~'-12-2015'] is defined ? 'checked="checked"' }}>
         </td>
-        <td>{{ price }}&nbsp;р.</td>
+        <td>{{ object.price }}&nbsp;р.</td>
     </tr>
 </table>
 <br />
