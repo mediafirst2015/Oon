@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-lg-3">
             <div class="box">
-                <form method="GET" id="form">
+                <form method="GET" id="form" action="{{ path('map') }}">
                     <div class="form">
                         <h2 class="green">Фильтры</h2>
                         <input type="text" placeholder="Улица" id="street" name="street" value="{{ params.street }}">
@@ -328,7 +328,6 @@
                         var placemarks = [];
                         var j = 0;
                         for (var i in objects) {
-                            console.log('ID -> '+objects[i].id);
                             placemarks[j] = new ym.GeoObject({
                                         geometry: {
                                             type: "Point",
@@ -455,12 +454,12 @@
             });
 
             $('#map').on('click','input.addBasket', function(){
-                console.log('jk');
                 $.ajax({
                     url: Routing.generate('basket_add', {'itemId': $(this).attr('data-id'), 'month': $(this).attr('data-month')}),
                     method: 'POST',
                     success: function(msg){
                         $('#basket-table').html(msg);
+                        $.notify("позиция добавлена в медиаплан", "success");
                         orderRefresh();
                     }
                 });

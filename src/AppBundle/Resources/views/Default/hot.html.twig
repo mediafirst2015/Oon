@@ -84,13 +84,15 @@
                                     </a>
                                 </td>
                                 <td style="text-align: right">
-                                    <span class="btn-pink">Заказать</span>
+                                    <span class="btn-pink addbasket" data-id="{{ b.id }}" data-month="4">Заказать</span>
                                 </td>
                             </tr>
                         </table>
                         <br />
                     </div>
                 </div>
+            {% else %}
+                <h2 class="pink" style="text-align: center; display: block">По данному запросу предложений не найдено</h2>
             {% endfor %}
         </div>
     </div>
@@ -104,6 +106,28 @@
         $(document).ready(function(){
             $('#form-submit').click(function(){
                 $('#form').submit();
+            });
+
+            function orderRefresh(){
+                $.ajax({
+                    url: Routing.generate('order_price'),
+                    method: 'GET',
+                    success: function(msg){
+                        $('#order-btn').html('Заказ на сумму '+msg+' р.');
+                        $('#order-btn').css('display','block');
+                    }
+                });
+            }
+
+            $('.addBasket').click(function(){
+                $.ajax({
+                    url: Routing.generate('basket_add', {'itemId': $(this).attr('data-id'), 'month': $(this).attr('data-month')}),
+                    method: 'POST',
+                    success: function(msg){
+                        $.notify("позиция добавлена в медиаплан", "success");
+                        orderRefresh();
+                    }
+                });
             });
         });
     </script>

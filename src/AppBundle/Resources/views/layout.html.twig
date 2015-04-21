@@ -15,6 +15,7 @@
         <script src="{{ asset('bundles/app/fancyBox/lib/jquery.mousewheel-3.0.6.pack.js') }}"></script>
 
         <script src="{{ asset('bundles/app/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/javascripts/notify.min.js') }}"></script>
         <script src="//api-maps.yandex.ru/2.1/?load=package.full&lang=ru-RU&ns=ym" type="text/javascript"></script>
 
         <script type="text/javascript" src="{{ asset('bundles/app/jqueryui/jquery-ui.min.js') }}"></script>
@@ -63,7 +64,7 @@
                         url: Routing.generate('order_price'),
                         method: 'GET',
                         success: function(msg){
-                            $('#order-btn').html('Заказ на сумму '+msg+' р.');
+                            $('#order-btn').html('Выбрано на сумму '+msg+'р.');
                             $('#order-btn').css('display','block');
                         }
                     });
@@ -121,7 +122,7 @@
                         <a href="{{ path('hot') }}"><span>Горячие предложения</span></a>
                     </div>
                 </span>
-                <a href="{{ path('map') }}#basket">
+                <a href="{{ path('map') }}?my=1#basket">
                     <div class="btn-pink" id="order-btn" style="float: right; margin-top: -10px; display: none;"></div>
                 </a>
             </div>
