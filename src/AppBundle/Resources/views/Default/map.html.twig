@@ -171,7 +171,7 @@
                             <td>Свободно</td>
                             <td style="text-align: center">
                                 <a href="{{ path('basket_remove', { 'itemId' : k } ) }}">
-                                    <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon">
+                                    <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon" title="Удалить элемент">
                                 </a>
                             </td>
                         </tr>
@@ -199,7 +199,7 @@
                     <div style="font-size: 7px;">&nbsp;</div>
                     <div>
                         <label>Средняя стоимость размещения за поверхность:</label>
-                        {{ price }} р.
+                        {{ price |number_format(0, '.', ',') }} р.
                     </div>
                     <div>
                         <label>Процентное соотношение сторон A/B в программе:</label>
@@ -265,6 +265,10 @@
             ym.ready(init);
             function init(){
                 map = new ym.Map('map', {
+                    {% if app.request.query.all.my is defined and app.request.query.all.my == 1 %}
+                    center: [55.755381, 37.619044],
+                    zoom: 9,
+                    {% else %}
                     {% if thisBanner != null %}
                     center: [{{ thisBanner.latitude }}, {{ thisBanner.longitude }}],
                     zoom: 15,
@@ -274,6 +278,7 @@
                     {% else %}
                     center: [55.755381, 37.619044],
                     zoom: 9,
+                    {% endif %}
                     {% endif %}
                     controls: ['typeSelector','zoomControl']
                 });
@@ -286,7 +291,7 @@
                         '&formatL={{ params.formatL }}'+
                         '&formatSB={{ params.formatSB }}'+
                         '&type='+
-                        '&light='+
+                        '&light={{ params.light }}'+
                         '&grpMin={{ params.grpMin }}'+
                         '&grpMax={{ params.grpMax }}'+
                         '&otsMin={{ params.otsMin }}'+

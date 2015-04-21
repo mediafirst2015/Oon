@@ -42,9 +42,9 @@ class BannerRepository extends EntityRepository
             if ($type != null ){
                 $qb->andWhere("b.type = '$type'");
             }
-//        if ($light != null ){
-//            $qb->andWhere("b.light = '$light'");
-//        }
+            if ($light == 1 ){
+                $qb->andWhere("b.light = 1 ");
+            }
             if ($grpMin != null && $grpMax != null){
                 $qb->andWhere("( b.grp >= $grpMin AND b.grp <= $grpMax )");
             }

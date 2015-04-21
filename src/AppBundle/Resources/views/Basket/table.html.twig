@@ -44,7 +44,7 @@
             <td>Свободно</td>
             <td style="text-align: center">
                 <a href="{{ path('basket_remove', { 'itemId' : k } ) }}">
-                    <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon">
+                    <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon" title="Удалить элемент">
                 </a>
             </td>
         </tr>
@@ -72,7 +72,7 @@
     <div style="font-size: 7px;">&nbsp;</div>
     <div>
         <label>Средняя стоимость размещения за поверхность:</label>
-        {{ price }} р.
+        {{ price |number_format(0, '.', ',') }} р.
     </div>
     <div>
         <label>Процентное соотношение сторон A/B в программе:</label>

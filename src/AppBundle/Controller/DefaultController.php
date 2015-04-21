@@ -88,6 +88,19 @@ class DefaultController extends Controller
             'street' => $request->query->get('street'),
         );
 
+        if ($params['formatS'] == null){
+            $params['formatS'] = 1;
+        }
+        if ($params['formatM'] == null){
+            $params['formatM'] = 1;
+        }
+        if ($params['formatL'] == null){
+            $params['formatL'] = 1;
+        }
+        if ($params['formatSB'] == null){
+            $params['formatSB'] = 1;
+        }
+
         if ( $request->query->get('city')){
             $city = $request->query->get('city').', ';
         }else{

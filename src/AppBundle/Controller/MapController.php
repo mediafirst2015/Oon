@@ -49,8 +49,6 @@ class MapController extends Controller
         $light = $request->request->get('light');
         if ($light == 'on'){
             $light = 1;
-        }else{
-            $light = null;
         }
         $grpMin = $request->request->get('grpMin');
         $grpMax = $request->request->get('grpMax');
