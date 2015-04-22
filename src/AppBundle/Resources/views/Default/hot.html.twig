@@ -9,33 +9,49 @@
                         <div class="title" style="font-size: 20px">Поиск горящих предложений</div>
                         <br />
                         <select name="city">
-                            <option value="0" disabled selected>Город</option>
-                            <option value="0" selected>Все города</option>
-                            <option value="Москва">Москва</option>
-                            <option value="Подольск">Подольск</option>
+                            <option value="" disabled selected>Город</option>
+                            <option value="Москва" {{ params.city == 'Москва' ? 'selected="selected"' }}>Москва</option>
                         </select>
                         <select name="area">
                             <option value="0" disabled selected>Округ</option>
-                            <option value="ЦАО"  {{ app.request.query.all.area=='ЦАО' ? 'selected="selected"' : '' }}>ЦАО</option>
-                            <option value="СВАО" {{ app.request.query.all.area=='СВАО' ? 'selected="selected"' : '' }}>СВАО</option>
-                            <option value="ВАО"  {{ app.request.query.all.area=='ВАО' ? 'selected="selected"' : '' }}>ВАО</option>
-                            <option value="ЮВАО" {{ app.request.query.all.area=='ЮВАО' ? 'selected="selected"' : '' }}>ЮВАО</option>
-                            <option value="ЮАО"  {{ app.request.query.all.area=='ЮАО' ? 'selected="selected"' : '' }}>ЮАО</option>
-                            <option value="ЮЗАО" {{ app.request.query.all.area=='ЮЗАО' ? 'selected="selected"' : '' }}>ЮЗАО</option>
-                            <option value="ЗАО"  {{ app.request.query.all.area=='ЗАО' ? 'selected="selected"' : '' }}>ЗАО</option>
-                            <option value="CЗАО" {{ app.request.query.all.area=='CЗАО' ? 'selected="selected"' : '' }}>CЗАО</option>
-                            <option value="CАО"  {{ app.request.query.all.area=='CАО' ? 'selected="selected"' : '' }}>CАО</option>
+                            <option value="0" selected>Все округа</option>
+                            <option value="ЦАО"  {{ params.area=='ЦАО' ? 'selected="selected"' : '' }}>ЦАО</option>
+                            <option value="СВАО" {{ params.area=='СВАО' ? 'selected="selected"' : '' }}>СВАО</option>
+                            <option value="ВАО"  {{ params.area=='ВАО' ? 'selected="selected"' : '' }}>ВАО</option>
+                            <option value="ЮВАО" {{ params.area=='ЮВАО' ? 'selected="selected"' : '' }}>ЮВАО</option>
+                            <option value="ЮАО"  {{ params.area=='ЮАО' ? 'selected="selected"' : '' }}>ЮАО</option>
+                            <option value="ЮЗАО" {{ params.area=='ЮЗАО' ? 'selected="selected"' : '' }}>ЮЗАО</option>
+                            <option value="ЗАО"  {{ params.area=='ЗАО' ? 'selected="selected"' : '' }}>ЗАО</option>
+                            <option value="CЗАО" {{ params.area=='CЗАО' ? 'selected="selected"' : '' }}>CЗАО</option>
+                            <option value="CАО"  {{ params.area=='CАО' ? 'selected="selected"' : '' }}>CАО</option>
                         </select>
-                        <input type="text" placeholder="Улица" id="street" name="street" value="{{ app.request.query.all.street is defined ? app.request.query.all.street : '' }}" >
+                        {#<input type="text" placeholder="Улица" id="street" name="street" value="{{ params.street }}" >#}
+                        <div class="check-group">
+                            Формат 3х6
+                            <div class="check {{ params.formatM == 1 ? 'active' : '' }}"></div>
+                            <input type="hidden" name="formatM" value="{{ params.formatM == 1 ? 1 : 0 }}">
+                        </div>
+                        <div class="check-group">
+                            Малые форматы
+                            <div class="check {{ params.formatS == 1 ? 'active' : '' }}"></div>
+                            <input type="hidden" name="formatS" value="{{ params.formatS == 1 ? 1 : 0 }}">
+                        </div>
+                        <div class="check-group">
+                            Большие форматы
+                            <div class="check {{ params.formatL == 1 ? 'active' : '' }}"></div>
+                            <input type="hidden" name="formatL" value="{{ params.formatL == 1 ? 1 : 0 }}">
+                        </div>
+                        <div class="check-group">
+                            Ситиборды
+                            <div class="check {{ params.formatSB == 1 ? 'active' : '' }}"></div>
+                            <input type="hidden" name="formatSB" value="{{ params.formatSB == 1 ? 1 : 0 }}">
+                        </div>
+                        <br />
                         <div class="check-group">
                             Пакеты
                             <div class="check"></div>
                             <input type="hidden" name="packet" value="0">
                         </div>
-                        <select name="type">
-                            <option value="0" disabled selected>Типы конструкций</option>
-                            <option value="1">Щиты</option>
-                        </select>
                         <br />
                         <br />
                         <div style="text-align: right">
@@ -95,41 +111,179 @@
             {% else %}
                 <h2 class="pink" style="text-align: center; display: block">По данному запросу предложений не найдено</h2>
             {% endfor %}
+            <br />
+            <br />
+        </div>
+    </div>
+    <div class="row" id="basket">
+        <div class="col-sm-12">
+            <div id="basket-table">
+                <table class="table">
+                    <tr>
+                        <th>№</th>
+                        <th>Город</th>
+                        <th>Округ</th>
+                        <th>Адрес</th>
+                        <th>Гид</th>
+                        <th>Период</th>
+                        <th>Сторона</th>
+                        <th>Формат</th>
+                        <th>Тип</th>
+                        <th>Свет</th>
+                        <th>GRP</th>
+                        <th>OTS</th>
+                        <th>Стоимость</th>
+                        <th>Налог</th>
+                        <th>Фото</th>
+                        <th>Карта</th>
+                        <th>Статус</th>
+                        <th></th>
+                    </tr>
+                    {% if lists %}
+                        {% set j = 0 %}
+                        {% for k,l in lists %}
+                            {% set j = j+1 %}
+                            <tr>
+                                <td>{{ j }}</td>
+                                <td>{{ l.city }}</td>
+                                <td>{{ l.area }}</td>
+                                <td>{{ l.adrs }}</td>
+                                <td>{{ l.gid }}</td>
+                                <td>{{ l.monthStr }}</td>
+                                <td>{{ l.side }}</td>
+                                <td>{{ l.format }}</td>
+                                <td>{{ l.type }}</td>
+                                <td>{{ l.light == 1 ? 'да' : 'нет' }}</td>
+                                <td>{{ l.grp }}</td>
+                                <td>{{ l.ots|number_format(1, '.', ',') }}</td>
+                                <td>{{ l.price }}</td>
+                                <td>{{ l.tax }} ({{ l.taxType }})</td>
+                                <td style="text-align: center">
+                                    <a href="{{ l.img }}" class="fancybox" data-fancybox-group="gallery">
+                                        <img src="{{ asset('bundles/app/images/img-icon.png') }}" class="icon">
+                                    </a>
+                                </td>
+                                <td style="text-align: center"><img src="{{ asset('bundles/app/images/adrs-icon.png') }}" class="icon"></td>
+                                <td>Свободно</td>
+                                <td style="text-align: center">
+                                    <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon removeBasket" data-id="{{ k }}" title="Удалить элемент">
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr class="bottom-line">
+                            <td colspan="10" style="background: #FFF; border: 0"></td>
+                            <td style="background: #FFF; border: 0" colspan="2">
+                                <b class="green">ИТОГО:</b>
+                            </td>
+                            <td style="background: none;">
+                                <b>{{ fullPrice }}&nbsp;р.</b>
+                            </td>
+                            <td style="background: none;">
+                                <b>{{ fullPrice }}&nbsp;р.</b>
+                            </td>
+                            <td style="background: none;"></td>
+                            <td colspan="3" style="text-align: right; color: #CC0000; background: none; border: 0;">
+                                <a href="{{ path('basket_clear') }}" style="color: #CC0000">Удалить все</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </table>
+                {% if lists %}
+                    <div style="color: #555555; font-size: 13px" class="table-info">
+                        <b>ПОКАЗАТЕЛИ ЭФФЕКТИВНОСТИ</b>
+                        <div style="font-size: 7px;">&nbsp;</div>
+                        <div>
+                            <label>Средняя стоимость размещения за поверхность:</label>
+                            {{ price |number_format(0, '.', ',') }} р.
+                        </div>
+                        <div>
+                            <label>Процентное соотношение сторон A/B в программе:</label>
+                            {{ side }}
+                        </div>
+                        <div>
+                            <label>Средний показатель GRP за программу:</label>
+                            {{ grp }}
+                        </div>
+                        <div>
+                            <label>Средний показатель OTS за программу:</label>
+                            {{ ots }}
+                        </div>
+                        <div>
+                            <label>CРТ за программу:</label>
+                            {% if price != 0 %}
+                                {{ ( ots / price )|number_format(3, '.', ',') }}
+                            {% else %}
+                                0
+                            {% endif %}
+                        </div>
+                        <div>
+                            <label>Количество поверхностей:</label>
+                            {{ count }}
+                        </div>
+                    </div>
+
+                    <br />
+                    <br />
+                    <div style="text-align: right">
+                        <div style="margin-top: -125px; margin-bottom: 100px">
+                    <span class="btn-pink" style="font-size: 16px" data-toggle="modal" data-target=".bs-example-modal-sm">
+                            ПОЛУЧИТЬ МЕДИА ПЛАН
+                    </span>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <br />
+            <br />
         </div>
     </div>
     <br />
     <br />
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        $(document).ready(function(){
-            $('#form-submit').click(function(){
-                $('#form').submit();
-            });
-
-            function orderRefresh(){
-                $.ajax({
-                    url: Routing.generate('order_price'),
-                    method: 'GET',
-                    success: function(msg){
-                        $('#order-btn').html('Заказ на сумму '+msg+' р.');
-                        $('#order-btn').css('display','block');
-                    }
+    {% block javascripts %}
+        {{ parent() }}
+        <script>
+            $(document).ready(function(){
+                $('#form-submit').click(function(){
+                    $('#form').submit();
                 });
-            }
 
-            $('.addBasket').click(function(){
-                $.ajax({
-                    url: Routing.generate('basket_add', {'itemId': $(this).attr('data-id'), 'month': $(this).attr('data-month')}),
-                    method: 'POST',
-                    success: function(msg){
-                        $.notify("позиция добавлена в медиаплан", "success");
-                        orderRefresh();
-                    }
+                function orderRefresh(){
+                    $.ajax({
+                        url: Routing.generate('order_price'),
+                        method: 'GET',
+                        success: function(msg){
+                            $('#order-btn').html('Заказ на сумму '+msg+' р.');
+                            $('#order-btn').css('display','block');
+                        }
+                    });
+                }
+
+                $('.addBasket').click(function(){
+                    var item = $(this);
+                    $.ajax({
+                        url: Routing.generate('basket_add', {'itemId': $(this).attr('data-id'), 'month': $(this).attr('data-month')}),
+                        method: 'POST',
+                        success: function(msg){
+                            $('#basket-table').html(msg);
+                            $('.thrumb').notify("позиция добавлена в медиаплан",{ className: 'success', autoHideDelay: 500, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "bottom"  });
+                            orderRefresh();
+                        }
+                    });
+                });
+                $('#basket-table').on('click','.removeBasket', function(){
+                    var item = $(this)
+                    $.ajax({
+                        url: Routing.generate('basket_remove', {'itemId': $(this).attr('data-id') }),
+                        method: 'POST',
+                        success: function(msg){
+                            $('#basket-table').html(msg);
+                            $.notify("позиция удалена",{ className: 'success', autoHideDelay: 500, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "bottom left"  });
+                            orderRefresh();
+                        }
+                    });
                 });
             });
-        });
-    </script>
-{% endblock %}
+        </script>
+    {% endblock %}

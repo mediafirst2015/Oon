@@ -62,10 +62,14 @@ class BasketController extends Controller
             if ($banner){
                 $lists[$itemId.'-'.$month.'-'.$year] = array(
                     'id' => $banner->getId(),
+                    'city' => $banner->getCity(),
+                    'gid' => $banner->getGid(),
                     'area' => $banner->getArea(),
                     'adrs' => $banner->getAdrs(),
                     'img'  => $banner->getImg(),
                     'price'=> $banner->getPrice(),
+                    'tax'=> $banner->getTax(),
+                    'taxType'=> $banner->getTaxType(),
                     'light'=> $banner->getLight(),
                     'longitude'=>$banner->getLongitude(),
                     'latitude'=>$banner->getLatitude(),
@@ -97,7 +101,6 @@ class BasketController extends Controller
         if ($basket){
             foreach ($basket as $key=>$val){
                 $i ++;
-                $lists[] = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($key);
                 $grp += $val['grp'];
                 $ots += $val['ots'];
                 if ($val['side'] == 'A'){
@@ -208,14 +211,56 @@ class BasketController extends Controller
         $lists = $session->get('lists');
         if (isset($lists[$itemId])){
             unset($lists[$itemId]);
-            $status = 'remove';
+            $session->set('lists',$lists);
+            $lists = array();
+            $i = 0;
+            $grp = 0;
+            $ots = 0;
+            $sideA = 0;
+            $side = '';
+            $sideB = 0;
+            $price = 0;
+            $fullprice = 0;
+            $basket = $session->get('lists');
+            if ($basket){
+                foreach ($basket as $key=>$val){
+                    $i ++;
+                    $lists[] = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($key);
+                    $grp += $val['grp'];
+                    $ots += $val['ots'];
+                    if ($val['side'] == 'A'){
+                        $sideA ++;
+                    }else{
+                        $sideB ++;
+                    }
+                    $price += $val['price'];
+                }
+                $lists = $basket;
+                $grp = $grp / $i;
+                $ots = $ots / $i;
+                $fullprice = $price;
+                $price = $price / $i;
+                $grp = number_format($grp,2,'.','');
+                $ots = number_format($ots,2,'.','');
+                $price = number_format($price,2,'.','');
+                $sideA = number_format(100/$i*$sideA,0,'.','');
+                $sideB = number_format(100/$i*$sideB,0,'.','');
+                $side = $sideA.'/'.$sideB;
+            }
+            $params = array(
+                'lists' => $lists,
+                'grp' => $grp,
+                'ots'=>$ots,
+                'price' => $price,
+                'count' => $i,
+                'side'=> $side,
+                'fullPrice' => $fullprice,
+            );
         }else{
             $status = 'error';
         }
-        $session->set('lists',$lists);
-        $count = count($lists);
         if ($request->getMethod() == 'POST'){
-            return new JsonResponse(array('status' => $status, 'count' => $count));
+            return $this->render('AppBundle:Basket:table.html.twig',$params);
         }else{
 //            $referer = $request->headers->get('referer');
 //            return $this->redirect($referer);

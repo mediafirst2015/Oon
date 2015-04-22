@@ -86,6 +86,7 @@ class DefaultController extends Controller
             'formatSB' => $request->query->get('formatSB'),
             'light' => $request->query->get('light'),
             'street' => $request->query->get('street'),
+            'city' => $request->query->get('city'),
         );
 
         if ($params['formatS'] == null){
@@ -146,7 +147,7 @@ class DefaultController extends Controller
         if ($basket){
             foreach ($basket as $key=>$val){
                 $i ++;
-                $lists[] = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($key);
+//                $lists[] = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($key);
                 $grp += $val['grp'];
                 $ots += $val['ots'];
                 if ($val['side'] == 'A'){
@@ -191,12 +192,77 @@ class DefaultController extends Controller
         $params = array(
             'city' => $request->query->get('city'),
             'area' => $request->query->get('area'),
-            'street' => $request->query->get('street'),
-            'packet' => $request->query->get('packet'),
-            'type' => $request->query->get('type'),
+//            'street' => $request->query->get('street'),
+            'formatS' => $request->query->get('formatS'),
+            'formatM' => $request->query->get('formatM'),
+            'formatL' => $request->query->get('formatL'),
+            'formatSB' => $request->query->get('formatSB'),
         );
-        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->filterHot($params);
-        return array('banners' => $banners);
+
+        if ($params['formatS'] == null){
+            $params['formatS'] = 1;
+        }
+        if ($params['formatM'] == null){
+            $params['formatM'] = 1;
+        }
+        if ($params['formatL'] == null){
+            $params['formatL'] = 1;
+        }
+        if ($params['formatSB'] == null){
+            $params['formatSB'] = 1;
+        }
+
+        $page = $request->query->get('page');
+        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->filterHot($params,$page);
+
+        $lists = array();
+        $i = 0;
+        $grp = 0;
+        $ots = 0;
+        $sideA = 0;
+        $side = '';
+        $sideB = 0;
+        $price = 0;
+        $fullprice = 0;
+        $session = $request->getSession();
+        $basket = $session->get('lists');
+        if ($basket){
+            foreach ($basket as $key=>$val){
+                $i ++;
+//                $lists[] = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($key);
+                $grp += $val['grp'];
+                $ots += $val['ots'];
+                if ($val['side'] == 'A'){
+                    $sideA ++;
+                }else{
+                    $sideB ++;
+                }
+                $price += $val['price'];
+            }
+            $lists = $basket;
+            $grp = $grp / $i;
+            $ots = $ots / $i;
+            $fullprice = $price;
+            $price = $price / $i;
+            $grp = number_format($grp,2,'.','');
+            $ots = number_format($ots,2,'.','');
+            $price = number_format($price,2,'.','');
+            $sideA = number_format(100/$i*$sideA,0,'.','');
+            $sideB = number_format(100/$i*$sideB,0,'.','');
+            $side = $sideA.'/'.$sideB;
+        }
+        return array(
+            'params' => $params,
+            'lists' => $lists,
+            'grp' => $grp,
+            'ots'=>$ots,
+            'price' => $price,
+            'count' => $i,
+            'side'=> $side,
+            'fullPrice' => $fullprice,
+            'banners' => $banners
+        );
+
     }
 
 }

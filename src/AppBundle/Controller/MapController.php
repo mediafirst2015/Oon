@@ -35,7 +35,10 @@ class MapController extends Controller
 
         $session = $request->getSession();
         $myBasket = $session->get('lists');
+        $city = $request->request->get('city');
+
         $area = $request->request->get('area');
+
         $street = $request->request->get('street');
         if ($area == 'null'){
             $area = null;
@@ -62,10 +65,11 @@ class MapController extends Controller
         $id = $request->request->get('id');
 
 
-        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->filter($id,$street,$area,$formatS,$formatM,$formatL,$formatSB,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax);
+        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->filter($id,$city,$area,$formatS,$formatM,$formatL,$formatSB,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax);
         $objects = array();
         if ($banners != null){
             foreach ($banners as $banner){
+                $city = $banner->getCity();
                 $adrs   = $banner->getAdrs();
                 $img    = $banner->getImg();
                 $img    = str_replace(' ','%20', $img);
@@ -80,6 +84,7 @@ class MapController extends Controller
                 $months = $banner->getMonths();
 
                 $params = array(
+                    'city'   => $city,
                     'adrs'   => $adrs,
                     'img'    => $img,
                     'id'     => $id,
@@ -117,6 +122,7 @@ class MapController extends Controller
             foreach ($banners as $banner){
                 $b = $banner;
                 $banner = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($banner['id']);
+                $city   = $banner->getCity();
                 $adrs   = $banner->getAdrs();
                 $img    = $banner->getImg();
                 $img    = str_replace(' ','%20', $img);
@@ -132,6 +138,7 @@ class MapController extends Controller
 
                 $params = array(
                     'adrs'   => $adrs,
+                    'city'   => $city,
                     'img'    => $img,
                     'id'     => $id,
                     'price'  => $price,

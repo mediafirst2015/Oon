@@ -19,13 +19,13 @@
         <td>Формат</td>
         <td>{{ object.format }}</td>
     </tr>
-    <tr>
-        <td>Тип</td>
-        <td>{{ object.type }}</td>
-    </tr>
+    {#<tr>#}
+        {#<td>Тип</td>#}
+        {#<td>{{ object.type }}</td>#}
+    {#</tr>#}
     <tr>
         <td>Свет</td>
-        <td>{{ object.light }}</td>
+        <td>{{ object.light == 1 ? 'Да' : 'нет' }}</td>
     </tr>
     <tr>
         <td>GRP</td>
@@ -36,7 +36,6 @@
         <td>{{ object.ots }}</td>
     </tr>
 </table>
-<br />
 <table style='margin: 0 auto' class="month-table">
     <tr>
         <td>Янв</td>

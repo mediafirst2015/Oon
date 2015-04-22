@@ -451,6 +451,9 @@ input.mini {
   width: 25px;
   box-shadow: none;
 }
+.removeBasket {
+  cursor: pointer;
+}
 .month-table {
   width: 100%;
 }

@@ -19,22 +19,25 @@
         <th>Статус</th>
         <th></th>
     </tr>
+    {% if lists %}
+    {% set j = 0 %}
     {% for k,l in lists %}
+        {% set j = j+1 %}
         <tr>
-            <td>{{ k }}</td>
-            <td>Москва</td>
+            <td>{{ j }}</td>
+            <td>{{ l.city }}</td>
             <td>{{ l.area }}</td>
             <td>{{ l.adrs }}</td>
-            <td>{{ l.id }}</td>
+            <td>{{ l.gid }}</td>
             <td>{{ l.monthStr }}</td>
             <td>{{ l.side }}</td>
             <td>{{ l.format }}</td>
             <td>{{ l.type }}</td>
             <td>{{ l.light == 1 ? 'да' : 'нет' }}</td>
             <td>{{ l.grp }}</td>
-            <td>{{ l.ots }}</td>
+            <td>{{ l.ots|number_format(1, '.', ',') }}</td>
             <td>{{ l.price }}</td>
-            <td>{{ l.price/0.20 }}</td>
+            <td>{{ l.tax }} ({{ l.taxType }})</td>
             <td style="text-align: center">
                 <a href="{{ l.img }}" class="fancybox" data-fancybox-group="gallery">
                     <img src="{{ asset('bundles/app/images/img-icon.png') }}" class="icon">
@@ -43,9 +46,9 @@
             <td style="text-align: center"><img src="{{ asset('bundles/app/images/adrs-icon.png') }}" class="icon"></td>
             <td>Свободно</td>
             <td style="text-align: center">
-                <a href="{{ path('basket_remove', { 'itemId' : k } ) }}">
-                    <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon" title="Удалить элемент">
-                </a>
+                {#<a href="{{ path('basket_remove', { 'itemId' : k } ) }}">#}
+                <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon removeBasket" data-id="{{ k }}" title="Удалить элемент">
+                {#</a>#}
             </td>
         </tr>
     {% endfor %}
@@ -62,7 +65,7 @@
         </td>
         <td style="background: none;"></td>
         <td colspan="3" style="text-align: right; color: #CC0000; background: none; border: 0;">
-            <a href="{{ path('basket_clear') }}" style="color: #CC0000">Обнулить заказ</a>
+            <a href="{{ path('basket_clear') }}" style="color: #CC0000">Удалить все</a>
         </td>
     </tr>
 </table>
@@ -84,11 +87,15 @@
     </div>
     <div>
         <label>Средний показатель OTS за программу:</label>
-        {{ ots }}
+        {{ ots|number_format(1, '.', ',') }}
     </div>
     <div>
         <label>CРТ за программу:</label>
-        {{ ( ots / price )|number_format(3, '.', ',') }}
+        {% if ( price != 0) %}
+            {{ ( ots / price )|number_format(3, '.', ',') }}
+        {% else %}
+            0
+        {% endif %}
     </div>
     <div>
         <label>Количество поверхностей:</label>
@@ -100,8 +107,9 @@
 <br />
 <div style="text-align: right">
     <div style="margin-top: -125px; margin-bottom: 100px">
-                    <span class="btn-pink" style="font-size: 16px" data-toggle="modal" data-target=".bs-example-modal-sm">
-                            ПОЛУЧИТЬ МЕДИА ПЛАН
-                    </span>
+                        <span class="btn-pink" style="font-size: 16px" data-toggle="modal" data-target=".bs-example-modal-sm">
+                                ПОЛУЧИТЬ МЕДИА ПЛАН
+                        </span>
     </div>
 </div>
+{% endif %}

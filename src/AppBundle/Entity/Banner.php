@@ -16,6 +16,11 @@ class Banner extends BaseEntity
 {
 
     /**
+     * @ORM\Column(type="string", length=15 ,nullable=true)
+     */
+    protected $gid;
+
+    /**
      * @ORM\OneToMany(targetEntity="Order", mappedBy="banner")
      */
     protected $orders;
@@ -29,6 +34,11 @@ class Banner extends BaseEntity
      * @ORM\OneToMany(targetEntity="Month", mappedBy="banner")
      */
     protected $months;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $city;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -77,6 +87,16 @@ class Banner extends BaseEntity
     protected $price = 0;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $tax;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $taxType;
+
+    /**
      * Долгота
      * @ORM\Column(type="string", nullable=true)
      */
@@ -100,7 +120,7 @@ class Banner extends BaseEntity
     protected $grp;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="float", scale=2, nullable=true)
      */
     protected $ots;
 
@@ -456,6 +476,70 @@ class Banner extends BaseEntity
     public function setHot($hot)
     {
         $this->hot = $hot;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGid()
+    {
+        return $this->gid;
+    }
+
+    /**
+     * @param mixed $gid
+     */
+    public function setGid($gid)
+    {
+        $this->gid = $gid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTax()
+    {
+        return $this->tax;
+    }
+
+    /**
+     * @param mixed $tax
+     */
+    public function setTax($tax)
+    {
+        $this->tax = $tax;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTaxType()
+    {
+        return $this->taxType;
+    }
+
+    /**
+     * @param mixed $taxType
+     */
+    public function setTaxType($taxType)
+    {
+        $this->taxType = $taxType;
     }
 
 

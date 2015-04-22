@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityRepository;
 
 class BannerRepository extends EntityRepository
 {
-    public function filter($id, $street, $area,$formatS,$formatM,$formatL,$formatSB,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax)
+    public function filter($id,$city,$area,$formatS,$formatM,$formatL,$formatSB,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax)
     {
 
         $qb = $this->_em->createQueryBuilder();
@@ -18,9 +18,10 @@ class BannerRepository extends EntityRepository
             if ($area != null ){
                 $qb->andWhere("b.area = '$area'");
             }
-//            if ($street != null ){
-//                $qb->andWhere("b.adrs LIKE '%$street%'");
-//            }
+
+            if ($city != null){
+                $qb->andWhere("b.city = '$city'");
+            }
 
             $format = null;
             if ($formatS != null && $formatS != 0){
@@ -63,22 +64,47 @@ class BannerRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function filterHot($params)
+    public function filterHot($params, $page)
     {
+        if ( $page == null){
+            $page = 0;
+        }
         $qb = $this->_em->createQueryBuilder();
         $qb->select('b')
             ->from('AppBundle:Banner','b')
             ->where('b.enabled = 1')
             ->andWhere('b.hot = 1');
-        if ($params['area'] != null ){
-            $qb->andWhere("b.area = '$params[area]'");
+
+        if ($params['area'] != null && $params['area'] != 0 && $params['area'] != '0'){
+            $qb->andWhere("b.area = '".$params['area']."'");
         }
-        if ($params['street'] != null ){
-            $qb->andWhere("b.adrs LIKE '%$params[street]%'");
+
+        if ($params['city'] != null){
+            $qb->andWhere("b.city = '".$params['city']."'");
         }
-//        if ($params['packet'] != null ){
-//            $qb->andWhere("b.enabled = '%$params[packet]%'");
-//        }
+
+        $format = null;
+        if ($params['formatS'] != null && $params['formatS'] != 0){
+            $format .=" b.format='small'  ";
+        }
+        if ($params['formatM'] != null && $params['formatM'] != 0){
+            $format .= ($format == null ? '' : ' OR ')." b.format='3x6'  ";
+        }
+        if ($params['formatL'] != null && $params['formatL'] != 0){
+            $format .= ($format == null ? '' : ' OR ')." b.format='big'  ";
+        }
+        if ($params['formatSB'] != null && $params['formatSB'] != 0){
+            $format .= ($format == null ? '' : ' OR ')." b.format='cityboard'  ";
+        }
+
+        if ($format != null ){
+            $qb->andWhere("( $format )");
+        }
+
+        $qb->setFirstResult($page)
+            ->setMaxResults(4);
+
+
         return $qb->getQuery()->getResult();
     }
 }
