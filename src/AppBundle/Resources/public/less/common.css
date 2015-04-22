@@ -189,15 +189,15 @@ footer .title {
   text-align: left;
 }
 select {
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: white;
   box-shadow: 0px 1px 16px 0px rgba(1, 1, 1, 0.51);
   width: 100%;
   margin-bottom: 10px;
   padding-left: 20px;
-  height: 43px;
+  height: 30px;
   color: #737272;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 400;
   text-align: left;
   border: 0;
@@ -207,15 +207,15 @@ select.mini {
   width: 95px;
 }
 input {
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: white;
   box-shadow: 0px 1px 16px 0px rgba(1, 1, 1, 0.51);
   width: 100%;
   margin-bottom: 10px;
   padding-left: 20px;
-  height: 43px;
+  height: 30px;
   color: #737272;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 400;
   text-align: left;
   border: 0;
@@ -225,29 +225,29 @@ input.mini {
   width: 150px;
 }
 .check-group {
-  height: 34px;
+  height: 24px;
   line-height: 34px;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 400;
   text-align: left;
   color: #737272;
   padding-left: 20px;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 .check-group .check {
   float: right;
   background-image: url("/bundles/app/images/checkbox.png");
-  width: 35px;
-  height: 34px;
+  width: 25px;
+  height: 24px;
 }
 .check-group .check.active {
   background-image: url("/bundles/app/images/checkbox-act.png");
 }
 .input-group {
-  height: 34px;
-  line-height: 34px;
-  font-size: 18px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 15px;
   font-weight: 400;
   text-align: left;
   color: #737272;

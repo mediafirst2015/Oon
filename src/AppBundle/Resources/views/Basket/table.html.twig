@@ -12,8 +12,19 @@
         <th>Свет</th>
         <th>GRP</th>
         <th>OTS</th>
-        <th>Стоимость</th>
+        <th>Стоимость
+            без учёта
+            налогов</th>
         <th>Налог</th>
+        <th>Стоимость
+            с учётом
+            налогов</th>
+        <th>
+            Стоимость
+            монтажа
+            с учётом
+            налогов
+        </th>
         <th>Фото</th>
         <th>Карта</th>
         <th>Статус</th>
@@ -37,7 +48,9 @@
             <td>{{ l.grp }}</td>
             <td>{{ l.ots|number_format(1, '.', ',') }}</td>
             <td>{{ l.price }}</td>
-            <td>{{ l.tax }} ({{ l.taxType }})</td>
+            <td>{{ l.taxType }}</td>
+            <td>{{ l.price }}</td>
+            <td>{{ l.priceDeploy }}</td>
             <td style="text-align: center">
                 <a href="{{ l.img }}" class="fancybox" data-fancybox-group="gallery">
                     <img src="{{ asset('bundles/app/images/img-icon.png') }}" class="icon">
