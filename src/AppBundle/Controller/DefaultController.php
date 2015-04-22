@@ -23,7 +23,7 @@ class DefaultController extends Controller
 //        $objects = $this->getDoctrine()->getRepository('AppBundle:Banner')->findAll();
 
 
-        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->findBy(array('enabled'=> true,'hot' => true),array(),3);
+        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->findBy(array('enabled'=> true,'hot' => true),array(),4);
         return array('banners'=> $banners);
     }
 

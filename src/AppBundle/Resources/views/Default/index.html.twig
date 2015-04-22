@@ -139,38 +139,52 @@
                             <option value="12">Дек</option>
                         </select>
                     </div>
+                    <br />
                     <div class="slider-group">
-                        <span class="caption">GRP</span>
+                        <span class="caption" style="float: left; margin-top: 8px;">GRP</span>
                         <span id="grp-amount" class="val"></span>
-                        <span class="slider" id="grp"></span>
+                        <span class="slider" id="grp" style="float: right"></span>
+                        <input type="hidden" name="grp-min" id="grp-min" value="0">
+                        <input type="hidden" name="grp-max" id="grp-max" value="3">
                     </div>
+                    <br />
+                    <br />
                     <div class="slider-group">
-                        <span class="caption">OTS</span>
+                        <span class="caption" style="float: left; margin-top: 8px;">OTS</span>
                         <span id="ots-amount" class="val"></span>
-                        <span class="slider"  id="ots"></span>
+                        <span class="slider"  id="ots" style="float: right"></span>
+                        <input type="hidden" name="ots-min" id="ots-min" value="0">
+                        <input type="hidden" name="ots-max" id="ots-max" value="500">
                     </div>
+                    <br />
+                    <br />
                     <div class="slider-group">
-                        <span class="caption">Стоимость</span>
+                        <span class="caption" style="float: left; margin-top: 8px;">Стоимость</span>
                         <span id="price-amount" class="val"></span>
-                        <span class="slider" id="price"></span>
+                        <span class="slider" id="price" style="float: right"></span>
+                        <input type="hidden" name="price-min" id="price-min" value="0">
+                        <input type="hidden" name="price-max" id="price-max" value="1000">
                     </div>
-                    <div class="check-btn-group">
-                        <span class="check-btn">
-                            Щиты 3х6
-                            <input type="hidden" value="0">
-                        </span>
-                        <span class="check-btn">
-                            Большие форматы
-                            <input type="hidden" value="0">
-                        </span>
-                        <span class="check-btn">
-                            Ситиборды
-                            <input type="hidden" value="0">
-                        </span>
-                        <span class="check-btn">
-                            Малые форматы
-                            <input type="hidden" value="0">
-                        </span>
+                    <br style="clear: both"/>
+                    <div class="check-group">
+                        Формат 3х6
+                        <div class="check active"></div>
+                        <input type="hidden" name="formatM" value="1">
+                    </div>
+                    <div class="check-group">
+                        Малые форматы
+                        <div class="check active"></div>
+                        <input type="hidden" name="formatS" value="1">
+                    </div>
+                    <div class="check-group">
+                        Большие форматы
+                        <div class="check active"></div>
+                        <input type="hidden" name="formatL" value="1">
+                    </div>
+                    <div class="check-group">
+                        Ситиборды
+                        <div class="check active"></div>
+                        <input type="hidden" name="formatSB" value="1">
                     </div>
                     <br />
                     <br />
@@ -201,7 +215,7 @@
         </div>
         <div class="col-sm-4">
             <div class="box">
-                <div class="form" style="  height: 625px;">
+                <div class="form" style="  height: 775px;">
                     <div class="title pink">Горящие предложения</div>
                     <br />
                     {% for b in banners %}
@@ -422,6 +436,8 @@
                 });
                 $( "#price-amount" ).html( "" + $( "#price" ).slider( "values", 0 ) +
                 " т.р. - " + $( "#price" ).slider( "values", 1 ) + ' т.р.' );
+
+
 
                 $('#form-top-submit').click(function(){
                     $('#form-top').submit();
