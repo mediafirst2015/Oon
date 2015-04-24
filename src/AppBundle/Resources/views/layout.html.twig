@@ -114,11 +114,16 @@
                 </div>
             </div>
         </header>
+        {% if app.request.attributes.get('_route_params').url is defined  %}
+            {% set url = app.request.attributes.get('_route_params').url %}
+        {% else %}
+            {% set url = null %}
+        {% endif %}
         <div class="container">
             <div class="top-menu">
-                <a href="{{ path('about') }}"><span class="btn-top-menu">О нас</span></a>
+                <a href="{{ path('page',{'url' : 'about'}) }}"><span class="btn-top-menu {{ url == 'about' ? 'act' : '' }}">О нас</span></a>
                 <a href="#"><span class="btn-top-menu">Клиенты</span></a>
-                <a href="{{ path('contacts') }}"><span class="btn-top-menu">Контакты</span></a>
+                <a href="{{ path('page',{'url' : 'contacts'}) }}"><span class="btn-top-menu {{ url == 'contacts' ? 'act' : '' }}">Контакты</span></a>
                 &nbsp;&nbsp;&nbsp;
                 <span class="btn-top-menu-search">
                     Поиск щитов

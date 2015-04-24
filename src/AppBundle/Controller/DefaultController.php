@@ -51,11 +51,14 @@ class DefaultController extends Controller
      */
     public function pageAction($url)
     {
-//        if ($url == 'about'){
-//            return $this->render('AppBundle:Default:about.html.twig');
-//        }else{
+        if ($url == 'about'){
+            return $this->render('AppBundle:Default:about.html.twig');
+        }elseif($url == 'contacts'){
+            return $this->render('AppBundle:Default:about.html.twig');
+        }else{
         $page = $this->getDoctrine()->getRepository('AppBundle:Page')->findOneByUrl($url);
         return array('page' => $page);
+        }
 //        }
     }
 
