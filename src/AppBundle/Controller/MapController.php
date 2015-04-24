@@ -102,6 +102,7 @@ class MapController extends Controller
                     'coords' => [ $banner->getLatitude(), $banner->getLongitude()],
                     'alt' => $banner->getAdrs(),
                     'id' => $banner->getId(),
+                    'hot' => $banner->getHot(),
 //                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
                 );
             }
@@ -154,6 +155,7 @@ class MapController extends Controller
                     'coords' => [ $banner->getLatitude(), $banner->getLongitude()],
                     'alt' => $banner->getAdrs(),
                     'id' => $banner->getId(),
+                    'hot' => $banner->getHot(),
 //                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
                 );
             }

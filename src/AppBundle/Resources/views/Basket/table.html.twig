@@ -60,18 +60,18 @@
             <td>{{ l.priceDeploy ? priceDeploy : 0 }}</td>
             <td style="text-align: center">
                 <a href="{{ l.img }}" class="fancybox" data-fancybox-group="gallery">
-                    <img src="{{ asset('bundles/app/images/img-icon.png') }}" class="icon">
+                    <img src="{{ asset('bundles/app/images/img-icon.png') }}" class="icon" title="Показать фотографию">
                 </a>
             </td>
             <td style="text-align: center">
                 <a href="{{ path('map') }}?bannerId={{ l.id }}" target="_top">
-                    <img src="{{ asset('bundles/app/images/adrs-icon.png') }}" class="icon">
+                    <img src="{{ asset('bundles/app/images/adrs-icon.png') }}" class="icon" title="Показать щит на карте">
                 </a>
             </td>
             <td>Свободно</td>
             <td style="text-align: center">
                 {#<a href="{{ path('basket_remove', { 'itemId' : k } ) }}">#}
-                <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon removeBasket" data-id="{{ k }}" title="Удалить элемент">
+                <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon removeBasket" data-id="{{ k }}" title="Удалить позицию из медиаплана">
                 {#</a>#}
             </td>
         </tr>

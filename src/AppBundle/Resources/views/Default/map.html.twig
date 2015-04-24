@@ -249,6 +249,11 @@
                         var placemarks = [];
                         var j = 0;
                         for (var i in objects) {
+                            if (objects[i].hot != '0' && objects[i].hot != 0 && objects[i].hot != null ){
+                                var img = '/bundles/app/images/fire.gif';
+                            }else{
+                                var img = '/bundles/app/images/mapIcon3.png';
+                            }
                             placemarks[j] = new ym.GeoObject({
                                         geometry: {
                                             type: "Point",
@@ -265,7 +270,7 @@
                                         balloonPanelMaxMapArea: 0,
                                         openEmptyBalloon: true,
                                         iconLayout: 'default#image',
-                                        iconImageHref: '/bundles/app/images/mapIcon3.png',
+                                        iconImageHref: img,
                                         iconImageSize: [16, 16]
                                     }
                             );
