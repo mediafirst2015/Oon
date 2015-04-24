@@ -104,7 +104,7 @@ class BasketController extends Controller
                 $i ++;
                 $grp += $val['grp'];
                 $ots += $val['ots'];
-                if ($val['side'] == 'A'){
+                if ($val['side'] == 'А' || $val['side'] == 'A'){
                     $sideA ++;
                 }else{
                     $sideB ++;
@@ -229,7 +229,7 @@ class BasketController extends Controller
                     $lists[] = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($key);
                     $grp += $val['grp'];
                     $ots += $val['ots'];
-                    if ($val['side'] == 'A'){
+                    if ($val['side'] == 'А' || $val['side'] == 'A'){
                         $sideA ++;
                     }else{
                         $sideB ++;

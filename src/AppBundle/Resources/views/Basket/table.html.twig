@@ -14,16 +14,16 @@
         <th>OTS</th>
         <th>Стоимость
             без учёта
-            налогов</th>
+            налогов (р.)</th>
         <th>Налог</th>
         <th>Стоимость
             с учётом
-            налогов</th>
+            налогов (р.)</th>
         <th>
             Стоимость
             монтажа
             с учётом
-            налогов
+            налогов (р.)
         </th>
         <th>Фото</th>
         <th>Карта</th>
@@ -50,13 +50,17 @@
             <td>{{ l.price }}</td>
             <td>{{ l.taxType }}</td>
             <td>{{ l.price }}</td>
-            <td>{{ l.priceDeploy }}</td>
+            <td>{{ l.priceDeploy ? priceDeploy : 0 }}</td>
             <td style="text-align: center">
                 <a href="{{ l.img }}" class="fancybox" data-fancybox-group="gallery">
                     <img src="{{ asset('bundles/app/images/img-icon.png') }}" class="icon">
                 </a>
             </td>
-            <td style="text-align: center"><img src="{{ asset('bundles/app/images/adrs-icon.png') }}" class="icon"></td>
+            <td style="text-align: center">
+                <a href="{{ path('map') }}?bannerId={{ l.id }}" target="_top">
+                    <img src="{{ asset('bundles/app/images/adrs-icon.png') }}" class="icon">
+                </a>
+            </td>
             <td>Свободно</td>
             <td style="text-align: center">
                 {#<a href="{{ path('basket_remove', { 'itemId' : k } ) }}">#}
@@ -73,10 +77,11 @@
         <td style="background: none;">
             <b>{{ fullPrice }}&nbsp;р.</b>
         </td>
+        <td style="background: none;"></td>
         <td style="background: none;">
             <b>{{ fullPrice }}&nbsp;р.</b>
         </td>
-        <td style="background: none;"></td>
+        <td style="background: none; border: 0"></td>
         <td colspan="3" style="text-align: right; color: #CC0000; background: none; border: 0;">
             <a href="{{ path('basket_clear') }}" style="color: #CC0000">Удалить все</a>
         </td>
@@ -90,7 +95,7 @@
     <div style="font-size: 7px;">&nbsp;</div>
     <div>
         <label>Средняя стоимость размещения за поверхность:</label>
-        {{ price |number_format(0, '.', ',') }} р.
+        {{ price |number_format(0, '.', '') }} р.
     </div>
     <div>
         <label>Процентное соотношение сторон A/B в программе:</label>
@@ -102,12 +107,12 @@
     </div>
     <div>
         <label>Средний показатель OTS за программу:</label>
-        {{ ots|number_format(1, '.', ',') }}
+        {{ ots|number_format(1, '.', '') }}
     </div>
     <div>
         <label>CРТ за программу:</label>
         {% if ( price != 0) %}
-            {{ ( price / ots )|number_format(3, '.', ',') }}
+            {{ ( price / ots )|number_format(0, '.', '') }}
         {% else %}
             0
         {% endif %}

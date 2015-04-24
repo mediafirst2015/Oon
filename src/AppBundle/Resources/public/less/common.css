@@ -421,6 +421,8 @@ input.mini {
   width: 100%;
   border-radius: 10px;
   box-shadow: 0 1px 16px 0 rgba(1, 1, 1, 0.51);
+  min-width: 330px;
+  min-height: 200px;
 }
 .hot-box .hot-img .hot-icon {
   position: absolute;
@@ -557,4 +559,11 @@ input.mini {
 .pagination > li > a,
 .pagination > li > span {
   color: #016b04;
+}
+.table > tbody > tr > th {
+  font-size: 13px !important;
+  vertical-align: middle !important;
+}
+.table > tbody > tr > td {
+  font-size: 12px !important;
 }
