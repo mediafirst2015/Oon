@@ -150,122 +150,125 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="box" style="height: 620px;">
-                <div class="form">
-                    <div class="title">Поиск щитов по параметрам</div>
-                    <br />
-                    <select>
-                        <option value="0" disabled selected>Город</option>
-                        <option value="1">Москва</option>
-                        <option value="2">Подольск</option>
-                    </select>
-                    <br />
-                    <select>
-                        <option value="0" disabled selected>Округ</option>
-                        <option value="ЦАО">ЦАО</option>
-                        <option value="СВАО">СВАО</option>
-                        <option value="ВАО">ВАО</option>
-                        <option value="ЮВАО">ЮВАО</option>
-                        <option value="ЮАО">ЮАО</option>
-                        <option value="ЮЗАО">ЮЗАО</option>
-                        <option value="ЗАО">ЗАО</option>
-                        <option value="CЗАО">CЗАО</option>
-                        <option value="CАО">CАО</option>
+                <form method="GET" action="{{ path('map') }}" id="form-map">
+                    <div class="form">
+                        <div class="title">Поиск щитов по параметрам</div>
+                        <br />
+                        <select name="city">
+                            <option value="0" disabled selected>Город</option>
+                            <option value="1">Москва</option>
+                        </select>
+                        <br />
+                        <select name="area">
+                            <option value="0" disabled selected>Округ</option>
+                            <option value="ЦАО">ЦАО</option>
+                            <option value="СВАО">СВАО</option>
+                            <option value="ВАО">ВАО</option>
+                            <option value="ЮВАО">ЮВАО</option>
+                            <option value="ЮАО">ЮАО</option>
+                            <option value="ЮЗАО">ЮЗАО</option>
+                            <option value="ЗАО">ЗАО</option>
+                            <option value="CЗАО">CЗАО</option>
+                            <option value="CАО">CАО</option>
 
-                    </select>
-                    <br />
-                    <input type="text" placeholder="Улица" id="street">
-                    {#<div class="check-group">#}
-                    {#Пакеты#}
-                    {#<div class="check"></div>#}
-                    {#<input type="hidden" name="packets" value="0">#}
-                    {#</div>#}
-                    <div class="input-group" style="padding-left: 20px">
-                        Период
-                        <div style="float: right;">
-                            с&nbsp;&nbsp;
-                            <select class="mini">
-                                <option value="1" >Янв</option>
-                                <option value="2" >Фев</option>
-                                <option value="3" >Мар</option>
-                                <option value="4" >Апр</option>
-                                <option value="5" >Май</option>
-                                <option value="6" >Июн</option>
-                                <option value="7" >Июл</option>
-                                <option value="8" >Авг</option>
-                                <option value="9" >Сен</option>
-                                <option value="10">Окт</option>
-                                <option value="11">Ноя</option>
-                                <option value="12">Дек</option>
-                            </select>
-                            &nbsp;&nbsp;по&nbsp;&nbsp;
-                            <select class="mini">
-                                <option value="1" >Янв</option>
-                                <option value="2" >Фев</option>
-                                <option value="3" >Мар</option>
-                                <option value="4" >Апр</option>
-                                <option value="5" >Май</option>
-                                <option value="6" >Июн</option>
-                                <option value="7" >Июл</option>
-                                <option value="8" >Авг</option>
-                                <option value="9" >Сен</option>
-                                <option value="10">Окт</option>
-                                <option value="11">Ноя</option>
-                                <option value="12">Дек</option>
-                            </select>
+                        </select>
+                        <br />
+                        <input type="text" placeholder="Улица" id="street" name="street">
+                        {#<div class="check-group">#}
+                        {#Пакеты#}
+                        {#<div class="check"></div>#}
+                        {#<input type="hidden" name="packets" value="0">#}
+                        {#</div>#}
+                        <div class="input-group" style="padding-left: 20px">
+                            Период
+                            <div style="float: right;">
+                                с&nbsp;&nbsp;
+                                <select class="mini" name="dateStart">
+                                    <option value="1" >Янв</option>
+                                    <option value="2" >Фев</option>
+                                    <option value="3" >Мар</option>
+                                    <option value="4" >Апр</option>
+                                    <option value="5" >Май</option>
+                                    <option value="6" >Июн</option>
+                                    <option value="7" >Июл</option>
+                                    <option value="8" >Авг</option>
+                                    <option value="9" >Сен</option>
+                                    <option value="10">Окт</option>
+                                    <option value="11">Ноя</option>
+                                    <option value="12">Дек</option>
+                                </select>
+                                &nbsp;&nbsp;по&nbsp;&nbsp;
+                                <select class="mini" name="dateEnd">
+                                    <option value="1" >Янв</option>
+                                    <option value="2" >Фев</option>
+                                    <option value="3" >Мар</option>
+                                    <option value="4" >Апр</option>
+                                    <option value="5" >Май</option>
+                                    <option value="6" >Июн</option>
+                                    <option value="7" >Июл</option>
+                                    <option value="8" >Авг</option>
+                                    <option value="9" >Сен</option>
+                                    <option value="10">Окт</option>
+                                    <option value="11">Ноя</option>
+                                    <option value="12">Дек</option>
+                                </select>
+                            </div>
                         </div>
+                        <br />
+                        <div class="slider-group">
+                            <span class="caption" style="float: left; margin-top: 8px;">GRP</span>
+                            <span id="grp-amount" class="val"></span>
+                            <span class="slider" id="grp" style="float: right"></span>
+                            <input type="hidden" name="grp-min" id="grp-min" value="0">
+                            <input type="hidden" name="grp-max" id="grp-max" value="3">
+                        </div>
+                        <br />
+                        <div class="slider-group">
+                            <span class="caption" style="float: left; margin-top: 8px;">OTS</span>
+                            <span id="ots-amount" class="val"></span>
+                            <span class="slider"  id="ots" style="float: right"></span>
+                            <input type="hidden" name="ots-min" id="ots-min" value="0">
+                            <input type="hidden" name="ots-max" id="ots-max" value="500">
+                        </div>
+                        <br />
+                        <div class="slider-group">
+                            <span class="caption" style="float: left; margin-top: 8px;">Стоимость</span>
+                            <span id="price-amount" class="val"></span>
+                            <span class="slider" id="price" style="float: right"></span>
+                            <input type="hidden" name="price-min" id="price-min" value="0">
+                            <input type="hidden" name="price-max" id="price-max" value="1000">
+                        </div>
+                        <br style="clear: both"/>
+                        Форматы
+                        <div class="check-group">
+                            Формат 3х6
+                            <div class="check active"></div>
+                            <input type="hidden" name="formatM" value="1">
+                        </div>
+                        <div class="check-group">
+                            Малые форматы
+                            <div class="check active"></div>
+                            <input type="hidden" name="formatS" value="1">
+                        </div>
+                        <div class="check-group">
+                            Большие форматы
+                            <div class="check active"></div>
+                            <input type="hidden" name="formatL" value="1">
+                        </div>
+                        <div class="check-group">
+                            Ситиборды
+                            <div class="check active"></div>
+                            <input type="hidden" name="formatSB" value="1">
+                        </div>
+                        <br />
+                        <div style="text-align: right">
+                            <span class="btn2" id="form-map-submit">
+                                Найти
+                            </span>
+                        </div>
+                        <br />
                     </div>
-                    <div class="slider-group">
-                        <span class="caption" style="float: left; margin-top: 8px;">GRP</span>
-                        <span id="grp-amount" class="val"></span>
-                        <span class="slider" id="grp" style="float: right"></span>
-                        <input type="hidden" name="grp-min" id="grp-min" value="0">
-                        <input type="hidden" name="grp-max" id="grp-max" value="3">
-                    </div>
-                    <br />
-                    <div class="slider-group">
-                        <span class="caption" style="float: left; margin-top: 8px;">OTS</span>
-                        <span id="ots-amount" class="val"></span>
-                        <span class="slider"  id="ots" style="float: right"></span>
-                        <input type="hidden" name="ots-min" id="ots-min" value="0">
-                        <input type="hidden" name="ots-max" id="ots-max" value="500">
-                    </div>
-                    <br />
-                    <div class="slider-group">
-                        <span class="caption" style="float: left; margin-top: 8px;">Стоимость</span>
-                        <span id="price-amount" class="val"></span>
-                        <span class="slider" id="price" style="float: right"></span>
-                        <input type="hidden" name="price-min" id="price-min" value="0">
-                        <input type="hidden" name="price-max" id="price-max" value="1000">
-                    </div>
-                    <br style="clear: both"/>
-                    <div class="check-group">
-                        Формат 3х6
-                        <div class="check active"></div>
-                        <input type="hidden" name="formatM" value="1">
-                    </div>
-                    <div class="check-group">
-                        Малые форматы
-                        <div class="check active"></div>
-                        <input type="hidden" name="formatS" value="1">
-                    </div>
-                    <div class="check-group">
-                        Большие форматы
-                        <div class="check active"></div>
-                        <input type="hidden" name="formatL" value="1">
-                    </div>
-                    <div class="check-group">
-                        Ситиборды
-                        <div class="check active"></div>
-                        <input type="hidden" name="formatSB" value="1">
-                    </div>
-                    <br />
-                    <div style="text-align: right">
-                        <span class="btn2">
-                            Найти
-                        </span>
-                    </div>
-                    <br />
-                </div>
+                </form>
             </div>
         </div>
         <div class="col-sm-4">
@@ -509,6 +512,10 @@
 
                 $('#form-top-submit').click(function(){
                     $('#form-top').submit();
+                });
+
+                $('#form-map-submit').click(function(){
+                   $('#form-map').submit();
                 });
             });
         </script>

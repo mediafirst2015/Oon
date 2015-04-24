@@ -87,6 +87,9 @@ class DefaultController extends Controller
             'light' => $request->query->get('light'),
             'street' => $request->query->get('street'),
             'city' => $request->query->get('city'),
+
+            'dateStart' => $request->query->get('dateStart'),
+            'dateEnd' => $request->query->get('dateEnd'),
         );
 
         if ($params['formatS'] == null){

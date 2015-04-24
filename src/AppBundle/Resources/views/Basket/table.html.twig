@@ -31,8 +31,8 @@
         <th></th>
     </tr>
     {% if lists %}
-    {% set j = 0 %}
-    {% for k,l in lists %}
+        {% set j = 0 %}
+        {% for k,l in lists %}
         {% set j = j+1 %}
         <tr>
             <td>{{ j }}</td>
@@ -81,8 +81,10 @@
             <a href="{{ path('basket_clear') }}" style="color: #CC0000">Удалить все</a>
         </td>
     </tr>
+    {% endif %}
 </table>
 
+{% if lists %}
 <div style="color: #555555; font-size: 13px" class="table-info">
     <b>ПОКАЗАТЕЛИ ЭФФЕКТИВНОСТИ</b>
     <div style="font-size: 7px;">&nbsp;</div>

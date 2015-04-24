@@ -236,7 +236,8 @@ select {
   outline-color: #5eba5e;
 }
 select.mini {
-  width: 95px;
+  width: 75px;
+  padding-left: 10px;
 }
 input {
   border-radius: 5px;
