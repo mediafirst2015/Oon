@@ -117,7 +117,7 @@
                         method: 'POST',
                         success: function(msg){
                             $('#basket-table').html(msg);
-                            $('.thrumb').notify("позиция добавлена в медиаплан",{ className: 'success', autoHideDelay: 500, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "bottom"  });
+                            $('.thrumb').notify("позиция добавлена в медиаплан",{ className: 'success', autoHideDelay: 700, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "bottom"  });
                             orderRefresh();
                         }
                     });
@@ -130,8 +130,13 @@
                         url: Routing.generate('basket_remove', {'itemId': $(this).attr('data-id') }),
                         method: 'POST',
                         success: function(msg){
+                            var item2 = item.parent().parent().next();
+                            item2 = item2.attr('class');
                             $('#basket-table').html(msg);
-                            $.notify("позиция удалена",{ className: 'success', autoHideDelay: 500, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "bottom left"  });
+                            console.log(item2);
+                            item2 = $('.'+item2);
+                            console.log(item2);
+                            item2.notify("позиция удалена",{ className: 'success', autoHideDelay: 700, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "top right"  });
                             orderRefresh();
                         }
                     });

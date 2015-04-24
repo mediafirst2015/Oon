@@ -35,7 +35,7 @@
         {% set j = 0 %}
         {% for k,l in lists %}
         {% set j = j+1 %}
-        <tr>
+        <tr class="s-{{ k }}">
             <td>
                 {% if l.hot == 1 %}
                     <img src="{{ asset('bundles/app/images/fire.gif') }}"  style="height: 24px"/>
