@@ -212,8 +212,13 @@ class DefaultController extends Controller
             $params['formatSB'] = 1;
         }
 
-        $page = $request->query->get('page');
-        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->filterHot($params,$page);
+        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->filterHot($params);
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $banners,
+            $this->get('request')->query->get('page', 1),
+            4
+        );
 
         $lists = array();
         $i = 0;
@@ -260,9 +265,46 @@ class DefaultController extends Controller
             'count' => $i,
             'side'=> $side,
             'fullPrice' => $fullprice,
-            'banners' => $banners
+            'banners' => $pagination
+        );
+    }
+
+    /**
+     * @Route("/hot-ajax", name="hot_ajax" , options={"expose" = true})
+     * @Template()
+     */
+    public function hotAjaxAction(Request $request){
+        $params = array(
+            'city' => $request->query->get('city'),
+            'area' => $request->query->get('area'),
+            'formatS' => $request->query->get('formatS'),
+            'formatM' => $request->query->get('formatM'),
+            'formatL' => $request->query->get('formatL'),
+            'formatSB' => $request->query->get('formatSB'),
         );
 
+        if ($params['formatS'] == null){
+            $params['formatS'] = 1;
+        }
+        if ($params['formatM'] == null){
+            $params['formatM'] = 1;
+        }
+        if ($params['formatL'] == null){
+            $params['formatL'] = 1;
+        }
+        if ($params['formatSB'] == null){
+            $params['formatSB'] = 1;
+        }
+
+        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->filterHot($params);
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $banners,
+            $this->get('request')->query->get('page', 1),
+            4
+        );
+
+        return array('banners' => $pagination);
     }
 
 }

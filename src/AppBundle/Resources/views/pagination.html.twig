@@ -16,28 +16,27 @@
  * @author Artem Ponomarenko <imenem@inbox.ru>
  */
 #}
-
+<nav style="text-align: center;">
 {% if pageCount > 1 %}
-    <div class="pagination">
-        <ul>
+        <ul class="pagination">
 
             {% if previous is defined %}
                 <li>
-                    <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&laquo;&nbsp;{{ 'Previous'|trans }}</a>
+                    <a href="{{ url('hot_ajax', query|merge({(pageParameterName): previous})) }}">&laquo;&nbsp;{{ 'Предыдущая'|trans }}</a>
                 </li>
             {% else %}
                 <li class="disabled">
-                    <span>&laquo;&nbsp;{{ 'Previous'|trans }}</span>
+                    <span>&laquo;&nbsp;{{ 'Предыдущая'|trans }}</span>
                 </li>
             {% endif %}
 
             {% if startPage > 1 %}
                 <li>
-                    <a href="{{ path(route, query|merge({(pageParameterName): 1})) }}">1</a>
+                    <a href="{{ url('hot_ajax', query|merge({(pageParameterName): 1})) }}">1</a>
                 </li>
                 {% if startPage == 3 %}
                     <li>
-                        <a href="{{ path(route, query|merge({(pageParameterName): 2})) }}">2</a>
+                        <a href="{{ url('hot_ajax', query|merge({(pageParameterName): 2})) }}">2</a>
                     </li>
                 {% elseif startPage != 2 %}
                     <li class="disabled">
@@ -49,7 +48,7 @@
             {% for page in pagesInRange %}
                 {% if page != current %}
                     <li>
-                        <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                        <a href="{{ url('hot_ajax', query|merge({(pageParameterName): page})) }}">{{ page }}</a>
                     </li>
                 {% else %}
                     <li class="active">
@@ -67,24 +66,24 @@
                         </li>
                     {% else %}
                         <li>
-                            <a href="{{ path(route, query|merge({(pageParameterName): (pageCount - 1)})) }}">{{ pageCount -1 }}</a>
+                            <a href="{{ url('hot_ajax', query|merge({(pageParameterName): (pageCount - 1)})) }}">{{ pageCount -1 }}</a>
                         </li>
                     {% endif %}
                 {% endif %}
                 <li>
-                    <a href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}">{{ pageCount }}</a>
+                    <a href="{{ url('hot_ajax', query|merge({(pageParameterName): pageCount})) }}">{{ pageCount }}</a>
                 </li>
             {% endif %}
 
             {% if next is defined %}
                 <li>
-                    <a href="{{ path(route, query|merge({(pageParameterName): next})) }}">{{ 'Next'|trans }}&nbsp;&raquo;</a>
+                    <a href="{{ url('hot_ajax', query|merge({(pageParameterName): next})) }}">{{ 'Следующая'|trans }}&nbsp;&raquo;</a>
                 </li>
             {% else %}
                 <li class="disabled">
-                    <span>{{ 'Next'|trans }}&nbsp;&raquo;</span>
+                    <span>{{ 'Следующая'|trans }}&nbsp;&raquo;</span>
                 </li>
             {% endif %}
         </ul>
-    </div>
 {% endif %}
+</nav>

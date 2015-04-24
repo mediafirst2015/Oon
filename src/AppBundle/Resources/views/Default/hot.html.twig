@@ -66,172 +66,16 @@
             </div>
         </div>
         <div class="col-sm-9">
-            {% for b in banners %}
-                <div class="hot-box">
-                    <div class="hot-img">
-                        <a href="{{ b.img }}" class="fancybox"><img class="img" src="{{ b.img }}"></a>
-                        <img class="hot-icon" src="{{ asset('bundles/app/images/hot.png') }}">
-                    </div>
-                    <br />
-                    <table class="hot-params">
-                        <tr>
-                            <td>Адрес</td>
-                            <td>{{ b.adrs }}</td>
-                        </tr>
-                        <tr>
-                            <td>Формат</td>
-                            <td>{{ b.format }}</td>
-                        </tr>
-                        <tr>
-                            <td>Цена</td>
-                            <td><b class="pink">{{ b.price }} р.</b></td>
-                        </tr>
-                        <tr>
-                            <td>Период</td>
-                            <td><b class="pink">Апрель</b></td>
-                        </tr>
-                    </table>
-                    <div>
-                        <br />
-                        <table style="width: 100%">
-                            <tr>
-                                <td style="width: 50%">
-                                    <a href="{{ path('map',{'bannerId' : b.id}) }}">
-                                        <span class="btn2">На карте</span>
-                                    </a>
-                                </td>
-                                <td style="text-align: right">
-                                    <span class="btn-pink addbasket" data-id="{{ b.id }}" data-month="4">Заказать</span>
-                                </td>
-                            </tr>
-                        </table>
-                        <br />
-                    </div>
-                </div>
-            {% else %}
-                <h2 class="pink" style="text-align: center; display: block">По данному запросу предложений не найдено</h2>
-            {% endfor %}
-            <br />
+            <div id="items">
+            {{ render(path('hot_ajax')) }}
+            </div>
             <br />
         </div>
     </div>
     <div class="row" id="basket">
         <div class="col-sm-12">
             <div id="basket-table">
-                <table class="table">
-                    <tr>
-                        <th>№</th>
-                        <th>Город</th>
-                        <th>Округ</th>
-                        <th>Адрес</th>
-                        <th>Гид</th>
-                        <th>Период</th>
-                        <th>Сторона</th>
-                        <th>Формат</th>
-                        <th>Тип</th>
-                        <th>Свет</th>
-                        <th>GRP</th>
-                        <th>OTS</th>
-                        <th>Стоимость</th>
-                        <th>Налог</th>
-                        <th>Фото</th>
-                        <th>Карта</th>
-                        <th>Статус</th>
-                        <th></th>
-                    </tr>
-                    {% if lists %}
-                        {% set j = 0 %}
-                        {% for k,l in lists %}
-                            {% set j = j+1 %}
-                            <tr>
-                                <td>{{ j }}</td>
-                                <td>{{ l.city }}</td>
-                                <td>{{ l.area }}</td>
-                                <td>{{ l.adrs }}</td>
-                                <td>{{ l.gid }}</td>
-                                <td>{{ l.monthStr }}</td>
-                                <td>{{ l.side }}</td>
-                                <td>{{ l.format }}</td>
-                                <td>{{ l.type }}</td>
-                                <td>{{ l.light == 1 ? 'да' : 'нет' }}</td>
-                                <td>{{ l.grp }}</td>
-                                <td>{{ l.ots|number_format(1, '.', ',') }}</td>
-                                <td>{{ l.price }}</td>
-                                <td>{{ l.tax }} ({{ l.taxType }})</td>
-                                <td style="text-align: center">
-                                    <a href="{{ l.img }}" class="fancybox" data-fancybox-group="gallery">
-                                        <img src="{{ asset('bundles/app/images/img-icon.png') }}" class="icon">
-                                    </a>
-                                </td>
-                                <td style="text-align: center"><img src="{{ asset('bundles/app/images/adrs-icon.png') }}" class="icon"></td>
-                                <td>Свободно</td>
-                                <td style="text-align: center">
-                                    <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon removeBasket" data-id="{{ k }}" title="Удалить элемент">
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        <tr class="bottom-line">
-                            <td colspan="10" style="background: #FFF; border: 0"></td>
-                            <td style="background: #FFF; border: 0" colspan="2">
-                                <b class="green">ИТОГО:</b>
-                            </td>
-                            <td style="background: none;">
-                                <b>{{ fullPrice }}&nbsp;р.</b>
-                            </td>
-                            <td style="background: none;">
-                                <b>{{ fullPrice }}&nbsp;р.</b>
-                            </td>
-                            <td style="background: none;"></td>
-                            <td colspan="3" style="text-align: right; color: #CC0000; background: none; border: 0;">
-                                <a href="{{ path('basket_clear') }}" style="color: #CC0000">Удалить все</a>
-                            </td>
-                        </tr>
-                    {% endif %}
-                </table>
-                {% if lists %}
-                    <div style="color: #555555; font-size: 13px" class="table-info">
-                        <b>ПОКАЗАТЕЛИ ЭФФЕКТИВНОСТИ</b>
-                        <div style="font-size: 7px;">&nbsp;</div>
-                        <div>
-                            <label>Средняя стоимость размещения за поверхность:</label>
-                            {{ price |number_format(0, '.', ',') }} р.
-                        </div>
-                        <div>
-                            <label>Процентное соотношение сторон A/B в программе:</label>
-                            {{ side }}
-                        </div>
-                        <div>
-                            <label>Средний показатель GRP за программу:</label>
-                            {{ grp }}
-                        </div>
-                        <div>
-                            <label>Средний показатель OTS за программу:</label>
-                            {{ ots }}
-                        </div>
-                        <div>
-                            <label>CРТ за программу:</label>
-                            {% if price != 0 %}
-                                {{ ( ots / price )|number_format(3, '.', ',') }}
-                            {% else %}
-                                0
-                            {% endif %}
-                        </div>
-                        <div>
-                            <label>Количество поверхностей:</label>
-                            {{ count }}
-                        </div>
-                    </div>
-
-                    <br />
-                    <br />
-                    <div style="text-align: right">
-                        <div style="margin-top: -125px; margin-bottom: 100px">
-                    <span class="btn-pink" style="font-size: 16px" data-toggle="modal" data-target=".bs-example-modal-sm">
-                            ПОЛУЧИТЬ МЕДИА ПЛАН
-                    </span>
-                        </div>
-                    </div>
-                {% endif %}
+                {{ include('AppBundle:Basket:table.html.twig') }}
             </div>
             <br />
             <br />
@@ -259,11 +103,10 @@
                         }
                     });
                 }
-
-                $('.addBasket').click(function(){
+                $(document).on('click','.addBasket', function(){
                     var item = $(this);
                     $.ajax({
-                        url: Routing.generate('basket_add', {'itemId': $(this).attr('data-id'), 'month': $(this).attr('data-month')}),
+                        url: Routing.generate('basket_add', {'itemId': item.attr('data-id'), 'month': item.attr('data-month')}),
                         method: 'POST',
                         success: function(msg){
                             $('#basket-table').html(msg);
@@ -272,8 +115,10 @@
                         }
                     });
                 });
+
+
                 $('#basket-table').on('click','.removeBasket', function(){
-                    var item = $(this)
+                    var item = $(this);
                     $.ajax({
                         url: Routing.generate('basket_remove', {'itemId': $(this).attr('data-id') }),
                         method: 'POST',
@@ -283,6 +128,18 @@
                             orderRefresh();
                         }
                     });
+                });
+
+                $('.body').on('click','.pagination li a', function(){
+                    var link = $(this);
+                    $.ajax({
+                        url: link.attr('href'),
+                        method: 'POST',
+                        success: function(msg){
+                            $('#items').html(msg);
+                        }
+                    });
+                    return false;
                 });
             });
         </script>

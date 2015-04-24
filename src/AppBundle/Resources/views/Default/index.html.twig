@@ -4,9 +4,45 @@
 
     <div class="row">
         <div class="col-sm-8">
-            <div class="slider-image">
-                <div class="title">Тут некий текст</div>
+            <div class="slider-box">
+                <div style="width: 5300px">
+                    <div class="slider-image slide-1">
+                        <div class="title">Top-8 Группа по медиа бизнесу за 2013 год<br />
+                            (Рейтинг Adindex/RBC, 2014)</div>
+                    </div>
+                    <div class="slider-image slide-2">
+                        <div class="title">Наличие полного пакета «Эспар аналитик»</div>
+                    </div>
+                    <div class="slider-image slide-3">
+                        <div class="title">Собственная типография</div>
+                    </div>
+                    <div class="slider-image slide-4">
+                        <div class="title">Разработка дизайн макета и адаптация</div>
+                    </div>
+                    <div class="slider-image slide-5">
+                        <div class="title">Прямые контракты с владельцами конструкций -<br />
+                            более 500 подрядчиков</div>
+                    </div>
+                    <div class="slider-image slide-6">
+                        <div class="title">Предоставление ночного фотоотчёта</div>
+                    </div>
+                    <div class="slider-image slide-7">
+                        <div class="title">Синхронизация конструкций в on-line режиме</div>
+                    </div>
+                </div>
             </div>
+            <script>
+                $(document).ready(function(){
+                    setInterval(function(){
+                        var box = $('.slider-box').children('div');
+                        var item = box.children('div.slider-image').eq(0);
+                        item.animate({ marginLeft: '-750px' },300, function(){
+                            box.append(item);
+                            item.css('margin-left','0');
+                        });
+                    }, 3000);
+                });
+            </script>
             <br />
             <h1 class="pink">
                 МЕДИА-ПЛАН ПО НАРУЖКЕ ЗА ТРИ МИНУТЫ!

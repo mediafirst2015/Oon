@@ -1,0 +1,55 @@
+{% if banners %}
+    <div class="navigation">
+        {{ knp_pagination_render(banners) }}
+    </div>
+{% endif %}
+{% for b in banners %}
+    <div class="hot-box">
+        <div class="hot-img">
+            <a href="{{ b.img }}" class="fancybox"><img class="img" src="{{ b.img }}"></a>
+            <img class="hot-icon" src="{{ asset('bundles/app/images/hot.png') }}">
+        </div>
+        <br />
+        <table class="hot-params">
+            <tr>
+                <td>Адрес</td>
+                <td>{{ b.adrs }}</td>
+            </tr>
+            <tr>
+                <td>Формат</td>
+                <td>{{ b.format }}</td>
+            </tr>
+            <tr>
+                <td>Цена</td>
+                <td><b class="pink">{{ b.price }} р.</b></td>
+            </tr>
+            <tr>
+                <td>Период</td>
+                <td><b class="pink">Апрель</b></td>
+            </tr>
+        </table>
+        <div>
+            <br />
+            <table style="width: 100%">
+                <tr>
+                    <td style="width: 50%">
+                        <a href="{{ path('map',{'bannerId' : b.id}) }}">
+                            <span class="btn2">На карте</span>
+                        </a>
+                    </td>
+                    <td style="text-align: right">
+                        <span class="btn-pink addBasket" data-id="{{ b.id }}" data-month="4">Заказать</span>
+                    </td>
+                </tr>
+            </table>
+            <br />
+        </div>
+    </div>
+{% else %}
+    <h2 class="pink" style="text-align: center; display: block">По данному запросу предложений не найдено</h2>
+{% endfor %}
+{% if banners %}
+    <div class="navigation">
+        {{ knp_pagination_render(banners) }}
+    </div>
+{% endif %}

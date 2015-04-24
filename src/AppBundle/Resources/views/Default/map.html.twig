@@ -6,7 +6,6 @@
             <div style="float: left">
                 <h2 class="green">Поиск щитов по карте</h2>
             </div>
-            {#<img src="{{ asset('bundles/app/images/iconInfo.png') }}" style="width: 32px; height: 32px; float: right;  margin-top: 10px;" id="popover"/>#}
             <img src="{{ asset('bundles/app/images/tooltip.png') }}" style="margin-left: 175px;width: 500px; opacity: 0.8;z-index: 999;position: absolute; top: 75px"/>
         </div>
     </div>
@@ -35,21 +34,6 @@
                         </select>
                         <input type="text" placeholder="Улица" id="street" name="street" value="{{ params.street }}">
                         <br />
-                        {#<select name="format">#}
-                        {#<option value="" disabled selected>Формат</option>#}
-                        {#<option value="" selected>Все форматы</option>#}
-                        {#<option value="3x6" {{ params.format == '3x6' ? 'selected="selected"' }}>3х6</option>#}
-                        {#<option value="small" {{ params.format == 'small' ? 'selected="selected"' }}>Малые форматы</option>#}
-                        {#<option value="big" {{ params.format == 'big' ? 'selected="selected"' }}>Большие форматы</option>#}
-                        {#<option value="citybord" {{ params.format == 'citybord' ? 'selected="selected"' }}>Ситиборды</option>#}
-                        {#</select>#}
-                        {#<br />#}
-                        {#<select>#}
-                        {#<option value="" disabled selected>Тип</option>#}
-                        {#<option value="" selected>Все типы</option>#}
-                        {#<option value="1">3х6</option>#}
-                        {#<option value="2">Малые</option>#}
-                        {#</select>#}
                         <div class="check-group">
                             Формат 3х6
                             <div class="check {{ params.formatM == 1 ? 'active' : '' }}"></div>
@@ -131,133 +115,7 @@
     <div class="row" id="basket">
         <div class="col-sm-12">
             <div id="basket-table">
-                <table class="table">
-                    <tr>
-                        <th>№</th>
-                        <th>Город</th>
-                        <th>Округ</th>
-                        <th>Адрес</th>
-                        <th>Гид</th>
-                        <th>Период</th>
-                        <th>Сторона</th>
-                        <th>Формат</th>
-                        <th>Тип</th>
-                        <th>Свет</th>
-                        <th>GRP</th>
-                        <th>OTS</th>
-                        <th>Стоимость
-                            без учёта
-                            налогов</th>
-                        <th>Налог</th>
-                        <th>Стоимость
-                            с учётом
-                            налогов</th>
-                        <th>
-                            Стоимость
-                            монтажа
-                            с учётом
-                            налогов
-                        </th>
-                        <th>Фото</th>
-                        <th>Карта</th>
-                        <th>Статус</th>
-                        <th></th>
-                    </tr>
-                    {% if lists %}
-                        {% set j = 0 %}
-                        {% for k,l in lists %}
-                            {% set j = j+1 %}
-                            <tr>
-                                <td>{{ j }}</td>
-                                <td>{{ l.city }}</td>
-                                <td>{{ l.area }}</td>
-                                <td>{{ l.adrs }}</td>
-                                <td>{{ l.gid }}</td>
-                                <td>{{ l.monthStr }}</td>
-                                <td>{{ l.side }}</td>
-                                <td>{{ l.format }}</td>
-                                <td>{{ l.type }}</td>
-                                <td>{{ l.light == 1 ? 'да' : 'нет' }}</td>
-                                <td>{{ l.grp }}</td>
-                                <td>{{ l.ots|number_format(1, '.', ',') }}</td>
-                                <td>{{ l.price }}</td>
-                                <td>{{ l.taxType }}</td>
-                                <td>{{ l.price }}</td>
-                                <td>{{ l.priceDeploy }}</td>
-                                <td style="text-align: center">
-                                    <a href="{{ l.img }}" class="fancybox" data-fancybox-group="gallery">
-                                        <img src="{{ asset('bundles/app/images/img-icon.png') }}" class="icon">
-                                    </a>
-                                </td>
-                                <td style="text-align: center"><img src="{{ asset('bundles/app/images/adrs-icon.png') }}" class="icon"></td>
-                                <td>Свободно</td>
-                                <td style="text-align: center">
-                                    <img src="{{ asset('bundles/app/images/del-icon.png') }}" class="icon removeBasket" data-id="{{ k }}" title="Удалить элемент">
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        <tr class="bottom-line">
-                            <td colspan="10" style="background: #FFF; border: 0"></td>
-                            <td style="background: #FFF; border: 0" colspan="2">
-                                <b class="green">ИТОГО:</b>
-                            </td>
-                            <td style="background: none;">
-                                <b>{{ fullPrice }}&nbsp;р.</b>
-                            </td>
-                            <td style="background: none;">
-                                <b>{{ fullPrice }}&nbsp;р.</b>
-                            </td>
-                            <td style="background: none;"></td>
-                            <td colspan="3" style="text-align: right; color: #CC0000; background: none; border: 0;">
-                                <a href="{{ path('basket_clear') }}" style="color: #CC0000">Удалить все</a>
-                            </td>
-                        </tr>
-                    {% endif %}
-                </table>
-                {% if lists %}
-                    <div style="color: #555555; font-size: 13px" class="table-info">
-                        <b>ПОКАЗАТЕЛИ ЭФФЕКТИВНОСТИ</b>
-                        <div style="font-size: 7px;">&nbsp;</div>
-                        <div>
-                            <label>Средняя стоимость размещения за поверхность:</label>
-                            {{ price |number_format(0, '.', ',') }} р.
-                        </div>
-                        <div>
-                            <label>Процентное соотношение сторон A/B в программе:</label>
-                            {{ side }}
-                        </div>
-                        <div>
-                            <label>Средний показатель GRP за программу:</label>
-                            {{ grp }}
-                        </div>
-                        <div>
-                            <label>Средний показатель OTS за программу:</label>
-                            {{ ots }}
-                        </div>
-                        <div>
-                            <label>CРТ за программу:</label>
-                            {% if price != 0 %}
-                                {{ ( ots / price )|number_format(3, '.', ',') }}
-                            {% else %}
-                                0
-                            {% endif %}
-                        </div>
-                        <div>
-                            <label>Количество поверхностей:</label>
-                            {{ count }}
-                        </div>
-                    </div>
-
-                    <br />
-                    <br />
-                    <div style="text-align: right">
-                        <div style="margin-top: -125px; margin-bottom: 100px">
-                    <span class="btn-pink" style="font-size: 16px" data-toggle="modal" data-target=".bs-example-modal-sm">
-                            ПОЛУЧИТЬ МЕДИА ПЛАН
-                    </span>
-                        </div>
-                    </div>
-                {% endif %}
+                {{ include('AppBundle:Basket:table.html.twig') }}
             </div>
             <br />
             <br />

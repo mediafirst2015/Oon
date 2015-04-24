@@ -64,11 +64,8 @@ class BannerRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function filterHot($params, $page)
+    public function filterHot($params, $page = null)
     {
-        if ( $page == null){
-            $page = 0;
-        }
         $qb = $this->_em->createQueryBuilder();
         $qb->select('b')
             ->from('AppBundle:Banner','b')
@@ -101,9 +98,10 @@ class BannerRepository extends EntityRepository
             $qb->andWhere("( $format )");
         }
 
-        $qb->setFirstResult($page)
-            ->setMaxResults(4);
-
+        if ($page != null){
+            $qb->setFirstResult($page)
+                ->setMaxResults(4);
+        }
 
         return $qb->getQuery()->getResult();
     }
