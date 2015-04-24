@@ -286,6 +286,9 @@ input.mini {
 .check-group .check.active {
   background-image: url("/bundles/app/images/checkbox-act.png");
 }
+.check-group .check.disabled {
+  background-image: url("/bundles/app/images/checkbox-disabled.png");
+}
 .input-group {
   height: 30px;
   line-height: 30px;

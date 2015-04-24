@@ -2,103 +2,101 @@
 
 {% block content %}
     <div class="row">
+        <div class="col-lg-12" style="  margin-top: -20px;">
+            <div style="float: left">
+                <h2 class="green">Поиск щитов по параметрам</h2>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-2"></div>
         <div class="col-sm-4">
-            <select>
+            <select name="city">
                 <option value="null" disabled>Город</option>
                 <option>Москва</option>
-                <option>Подольск</option>
             </select>
         </div>
         <div class="col-sm-4">
-            <select>
-                <option value="null" disabled>Округ</option>
-                <option>СВАО</option>
-                <option>ЮВАО</option>
+            <select name="area">
+                <option value="0" disabled selected>Округ</option>
+                <option value="0" selected>Все округа</option>
+                <option value="ЦАО">ЦАО</option>
+                <option value="СВАО">СВАО</option>
+                <option value="ВАО">ВАО</option>
+                <option value="ЮВАО">ЮВАО</option>
+                <option value="ЮАО">ЮАО</option>
+                <option value="ЮЗАО">ЮЗАО</option>
+                <option value="ЗАО">ЗАО</option>
+                <option value="CЗАО">CЗАО</option>
+                <option value="CАО">CАО</option>
             </select>
-        </div>
-        <div class="col-sm-4">
-            <input type="text" placeholder="Улица">
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
             <h2  class="green">Период</h2>
-            <span class="check-btn">
-                Январь
-                <input type="hidden" name="month-1" value="0">
-            </span>
-            <span class="check-btn">
-                Февраль
-                <input type="hidden" name="month-2" value="0">
-            </span>
-            <span class="check-btn">
-                Март
-                <input type="hidden" name="month-3" value="0">
-            </span>
-            <span class="check-btn">
-                Апрель
-                <input type="hidden" name="month-4" value="0">
-            </span>
-            <span class="check-btn">
-                Май
-                <input type="hidden" name="month-5" value="0">
-            </span>
-            <span class="check-btn">
-                Июнь
-                <input type="hidden" name="month-6" value="0">
-            </span>
-            <span class="check-btn">
-                Июль
-                <input type="hidden" name="month-7" value="0">
-            </span>
-            <span class="check-btn">
-                Август
-                <input type="hidden" name="month-8" value="0">
-            </span>
-            <span class="check-btn">
-                Сентябрь
-                <input type="hidden" name="month-9" value="0">
-            </span>
-            <span class="check-btn">
-                Октябрь
-                <input type="hidden" name="month-10" value="0">
-            </span>
-            <span class="check-btn">
-                Ноябрь
-                <input type="hidden" name="month-11" value="0">
-            </span>
-            <span class="check-btn">
-                Декабрь
-                <input type="hidden" name="month-12" value="0">
-            </span>
+            <div>
+                с&nbsp;&nbsp;
+                <select class="mini">
+                    <option value="1" >Янв</option>
+                    <option value="2" >Фев</option>
+                    <option value="3" >Мар</option>
+                    <option value="4" >Апр</option>
+                    <option value="5" >Май</option>
+                    <option value="6" >Июн</option>
+                    <option value="7" >Июл</option>
+                    <option value="8" >Авг</option>
+                    <option value="9" >Сен</option>
+                    <option value="10">Окт</option>
+                    <option value="11">Ноя</option>
+                    <option value="12">Дек</option>
+                </select>
+                &nbsp;&nbsp;по&nbsp;&nbsp;
+                <select class="mini">
+                    <option value="1" >Янв</option>
+                    <option value="2" >Фев</option>
+                    <option value="3" >Мар</option>
+                    <option value="4" >Апр</option>
+                    <option value="5" >Май</option>
+                    <option value="6" >Июн</option>
+                    <option value="7" >Июл</option>
+                    <option value="8" >Авг</option>
+                    <option value="9" >Сен</option>
+                    <option value="10">Окт</option>
+                    <option value="11">Ноя</option>
+                    <option value="12">Дек</option>
+                </select>
+            </div>
         </div>
-        <div class="col-sm-6">
-            <h2 class="green">Типы конструкций</h2>
-            <span class="check-btn">
-                Пакеты
-                <input type="hidden" name="month-12" value="0">
-            </span>
-            <br />
-            <span class="check-btn">
-                Щиты 3х6
-                <input type="hidden" name="month-12" value="0">
-            </span>
-            <span class="check-btn">
-                Ситиборды
-                <input type="hidden" name="month-12" value="0">
-            </span>
-            <br />
-            <span class="check-btn">
-                Большие форматы
-                <input type="hidden" name="month-12" value="0">
-            </span>
-            <span class="check-btn">
+        <div class="col-sm-4">
+            <h2 class="green">Форматы конструкций</h2>
+            <div class="check-group">
+                Формат 3х6
+                <div class="check active"></div>
+                <input type="hidden" name="formatM" value="1">
+            </div>
+            <div class="check-group">
                 Малые форматы
-                <input type="hidden" name="month-12" value="0">
-            </span>
+                <div class="check active"></div>
+                <input type="hidden" name="formatS" value="1">
+            </div>
+            <div class="check-group">
+                Большие форматы
+                <div class="check active"></div>
+                <input type="hidden" name="formatL" value="1">
+            </div>
+            <div class="check-group">
+                Ситиборды
+                <div class="check active"></div>
+                <input type="hidden" name="formatSB" value="1">
+            </div>
+            <br />
         </div>
     </div>
     <div class="row">
+        <div class="col-sm-2"></div>
         <div class="col-sm-4">
             <h2 class="green">Дополнительно</h2>
             <div class="check-group">
@@ -113,42 +111,132 @@
             </div>
             <div class="check-group">
                 Исключить призмы и скроллеры
-                <div class="check"killall></div>
+                <div class="check"></div>
                 <input type="hidden" name="isScroll" value="0">
+            </div>
+            <div class="check-group" id="packets">
+                пакетные предложения
+                <div class="check active"></div>
+                <input type="hidden" name="packets" value="1">
             </div>
             <br />
             <br />
             <input type="text" placeholder="ID конструкции">
         </div>
-        <div class="col-sm-3"></div>
-        <div class="col-sm-5">
+        <div class="col-sm-4">
             <div class="slider-group">
-                GRP
-                <span id="grp-amount"></span>
-                <span  id="grp"></span>
+                <span class="caption" style="float: left; margin-top: 8px;  width: 150px;">GRP</span>
+                <span id="grp-amount" class="val"></span>
+                <span class="slider" id="grp" style="float: right"></span>
+                <input type="hidden" name="grp-min" id="grp-min" value="0">
+                <input type="hidden" name="grp-max" id="grp-max" value="3">
             </div>
+            <br />
             <div class="slider-group">
-                OTS
-                <span id="ots-amount"></span>
-                <span  id="ots"></span>
+                <span class="caption" style="float: left; margin-top: 8px;  width: 150px;">OTS</span>
+                <span id="ots-amount" class="val"></span>
+                <span class="slider"  id="ots" style="float: right"></span>
+                <input type="hidden" name="ots-min" id="ots-min" value="0">
+                <input type="hidden" name="ots-max" id="ots-max" value="500">
             </div>
+            <br />
             <div class="slider-group">
-                Стоимость
-                <span id="price-amount"></span>
-                <span  id="price"></span>
+                <span class="caption" style="float: left; margin-top: 8px;  width: 150px;">Стоимость</span>
+                <span id="price-amount" class="val"></span>
+                <span class="slider" id="price" style="float: right"></span>
+                <input type="hidden" name="price-min" id="price-min" value="0">
+                <input type="hidden" name="price-max" id="price-max" value="1000">
             </div>
             <br/>
-            <br/>
-            <div class="input-group" style="padding-left: 20px">
-                Сторона
-                А
-                <input type="text" class="mini">
-                В
-                <input type="text" class="mini">
-            </div>
             <div style="text-align: right">
                 <span class="btn">Найти</span>
             </div>
         </div>
     </div>
+    <br />
+    <br />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $('#street').kladr({
+                token: '541ee4ac7c52392c7d8b457e',
+                key: '181d5e2c44994c335e5e81e9ae46e79a67b6b495',
+                type: $.kladr.type.street,
+                parentType: $.kladr.type.city,
+                parentId: '7700000000000',
+                select: function (obj) {
+                    $('#street').val(obj.typeShort + ' ' + obj.name);
+                },
+                close: function () {
+                    $.ajax({
+                        url: '{{ path('get_coords') }}',
+                        processData: false,
+                        method: 'POST',
+                        data: 'street=' + $('#street').val(),
+                        success: function (msg) {
+                            coords = msg.data;
+                            map.setCenter(coords);
+                        }
+                    });
+                }
+            });
+
+            $( "#grp" ).slider({
+                range: true,
+                min: 0,
+                max: 300,
+                values: [ 0, 300 ],
+                slide: function( event, ui ) {
+                    $( "#grp-amount" ).html( "" + ui.values[ 0 ]/100 + " - " + ui.values[ 1 ]/100 );
+                    $( "#grp-min" ).val(ui.values[ 0 ]/100);
+                    $( "#grp-max" ).val(ui.values[ 1 ]/100);
+                }
+            });
+            $( "#grp-amount" ).html( "" + $( "#grp" ).slider( "values", 0 )/100 +
+            " - " + $( "#grp" ).slider( "values", 1 )/100 );
+
+            $( "#ots" ).slider({
+                range: true,
+                min: 0,
+                max: 500,
+                values: [ 0, 500 ],
+                slide: function( event, ui ) {
+                    $( "#ots-amount" ).html( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                    $( "#ots-min" ).val(ui.values[ 0 ]);
+                    $( "#ots-max" ).val(ui.values[ 1 ]);
+                }
+            });
+            $( "#ots-amount" ).html( "" + $( "#ots" ).slider( "values", 0 ) +
+            " - " + $( "#ots" ).slider( "values", 1 ) );
+
+            $( "#price" ).slider({
+                range: true,
+                min: 0,
+                max: 1000,
+                values: [ 0, 1000 ],
+                slide: function( event, ui ) {
+                    $( "#price-amount" ).html( "" + ui.values[ 0 ] + " т.р. - " + ui.values[ 1 ] + ' т.р.' );
+                    $( "#price-min" ).val(ui.values[ 0 ]);
+                    $( "#price-max" ).val(ui.values[ 1 ]);
+                }
+            });
+            $( "#price-amount" ).html( "" + $( "#price" ).slider( "values", 0 ) +
+            " т.р. - " + $( "#price" ).slider( "values", 1 ) + ' т.р.' );
+
+            $('#packets').click(function(){
+               if ($(this).hasClass('act')){
+                   $('.check').addClass('disabled');
+                   $(this).removeClass('disabled');
+               }else{
+                   $('.check').removeClass('disabled');
+                   $(this).removeClass('disabled');
+                }
+
+            });
+        });
+    </script>
 {% endblock %}
