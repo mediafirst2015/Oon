@@ -119,7 +119,7 @@
 //                            console.log(s=item);
                             item.parent().parent().parent().parent().parent().parent().children('.hot-img').children('.ok-icon').addClass('act');
                             $('#basket-table').html(msg);
-                            $('.thrumb').notify("позициtя добавлена в медиаплан",{ className: 'success', autoHideDelay: 700, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "bottom"  });
+                            item.notify("позициtя добавлена в медиаплан",{ className: 'success', autoHideDelay: 700, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "top"  });
                             orderRefresh();
                         }
                     });
