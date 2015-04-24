@@ -1,8 +1,10 @@
 <table class="table">
     <tr>
+        <th></th>
         <th>№</th>
         <th>Город</th>
         <th>Округ</th>
+        <th>Адрес</th>
         <th>Адрес</th>
         <th>Гид</th>
         <th>Период</th>
@@ -35,6 +37,11 @@
         {% for k,l in lists %}
         {% set j = j+1 %}
         <tr>
+            <td>
+                {% if l.hot == 1 %}
+                    <img src="{{ asset('bundles/app/images/fire.gif') }}"  style="height: 24px"/>
+                {% endif %}
+            </td>
             <td>{{ j }}</td>
             <td>{{ l.city }}</td>
             <td>{{ l.area }}</td>
@@ -81,7 +88,7 @@
         <td style="background: none;">
             <b>{{ fullPrice }}&nbsp;р.</b>
         </td>
-        <td style="background: none; border: 0"></td>
+        <td style="background: none; border: 0" colspan="2"></td>
         <td colspan="3" style="text-align: right; color: #CC0000; background: none; border: 0;">
             <a href="{{ path('basket_clear') }}" style="color: #CC0000">Удалить все</a>
         </td>

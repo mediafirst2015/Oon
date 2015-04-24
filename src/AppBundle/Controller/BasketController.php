@@ -64,6 +64,7 @@ class BasketController extends Controller
                     'id' => $banner->getId(),
                     'city' => $banner->getCity(),
                     'gid' => $banner->getGid(),
+                    'hot' => $banner->getHot(),
                     'area' => $banner->getArea(),
                     'adrs' => $banner->getAdrs(),
                     'img'  => $banner->getImg(),
