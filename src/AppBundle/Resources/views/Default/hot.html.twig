@@ -116,8 +116,10 @@
                         url: Routing.generate('basket_add', {'itemId': item.attr('data-id'), 'month': item.attr('data-month')}),
                         method: 'POST',
                         success: function(msg){
+//                            console.log(s=item);
+                            item.parent().parent().parent().parent().parent().parent().children('.hot-img').children('.ok-icon').addClass('act');
                             $('#basket-table').html(msg);
-                            $('.thrumb').notify("позиция добавлена в медиаплан",{ className: 'success', autoHideDelay: 700, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "bottom"  });
+                            $('.thrumb').notify("позициtя добавлена в медиаплан",{ className: 'success', autoHideDelay: 700, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "bottom"  });
                             orderRefresh();
                         }
                     });

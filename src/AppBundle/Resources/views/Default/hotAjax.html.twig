@@ -8,6 +8,11 @@
         <div class="hot-img">
             <a href="{{ b.img }}" class="fancybox"><img class="img" src="{{ b.img }}"></a>
             <img class="hot-icon" src="{{ asset('bundles/app/images/hot.png') }}">
+            {% if basket[b.id~'-4-2015'] is defined  %}
+                <img class="ok-icon act" src="{{ asset('bundles/app/images/ok.png') }}">
+            {% else %}
+                <img class="ok-icon" src="{{ asset('bundles/app/images/ok.png') }}">
+            {% endif %}
         </div>
         <br />
         <table class="hot-params">

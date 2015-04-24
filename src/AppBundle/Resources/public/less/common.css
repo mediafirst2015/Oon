@@ -432,6 +432,15 @@ input.mini {
   bottom: 20px;
   right: -30px;
 }
+.hot-box .hot-img .ok-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: none;
+}
+.hot-box .hot-img .ok-icon.act {
+  display: block;
+}
 .hot-box .hot-params tr td:first-child {
   color: #737272;
   width: 140px;

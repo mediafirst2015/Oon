@@ -280,6 +280,9 @@ class DefaultController extends Controller
      * @Template()
      */
     public function hotAjaxAction(Request $request){
+        $session = $request->getSession();
+        $basket = $session->get('lists');
+
         $params = array(
             'city' => $request->query->get('city'),
             'area' => $request->query->get('area'),
@@ -310,7 +313,7 @@ class DefaultController extends Controller
             4
         );
 
-        return array('banners' => $pagination);
+        return array('banners' => $pagination, 'basket' => $basket);
     }
 
 }
