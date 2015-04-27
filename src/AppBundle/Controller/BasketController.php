@@ -69,6 +69,7 @@ class BasketController extends Controller
                     'adrs' => $banner->getAdrs(),
                     'img'  => $banner->getImg(),
                     'price'=> $banner->getPrice(),
+                    'price2'=> $banner->getPrice2(),
                     'priceDeploy'=> $banner->getPriceDeploy(),
                     'tax'=> $banner->getTax(),
                     'taxType'=> $banner->getTaxType(),

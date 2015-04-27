@@ -89,6 +89,11 @@ class Banner extends BaseEntity
     /**
      * @ORM\Column(type="string", nullable=true)
      */
+    protected $price2 = 0;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
     protected $priceDeploy;
 
     /**
@@ -561,6 +566,22 @@ class Banner extends BaseEntity
     public function setPriceDeploy($priceDeploy)
     {
         $this->priceDeploy = $priceDeploy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrice2()
+    {
+        return $this->price2;
+    }
+
+    /**
+     * @param mixed $price2
+     */
+    public function setPrice2($price2)
+    {
+        $this->price2 = $price2;
     }
 
 
