@@ -26,6 +26,10 @@ class User extends BaseEntity implements UserInterface
      */
     protected $banners;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Package", mappedBy="author")
+     */
+    protected $packages;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -86,6 +90,7 @@ class User extends BaseEntity implements UserInterface
         $this->roles    = 'ROLE_USER';
         $this->orders = new ArrayCollection();
         $this->banners = new ArrayCollection();
+        $this->packages = new ArrayCollection();
     }
 
     public function __toString(){
@@ -371,6 +376,31 @@ class User extends BaseEntity implements UserInterface
     {
         $this->hot = $hot;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPackages()
+    {
+        return $this->packages;
+    }
+
+    /**
+     * @param mixed $packages
+     */
+    public function setPackages($packages)
+    {
+        $this->packages = $packages;
+    }
+
+    public function addPackage($package){
+        $this->packages[] = $package;
+    }
+
+    public function removePackage($package){
+        $this->packages->removeElement($package);
+    }
+
 
 
 }

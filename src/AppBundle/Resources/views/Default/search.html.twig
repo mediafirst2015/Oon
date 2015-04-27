@@ -114,10 +114,10 @@
                 <div class="check"></div>
                 <input type="hidden" name="isScroll" value="0">
             </div>
-            <div class="check-group" id="packets">
+            <div class="check-group" id="package">
                 пакетные предложения
                 <div class="check active"></div>
-                <input type="hidden" name="packets" value="1">
+                <input type="hidden" name="package" value="1">
             </div>
             <br />
             <br />
@@ -167,6 +167,21 @@
     </div>
     <br />
     <br />
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="box package">
+                <div class="package-img">
+                    <img src="">
+                </div>
+                <div class="package-setting">
+                    Количество конструкций: 85
+                    GRP: 1500
+                    OTS: 1500
+                    Цена: 1500000
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -239,7 +254,7 @@
             $( "#price-amount" ).html( "" + $( "#price" ).slider( "values", 0 ) +
             " т.р. - " + $( "#price" ).slider( "values", 1 ) + ' т.р.' );
 
-            $('#packets').click(function(){
+            $('#package').click(function(){
                if ($(this).hasClass('act')){
                    $('.check').addClass('disabled');
                    $(this).removeClass('disabled');
