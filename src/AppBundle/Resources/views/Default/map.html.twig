@@ -6,7 +6,7 @@
             <div style="float: left">
                 <h2 class="green">Поиск щитов по карте</h2>
             </div>
-            <img src="{{ asset('bundles/app/images/tooltip.png') }}" style="margin-left: 175px;width: 500px; opacity: 0.8;z-index: 999;position: absolute; top: 75px"/>
+            <img src="{{ asset('bundles/app/images/tooltip.png') }}" style="margin-left: 130px;width: 550px; opacity: 0.8;z-index: 999;position: absolute; top: 75px"/>
         </div>
     </div>
     <div class="row">
@@ -200,7 +200,7 @@
                     zoom: 9,
                     {% endif %}
                     {% endif %}
-                    controls: ['typeSelector','zoomControl']
+                    controls: ['zoomControl']
                 });
                 var filter =
                         'id={{ id }}'+
