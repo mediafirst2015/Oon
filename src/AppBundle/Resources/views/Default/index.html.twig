@@ -262,7 +262,7 @@
                             <span id="price-amount" class="val"></span>
                             <span class="slider" id="price" style="float: right"></span>
                             <input type="hidden" name="price-min" id="price-min" value="0">
-                            <input type="hidden" name="price-max" id="price-max" value="1000">
+                            <input type="hidden" name="price-max" id="price-max" value="999">
                         </div>
                         <br style="clear: both"/>
                         Форматы
@@ -522,8 +522,8 @@
                 $( "#price" ).slider({
                     range: true,
                     min: 0,
-                    max: 1000,
-                    values: [ 0, 1000 ],
+                    max: 999,
+                    values: [ 0, 999 ],
                     slide: function( event, ui ) {
                         $( "#price-amount" ).html( "" + ui.values[ 0 ] + " т.р. - " + ui.values[ 1 ] + ' т.р.' );
                         $( "#price-min" ).val(ui.values[ 0 ]);

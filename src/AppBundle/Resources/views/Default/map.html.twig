@@ -117,7 +117,7 @@
                             <span id="price-amount" class="val"></span>
                             <span class="slider" id="price"></span>
                             <input type="hidden" name="price-min" id="price-min" value="{{ params.priceMin != null ? params.priceMin : 0 }}">
-                            <input type="hidden" name="price-max" id="price-max" value="{{ params.priceMax != null ? params.priceMax : 1000 }}">
+                            <input type="hidden" name="price-max" id="price-max" value="{{ params.priceMax != null ? params.priceMax : 999 }}">
                         </div>
                         <br/>
                         <br/>
@@ -420,8 +420,8 @@
             $( "#price" ).slider({
                 range: true,
                 min: 0,
-                max: 1000,
-                values: [ {{ params.priceMin != null ? params.priceMin : 0 }}, {{ params.priceMax != null ? params.priceMax : 1000 }} ],
+                max: 999,
+                values: [ {{ params.priceMin != null ? params.priceMin : 0 }}, {{ params.priceMax != null ? params.priceMax : 999 }} ],
                 slide: function( event, ui ) {
                     $( "#price-amount" ).html( "" + ui.values[ 0 ] + " т.р. - " + ui.values[ 1 ] + ' т.р.' );
                     $( "#price-min" ).val(ui.values[ 0 ]);
