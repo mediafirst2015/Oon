@@ -22,8 +22,8 @@ h1.pink{
   width: 1150px;
   margin: 0 auto;
   min-height: 100%;
-  margin-bottom: -250px;
-  padding-bottom: 250px;
+  margin-bottom: -200px;
+  padding-bottom: 200px;
 }
 .btn {
   border: 0;
@@ -137,7 +137,7 @@ h1.pink{
     height: 34px;
     display: inline-block;
     line-height: 35px;
-    color: #333map;
+    color: #333;
     text-align: center;
     font-size: 20px;
     cursor: pointer;
@@ -155,7 +155,7 @@ header{
   #logo{
     margin-top: 10px;
   }
-  #phone{
+  #s-phone{
     color:  #e3007a;
     font-size: 34px;
     font-weight: 700;
@@ -171,7 +171,7 @@ header{
 
 footer{
   background-color: @color-green;
-  min-height: 250px;
+  min-height: 200px;
   color: white;
   font-size: 18px;
   padding: 10px 20px;
@@ -259,7 +259,7 @@ select{
   border-radius: 5px;
   background-color:  white;
   box-shadow: 0px 1px 16px 0px rgba(1, 1, 1, 0.51);
-  width: 100%;
+  width: 95%;
   margin-bottom: 10px;
   padding-left: 20px;
   height: 30px;
@@ -269,9 +269,16 @@ select{
   text-align: left;
   border: 0;
   outline-color: @color-green;
+  margin-left: 5px;
+  float: right;
+  &[required]{
+    width: 95%;
+    margin-left: 5px;
+  }
   &.mini{
     width: 70px;
-    padding-left: 10px;
+    padding-left: 5px;
+    float: none;
   }
 }
 
@@ -279,7 +286,9 @@ input{
   border-radius: 5px;
   background-color:  white;
   box-shadow: 0px 1px 16px 0px rgba(1, 1, 1, 0.51);
-  width: 100%;
+  width: 95%;
+  float: right;
+  margin-left: 5px;
   margin-bottom: 10px;
   padding-left: 20px;
   height: 30px;
@@ -289,12 +298,16 @@ input{
   text-align: left;
   border: 0;
   outline-color: @color-green;
+  &[required]{
+    margin-left: 5px;
+  }
   &.mini{
     width: 150px;
   }
 }
 .check-group{
   height: 24px;
+  overflow: hidden;
   line-height: 34px;
   font-size: 15px;
   font-weight: 400;
@@ -620,4 +633,24 @@ input{
 }
 .table>tbody>tr>td{
   font-size: 12px !important;
+}
+.required{
+//  position: absolute;
+//  top: 0;
+}
+.required:before {
+    content: '*';
+    color: @color-pink;
+    font-size: 20px;
+//    padding: 0 10px;
+}
+//[required]::before { content: "*"; color: @color-pink; }
+.relative{
+  padding-top: 10px;
+  padding-right: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.error{
+  color: #cc0000;
 }

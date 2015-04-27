@@ -13,8 +13,8 @@ h1.pink {
   width: 1150px;
   margin: 0 auto;
   min-height: 100%;
-  margin-bottom: -250px;
-  padding-bottom: 250px;
+  margin-bottom: -200px;
+  padding-bottom: 200px;
 }
 .btn {
   border: 0;
@@ -128,7 +128,7 @@ h1.pink {
   height: 34px;
   display: inline-block;
   line-height: 35px;
-  color: #333map;
+  color: #333;
   text-align: center;
   font-size: 20px;
   cursor: pointer;
@@ -142,7 +142,7 @@ h1.pink {
 header #logo {
   margin-top: 10px;
 }
-header #phone {
+header #s-phone {
   color: #e3007a;
   font-size: 34px;
   font-weight: 700;
@@ -156,7 +156,7 @@ header #top-img {
 }
 footer {
   background-color: #5eba5e;
-  min-height: 250px;
+  min-height: 200px;
   color: white;
   font-size: 18px;
   padding: 10px 20px;
@@ -236,7 +236,7 @@ select {
   border-radius: 5px;
   background-color: white;
   box-shadow: 0px 1px 16px 0px rgba(1, 1, 1, 0.51);
-  width: 100%;
+  width: 95%;
   margin-bottom: 10px;
   padding-left: 20px;
   height: 30px;
@@ -246,16 +246,25 @@ select {
   text-align: left;
   border: 0;
   outline-color: #5eba5e;
+  margin-left: 5px;
+  float: right;
+}
+select[required] {
+  width: 95%;
+  margin-left: 5px;
 }
 select.mini {
   width: 70px;
-  padding-left: 10px;
+  padding-left: 5px;
+  float: none;
 }
 input {
   border-radius: 5px;
   background-color: white;
   box-shadow: 0px 1px 16px 0px rgba(1, 1, 1, 0.51);
-  width: 100%;
+  width: 95%;
+  float: right;
+  margin-left: 5px;
   margin-bottom: 10px;
   padding-left: 20px;
   height: 30px;
@@ -265,12 +274,16 @@ input {
   text-align: left;
   border: 0;
   outline-color: #5eba5e;
+}
+input[required] {
+  margin-left: 5px;
 }
 input.mini {
   width: 150px;
 }
 .check-group {
   height: 24px;
+  overflow: hidden;
   line-height: 34px;
   font-size: 15px;
   font-weight: 400;
@@ -581,4 +594,18 @@ input.mini {
 }
 .table > tbody > tr > td {
   font-size: 12px !important;
+}
+.required:before {
+  content: '*';
+  color: #e3007a;
+  font-size: 20px;
+}
+.relative {
+  padding-top: 10px;
+  padding-right: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.error {
+  color: #cc0000;
 }

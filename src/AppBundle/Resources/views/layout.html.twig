@@ -84,7 +84,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/jqueryui/jquery-ui.css') }}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/fancyBox/source/jquery.fancybox.css') }}" media="screen" />
     <link href="{{ asset('bundles/app/kladrapi/jquery.kladr.css') }}" rel="stylesheet" media="all">
-        {% stylesheets filter='less'  '@AppBundle/Resources/public/less/*' %}
+        {% stylesheets filter='less'  '@AppBundle/Resources/public/less/*.less' %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="all" />
         {% endstylesheets %}
     {% endblock %}
@@ -106,7 +106,7 @@
                     <img src="{{ asset('bundles/app/images/top-img.png') }}" id="top-img">
                 </div>
                 <div class="col-sm-3" style="text-align: right">
-                    <span id="phone">8 495 987 35 95</span>
+                    <span id="s-phone">8 495 987 35 95</span>
                     <br />
                     <span class="btn" data-toggle="modal" data-target=".set-contacts">
                         СВЯЗАТЬСЯ С НАМИ

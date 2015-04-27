@@ -53,85 +53,109 @@
                 <div class="form">
                     <form method="POST" id="form-top">
                         <div class="title" style="font-size: 20px; margin-bottom: 10px">Закажите свой медиа-план!</div>
-                        <select required="required" id="city" name="city" required="true">
-                            <option value="0" disabled selected>Город</option>
-                            <option value="Москва">Москва</option>
-                        </select>
-                        <br />
-                        <select id="area" name="area">
-                            <option value="0" disabled selected>Округ</option>
-                            <option value="0" selected>Все округа</option>
-                            <option value="ЦАО">ЦАО</option>
-                            <option value="СВАО">СВАО</option>
-                            <option value="ВАО">ВАО</option>
-                            <option value="ЮВАО">ЮВАО</option>
-                            <option value="ЮАО">ЮАО</option>
-                            <option value="ЮЗАО">ЮЗАО</option>
-                            <option value="ЗАО">ЗАО</option>
-                            <option value="CЗАО">CЗАО</option>
-                            <option value="CАО">CАО</option>
-                        </select>
-                        <br />
-                        <div class="check-group">
-                            Формат 3х6
-                            <div class="check"></div>
-                            <input type="hidden" name="formatM" value="0">
+                        <div class="error">
+
                         </div>
-                        <div class="check-group">
-                            Малые форматы
-                            <div class="check"></div>
-                            <input type="hidden" name="formatS" value="0">
+                        <div class="relative">
+                            <span class="required"></span>
+                            <select id="city" name="city" required="true" class="required">
+                                <option value="0" disabled selected>Город</option>
+                                <option value="Москва">Москва</option>
+                            </select>
                         </div>
-                        <div class="check-group">
-                            Большие форматы
-                            <div class="check"></div>
-                            <input type="hidden" name="formatL" value="0">
+                        <div class="relative">
+                            <select id="area" name="area">
+                                <option value="0" disabled selected>Округ</option>
+                                <option value="0" selected>Все округа</option>
+                                <option value="ЦАО">ЦАО</option>
+                                <option value="СВАО">СВАО</option>
+                                <option value="ВАО">ВАО</option>
+                                <option value="ЮВАО">ЮВАО</option>
+                                <option value="ЮАО">ЮАО</option>
+                                <option value="ЮЗАО">ЮЗАО</option>
+                                <option value="ЗАО">ЗАО</option>
+                                <option value="CЗАО">CЗАО</option>
+                                <option value="CАО">CАО</option>
+                            </select>
                         </div>
-                        <div class="check-group">
-                            Ситиборды
-                            <div class="check"></div>
-                            <input type="hidden" name="formatSB" value="0">
-                        </div>
-                        <div class="input-group" style="padding-left: 20px">
-                            Период
-                            <div style="float: right;">
-                                с&nbsp;&nbsp;
-                                <select class="mini">
-                                    <option value="1" >Янв</option>
-                                    <option value="2" >Фев</option>
-                                    <option value="3" >Мар</option>
-                                    <option value="4" >Апр</option>
-                                    <option value="5" >Май</option>
-                                    <option value="6" >Июн</option>
-                                    <option value="7" >Июл</option>
-                                    <option value="8" >Авг</option>
-                                    <option value="9" >Сен</option>
-                                    <option value="10">Окт</option>
-                                    <option value="11">Ноя</option>
-                                    <option value="12">Дек</option>
-                                </select>
-                                &nbsp;&nbsp;по&nbsp;&nbsp;
-                                <select class="mini">
-                                    <option value="1" >Янв</option>
-                                    <option value="2" >Фев</option>
-                                    <option value="3" >Мар</option>
-                                    <option value="4" >Апр</option>
-                                    <option value="5" >Май</option>
-                                    <option value="6" >Июн</option>
-                                    <option value="7" >Июл</option>
-                                    <option value="8" >Авг</option>
-                                    <option value="9" >Сен</option>
-                                    <option value="10">Окт</option>
-                                    <option value="11">Ноя</option>
-                                    <option value="12">Дек</option>
-                                </select>
+                        <div class="relative">
+                            <div class="check-group">
+                                Формат 3х6
+                                <div class="check"></div>
+                                <input type="hidden" name="formatM" value="0">
+                            </div>
+                            <div class="check-group">
+                                Малые форматы
+                                <div class="check"></div>
+                                <input type="hidden" name="formatS" value="0">
+                            </div>
+                            <div class="check-group">
+                                Большие форматы
+                                <div class="check"></div>
+                                <input type="hidden" name="formatL" value="0">
+                            </div>
+                            <div class="check-group">
+                                Ситиборды
+                                <div class="check"></div>
+                                <input type="hidden" name="formatSB" value="0">
                             </div>
                         </div>
-                        <input type="text" placeholder="Количество конструкций" id="count">
-                        <input type="text" placeholder="Стоимость" id="count">
-                        <input type="text" class="email" placeholder="Email" name="email" id="email" required="true">
-                        <input type="text" class="phone" placeholder="Телефон" name="phone" id="phone" required="true">
-                        <br />
+                        <div class="relative">
+                            <div class="input-group" style="padding-left: 20px">
+                                <span class="required" style="  margin-left: -20px;padding-right: 10px;"></span>
+                                Период
+                                <div style="float: right;">
+                                    с&nbsp;&nbsp;
+                                    <select class="mini" id="dateStart">
+                                        <option value="0" disabled selected="selected">Дата начала</option>
+                                        <option value="1" >Янв</option>
+                                        <option value="2" >Фев</option>
+                                        <option value="3" >Мар</option>
+                                        <option value="4" >Апр</option>
+                                        <option value="5" >Май</option>
+                                        <option value="6" >Июн</option>
+                                        <option value="7" >Июл</option>
+                                        <option value="8" >Авг</option>
+                                        <option value="9" >Сен</option>
+                                        <option value="10">Окт</option>
+                                        <option value="11">Ноя</option>
+                                        <option value="12">Дек</option>
+                                    </select>
+                                    &nbsp;&nbsp;по&nbsp;&nbsp;
+                                    <select class="mini" id="dateEnd">
+                                        <option value="0" disabled selected="selected">Дата окончания</option>
+                                        <option value="1" >Янв</option>
+                                        <option value="2" >Фев</option>
+                                        <option value="3" >Мар</option>
+                                        <option value="4" >Апр</option>
+                                        <option value="5" >Май</option>
+                                        <option value="6" >Июн</option>
+                                        <option value="7" >Июл</option>
+                                        <option value="8" >Авг</option>
+                                        <option value="9" >Сен</option>
+                                        <option value="10">Окт</option>
+                                        <option value="11">Ноя</option>
+                                        <option value="12">Дек</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div  class="relative">
+                            <span class="required"></span>
+                            <input type="text" placeholder="Количество конструкций" id="count" required="required" name="count">
+                        </div>
+                        <div  class="relative">
+                            <span class="required"></span>
+                            <input type="text" placeholder="Стоимость" id="priceAll" required="required" name="priceAll">
+                        </div>
+                        <div  class="relative">
+                            <span class="required"></span>
+                            <input type="text" class="email" placeholder="Email" name="email" id="email" required="required">
+                        </div>
+                        <div  class="relative">
+                            <span class="required"></span>
+                            <input type="text" class="phone" placeholder="Телефон" name="phone" id="phone" required="required">
+                        </div>
                         <br />
                         <div style="text-align: right">
                             <span class="btn2" id="form-top-submit">
@@ -512,12 +536,44 @@
 
 
                 $('#form-top-submit').click(function(){
-                    $('#form-top').submit();
+                    // Валидация полей
+                    var error = '';
+                    if ($('#city').val() == '0' || $('#city').val() == null){
+                        error += 'Поле город обязательно для заполнения <br />';
+                    }
+                    if ($('#dateStart').val() == '0' || $('#dateEnd').val() == '0' || $('#dateStart').val() == null || $('#dateEnd').val() == null){
+                        error += 'Поля период обязательны для заполнения <br />';
+                    }
+                    if ($('#count').val() == ''){
+                        error += 'Поле кол-во конструкций обязательно для заполнения <br />';
+                    }
+                    if ($('#priceAll').val() == ''){
+                        error += 'Поле стоимость медиаплана обязательно для заполнения <br />';
+                    }
+                    if ($('#email').val() == ''){
+                        error += 'Поле e-mail обязательно для заполнения <br />';
+                    }else{
+                        var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+                        if (!re.test($('#email').val())){
+                            error += 'Поле e-mail Заполнено некорректно <br />';
+                        }
+                    }
+                    if ($('#phone').val() == ''){
+                        error += 'Поле телефон обязательно для заполнения <br />';
+                    }
+                    if (error == ''){
+                        $('#form-top').submit();
+                    }else{
+                        $('.error').html(error);
+                    }
                 });
 
                 $('#form-map-submit').click(function(){
                    $('#form-map').submit();
                 });
+
+
+
             });
         </script>
     {% endblock %}
