@@ -7,15 +7,15 @@
                     <div class="error get-media-plan-error"></div>
                     <div class="relative">
                         <span class="required"></span>
-                        <input type="text" name="name" id="name" placeholder="Имя">
+                        <input type="text" name="name" id="media-name" placeholder="Имя">
                     </div>
                     <div class="relative">
                         <span class="required"></span>
-                        <input type="text" name="email" id="email" placeholder="E-mail">
+                        <input type="text" name="email" id="media-email" placeholder="E-mail">
                     </div>
                     <div class="relative">
                         <span class="required"></span>
-                        <input type="text" name="phone" id="phone" placeholder="Телефон">
+                        <input type="text" name="phone" id="media-phone" placeholder="Телефон">
                     </div>
                     <br />
                     <br />
@@ -33,20 +33,34 @@
 <div class="modal fade set-contacts" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm" style="width: 400px">
         <div class="modal-content">
-            <div class="form">
-                <h2 class="pink" style="display: block;text-align: center;margin-top: -5px;">Связаться с нами</h2>
-                <input type="Name" placeholder="Имя">
-                <input type="Email" placeholder="Email">
-                <input type="phone" placeholder="Телефон">
-                <br />
-                <br />
-                <div style="text-align: right">
-                    <span class="btn2" style="font-size: 16px">
+            <form id="contact-form" method="POST" action="{{ path('send_contact') }}">
+                <div class="form">
+                    <h2 class="pink" style="display: block;text-align: center;margin-top: -5px;">Связаться с нами</h2>
+                    <div class="error contact-error"></div>
+                    <div class="relative">
+                        <span class="required"></span>
+                        <input type="text" name="name" id="contact-name" placeholder="Имя">
+                    </div>
+                    <div class="relative">
+                        <span class="required"></span>
+                        <input type="text" name="email" id="contact-email" placeholder="E-mail">
+                    </div>
+                    <div class="relative">
+                        <span class="required"></span>
+                        <input type="text" name="phone" id="contact-phone" placeholder="Телефон">
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <div style="text-align: right">
+                    <span class="btn2" style="font-size: 16px" id="contact">
                         Отправить контакты
                     </span>
+                    </div>
+                    <br />
                 </div>
-                <br />
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -61,28 +75,51 @@
 
 <script>
     $(document).ready(function(){
-       $('#get-media-plan').click(function(){
+        $('#get-media-plan').click(function(){
             var error = '';
-           if ($('#name').val() == ''){
-               error += 'Поле имя обязательно для заполнения <br />';
-           }
-           if ($('#email').val() == ''){
-               error += 'Поле e-mail обязательно для заполнения <br />';
-           }else{
-               var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-               if (!re.test($('#email').val())){
-                   error += 'Поле e-mail Заполнено некорректно <br />';
-               }
-           }
-           if ($('#phone').val() == ''){
-               error += 'Поле телефон обязательно для заполнения <br />';
-           }
-           if (error == ''){
-               $('#get-media-plan-form').submit();
-           }else{
-               $('.get-media-plan-error').html(error);
-           }
-       });
+            if ($('#media-name').val() == ''){
+                error += 'Поле имя обязательно для заполнения <br />';
+            }
+            if ($('#media-email').val() == ''){
+                error += 'Поле e-mail обязательно для заполнения <br />';
+            }else{
+                var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+                if (!re.test($('#media-email').val())){
+                    error += 'Поле e-mail Заполнено некорректно <br />';
+                }
+            }
+            if ($('#media-phone').val() == ''){
+                error += 'Поле телефон обязательно для заполнения <br />';
+            }
+            if (error == ''){
+                $('#get-media-plan-form').submit();
+            }else{
+                $('.get-media-plan-error').html(error);
+            }
+        });
+
+        $('#contact').click(function(){
+            var error = '';
+            if ($('#contact-name').val() == ''){
+                error += 'Поле имя обязательно для заполнения <br />';
+            }
+            if ($('#contact-email').val() == ''){
+                error += 'Поле e-mail обязательно для заполнения <br />';
+            }else{
+                var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+                if (!re.test($('#contact-email').val())){
+                    error += 'Поле e-mail Заполнено некорректно <br />';
+                }
+            }
+            if ($('#contact-phone').val() == ''){
+                error += 'Поле телефон обязательно для заполнения <br />';
+            }
+            if (error == ''){
+                $('#contact-form').submit();
+            }else{
+                $('.contact-error').html(error);
+            }
+        });
 
         setTimeout(function(){$('.flashbag-success').fadeOut()},4000);
     });

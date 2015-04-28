@@ -588,6 +588,64 @@ class BasketController extends Controller
     }
 
     /**
+     * @Route("/send/contact", name="send_contact")
+     */
+    public function sendContactAction(Request $request){
+        $session = new Session();
+        $email = $request->request->get('email');
+        $name = $request->request->get('name');
+        $phone = $request->request->get('phone');
+        $this->get('email.service')->send(
+            'tulupov.m@gmail.com',
+            array('AppBundle:Email:contact.html.twig', array(
+                'name'  => $name,
+                'email'  => $email,
+                'phone'  => $phone,
+            )),
+            'Сообщение от navigator mediaFirst',
+            null
+        );
+        $session->getFlashBag()->set('success', '<span>Дорогой клиент,</span><br /><br />Спасибо за обращение к нам. наш оператор свяжется с Вами в ближайшее время.');
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+    }
+
+    /**
+     * @Route("/send/getmedia", name="send_getmedia")
+     */
+    public function sendGetMediaAction(Request $request){
+        $session = new Session();
+        $params = array(
+            'email' =>   $request->request->get('email'),
+            'name' =>    $request->request->get('name'),
+            'phone' =>   $request->request->get('phone'),
+            'city' =>    $request->request->get('city'),
+            'area' =>    $request->request->get('area'),
+            'formatM' => ( $request->request->get('formatM')==1 ? 'да' : 'нет' ) ,
+            'formatS' => ( $request->request->get('formatS')==1 ? 'да' : 'нет' ),
+            'formatL' => ( $request->request->get('formatL')==1 ? 'да' : 'нет' ),
+            'formatSB' =>( $request->request->get('formatSB')==1 ? 'да' : 'нет' ),
+            'start' =>   $this->getMonth($request->request->get('dateStart')),
+            'end' =>     $this->getMonth($request->request->get('dateEnd')),
+            'count' =>   $request->request->get('count'),
+            'priceAll' =>$request->request->get('priceAll'),
+        );
+
+
+        $this->get('email.service')->send(
+            'tulupov.m@gmail.com',
+            array('AppBundle:Email:mediaplan.html.twig', $params),
+            'Сообщение от navigator mediaFirst',
+            null
+        );
+        $session->getFlashBag()->set('success', '<span>Дорогой клиент,</span><br /><br />Спасибо за обращение к нам. наш оператор свяжется с Вами в ближайшее время.');
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+    }
+
+
+
+    /**
      * Некий контроллер для генерации Excel
      */
 
@@ -696,7 +754,7 @@ class BasketController extends Controller
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('L'.$line, $o['price'].'р.');
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('M'.$line, $o['taxType']);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('N'.$line, $o['price2'].'р.');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('O'.$line, $o['priceDeploy'].'р.');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('O'.$line, ( $o['priceDeploy'] != '' ? $o['priceDeploy'] : '0' ) .'р.');
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('P'.$line, 'Карта');
             $phpExcelObject->setActiveSheetIndex(0)->getHyperlink('P'.$line)->setUrl($url);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('Q'.$line, 'Фото');

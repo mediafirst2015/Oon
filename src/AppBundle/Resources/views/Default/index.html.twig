@@ -51,7 +51,7 @@
         <div class="col-sm-4">
             <div class="box" style="  margin-top: -15px;">
                 <div class="form">
-                    <form method="POST" id="form-top">
+                    <form method="POST" id="form-top" action="{{ path('send_getmedia') }}">
                         <div class="title" style="font-size: 20px; margin-bottom: 10px">Закажите свой медиа-план!</div>
                         <div class="error">
 
@@ -106,7 +106,7 @@
                                 Период
                                 <div style="float: right;">
                                     с&nbsp;&nbsp;
-                                    <select class="mini" id="dateStart">
+                                    <select class="mini" id="dateStart" name="dateStart">
                                         <option value="0" disabled selected="selected">Дата начала</option>
                                         <option value="1" >Янв</option>
                                         <option value="2" >Фев</option>
@@ -122,7 +122,7 @@
                                         <option value="12">Дек</option>
                                     </select>
                                     &nbsp;&nbsp;по&nbsp;&nbsp;
-                                    <select class="mini" id="dateEnd">
+                                    <select class="mini" id="dateEnd" name="dateEnd">
                                         <option value="0" disabled selected="selected">Дата окончания</option>
                                         <option value="1" >Янв</option>
                                         <option value="2" >Фев</option>
