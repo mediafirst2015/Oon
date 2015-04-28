@@ -561,4 +561,27 @@ class BasketController extends Controller
                 return 'Декабрь';
         }
     }
+
+    /**
+     * @Route("/sendMailtest")
+     */
+    public function sendMailtestAction(){
+        $this->get('email.service')->send(
+            'tulupov.m@gmail.com',
+            array('AppBundle:Email:order.html.twig', array(
+                'name'  => 'Вася',
+            )),
+            'Медиаплан от MediaFirst !',
+            '/home/maxim/1.xls'
+        );
+        return new Response('письмо отправлено');
+    }
+
+    /**
+     * Некий контроллер для генерации Excel
+     */
+    public function generateExcel(){
+
+    }
+
 }

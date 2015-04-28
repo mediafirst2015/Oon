@@ -46,9 +46,15 @@ class ParserController extends Controller
                     $banner->setLatitude($val['latitude']);
                     $banner->setImg(str_replace('//','http://',$val['imageURL']));
                     $banner->setArea((isset($val['subAreaId']) && isset($area[$val['subAreaId']]) ? $area[$val['subAreaId']] : null ));
-                    $em->persist($banner);
-                    $em->flush($banner);
+//                    $em->persist($banner);
+//                    $em->flush($banner);
                 }
+            }else{
+                echo $val['address'].'<br />';
+                echo '<br />';
+                print_r($val);
+                echo '<br />';
+                echo '<br />';
             }
         }
 

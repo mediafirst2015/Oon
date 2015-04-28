@@ -1,29 +1,33 @@
 <?php
-namespace Crm\MainBundle\Service;
+namespace AppBundle\Service;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Bundle\TwigBundle\TwigEngine as Templating;
 class EmailService
 {
     private $container;
     private $templating;
+
     public function __construct(Container $container, Templating $templating)
     {
         $this->container  = $container;
         $this->templating = $templating;
     }
-    public function send($emails, $template, $subject = 'Уведомление')
+    public function send($emails, $template, $subject = 'Уведомление', $filepath = null)
     {
         $mail = new \PHPMailer();
-        $portal = $this->container->getParameter('portal');
+        $portal = 'mediafirst.ru';
         $mail->isSMTP();
         $mail->isHTML(true);
         $mail->CharSet  = 'UTF-8';
         $mail->FromName = $portal;
         $mail->Subject  = $subject;
+        if ($filepath != null){
+            $mail->addAttachment($filepath,'mediaplan.xls');
+        }
         # prod - оптравка через Exim, dev/test - отправка через Gmail
         if ($this->container->getParameter('kernel.environment') == 'prod') {
             $mail->Host = '127.0.0.1';
-            $mail->From = 'noreply@mailbot.evrika.ru';
+            $mail->From = 'noreply@navigator.mediafirst.ru';
         }
         else {
             $mail->Host       = 'smtp.gmail.com';

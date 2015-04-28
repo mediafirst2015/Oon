@@ -21,3 +21,7 @@ services:
     basket.service:
         class: Vidal\MainBundle\Service\Basket
         arguments: [ @doctrine.orm.entity_manager, @session ]
+
+    email.service:
+        class: AppBundle\Service\EmailService
+        arguments: [@service_container, @templating]

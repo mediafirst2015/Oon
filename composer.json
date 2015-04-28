@@ -27,7 +27,8 @@
     "friendsofsymfony/jsrouting-bundle": "@stable",
     "gregwar/captcha-bundle": "dev-master",
     "liip/cache-control-bundle": "~1.0",
-    "liuggio/excelbundle": "~2.0"
+    "liuggio/excelbundle": "~2.0",
+    "phpmailer/phpmailer": "~5.2"
 
   },
   "require-dev": {
