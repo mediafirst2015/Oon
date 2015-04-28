@@ -117,8 +117,8 @@
     </div>
     <div>
         <label>CРТ за программу:</label>
-        {% if ( price != 0) %}
-            {{ ( price / ots )|number_format(0, '.', '') }}
+        {% if ( fullPrice != 0) %}
+            {{ ( fullPrice / ( otsSum * 30 ) )|number_format(2, '.', '') }}
         {% else %}
             0
         {% endif %}

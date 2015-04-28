@@ -609,3 +609,22 @@ input.mini {
 .error {
   color: #cc0000;
 }
+.flashbag-success {
+  width: 300px;
+  position: fixed;
+  text-align: center;
+  left: 50%;
+  margin-left: -150px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #FFF;
+  border: 1px solid #777;
+  z-index: 9999;
+  top: 200px;
+  box-shadow: 0 1px 16px 0 rgba(1, 1, 1, 0.51);
+  font-size: 16px;
+  color: #016b04;
+}
+.flashbag-success span {
+  font-size: 20px;
+}

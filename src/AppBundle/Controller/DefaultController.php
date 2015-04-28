@@ -165,6 +165,7 @@ class DefaultController extends Controller
             }
             $lists = $basket;
             $grp = $grp / $i;
+            $ots2 = $ots;
             $ots = $ots / $i;
             $fullprice = $price;
             $price = $price / $i;
@@ -181,6 +182,7 @@ class DefaultController extends Controller
             'lists' => $lists,
             'grp' => $grp,
             'ots'=>$ots,
+            'otsSum'=>$ots2,
             'price' => $price,
             'count' => $i,
             'side'=> $side,
@@ -252,6 +254,7 @@ class DefaultController extends Controller
             }
             $lists = $basket;
             $grp = $grp / $i;
+            $ots2 = $ots;
             $ots = $ots / $i;
             $fullprice = $price;
             $price = $price / $i;
@@ -267,6 +270,7 @@ class DefaultController extends Controller
             'lists' => $lists,
             'grp' => $grp,
             'ots'=>$ots,
+            'otsSum'=>$ots2,
             'price' => $price,
             'count' => $i,
             'side'=> $side,

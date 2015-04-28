@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class BasketController extends Controller
 {
@@ -115,6 +116,7 @@ class BasketController extends Controller
             }
             $lists = $basket;
             $grp = $grp / $i;
+            $ots2 = $ots;
             $ots = $ots / $i;
             $fullprice = $price;
             $price = $price / $i;
@@ -128,6 +130,7 @@ class BasketController extends Controller
         $params = array(
             'lists' => $lists,
             'grp' => $grp,
+            'otsSum'=> $ots2,
             'ots'=>$ots,
             'price' => $price,
             'count' => $i,
@@ -240,6 +243,7 @@ class BasketController extends Controller
                 }
                 $lists = $basket;
                 $grp = $grp / $i;
+                $ots2 = $ots;
                 $ots = $ots / $i;
                 $fullprice = $price;
                 $price = $price / $i;
@@ -254,6 +258,7 @@ class BasketController extends Controller
                 'lists' => $lists,
                 'grp' => $grp,
                 'ots'=>$ots,
+                'otsSum'=>$ots2,
                 'price' => $price,
                 'count' => $i,
                 'side'=> $side,
@@ -563,25 +568,158 @@ class BasketController extends Controller
     }
 
     /**
-     * @Route("/sendMailtest")
+     * @Route("/send/mediaplan", name="send_mediaplan")
      */
-    public function sendMailtestAction(){
+    public function sendMailtestAction(Request $request){
+        $session = new Session();
+        $email = $request->request->get('email');
+        $name = $request->request->get('name');
+        $file = $this->generateExcel();
         $this->get('email.service')->send(
-            'tulupov.m@gmail.com',
+            $email,
             array('AppBundle:Email:order.html.twig', array(
-                'name'  => 'Вася',
+                'name'  => $name,
             )),
             'Медиаплан от MediaFirst !',
-            '/home/maxim/1.xls'
+            $file
         );
-        return new Response('письмо отправлено');
+        $session->getFlashBag()->set('success', '<span>Дорогой клиент,</span><br /><br />Спасибо за обращение к нам. Будем рады ответить на все ваши вопросы.');
+        return $this->redirect($this->generateUrl('map').'#basket');
     }
 
     /**
      * Некий контроллер для генерации Excel
      */
+
     public function generateExcel(){
+        $session = new Session();
+        $basket = $session->get('lists');
+
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+        for($i = 1; $i<500; $i ++){
+            $phpExcelObject->setActiveSheetIndex(0)->getRowDimension($i)->setRowHeight(20);
+        }
+
+
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('B')->setWidth(5);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('C')->setWidth(15);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('D')->setWidth(8);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('E')->setWidth(40);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('F')->setWidth(10);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('G')->setWidth(10);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('H')->setWidth(10);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('I')->setWidth(10);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('J')->setWidth(10);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('K')->setWidth(10);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('L')->setWidth(14);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('M')->setWidth(10);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('N')->setWidth(14);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('O')->setWidth(14);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('P')->setWidth(10);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('Q')->setWidth(10);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('R')->setWidth(10);
+        $phpExcelObject->getProperties()->setCreator("liuggio")
+            ->setLastModifiedBy("mediafirst")
+            ->setTitle("Сформированный медиаплан")
+            ->setSubject("Сформированный медиаплан")
+            ->setDescription("")
+            ->setKeywords("")
+            ->setCategory("");
+
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('B5', '№');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C5', 'Город');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('D5', 'Округ');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E5', 'Адрес');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F5', 'Период');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G5', 'Сторона');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('H5', 'Формат');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('I5', 'Свет');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('J5', 'GRP');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('K5', 'OTS');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('L5', 'Стоимость без учета налогов');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('M5', 'Налог');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('N5', 'Стоимость с учетом налогов');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('O5', 'Стоимость монтажа с налогом');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('P5', 'Фото');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('Q5', 'Карта');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('R5', 'Налог');
+
+
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("B5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("C5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("D5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("E5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("F5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("G5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("H5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("I5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("J5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("K5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("L5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("M5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("N5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("O5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("P5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("Q5")->getFont()->setBold(true);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("R5")->getFont()->setBold(true);
+
+        $line = 6;
+        $sum = array(
+            '6' => 0,
+            '7' => 0,
+            '8' => 0,
+            '9' => 0,
+            '10' => 0,
+            '11' => 0,
+            '12' => 0,
+            '13' => 0,
+            '14' => 0,
+            '15' => 0,
+            '16' => 0,
+            '17' => 0,
+        );
+        $num = 0;
+        foreach ($basket as $o){
+            $num ++ ;
+            $url = 'https://maps.yandex.ru/?text='.$o['latitude'].','.$o['longitude'];
+
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('B'.$line, $num);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, $o['city']);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('D'.$line, $o['area']);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E'.$line, $o['adrs']);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, $this->getMonth($o['month']));
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G'.$line, $o['side']);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('H'.$line, $o['format']);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('I'.$line, ($o['light'] == 1 ? 'Есть' : 'Нет'));
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('J'.$line, $o['grp']);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('K'.$line, $o['ots']);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('L'.$line, $o['price'].'р.');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('M'.$line, $o['taxType']);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('N'.$line, $o['price2'].'р.');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('O'.$line, $o['priceDeploy'].'р.');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('P'.$line, 'Карта');
+            $phpExcelObject->setActiveSheetIndex(0)->getHyperlink('P'.$line)->setUrl($url);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('Q'.$line, 'Фото');
+            $phpExcelObject->setActiveSheetIndex(0)->getHyperlink('Q'.$line)->setUrl($o['img']);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('R'.$line, $o['taxType']);
+
+            $line++;
+        }
+
+        $phpExcelObject->getActiveSheet()->setTitle('List');
+        // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+        $phpExcelObject->setActiveSheetIndex(0);
+
+        // create the writer
+        $time = time();
+        $path = '/tmp/'.$time.'xls';
+        $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
+        $writer->save($path);
+
+
+        return $path;
 
     }
+
 
 }

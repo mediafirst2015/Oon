@@ -44,7 +44,7 @@
                 });
             </script>
             <br />
-            <h1 class="pink">
+            <h1 class="pink" style="margin-top: 55px;">
                 МЕДИА-ПЛАН ПО НАРУЖКЕ ЗА ТРИ МИНУТЫ!
             </h1>
         </div>
@@ -147,6 +147,10 @@
                         <div  class="relative">
                             <span class="required"></span>
                             <input type="text" placeholder="Стоимость" id="priceAll" required="required" name="priceAll">
+                        </div>
+                        <div  class="relative">
+                            <span class="required"></span>
+                            <input type="text" class="name" placeholder="Имя" name="name" id="name" required="required">
                         </div>
                         <div  class="relative">
                             <span class="required"></span>
@@ -541,6 +545,9 @@
                 $('#form-top-submit').click(function(){
                     // Валидация полей
                     var error = '';
+                    if ($('#name').val() == ''){
+                        error += 'Поле имя обязательно для заполнения <br />';
+                    }
                     if ($('#city').val() == '0' || $('#city').val() == null){
                         error += 'Поле город обязательно для заполнения <br />';
                     }
@@ -548,10 +555,10 @@
                         error += 'Поля период обязательны для заполнения <br />';
                     }
                     if ($('#count').val() == ''){
-                        error += 'Поле кол-во конструкций обязательно для заполнения <br />';
+                        error += 'Поле кол-во щитов обязательно для заполнения <br />';
                     }
                     if ($('#priceAll').val() == ''){
-                        error += 'Поле стоимость медиаплана обязательно для заполнения <br />';
+                        error += 'Поле стоимость обязательно для заполнения <br />';
                     }
                     if ($('#email').val() == ''){
                         error += 'Поле e-mail обязательно для заполнения <br />';
