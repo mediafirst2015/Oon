@@ -134,6 +134,9 @@ h1.pink {
   cursor: pointer;
   position: relative;
 }
+.btn-top-menu-search.act {
+  color: #e3007a;
+}
 .btn-top-menu-search:hover {
   transition: background-image 0.2s ease-in-out, color 0.2s ease-in-out;
   background-image: url("/bundles/app/images/btn3.png");

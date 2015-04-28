@@ -125,7 +125,7 @@
                 <a href="#"><span class="btn-top-menu">Клиенты</span></a>
                 <a href="{{ path('page',{'url' : 'contacts'}) }}"><span class="btn-top-menu {{ url == 'contacts' ? 'act' : '' }}">Контакты</span></a>
                 &nbsp;&nbsp;&nbsp;
-                <span class="btn-top-menu-search">
+                <span class="btn-top-menu-search {{ url == 'search' or url == 'map' or url == 'hot' ? 'act' : '' }}">
                     Поиск щитов
                     <div class="dropdown">
                         <a href="{{ path('search') }}"><span>Поиск по параметрам</span></a> <br />
