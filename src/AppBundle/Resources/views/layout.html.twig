@@ -117,7 +117,15 @@
         {% if app.request.attributes.get('_route_params').url is defined  %}
             {% set url = app.request.attributes.get('_route_params').url %}
         {% else %}
-            {% set url = null %}
+            {% if app.request.attributes.get('_route') == 'map' %}
+                {% set url = 'map' %}
+            {% elseif app.request.attributes.get('_route') == 'search' %}
+                {% set url = 'search' %}
+            {% elseif app.request.attributes.get('_route') == 'hot' %}
+                {% set url = 'hot' %}
+            {% else %}
+                {% set url = null %}
+            {% endif %}
         {% endif %}
         <div class="container">
             <div class="top-menu">
