@@ -339,9 +339,9 @@ class ParserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Гема');
 //        $company->setTitle('Гема');
-        $em->persist($company);
-        $em->flush($company);
-        $em->refresh($company);
+//        $em->persist($company);
+//        $em->flush($company);
+//        $em->refresh($company);
 
         $filePath = '/var/www/navigator/current/web/Gema.xls';
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
