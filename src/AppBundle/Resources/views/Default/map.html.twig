@@ -134,15 +134,16 @@
         <div class="col-lg-9">
             <div id="submap" style="margin-top: 13px; position: relative">
                 <div id="gray"></div>
+                <div id="dinamys-popups" style="display: none"></div>
                 <img src="{{ asset('bundles/app/images/loader.gif') }}" id="loader-map">
                 <div id="map"></div>
                 <div class="icheck">
                     Показать <b>Все</b>
                     {% if app.request.query.all.my is defined and app.request.query.all.my == 1 %}
-                        <a href="?my=0"><img src="{{ asset('bundles/app/images/icheck-act.png') }}" style="margin-top: -5px;"></a>
-                    {% else %}
-                        <a href="?my=1"><img src="{{ asset('bundles/app/images/icheck.png') }}" style="margin-top: -5px;"></a>
-                    {% endif %}
+    <a href="?my=0"><img src="{{ asset('bundles/app/images/icheck-act.png') }}" style="margin-top: -5px;"></a>
+{% else %}
+    <a href="?my=1"><img src="{{ asset('bundles/app/images/icheck.png') }}" style="margin-top: -5px;"></a>
+{% endif %}
                     <b>Выбранные</b>
                 </div>
             </div>
@@ -206,7 +207,7 @@
                     var target = e.get('target')
                     target.balloon.close();
                 });
-                    var filter =
+                var filter =
                         'id={{ id }}'+
                         '&city={{ params.city }}'+
                         '&street={{ params.street }}'+
@@ -252,112 +253,135 @@
                         objects = msg.data;
                         var placemarks = [];
                         var j = 0;
-                        for (var i in objects) {
-                            if (objects[i].hot != '0' && objects[i].hot != 0 && objects[i].hot != null ){
-                                var img = '/bundles/app/images/fire.gif';
-                            }else{
-                                var img = '/bundles/app/images/mapIcon3.png';
-                            }
-                            placemarks[j] = new ym.GeoObject({
-                                        geometry: {
-                                            type: "Point",
-                                            coordinates: objects[i].coords //Массив
-                                        },
-                                        properties:{
-                                            hintContent: objects[i].alt, //Подсказка
-//                                    balloonContent: objects[i].content
-                                            balloonContent : '',
-                                            itemId: objects[i].id
 
-                                        }
-                                    },{
-                                        balloonPanelMaxMapArea: 0,
-                                        openEmptyBalloon: true,
-                                        iconLayout: 'default#image',
-                                        iconImageHref: img,
-                                        iconImageSize: [16, 16]
-                                    }
-                            );
-
-                            j ++ ;
-                        }
-                        var clusterer = new ym.Clusterer({
-                            preset: 'islands#darkGreenClusterIcons',
-                            clusterOpenBalloonOnClick: true
-                        });
-                        clusterer.events
-                            // Можно слушать сразу несколько событий, указывая их имена в массиве.
-                                .add(['mouseenter', 'mouseleave'], function (e) {
-                                    var target = e.get('target'),
-                                            type = e.get('type');
-                                    if (typeof target.getGeoObjects != 'undefined') {
-                                        // Событие произошло на кластере.
-                                        if (type == 'mouseenter') {
-                                            target.options.set('preset', 'islands#greenClusterIcons');
+                        if ( objects != null && objects.length != 0 ) {
+                            for (var i in objects) {
+                                if (objects[i].hot != '0' && objects[i].hot != 0 && objects[i].hot != null) {
+                                    var img = '/bundles/app/images/fire.gif';
+                                } else {
+                                    if (objects[i].format == '3x6') {
+                                        var img = '/bundles/app/images/mapIcon3.png';
+                                    } else {
+                                        if (objects[i].format == 'big') {
+                                            var img = '/bundles/app/images/mapIcon4.png';
                                         } else {
-                                            target.options.set('preset', 'islands#darkGreenClusterIcons');
+                                            if (objects[i].format == 'small') {
+                                                var img = '/bundles/app/images/mapIcon5.png';
+                                            } else {
+                                                var img = '/bundles/app/images/mapIcon1.png';
+                                            }
                                         }
                                     }
-                                });
+
+                                }
+                                placemarks[j] = new ym.GeoObject({
+                                            geometry: {
+                                                type: "Point",
+                                                coordinates: objects[i].coords //Массив
+                                            },
+                                            properties: {
+                                                hintContent: objects[i].alt, //Подсказка
+//                                    balloonContent: objects[i].content
+                                                balloonContent: '',
+                                                itemId: objects[i].id
+
+                                            }
+                                        }, {
+                                            balloonPanelMaxMapArea: 0,
+                                            openEmptyBalloon: true,
+                                            iconLayout: 'default#image',
+                                            iconImageHref: img,
+                                            iconImageSize: [16, 16]
+                                        }
+                                );
+
+                                j++;
+                            }
+                            var clusterer = new ym.Clusterer({
+                                preset: 'islands#darkGreenClusterIcons',
+                                clusterOpenBalloonOnClick: true
+                            });
+                            clusterer.events
+                                // Можно слушать сразу несколько событий, указывая их имена в массиве.
+                                    .add(['mouseenter', 'mouseleave'], function (e) {
+                                        var target = e.get('target'),
+                                                type = e.get('type');
+                                        if (typeof target.getGeoObjects != 'undefined') {
+                                            // Событие произошло на кластере.
+                                            if (type == 'mouseenter') {
+                                                target.options.set('preset', 'islands#greenClusterIcons');
+                                            } else {
+                                                target.options.set('preset', 'islands#darkGreenClusterIcons');
+                                            }
+                                        }
+                                    });
 
 //                        s.getData().cluster.properties.getAll().geoObjects[1]
-                        clusterer.events.add('balloonopen',function(e){
-                            var target = e.get('target');
-                            if (typeof target.getData != 'undefined') {
-                                console.log('Кластер');
-                                console.log(s=target);
-                                // Кластер
-                                var objs = target.getData().cluster.properties.getAll().geoObjects;
-                                var str = '';
-                                for ( i = 0 ; i < objs.length ; i ++ ){
-                                    str += objs[i].properties.get('itemId')+'|';
-                                }
-                                console.log('dates =>' +str);
-                                $.ajax({
-                                    url: Routing.generate('get_more_info'),
-                                    data: 'items='+str,
-                                    method: 'POST',
-                                    success: function(msg){
-                                        console.log('ajax success');
+                            clusterer.events.add('balloonopen',function(e){
+                                var target = e.get('target');
+                                if (typeof target.getData != 'undefined') {
+//                                console.log('Кластер');
+//                                console.log(s=target);
+                                    // Кластер
+                                    var objs = target.getData().cluster.properties.getAll().geoObjects;
+                                    var str = '';
+                                    for ( i = 0 ; i < objs.length ; i ++ ){
+                                        str += objs[i].properties.get('itemId')+'|';
+                                    }
+//                                console.log('dates =>' +str);
+                                    $.ajax({
+                                        url: Routing.generate('get_more_info'),
+                                        data: 'items='+str,
+                                        method: 'POST',
+                                        success: function(msg){
+//                                        console.log('ajax success');
 //                                        target.properties.set('balloonContent', msg);
-                                          for ( i = 0 ; i < msg.data.length ; i++ ){
-                                              objs[i].properties.set('name', msg.data[i].title);
-                                              objs[i].properties.set('clusterCaption', msg.data[i].title);
-                                              objs[i].properties.set('balloonContentBody', msg.data[i].body);
-                                          }
-                                    },
-                                    error: function(){
-                                        target.properties.set('balloonContent', 'Не удалось загрузить контент');
-                                        console.log('ajax error');
-                                    }
-                                });
-                                console.log('ajax closed');
-                            }else{
-                                console.log('Точка');
-                                console.log(s=target);
-                                $.ajax({
-                                    url: Routing.generate('get_more_info'),
-                                    data: 'itemId='+ target.properties.get('itemId'),
-                                    method: 'POST',
-                                    success: function(msg){
-                                        console.log('ajax');
-                                        target.properties.set('balloonContent', msg);
-                                    },
-                                    error: function(){
-                                        console.log('ajax error');
-                                        target.properties.set('balloonContent', 'Не удалось загрузить контент');
-                                    }
-                                });
-                                console.log('close ajax');
-                            }
-                        });
-                        clusterer.add(placemarks);
-                        map.geoObjects.add(clusterer);
+                                            for ( i = 0 ; i < msg.data.length ; i++ ){
+                                                objs[i].properties.set('name', msg.data[i].title);
+                                                objs[i].properties.set('clusterCaption', msg.data[i].title);
+                                                objs[i].properties.set('balloonContentBody', msg.data[i].body);
+                                            }
+                                        },
+                                        error: function(){
+                                            target.properties.set('balloonContent', 'Не удалось загрузить контент');
+                                            console.log('ajax error');
+                                        }
+                                    });
+//                                console.log('ajax closed');
+                                }else{
+//                                console.log('Точка');
+//                                console.log(s=target);
+                                    $.ajax({
+                                        url: Routing.generate('get_more_info'),
+                                        data: 'itemId='+ target.properties.get('itemId'),
+                                        method: 'POST',
+                                        success: function(msg){
+                                            console.log('ajax');
+                                            target.properties.set('balloonContent', msg);
+                                        },
+                                        error: function(){
+                                            console.log('ajax error');
+                                            target.properties.set('balloonContent', 'Не удалось загрузить контент');
+                                        }
+                                    });
+//                                console.log('close ajax');
+                                }
+                            });
+                            clusterer.add(placemarks);
+                            map.geoObjects.add(clusterer);
 
 
 
+                            $('#loader-map').css('display','none');
+                            $('#gray').css('display','none');
+
+                        }else{
+                        $('#gray').css('display','block');
                         $('#loader-map').css('display','none');
-                        $('#gray').css('display','none');
+                        $('#dinamys-popups').css('display','block');
+                        $('#dinamys-popups').html('<div class="flashbag-success-2"><span>Не найдено предложений,<br />удовлетворяющих Вашему запросу</span></div>');
+
+                        }
                     }
                 });
             }
@@ -405,7 +429,7 @@
                     method: 'POST',
                     success: function(msg){
                         $('#basket-table').html(msg);
-                        $('.thrumb').notify("позиция добавлена в медиаплан",{ className: 'success', autoHideDelay: 700, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "bottom"  });
+                        $('.thrumb').notify("позиция добавлена в медиаплан",{ className: 'success', autoHideDelay: 1200, position: "bottom",  showDuration: 0,  hideDuration: 0  });
                         orderRefresh();
                     }
                 });
@@ -423,7 +447,7 @@
                         console.log(item2);
                         item2 = $('.'+item2);
                         console.log(item2);
-                        item2.notify("позиция удалена",{ className: 'success', autoHideDelay: 700, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "top right"  });
+                        item2.notify("позиция удалена",{ className: 'success', autoHideDelay: 1200, position: "bottom",  showDuration: 0,  hideDuration: 0  });
                         orderRefresh();
                     }
                 });

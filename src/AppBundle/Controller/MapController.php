@@ -120,6 +120,7 @@ class MapController extends Controller
                     'alt' => $banner->getAdrs(),
                     'id' => $banner->getId(),
                     'hot' => $banner->getHot(),
+                    'format' => $banner->getFormat(),
 //                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
                 );
             }

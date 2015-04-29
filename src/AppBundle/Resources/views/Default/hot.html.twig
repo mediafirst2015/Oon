@@ -119,7 +119,7 @@
 //                            console.log(s=item);
                             item.parent().parent().parent().parent().parent().parent().children('.hot-img').children('.ok-icon').addClass('act');
                             $('#basket-table').html(msg);
-                            item.notify("позициtя добавлена в медиаплан",{ className: 'success', autoHideDelay: 700, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "top"  });
+                            item.notify("позициtя добавлена в медиаплан",{ className: 'success', autoHideDelay: 1200, showDuration: 0, hideDuration: 0, position: "top"  });
                             orderRefresh();
                         }
                     });
@@ -138,7 +138,7 @@
                             console.log(item2);
                             item2 = $('.'+item2);
                             console.log(item2);
-                            item2.notify("позиция удалена",{ className: 'success', autoHideDelay: 700, showDuration: 200, hideDuration: 200, arrowSize: 1, position: "top right"  });
+                            item2.notify("позиция удалена",{ className: 'success', autoHideDelay: 1200, showDuration: 0, hideDuration: 0, position: "top right"  });
                             orderRefresh();
                         }
                     });

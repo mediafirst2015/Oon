@@ -634,3 +634,22 @@ input.mini {
 .flashbag-success span {
   font-size: 20px;
 }
+.flashbag-success-2 {
+  width: 300px;
+  position: absolute;
+  text-align: center;
+  left: 50%;
+  margin-left: -150px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #FFF;
+  border: 1px solid #777;
+  z-index: 9999;
+  top: 255px;
+  box-shadow: 0 1px 16px 0 rgba(1, 1, 1, 0.51);
+  font-size: 16px;
+  color: #016b04;
+}
+.flashbag-success-2 span {
+  font-size: 20px;
+}
