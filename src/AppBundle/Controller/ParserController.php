@@ -343,7 +343,7 @@ class ParserController extends Controller
         $em->flush($company);
         $em->refresh($company);
 
-        $filePath = '/var/www/map/web/Gema.xls';
+        $filePath = '/var/www/navigator/current/web/Gema.xls';
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
         $num = 9;
 
