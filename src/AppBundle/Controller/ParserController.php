@@ -352,7 +352,14 @@ class ParserController extends Controller
             if ($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue() == ''){
                 break;
             }
-            $banner = new Banner();
+            $banner = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getValue());
+            if (!$banner){
+                $isNew = true;
+                $banner = new Banner();
+            }else{
+                $isNew = false;
+            }
+
             $banner->setCompany($company);
             $banner->setArea($this->getArea($phpExcelObject->setActiveSheetIndex(0)->getCell('D'.$num)->getValue()));
             $banner->setAdrs($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
@@ -372,7 +379,9 @@ class ParserController extends Controller
             $banner->setLongitude($pos[0]);
             $banner->setLatitude($pos[1]);
             $banner->setBody(' ');
-            $em->persist($banner);
+            if ($isNew == true){
+                $em->persist($banner);
+            }
             $em->flush($banner);
             $num ++;
         }
