@@ -337,8 +337,8 @@ class ParserController extends Controller
      */
     public function parser45Action(){
         $em = $this->getDoctrine()->getManager();
-        $company = new Company();
-        $company->setTitle('Гема');
+        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Гема');
+//        $company->setTitle('Гема');
         $em->persist($company);
         $em->flush($company);
         $em->refresh($company);
