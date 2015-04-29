@@ -53,10 +53,10 @@
             <td>{{ l.light == 1 ? 'да' : 'нет' }}</td>
             <td>{{ l.grp }}</td>
             <td>{{ l.ots|number_format(1, '.', ',') }}</td>
-            <td>{{ l.price }}</td>
+            <td>{{ l.price |number_format(1, '.', '') }}</td>
             <td>{{ l.taxType }}</td>
-            <td>{{ l.price2 }}</td>
-            <td>{{ l.priceDeploy ? priceDeploy : 0 }}</td>
+            <td>{{ l.price2 |number_format(1, '.', '') }}</td>
+            <td>{{ (l.priceDeploy ? priceDeploy : 0)|number_format(1, '.', '') }}</td>
             <td style="text-align: center">
                 <a href="{{ l.img }}" class="fancybox" data-fancybox-group="gallery">
                     <img src="{{ asset('bundles/app/images/img-icon.png') }}" class="icon" title="Показать фотографию">

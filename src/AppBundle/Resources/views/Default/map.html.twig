@@ -202,7 +202,11 @@
                     {% endif %}
                     controls: ['zoomControl']
                 });
-                var filter =
+                map.events.add('click', function (e) {
+                    var target = e.get('target')
+                    target.balloon.close();
+                });
+                    var filter =
                         'id={{ id }}'+
                         '&city={{ params.city }}'+
                         '&street={{ params.street }}'+
@@ -278,7 +282,8 @@
                             j ++ ;
                         }
                         var clusterer = new ym.Clusterer({
-                            preset: 'islands#darkGreenClusterIcons'
+                            preset: 'islands#darkGreenClusterIcons',
+                            clusterOpenBalloonOnClick: true
                         });
                         clusterer.events
                             // Можно слушать сразу несколько событий, указывая их имена в массиве.
@@ -295,26 +300,62 @@
                                     }
                                 });
 
+//                        s.getData().cluster.properties.getAll().geoObjects[1]
                         clusterer.events.add('balloonopen',function(e){
                             var target = e.get('target');
-                            console.log(s = target);
-                            if (typeof target.getGeoObjects == 'undefined') {
-                                // Событие произошло на точке.
+                            if (typeof target.getData != 'undefined') {
+                                console.log('Кластер');
+                                console.log(s=target);
+                                // Кластер
+                                var objs = target.getData().cluster.properties.getAll().geoObjects;
+                                var str = '';
+                                for ( i = 0 ; i < objs.length ; i ++ ){
+                                    str += objs[i].properties.get('itemId')+'|';
+                                }
+                                console.log('dates =>' +str);
                                 $.ajax({
                                     url: Routing.generate('get_more_info'),
-                                    data: 'itemId='+ s.properties.get('itemId'),
+                                    data: 'items='+str,
                                     method: 'POST',
                                     success: function(msg){
-                                        target.properties.set('balloonContent', msg);
+                                        console.log('ajax success');
+//                                        target.properties.set('balloonContent', msg);
+                                          for ( i = 0 ; i < msg.data.length ; i++ ){
+                                              objs[i].properties.set('name', msg.data[i].title);
+                                              objs[i].properties.set('clusterCaption', msg.data[i].title);
+                                              objs[i].properties.set('balloonContentBody', msg.data[i].body);
+                                          }
                                     },
                                     error: function(){
                                         target.properties.set('balloonContent', 'Не удалось загрузить контент');
+                                        console.log('ajax error');
                                     }
                                 });
+                                console.log('ajax closed');
+                            }else{
+                                console.log('Точка');
+                                console.log(s=target);
+                                $.ajax({
+                                    url: Routing.generate('get_more_info'),
+                                    data: 'itemId='+ target.properties.get('itemId'),
+                                    method: 'POST',
+                                    success: function(msg){
+                                        console.log('ajax');
+                                        target.properties.set('balloonContent', msg);
+                                    },
+                                    error: function(){
+                                        console.log('ajax error');
+                                        target.properties.set('balloonContent', 'Не удалось загрузить контент');
+                                    }
+                                });
+                                console.log('close ajax');
                             }
                         });
                         clusterer.add(placemarks);
                         map.geoObjects.add(clusterer);
+
+
+
                         $('#loader-map').css('display','none');
                         $('#gray').css('display','none');
                     }

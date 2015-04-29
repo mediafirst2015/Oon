@@ -525,8 +525,11 @@ input.mini {
 .ymaps-2-1-23-balloon__layout {
   min-width: 410px !important;
 }
+.ymaps-2-1-23-balloon__layout {
+  height: 600px;
+}
 .ymaps-2-1-23-balloon__content ymaps {
-  height: 600px !important;
+  height: auto !important;
 }
 .addBasket {
   height: 25px;

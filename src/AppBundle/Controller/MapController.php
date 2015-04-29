@@ -19,13 +19,30 @@ class MapController extends Controller
     public function getMoreInfoAction(Request $request){
         $session = $request->getSession();
         $myBasket = $session->get('lists');
-        $id = $request->request->get('itemId');
-        if ($id != null){
-            $object = $this->getDoctrine()->getRepository('AppBundle:Banner')->find($id);
+        if ($request->request->get('itemId') != null){
+            $id = $request->request->get('itemId');
+            if ($id != null){
+                $object = $this->getDoctrine()->getRepository('AppBundle:Banner')->find($id);
+            }else{
+                $object = null;
+            }
+            return $this->render("AppBundle:Map:getInfo.html.twig", array('object' => $object,'myBasket' => $myBasket));
         }else{
-            $object = null;
+            $items = $request->request->get('items');
+            $items = explode('|',$items);
+            $resourses = array();
+            foreach($items as $id){
+                if ($id && $id != '' && $id != null){
+                    $object = $this->getDoctrine()->getRepository('AppBundle:Banner')->find($id);
+                    $resourses[] = array(
+                        'title' => 'Объект '.$id,
+                        'body'  => $this->renderView("AppBundle:Map:getInfo.html.twig", array('object' => $object,'myBasket' => $myBasket))
+                    );
+                }
+            }
+
+            return new JsonResponse(array('data' => $resourses));
         }
-        return $this->render("AppBundle:Map:getInfo.html.twig", array('object' => $object,'myBasket' => $myBasket));
     }
 
     /**

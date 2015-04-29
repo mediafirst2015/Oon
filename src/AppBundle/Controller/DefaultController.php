@@ -143,6 +143,7 @@ class DefaultController extends Controller
         $i = 0;
         $grp = 0;
         $ots = 0;
+        $ots2 = 0;
         $sideA = 0;
         $side = '';
         $sideB = 0;
@@ -182,7 +183,7 @@ class DefaultController extends Controller
             'lists' => $lists,
             'grp' => $grp,
             'ots'=>$ots,
-            'otsSum'=>$ots2,
+            'otsSum'=> $ots2,
             'price' => $price,
             'count' => $i,
             'side'=> $side,
