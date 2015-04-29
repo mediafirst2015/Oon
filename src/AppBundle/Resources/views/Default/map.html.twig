@@ -187,19 +187,19 @@
             function init(){
                 map = new ym.Map('map', {
                     {% if app.request.query.all.my is defined and app.request.query.all.my == 1 %}
-                    center: [55.755381, 37.619044],
-                    zoom: 9,
+                        center: [55.755381, 37.619044],
+                        zoom: 11,
                     {% else %}
-                    {% if thisBanner != null %}
-                    center: [{{ thisBanner.latitude }}, {{ thisBanner.longitude }}],
-                    zoom: 15,
-                    {% elseif pos.x != null and pos.y != null %}
-                    center: [{{ pos.x }}, {{ pos.y }}],
-                    zoom: 14,
-                    {% else %}
-                    center: [55.755381, 37.619044],
-                    zoom: 9,
-                    {% endif %}
+                        {% if thisBanner != null %}
+                            center: [{{ thisBanner.latitude }}, {{ thisBanner.longitude }}],
+                            zoom: 15,
+                        {% elseif pos.x != null and pos.y != null %}
+                            center: [{{ pos.x }}, {{ pos.y }}],
+                            zoom: 15,
+                        {% else %}
+                            center: [55.755381, 37.619044],
+                            zoom: 11,
+                        {% endif %}
                     {% endif %}
                     controls: ['zoomControl']
                 });
@@ -376,10 +376,10 @@
                             $('#gray').css('display','none');
 
                         }else{
-                        $('#gray').css('display','block');
-                        $('#loader-map').css('display','none');
-                        $('#dinamys-popups').css('display','block');
-                        $('#dinamys-popups').html('<div class="flashbag-success-2"><span>Не найдено предложений,<br />удовлетворяющих Вашему запросу</span></div>');
+                            $('#gray').css('display','block');
+                            $('#loader-map').css('display','none');
+                            $('#dinamys-popups').css('display','block');
+                            $('#dinamys-popups').html('<div class="flashbag-success-2"><span>Не найдено предложений,<br />удовлетворяющих Вашему запросу</span></div>');
 
                         }
                     }

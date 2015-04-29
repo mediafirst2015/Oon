@@ -119,7 +119,7 @@ class DefaultController extends Controller
             $area = '';
         }
         $val = $city.' '.$area.' '.$request->query->get('street');
-        if ($val != ' ' && $val != '  '){
+        if ($area != '' ){
             $url = 'http://geocode-maps.yandex.ru/1.x/?geocode='.urlencode($val);
             $content = file_get_contents($url);
             $XmlObj = simplexml_load_string($content);
@@ -136,7 +136,6 @@ class DefaultController extends Controller
         }else{
             $thisBanner = null;
         }
-
 
 
         $lists = array();
