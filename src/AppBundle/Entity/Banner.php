@@ -16,6 +16,11 @@ class Banner extends BaseEntity
 {
 
     /**
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="banners")
+     */
+    protected $company;
+
+    /**
      * @ORM\Column(type="string", length=15 ,nullable=true)
      */
     protected $gid;
@@ -582,6 +587,22 @@ class Banner extends BaseEntity
     public function setPrice2($price2)
     {
         $this->price2 = $price2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param mixed $company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
     }
 
 
