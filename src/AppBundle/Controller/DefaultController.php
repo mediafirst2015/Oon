@@ -67,7 +67,107 @@ class DefaultController extends Controller
      * @Template()
      */
     public function searchAction(Request $request){
-        return array();
+        $params = array(
+            'grpMin' => $request->query->get('grp-min'),
+            'grpMax' => $request->query->get('grp-max'),
+            'otsMin' => $request->query->get('ots-min'),
+            'otsMax' => $request->query->get('ots-max'),
+            'priceMin' => $request->query->get('price-min'),
+            'priceMax' => $request->query->get('price-max'),
+            'city' => $request->query->get('city'),
+            'area' => $request->query->get('area'),
+            'formatS' => $request->query->get('formatS'),
+            'formatM' => $request->query->get('formatM'),
+            'formatL' => $request->query->get('formatL'),
+            'formatSB' => $request->query->get('formatSB'),
+            'light' => $request->query->get('light'),
+            'dateStart' => $request->query->get('dateStart'),
+            'dateEnd' => $request->query->get('dateEnd'),
+            'sideA' => $request->query->get('sideA'),
+            'sideB' => $request->query->get('sideB'),
+            'gid' => $request->query->get('gid'),
+        );
+
+        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->filter(
+            null,
+            $params['city'],
+            $params['area'],
+            $params['formatS'],
+            $params['formatM'],
+            $params['formatL'],
+            $params['formatSB'],
+            null,
+            $params['light'],
+            $params['grpMin'],
+            $params['grpMax'],
+            $params['otsMin'],
+            $params['otsMax'],
+            $params['priceMin'],
+            $params['priceMax'],
+            $params['sideA'],
+            $params['sideB'],
+            $params['gid']
+        );
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $banners,
+            $this->get('request')->query->get('page', 1),
+            100
+        );
+        $pagination->setTemplate('AppBundle::default_pagination.html.twig');
+
+
+        $lists = array();
+        $i = 0;
+        $grp = 0;
+        $ots = 0;
+        $ots2 = 0;
+        $sideA = 0;
+        $side = '';
+        $sideB = 0;
+        $price = 0;
+        $fullprice = 0;
+        $session = $request->getSession();
+        $basket = $session->get('lists');
+        if ($basket){
+            foreach ($basket as $key=>$val){
+                $i ++;
+//                $lists[] = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($key);
+                $grp += $val['grp'];
+                $ots += $val['ots'];
+                if ($val['side'] == 'А' || $val['side'] == 'A'){
+                    $sideA ++;
+                }else{
+                    $sideB ++;
+                }
+                $price += $val['price'];
+            }
+            $lists = $basket;
+            $grp = $grp / $i;
+            $ots2 = $ots;
+            $ots = $ots / $i;
+            $fullprice = $price;
+            $price = $price / $i;
+            $grp = number_format($grp,2,'.','');
+            $ots = number_format($ots,2,'.','');
+            $price = number_format($price,2,'.','');
+            $sideA = number_format(100/$i*$sideA,0,'.','');
+            $sideB = number_format(100/$i*$sideB,0,'.','');
+            $side = $sideA.'/'.$sideB;
+        }
+
+
+        return array(
+            'params' => $params,
+            'banners' => $pagination,
+            'lists' => $lists,
+            'grp' => $grp,
+            'ots'=>$ots,
+            'otsSum'=> $ots2,
+            'price' => $price,
+            'count' => $i,
+            'side'=> $side,
+            'fullPrice' => $fullprice);
     }
 
     /**

@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityRepository;
 
 class BannerRepository extends EntityRepository
 {
-    public function filter($id,$city,$area,$formatS,$formatM,$formatL,$formatSB,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax)
+    public function filter($id,$city,$area,$formatS,$formatM,$formatL,$formatSB,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax, $sideA = null, $sideB = null, $gid = null)
     {
 
         $qb = $this->_em->createQueryBuilder();
@@ -57,6 +57,18 @@ class BannerRepository extends EntityRepository
                 $priceMax = $priceMax*1000;
                 $qb->andWhere("( b.price >= $priceMin AND b.price <= $priceMax )");
             }
+
+            if ($sideA === 0 ){
+                $qb->andWhere(" b.side != 'A' ");
+            }
+            if ($sideA === 0 ){
+                $qb->andWhere(" b.side != 'B' ");
+            }
+
+            if ($gid != null ){
+                $qb->andWhere(" b.gid = '".$gid."' ");
+            }
+
         }
 
 //        echo $qb->getQuery()->getSQL();

@@ -356,11 +356,11 @@
                                         data: 'itemId='+ target.properties.get('itemId'),
                                         method: 'POST',
                                         success: function(msg){
-                                            console.log('ajax');
+//                                            console.log('ajax');
                                             target.properties.set('balloonContent', msg);
                                         },
                                         error: function(){
-                                            console.log('ajax error');
+//                                            console.log('ajax error');
                                             target.properties.set('balloonContent', 'Не удалось загрузить контент');
                                         }
                                     });

@@ -1,3 +1,9 @@
+a.green {
+  color: #016b04;
+}
+a.green:hover {
+  color: #5eba5e;
+}
 h1.pink {
   color: #e3007a;
   font-size: 48px;
@@ -652,4 +658,14 @@ input.mini {
 }
 .flashbag-success-2 span {
   font-size: 20px;
+}
+.thrumb {
+  width: 300px;
+}
+.map-title {
+  font-weight: bold;
+  padding: 5px;
+}
+.search_get_more > div > .modal-content {
+  padding: 10px;
 }
