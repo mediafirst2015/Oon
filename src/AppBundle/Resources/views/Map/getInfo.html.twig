@@ -31,11 +31,11 @@
     </tr>
     <tr>
         <td>GRP</td>
-        <td>{{ object.grp }}</td>
+        <td>{{ object.grp |number_format(2, '.', '')}}</td>
     </tr>
     <tr>
         <td>OTS</td>
-        <td>{{ object.ots }}</td>
+        <td>{{ object.ots |number_format(2, '.', '') }}</td>
     </tr>
 </table>
 {% if object.hot == 0 or object.hot == '0' or object.hot == null %}
