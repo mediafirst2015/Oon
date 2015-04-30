@@ -244,6 +244,16 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function() {
+            function orderRefresh(){
+                $.ajax({
+                    url: Routing.generate('order_price'),
+                    method: 'GET',
+                    success: function(msg){
+                        $('#order-btn').html('Заказ на сумму '+msg+' р.');
+                        $('#order-btn').css('display','block');
+                    }
+                });
+            }
 
             $('#street').kladr({
                 token: '541ee4ac7c52392c7d8b457e',
@@ -339,6 +349,38 @@
                     }
                 });
             });
+
+            $('.modal-content').on('click','input.addBasket', function(){
+                var item = $(this)
+                $.ajax({
+                    url: Routing.generate('basket_add', {'itemId': $(this).attr('data-id'), 'month': $(this).attr('data-month')}),
+                    method: 'POST',
+                    success: function(msg){
+                        $('#basket-table').html(msg);
+                        $('.thrumb').notify("позиция добавлена в медиаплан",{ className: 'success', autoHideDelay: 1200, position: "bottom",  showDuration: 0,  hideDuration: 0  });
+                        orderRefresh();
+                    }
+                });
+            });
+
+            $('#basket-table').on('click','.removeBasket', function(){
+                var item = $(this)
+                $.ajax({
+                    url: Routing.generate('basket_remove', {'itemId': $(this).attr('data-id') }),
+                    method: 'POST',
+                    success: function(msg){
+                        var item2 = item.parent().parent().next();
+                        item2 = item2.attr('class');
+                        $('#basket-table').html(msg);
+                        console.log(item2);
+                        item2 = $('.'+item2);
+                        console.log(item2);
+                        item2.notify("позиция удалена",{ className: 'success', autoHideDelay: 1200, position: "bottom right",  showDuration: 0,  hideDuration: 0  });
+                        orderRefresh();
+                    }
+                });
+            });
+
         });
     </script>
 {% endblock %}
