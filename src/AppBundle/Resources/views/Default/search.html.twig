@@ -15,22 +15,22 @@
             <div class="col-sm-4">
                 <select name="city">
                     <option value="null" disabled>Город</option>
-                    <option>Москва</option>
+                    <option value="Москва" {{ params.city == 'Москва' ? 'selected="selected"' }}>Москва</option>
                 </select>
             </div>
             <div class="col-sm-4">
                 <select name="area">
                     <option value="" disabled selected>Округ</option>
                     <option value="" selected>Все округа</option>
-                    <option value="ЦАО">ЦАО</option>
-                    <option value="СВАО">СВАО</option>
-                    <option value="ВАО">ВАО</option>
-                    <option value="ЮВАО">ЮВАО</option>
-                    <option value="ЮАО">ЮАО</option>
-                    <option value="ЮЗАО">ЮЗАО</option>
-                    <option value="ЗАО">ЗАО</option>
-                    <option value="CЗАО">CЗАО</option>
-                    <option value="CАО">CАО</option>
+                    <option value="ЦАО" {{ params.area == 'ЦАО' ? 'selected="selected"' }}>ЦАО</option>
+                    <option value="СВАО" {{ params.area == 'СВАО' ? 'selected="selected"' }}>СВАО</option>
+                    <option value="ВАО" {{ params.area == 'ВАО' ? 'selected="selected"' }}>ВАО</option>
+                    <option value="ЮВАО" {{ params.area == 'ЮВАО' ? 'selected="selected"' }}>ЮВАО</option>
+                    <option value="ЮАО" {{ params.area == 'ЮАО' ? 'selected="selected"' }}>ЮАО</option>
+                    <option value="ЮЗАО" {{ params.area == 'ЮЗАО' ? 'selected="selected"' }}>ЮЗАО</option>
+                    <option value="ЗАО" {{ params.area == 'ЗАО' ? 'selected="selected"' }}>ЗАО</option>
+                    <option value="CЗАО" {{ params.area == 'CЗАО' ? 'selected="selected"' }}>CЗАО</option>
+                    <option value="CАО" {{ params.area == 'CАО' ? 'selected="selected"' }}>CАО</option>
                 </select>
             </div>
         </div>
@@ -40,34 +40,36 @@
                 <h2  class="green">Период</h2>
                 <div>
                     с&nbsp;&nbsp;
-                    <select class="mini">
-                        <option value="1" >Янв</option>
-                        <option value="2" >Фев</option>
-                        <option value="3" >Мар</option>
-                        <option value="4" >Апр</option>
-                        <option value="5" >Май</option>
-                        <option value="6" >Июн</option>
-                        <option value="7" >Июл</option>
-                        <option value="8" >Авг</option>
-                        <option value="9" >Сен</option>
-                        <option value="10">Окт</option>
-                        <option value="11">Ноя</option>
-                        <option value="12">Дек</option>
+                    <select class="mini" name="dateStart">
+                        <option value="0" selected="selected">Нач</option>
+                        <option value="1"  {{ params.dateStart == '1' ? 'selected="selected"' : ''}}>Янв</option>
+                        <option value="2"  {{ params.dateStart == '2' ? 'selected="selected"' : ''}}>Фев</option>
+                        <option value="3"  {{ params.dateStart == '3' ? 'selected="selected"' : ''}}>Мар</option>
+                        <option value="4"  {{ params.dateStart == '4' ? 'selected="selected"' : ''}}>Апр</option>
+                        <option value="5"  {{ params.dateStart == '5' ? 'selected="selected"' : ''}}>Май</option>
+                        <option value="6"  {{ params.dateStart == '6' ? 'selected="selected"' : ''}}>Июн</option>
+                        <option value="7"  {{ params.dateStart == '7' ? 'selected="selected"' : ''}}>Июл</option>
+                        <option value="8"  {{ params.dateStart == '8' ? 'selected="selected"' : ''}}>Авг</option>
+                        <option value="9"  {{ params.dateStart == '9' ? 'selected="selected"' : ''}}>Сен</option>
+                        <option value="10" {{ params.dateStart == '10' ? 'selected="selected"' : ''}}>Окт</option>
+                        <option value="11" {{ params.dateStart == '11' ? 'selected="selected"' : ''}}>Ноя</option>
+                        <option value="12" {{ params.dateStart == '12' ? 'selected="selected"' : ''}}>Дек</option>
                     </select>
                     &nbsp;&nbsp;по&nbsp;&nbsp;
-                    <select class="mini">
-                        <option value="1" >Янв</option>
-                        <option value="2" >Фев</option>
-                        <option value="3" >Мар</option>
-                        <option value="4" >Апр</option>
-                        <option value="5" >Май</option>
-                        <option value="6" >Июн</option>
-                        <option value="7" >Июл</option>
-                        <option value="8" >Авг</option>
-                        <option value="9" >Сен</option>
-                        <option value="10">Окт</option>
-                        <option value="11">Ноя</option>
-                        <option value="12">Дек</option>
+                    <select class="mini" name="dateEnd">
+                        <option value="0" selected="selected">Кон</option>
+                        <option value="1"  {{ params.dateEnd == '1' ? 'selected="selected"' : ''}}>Янв</option>
+                        <option value="2"  {{ params.dateEnd == '2' ? 'selected="selected"' : ''}}>Фев</option>
+                        <option value="3"  {{ params.dateEnd == '3' ? 'selected="selected"' : ''}}>Мар</option>
+                        <option value="4"  {{ params.dateEnd == '4' ? 'selected="selected"' : ''}}>Апр</option>
+                        <option value="5"  {{ params.dateEnd == '5' ? 'selected="selected"' : ''}}>Май</option>
+                        <option value="6"  {{ params.dateEnd == '6' ? 'selected="selected"' : ''}}>Июн</option>
+                        <option value="7"  {{ params.dateEnd == '7' ? 'selected="selected"' : ''}}>Июл</option>
+                        <option value="8"  {{ params.dateEnd == '8' ? 'selected="selected"' : ''}}>Авг</option>
+                        <option value="9"  {{ params.dateEnd == '9' ? 'selected="selected"' : ''}}>Сен</option>
+                        <option value="10" {{ params.dateEnd == '10' ? 'selected="selected"' : ''}}>Окт</option>
+                        <option value="11" {{ params.dateEnd == '11' ? 'selected="selected"' : ''}}>Ноя</option>
+                        <option value="12" {{ params.dateEnd == '12' ? 'selected="selected"' : ''}}>Дек</option>
                     </select>
                 </div>
             </div>
@@ -75,23 +77,23 @@
                 <h2 class="green">Форматы конструкций</h2>
                 <div class="check-group">
                     Формат 3х6
-                    <div class="check active"></div>
-                    <input type="hidden" name="formatM" value="1">
+                    <div class="check {{ params.formatM == 1 or params.formatM == null   ? 'active' : '' }}"></div>
+                    <input type="hidden" name="formatM" value="{{ params.formatM == 1 or params.formatM == null ? 1 : 0 }}">
                 </div>
                 <div class="check-group">
                     Малые форматы
-                    <div class="check active"></div>
-                    <input type="hidden" name="formatS" value="1">
+                    <div class="check {{ params.formatS == 1 or params.formatS == null ? 'active' : '' }}"></div>
+                    <input type="hidden" name="formatS" value="{{ params.formatS == 1 or params.formatS == null ? 1 : 0 }}">
                 </div>
                 <div class="check-group">
                     Большие форматы
-                    <div class="check active"></div>
-                    <input type="hidden" name="formatL" value="1">
+                    <div class="check {{ params.formatL == 1 or params.formatL == null ? 'active' : '' }}"></div>
+                    <input type="hidden" name="formatL" value="{{ params.formatL == 1 or params.formatL == null ? 1 : 0 }}">
                 </div>
                 <div class="check-group">
                     Ситиборды
-                    <div class="check active"></div>
-                    <input type="hidden" name="formatSB" value="1">
+                    <div class="check {{ params.formatSB == 1 or params.formatSB == null ? 'active' : '' }}"></div>
+                    <input type="hidden" name="formatSB" value="{{ params.formatSB == 1 or params.formatSB == null ? 1 : 0 }}">
                 </div>
                 <br />
             </div>
@@ -101,9 +103,9 @@
             <div class="col-sm-4">
                 <h2 class="green">Дополнительно</h2>
                 <div class="check-group">
-                    Только щиты с подстветкой
-                    <div class="check"></div>
-                    <input type="hidden" name="isLight" value="0">
+                    Свет
+                    <div class="check {{ params.light == 1 ? 'active' : '' }}"></div>
+                    <input type="hidden" name="light" value="{{ params.light == 1 ? 1 : 0 }}">
                 </div>
                 {#<div class="check-group">#}
                     {#Только поверхности с картами#}
@@ -122,18 +124,18 @@
                 {#</div>#}
                 <br />
                 <br />
-                <input type="text" placeholder="GID конструкции" name="gid" >
+                <input type="text" placeholder="GID конструкции" name="gid" value="{{ params.gid }}">
             </div>
             <div class="col-sm-4">
                 <div class="check-group">
                     Сторона А
-                    <div class="check active"></div>
-                    <input type="hidden" name="sideA" value="1">
+                    <div class="check  {{ params.sideA == 1 or params.sideA == null ? 'active' : '' }} "></div>
+                    <input type="hidden" name="sideA" value="{{ params.sideA == 1 or params.sideA == null ? 1 : 0 }}">
                 </div>
                 <div class="check-group" id="packets">
                     Сторона B
-                    <div class="check active"></div>
-                    <input type="hidden" name="sideB" value="1">
+                    <div class="check  {{ params.sideB == 1 or params.sideB == null ? 'active' : '' }}"></div>
+                    <input type="hidden" name="sideB" value="{{ params.sideB == 1 or params.sideB == null ? 1 : 0 }}">
                 </div>
                 <br />
                 <br />
@@ -141,24 +143,24 @@
                     <span class="caption" style="float: left; margin-top: 8px;  width: 150px;">GRP</span>
                     <span id="grp-amount" class="val"></span>
                     <span class="slider" id="grp" style="float: right"></span>
-                    <input type="hidden" name="grp-min" id="grp-min" value="0">
-                    <input type="hidden" name="grp-max" id="grp-max" value="3">
+                    <input type="hidden" name="grp-min" id="grp-min" value="{{ params.grpMin != null ? params.grpMin : 0 }}">
+                    <input type="hidden" name="grp-max" id="grp-max" value="{{ params.grpMax != null ? params.grpMax : 3 }}">
                 </div>
                 <br />
                 <div class="slider-group">
                     <span class="caption" style="float: left; margin-top: 8px;  width: 150px;">OTS</span>
                     <span id="ots-amount" class="val"></span>
                     <span class="slider"  id="ots" style="float: right"></span>
-                    <input type="hidden" name="ots-min" id="ots-min" value="0">
-                    <input type="hidden" name="ots-max" id="ots-max" value="500">
+                    <input type="hidden" name="ots-min" id="ots-min" value="{{ params.otsMin != null ? params.otsMin : 0 }}">
+                    <input type="hidden" name="ots-max" id="ots-max" value="{{ params.otsMax != null ? params.otsMax : 500 }}">
                 </div>
                 <br />
                 <div class="slider-group">
                     <span class="caption" style="float: left; margin-top: 8px;  width: 150px;">Стоимость</span>
                     <span id="price-amount" class="val"></span>
                     <span class="slider" id="price" style="float: right"></span>
-                    <input type="hidden" name="price-min" id="price-min" value="0">
-                    <input type="hidden" name="price-max" id="price-max" value="999">
+                    <input type="hidden" name="price-min" id="price-min" value="{{ params.priceMin != null ? params.priceMin : 0 }}">
+                    <input type="hidden" name="price-max" id="price-max" value="{{ params.priceMax != null ? params.priceMax : 999 }}">
                 </div>
                 <br/>
                 <div style="text-align: right">
@@ -169,7 +171,7 @@
     </form>
     <br />
     <br />
-    <table class="table" style="margin-left: -10px;">
+    <table class="table">
         <tr>
             <th></th>
             <th>№</th>
@@ -204,6 +206,12 @@
                 <td>{{ l.price |number_format(1, '.', '') }}</td>
                 <td>{{ l.taxType }}</td>
                 <td>{{ l.price2 |number_format(1, '.', '') }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">
+                    <div class="" style="text-align: center"><h2 class="green">По Вашему запросу ничего не найдено</h2></div>
+                </td>
             </tr>
         {% endfor %}
     </table>
@@ -282,7 +290,7 @@
                 range: true,
                 min: 0,
                 max: 300,
-                values: [ 0, 300 ],
+                values: [ {{ params.grpMin != null ? params.grpMin*100 : 0 }}, {{ params.grpMax != null ? params.grpMax*100 : 300 }} ],
                 slide: function( event, ui ) {
                     $( "#grp-amount" ).html( "" + ui.values[ 0 ]/100 + " - " + ui.values[ 1 ]/100 );
                     $( "#grp-min" ).val(ui.values[ 0 ]/100);
@@ -296,7 +304,7 @@
                 range: true,
                 min: 0,
                 max: 500,
-                values: [ 0, 500 ],
+                values: [ {{ params.otsMin != null ? params.otsMin : 0 }}, {{ params.otsMax != null ? params.otsMax : 500 }} ],
                 slide: function( event, ui ) {
                     $( "#ots-amount" ).html( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
                     $( "#ots-min" ).val(ui.values[ 0 ]);
@@ -310,7 +318,7 @@
                 range: true,
                 min: 0,
                 max: 999,
-                values: [ 0, 999 ],
+                values: [ {{ params.priceMin != null ? params.priceMin : 0 }}, {{ params.priceMax != null ? params.priceMax : 999 }} ],
                 slide: function( event, ui ) {
                     $( "#price-amount" ).html( "" + ui.values[ 0 ] + " т.р. - " + ui.values[ 1 ] + ' т.р.' );
                     $( "#price-min" ).val(ui.values[ 0 ]);
