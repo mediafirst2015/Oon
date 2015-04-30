@@ -178,13 +178,13 @@ footer .title {
 }
 .slider-box {
   width: 750px;
-  height: 400px;
+  height: 470px;
   overflow: hidden;
 }
 .slider-image {
   display: inline-block;
   width: 750px;
-  height: 400px;
+  height: 470px;
   border-radius: 10px;
   position: relative;
 }
