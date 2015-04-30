@@ -4,7 +4,9 @@
     {{ object.adrs }}
 </div>
 <div style='text-align: center; margin-bottom: 5px'>
-    <a href="{{ object.img }}" class="fancybox"><img src='{{ object.img }}' class='thrumb'/></a>
+    {% if object.img != '' and object.img != null%}
+        <a href="{{ object.img }}" class="fancybox"><img src='{{ object.img }}' class='thrumb'/></a>
+    {% endif %}
 </div>
 <table class='map-setting' style='margin: 0 auto'>
     <tr>
