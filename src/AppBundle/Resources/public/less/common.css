@@ -536,6 +536,7 @@ input.mini {
 }
 .ymaps-2-1-23-balloon__content ymaps {
   height: auto !important;
+  max-height: 580px;
 }
 .addBasket {
   height: 25px;

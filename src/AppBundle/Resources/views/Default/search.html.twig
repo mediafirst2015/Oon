@@ -103,25 +103,10 @@
             <div class="col-sm-4">
                 <h2 class="green">Дополнительно</h2>
                 <div class="check-group">
-                    Свет
+                    Только щиты с подстветкой
                     <div class="check {{ params.light == 1 ? 'active' : '' }}"></div>
                     <input type="hidden" name="light" value="{{ params.light == 1 ? 1 : 0 }}">
                 </div>
-                {#<div class="check-group">#}
-                    {#Только поверхности с картами#}
-                    {#<div class="check"></div>#}
-                    {#<input type="hidden" name="isMap" value="0">#}
-                {#</div>#}
-                {#<div class="check-group">#}
-                    {#Исключить призмы и скроллеры#}
-                    {#<div class="check"></div>#}
-                    {#<input type="hidden" name="isScroll" value="0">#}
-                {#</div>#}
-                {#<div class="check-group" id="package">#}
-                    {#пакетные предложения#}
-                    {#<div class="check active"></div>#}
-                    {#<input type="hidden" name="package" value="1">#}
-                {#</div>#}
                 <br />
                 <br />
                 <input type="text" placeholder="GID конструкции" name="gid" value="{{ params.gid }}">
