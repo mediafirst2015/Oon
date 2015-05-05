@@ -1,0 +1,52 @@
+{% extends "AdminBundle::layout.html.twig" %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb well">
+        <li>Список отзывов</li>
+        <li><a href="{{ path('review_add') }}"><span class="btn btn-primary">Добавить</span></a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="well">
+        <table class="table" data-toggle="table"
+               data-sort-name="number"
+               data-sort-order="desc">
+            <thead>
+                <tr>
+                    <th data-field="number"
+                        data-sortable="true">№</th>
+                    <th data-field="title"
+                        data-sortable="true">Заголовок</th>
+                    <th data-field="setting"
+                        data-sortable="false" class="setting">Инструменты</th>
+                </tr>
+            </thead>
+            {% for item in pagination %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.title }}</td>
+                    <td class="setting">
+                        {% spaceless %}
+                        <a href="{{ path('review_edit',{'id' : item.id}) }}">
+                            <button type="button" class="btn btn-default btn-bg">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                        </a>
+                        &nbsp;
+                        &nbsp;
+                        <a href="{{ path('review_remove',{'id' : item.id}) }}">
+                            <button type="button" class="btn btn-default btn-bg">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </a>
+                        {% endspaceless %}
+                    </td>
+                </tr>
+            {% endfor%}
+        </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+{% endblock %}

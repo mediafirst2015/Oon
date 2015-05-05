@@ -93,6 +93,12 @@ iphp_file_store:
            namer:
               property:
                   params: { field : id }
+       review:
+           upload_dir:  %kernel.root_dir%/../web/upload/review
+           upload_path: /upload/review
+           namer:
+              property:
+                  params: { field : id }
 
 knp_paginator:
     page_range: 20                      # default page range used in pagination control
@@ -110,3 +116,4 @@ gregwar_captcha:
     length: 4
 #    background_color: [254,181,224]
     background_color: [255,255,255]
+

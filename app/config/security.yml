@@ -21,8 +21,8 @@ security:
         everything:
             pattern: ^/
             form_login:
-                check_path: /login_check
-                login_path: /login
+                check_path: /admin/login_check
+                login_path: /admin/login
             logout: true
             security: true
             anonymous: true

@@ -22,7 +22,7 @@ class AuthController extends Controller
 {
 
     /**
-     * @Route("/login", name="login")
+     * @Route("/admin/login", name="login")
      * @Template()
      */
     public function loginAction()
