@@ -430,7 +430,16 @@
             <div class="box">
                 <div class="form">
                     <div class="title">Отзывы клиентов</div>
-
+                    {% for r in reviews %}
+                        <div style="overflow: hidden; padding: 5px 0 10px 0">
+                            {% if r.image.path is defined %}
+                                <img src="{{ r.image.path }}" style="width: 120px; float: left; margin: 10px;">
+                            {% endif %}
+                            <div style="font-size: 20px; line-height: 20px">{{ r.title }}</div>
+                            <br />
+                            <div>{{ r.body }}</div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
             {#<div style="text-align: center">#}

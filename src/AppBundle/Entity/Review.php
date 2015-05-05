@@ -24,6 +24,7 @@ class Review extends BaseEntity
     /**
      * @Assert\File( maxSize="3M")
      * @FileStore\UploadableField(mapping="review")
+     * @ORM\Column(type="array", nullable=true)
      **/
     protected $image;
 
@@ -80,6 +81,7 @@ class Review extends BaseEntity
     {
         $this->body = $body;
     }
+
 
 
 }

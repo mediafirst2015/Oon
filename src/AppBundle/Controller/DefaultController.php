@@ -22,9 +22,9 @@ class DefaultController extends Controller
 
 //        $objects = $this->getDoctrine()->getRepository('AppBundle:Banner')->findAll();
 
-
+        $reviews = $this->getDoctrine()->getRepository('AppBundle:Review')->findBy(array('enabled'=> true),array(),3);
         $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->findBy(array('enabled'=> true,'hot' => true),array(),3);
-        return array('banners'=> $banners);
+        return array('banners'=> $banners, 'reviews' => $reviews);
     }
 
 
