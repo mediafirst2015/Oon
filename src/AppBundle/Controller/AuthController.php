@@ -22,28 +22,35 @@ class AuthController extends Controller
 {
 
     /**
+     * @Route("/first-1", name="first-1")
+     */
+    public function firstAction(){
+        $manager = $this->getDoctrine()->getManager();
+        $user = new User();
+        $user->setUsername('oper');
+        $user->setSalt(md5(time()));
+        $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
+        $password = $encoder->encodePassword('oper', $user->getSalt());
+        $user->setPassword($password);
+
+        $user->setRoles('ROLE_OPERATOR');
+        $user->setLastName('oper');
+        $user->setFirstName('oper');
+        $user->setSurName('oper');
+        $user->setPhone('+79161111111');
+        $user->setCompany('sdsd');
+//
+        $manager->persist($user);
+        $manager->flush($user);
+    }
+
+    /**
      * @Route("/admin/login", name="login")
      * @Template("AdminBundle:Auth:login.html.twig")
      */
     public function loginAction()
     {
         $manager = $this->getDoctrine()->getManager();
-//        $user = new User();
-//        $user->setUsername('oper');
-//        $user->setSalt(md5(time()));
-//        $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
-//        $password = $encoder->encodePassword('oper', $user->getSalt());
-//        $user->setPassword($password);
-//
-//        $user->setRoles('ROLE_OPERATOR');
-//        $user->setLastName('oper');
-//        $user->setFirstName('oper');
-//        $user->setSurName('oper');
-//        $user->setPhone('+79161111111');
-//        $user->setCompany('sdsd');
-////
-//        $manager->persist($user);
-//        $manager->flush($user);
 
         if ($this->get('request')->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $this->get('request')->attributes->get(SecurityContext::AUTHENTICATION_ERROR);

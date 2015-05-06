@@ -62,8 +62,8 @@ class VeraParserController extends Controller
             $em->refresh($company);
         }
 
-//        $filePath = '/var/www/navigator/current/web/Vera.xls';
-        $filePath = '/var/www/map/mapweb/Vera.xls';
+        $filePath = '/var/www/navigator/current/web/Vera.xls';
+//        $filePath = '/var/www/map/mapweb/Vera.xls';
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
         $num = 11;
 
@@ -116,8 +116,8 @@ class VeraParserController extends Controller
         $em->refresh($company);
         }
 
-//        $filePath = '/var/www/navigator/current/web/Vera.xls';
-        $filePath = '/var/www/map/web/Vera.xls';
+        $filePath = '/var/www/navigator/current/web/Vera.xls';
+//        $filePath = '/var/www/map/web/Vera.xls';
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
         $num = 11;
 
@@ -170,8 +170,8 @@ class VeraParserController extends Controller
             $em->refresh($company);
         }
 
-//        $filePath = '/var/www/navigator/current/web/Vera.xls';
-        $filePath = '/var/www/map/web/Vera.xls';
+        $filePath = '/var/www/navigator/current/web/Vera.xls';
+//        $filePath = '/var/www/map/web/Vera.xls';
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
         $num = 11;
 
@@ -223,8 +223,8 @@ class VeraParserController extends Controller
             $em->refresh($company);
         }
 
-//        $filePath = '/var/www/navigator/current/web/Vera.xls';
-        $filePath = '/var/www/map/web/Vera.xls';
+        $filePath = '/var/www/navigator/current/web/Vera.xls';
+//        $filePath = '/var/www/map/web/Vera.xls';
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
         $num = 11;
 
@@ -277,8 +277,8 @@ class VeraParserController extends Controller
             $em->refresh($company);
         }
 
-//        $filePath = '/var/www/navigator/current/web/Vera.xls';
-        $filePath = '/var/www/map/web/Vera.xls';
+        $filePath = '/var/www/navigator/current/web/Vera.xls';
+//        $filePath = '/var/www/map/web/Vera.xls';
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
         $num = 11;
 
@@ -330,8 +330,8 @@ class VeraParserController extends Controller
             $em->refresh($company);
         }
 
-//        $filePath = '/var/www/navigator/current/web/Vera.xls';
-        $filePath = '/var/www/map/web/Vera.xls';
+        $filePath = '/var/www/navigator/current/web/Vera.xls';
+//        $filePath = '/var/www/map/web/Vera.xls';
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
         $num = 11;
 
