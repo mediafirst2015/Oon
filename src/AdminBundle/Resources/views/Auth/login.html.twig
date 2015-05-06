@@ -12,28 +12,7 @@
     {% endblock %}
 
 {% block content %}
-    <div class="col-md-12" style="text-align: center">
-        <img src="{{ asset('bundles/app/images/img.jpg') }}" />
-        <br />
-        <br />
-    </div>
-    <div class="col-md-6">
-        <ul class="list-group">
-            {% for page in pages %}
-                <li class="list-group-item"><a href="{{ path('pages',{ 'url' : page.url  }) }}">{{ page.title }}</a></li>
-            {% endfor %}
-        </ul>
 
-        {#<div class="btn-group btn-group-justified" role="group" aria-label="...">#}
-            {#{% for page in pages %}#}
-                {#<div class="btn-group" role="group">#}
-                    {#<button type="button" class="btn btn-default">Left</button>#}
-                    {#{{ page.title }}</a>#}
-                {#</div>#}
-            {#{% endfor %}#}
-        {#</div>#}
-
-    </div>
     <div class="col-md-6">
         <div class="well">
             <form method="POST" action="{{ path('login_check') }}">

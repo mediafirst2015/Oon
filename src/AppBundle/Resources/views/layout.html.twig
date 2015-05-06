@@ -201,9 +201,9 @@
 
 {% endblock %}
 
-{% if not is_granted('ROLE_USER') %}
+{#{% if not is_granted('ROLE_USER') %}#}
     {#{% include 'AppBundle:Auth:login.html.twig' %}#}
-{% endif %}
+{#{% endif %}#}
 {% include 'AppBundle::popup.html.twig' %}
 </body>
 </html>

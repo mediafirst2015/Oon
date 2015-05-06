@@ -19,11 +19,14 @@ security:
 
     firewalls:
         everything:
-            pattern: ^/
+            pattern: ^/admin/
             form_login:
                 check_path: /admin/login_check
                 login_path: /admin/login
-            logout: true
+                default_target_path: /admin
+            logout:
+                path:   /admin/logout
+                target: /
             security: true
             anonymous: true
         dev:

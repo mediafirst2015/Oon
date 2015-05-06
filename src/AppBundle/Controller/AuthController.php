@@ -23,7 +23,7 @@ class AuthController extends Controller
 
     /**
      * @Route("/admin/login", name="login")
-     * @Template()
+     * @Template("AdminBundle:Auth:login.html.twig")
      */
     public function loginAction()
     {
