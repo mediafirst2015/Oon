@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ReviewType extends AbstractType
+class LogoType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,7 +16,6 @@ class ReviewType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('body')
             ->add('image','iphp_file')
             ->add('submit', 'submit', array('label' => 'Сохранить'))
         ;
@@ -28,7 +27,7 @@ class ReviewType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Review'
+            'data_class' => 'AppBundle\Entity\Logo'
         ));
     }
 
@@ -37,6 +36,6 @@ class ReviewType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_review';
+        return 'appbundle_logo';
     }
 }

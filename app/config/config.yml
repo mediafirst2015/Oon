@@ -99,6 +99,12 @@ iphp_file_store:
            namer:
               property:
                   params: { field : id }
+       logo:
+           upload_dir:  %kernel.root_dir%/../web/upload/logo
+           upload_path: /upload/logo
+           namer:
+              property:
+                  params: { field : id }
 
 knp_paginator:
     page_range: 20                      # default page range used in pagination control

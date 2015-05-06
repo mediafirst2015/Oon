@@ -1,0 +1,36 @@
+{% extends "AdminBundle::layout.html.twig" %}
+
+{% block breadcrumb %}
+    <a href="{{ path('logo_list') }}"><span class="btn btn-primary right-btn">В список</span></a>
+    <ul class="breadcrumb well">
+        <li><a href="{{ path('logo_list') }}">Список логотипов</a></li>
+        <li>Изменение<span class="divider"></span></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    {#<div class="well">#}
+        {#<iframe src="{{ path('admin_file_list') }}" class="frame"></iframe>#}
+    {#</div>#}
+    <div class="well">
+        <form method="POST" enctype="multipart/form-data">
+            {{ form_widget(form) }}
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/admin/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('bundles/admin/ckeditor/styles.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{#<link href="{{ asset('bundles/app/ckeditor/contents.css') }}" rel="stylesheet">#}
+<style>
+    .frame{
+        width: 100%;
+    }
+</style>
+{% endblock %}
