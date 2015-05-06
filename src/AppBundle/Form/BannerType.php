@@ -75,7 +75,7 @@ class BannerType extends AbstractType
                 'label' => 'Горячее предложение',
                 'required'  => false,
             ))
-            ->add('submit', 'submit', array('label' => 'Сохранить'))
+            ->add('submit', 'submit', array('label' => 'Сохранить', 'attr' => array('class' => 'btn-primary')))
         ;
     }
     

@@ -23,7 +23,7 @@ class UserType extends AbstractType
             ->add('surName', null, array('label' => 'Отчество'))
             ->add('company', null, array('label' => 'Название организации'))
             ->add('phone', null, array('label' => 'Контактный телефон'))
-            ->add('submit', 'submit', array('label' => 'Сохранить'))
+            ->add('submit', 'submit', array('label' => 'Сохранить', 'attr' => array('class' => 'btn-primary')))
         ;
     }
     

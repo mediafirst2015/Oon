@@ -18,9 +18,7 @@ class MonthType extends AbstractType
             ->add('date')
             ->add('price')
             ->add('status')
-            ->add('enabled')
-            ->add('created')
-            ->add('updated')
+            ->add('submit', 'submit', array('label' => 'Сохранить', 'attr' => array('class' => 'btn-primary')))
         ;
     }
     

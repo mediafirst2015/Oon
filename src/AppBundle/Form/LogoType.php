@@ -15,9 +15,9 @@ class LogoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('image','iphp_file')
-            ->add('submit', 'submit', array('label' => 'Сохранить'))
+            ->add('title',null, array('label' => 'Название'))
+            ->add('image','iphp_file', array('label' => 'Логотип'))
+            ->add('submit', 'submit', array('label' => 'Сохранить', 'attr' => array('class' => 'btn-primary')))
         ;
     }
     

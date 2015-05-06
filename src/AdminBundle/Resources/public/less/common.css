@@ -1,0 +1,12 @@
+.form-group {
+  overflow: hidden;
+}
+#appbundle_logo_image,
+#appbundle_review_image {
+  margin-top: 10px;
+  overflow: hidden;
+}
+#appbundle_logo_image div:nth-child(2),
+#appbundle_review_image div:nth-child(2) {
+  margin-top: 10px;
+}
