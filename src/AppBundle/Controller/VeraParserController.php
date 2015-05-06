@@ -55,15 +55,15 @@ class VeraParserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
         if ($company == null){
-        $company = new Company();
-        $company->setTitle('Вера Олимп');
-        $em->persist($company);
-        $em->flush($company);
-        $em->refresh($company);
+            $company = new Company();
+            $company->setTitle('Вера Олимп');
+            $em->persist($company);
+            $em->flush($company);
+            $em->refresh($company);
         }
 
-        $filePath = '/var/www/navigator/current/web/Vera.xls';
-//        $filePath = '/var/www/map/mapweb/Vera.xls';
+//        $filePath = '/var/www/navigator/current/web/Vera.xls';
+        $filePath = '/var/www/map/mapweb/Vera.xls';
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
         $num = 11;
 
@@ -77,7 +77,7 @@ class VeraParserController extends Controller
             $banner->setAdrs(explode("\n",$phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue())[0]);
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue());
-            $banner->setSide($phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue());
+            $banner->setSide($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue());
             $banner->setCity('Москва');
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
@@ -85,12 +85,280 @@ class VeraParserController extends Controller
             $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getValue())*1.18);
             $banner->setTaxType('НДС (18%)');
             $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('L'.$num)->getValue()));
-            $banner->setFormat('big');
-            $banner->setType('big');
+            $banner->setFormat('3x6');
+            $banner->setType('3x6');
             $banner->setArea($phpExcelObject->setActiveSheetIndex(0)->getCell('R'.$num)->getValue());
-            $banner->setLight(($phpExcelObject->setActiveSheetIndex(0)->getCell('P'.$num)->getValue() == 'Да' ? 1 : 0));
+            $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('P'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('P'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(0)->getCell('Q'.$num)->getValue());
+            $banner->setLongitude($pos[1]);
+            $banner->setLatitude($pos[0]);
+            $em->persist($banner);
+            $em->flush($banner);
+            $num ++;
+        }
+
+        return new Response('открылось');
+    }
+
+
+    /**
+     * @Route("/parserVera/2")
+     */
+    public function parserVera2Action(){
+        $em = $this->getDoctrine()->getManager();
+        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
+        if ($company == null){
+        $company = new Company();
+        $company->setTitle('Вера Олимп');
+        $em->persist($company);
+        $em->flush($company);
+        $em->refresh($company);
+        }
+
+//        $filePath = '/var/www/navigator/current/web/Vera.xls';
+        $filePath = '/var/www/map/web/Vera.xls';
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
+        $num = 11;
+
+
+        while(true){
+            if ($phpExcelObject->setActiveSheetIndex(1)->getCell('A'.$num)->getValue() == ''){
+                break;
+            }
+            $banner = new Banner();
+            $banner->setCompany($company);
+            $banner->setAdrs(explode("\n",$phpExcelObject->setActiveSheetIndex(1)->getCell('B'.$num)->getValue())[0]);
+            $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(1)->getCell('B'.$num)->getValue())[0]);
+            $banner->setBody($phpExcelObject->setActiveSheetIndex(1)->getCell('B'.$num)->getValue());
+            $banner->setSide($phpExcelObject->setActiveSheetIndex(1)->getCell('C'.$num)->getValue());
+            $banner->setCity('Москва');
+            $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(1)->getCell('E'.$num)->getValue()));
+            $banner->setGid($phpExcelObject->setActiveSheetIndex(1)->getCell('F'.$num)->getValue());
+            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(1)->getCell('G'.$num)->getValue()));
+            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(1)->getCell('G'.$num)->getValue())*1.18);
+            $banner->setTaxType('НДС (18%)');
+            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(1)->getCell('L'.$num)->getValue()));
+            $banner->setFormat('big');
+            $banner->setType($phpExcelObject->setActiveSheetIndex(1)->getCell('M'.$num)->getValue());
+            $banner->setArea($phpExcelObject->setActiveSheetIndex(1)->getCell('R'.$num)->getValue());
+            $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('P'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('P'.$num)->getValue() == 'да' ? 1 : 0));
+            $banner->setImg(null);
+            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(1)->getCell('Q'.$num)->getValue());
+            $banner->setLongitude($pos[1]);
+            $banner->setLatitude($pos[0]);
+            $em->persist($banner);
+            $em->flush($banner);
+            $num ++;
+        }
+
+        return new Response('открылось');
+    }
+
+
+    /**
+     * @Route("/parserVera/3")
+     */
+    public function parserVera3Action(){
+        $em = $this->getDoctrine()->getManager();
+        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
+        if ($company == null){
+            $company = new Company();
+            $company->setTitle('Вера Олимп');
+            $em->persist($company);
+            $em->flush($company);
+            $em->refresh($company);
+        }
+
+//        $filePath = '/var/www/navigator/current/web/Vera.xls';
+        $filePath = '/var/www/map/web/Vera.xls';
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
+        $num = 11;
+
+
+        while(true){
+            if ($phpExcelObject->setActiveSheetIndex(2)->getCell('A'.$num)->getValue() == ''){
+                break;
+            }
+            $banner = new Banner();
+            $banner->setCompany($company);
+            $banner->setAdrs(explode("\n",$phpExcelObject->setActiveSheetIndex(2)->getCell('B'.$num)->getValue())[0]);
+            $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(2)->getCell('B'.$num)->getValue())[0]);
+            $banner->setBody($phpExcelObject->setActiveSheetIndex(2)->getCell('B'.$num)->getValue());
+            $banner->setSide($phpExcelObject->setActiveSheetIndex(2)->getCell('C'.$num)->getValue());
+            $banner->setCity('Москва');
+            $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(2)->getCell('E'.$num)->getValue()));
+            $banner->setGid($phpExcelObject->setActiveSheetIndex(2)->getCell('F'.$num)->getValue());
+            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(2)->getCell('G'.$num)->getValue()));
+            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(2)->getCell('G'.$num)->getValue())*1.18);
+            $banner->setTaxType('НДС (18%)');
+            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(2)->getCell('M'.$num)->getValue()));
+            $banner->setFormat('cityboard');
+            $banner->setType($phpExcelObject->setActiveSheetIndex(2)->getCell('N'.$num)->getValue());
+            $banner->setArea($phpExcelObject->setActiveSheetIndex(2)->getCell('S'.$num)->getValue());
+            $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'да' ? 1 : 0));
+            $banner->setImg(null);
+            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(2)->getCell('R'.$num)->getValue());
+            $banner->setLongitude($pos[1]);
+            $banner->setLatitude($pos[0]);
+            $em->persist($banner);
+            $em->flush($banner);
+            $num ++;
+        }
+
+        return new Response('открылось');
+    }
+
+    /**
+     * @Route("/parserVera/4")
+     */
+    public function parserVera4Action(){
+        $em = $this->getDoctrine()->getManager();
+        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
+        if ($company == null){
+            $company = new Company();
+            $company->setTitle('Вера Олимп');
+            $em->persist($company);
+            $em->flush($company);
+            $em->refresh($company);
+        }
+
+//        $filePath = '/var/www/navigator/current/web/Vera.xls';
+        $filePath = '/var/www/map/web/Vera.xls';
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
+        $num = 11;
+
+
+        while(true){
+            if ($phpExcelObject->setActiveSheetIndex(3)->getCell('A'.$num)->getValue() == ''){
+                break;
+            }
+            $banner = new Banner();
+            $banner->setCompany($company);
+            $banner->setAdrs(explode("\n",$phpExcelObject->setActiveSheetIndex(3)->getCell('B'.$num)->getValue())[0]);
+            $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(3)->getCell('B'.$num)->getValue())[0]);
+            $banner->setBody($phpExcelObject->setActiveSheetIndex(3)->getCell('B'.$num)->getValue());
+            $banner->setSide($phpExcelObject->setActiveSheetIndex(3)->getCell('C'.$num)->getValue());
+            $banner->setCity('Москва');
+            $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(3)->getCell('E'.$num)->getValue()));
+            $banner->setGid($phpExcelObject->setActiveSheetIndex(3)->getCell('F'.$num)->getValue());
+            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(3)->getCell('G'.$num)->getValue()));
+            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(3)->getCell('G'.$num)->getValue())*1.18);
+            $banner->setTaxType('НДС (18%)');
+            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(3)->getCell('M'.$num)->getValue()));
+            $banner->setFormat('small');
+            $banner->setType($phpExcelObject->setActiveSheetIndex(3)->getCell('N'.$num)->getValue());
+            $banner->setArea($phpExcelObject->setActiveSheetIndex(3)->getCell('S'.$num)->getValue());
+            $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'да' ? 1 : 0));
+            $banner->setImg(null);
+            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(3)->getCell('R'.$num)->getValue());
+            $banner->setLongitude($pos[1]);
+            $banner->setLatitude($pos[0]);
+            $em->persist($banner);
+            $em->flush($banner);
+            $num ++;
+        }
+
+        return new Response('открылось');
+    }
+
+
+    /**
+     * @Route("/parserVera/5")
+     */
+    public function parserVera5Action(){
+        $em = $this->getDoctrine()->getManager();
+        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
+        if ($company == null){
+            $company = new Company();
+            $company->setTitle('Вера Олимп');
+            $em->persist($company);
+            $em->flush($company);
+            $em->refresh($company);
+        }
+
+//        $filePath = '/var/www/navigator/current/web/Vera.xls';
+        $filePath = '/var/www/map/web/Vera.xls';
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
+        $num = 11;
+
+
+        while(true){
+            if ($phpExcelObject->setActiveSheetIndex(4)->getCell('A'.$num)->getValue() == ''){
+                break;
+            }
+            $banner = new Banner();
+            $banner->setCompany($company);
+            $banner->setAdrs(explode("\n",$phpExcelObject->setActiveSheetIndex(4)->getCell('B'.$num)->getValue())[0]);
+            $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(4)->getCell('B'.$num)->getValue())[0]);
+            $banner->setBody($phpExcelObject->setActiveSheetIndex(4)->getCell('B'.$num)->getValue());
+            $banner->setSide($phpExcelObject->setActiveSheetIndex(4)->getCell('C'.$num)->getValue());
+            $banner->setCity('Москва');
+            $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(4)->getCell('E'.$num)->getValue()));
+            $banner->setGid($phpExcelObject->setActiveSheetIndex(4)->getCell('F'.$num)->getValue());
+            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(4)->getCell('G'.$num)->getValue()));
+            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(4)->getCell('G'.$num)->getValue())*1.18);
+            $banner->setTaxType('НДС (18%)');
+            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(4)->getCell('M'.$num)->getValue()));
+            $banner->setFormat('small');
+            $banner->setType($phpExcelObject->setActiveSheetIndex(4)->getCell('N'.$num)->getValue());
+            $banner->setArea($phpExcelObject->setActiveSheetIndex(4)->getCell('S'.$num)->getValue());
+            $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'да' ? 1 : 0));
+            $banner->setImg(null);
+            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(4)->getCell('R'.$num)->getValue());
+            $banner->setLongitude($pos[1]);
+            $banner->setLatitude($pos[0]);
+            $em->persist($banner);
+            $em->flush($banner);
+            $num ++;
+        }
+
+        return new Response('открылось');
+    }
+
+    /**
+     * @Route("/parserVera/6")
+     */
+    public function parserVera6Action(){
+        $em = $this->getDoctrine()->getManager();
+        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
+        if ($company == null){
+            $company = new Company();
+            $company->setTitle('Вера Олимп');
+            $em->persist($company);
+            $em->flush($company);
+            $em->refresh($company);
+        }
+
+//        $filePath = '/var/www/navigator/current/web/Vera.xls';
+        $filePath = '/var/www/map/web/Vera.xls';
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
+        $num = 11;
+
+
+        while(true){
+            if ($phpExcelObject->setActiveSheetIndex(4)->getCell('A'.$num)->getValue() == ''){
+                break;
+            }
+            $banner = new Banner();
+            $banner->setCompany($company);
+            $banner->setAdrs(explode("\n",$phpExcelObject->setActiveSheetIndex(4)->getCell('B'.$num)->getValue())[0]);
+            $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(4)->getCell('B'.$num)->getValue())[0]);
+            $banner->setBody($phpExcelObject->setActiveSheetIndex(4)->getCell('B'.$num)->getValue());
+            $banner->setSide($phpExcelObject->setActiveSheetIndex(4)->getCell('C'.$num)->getValue());
+            $banner->setCity('Московская область');
+            $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(4)->getCell('E'.$num)->getValue()));
+            $banner->setGid($phpExcelObject->setActiveSheetIndex(4)->getCell('F'.$num)->getValue());
+            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(4)->getCell('G'.$num)->getValue()));
+            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(4)->getCell('G'.$num)->getValue())*1.18);
+            $banner->setTaxType('НДС (18%)');
+            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(4)->getCell('M'.$num)->getValue()));
+            $banner->setFormat('3x6');
+            $banner->setType($phpExcelObject->setActiveSheetIndex(4)->getCell('N'.$num)->getValue());
+            $banner->setArea(null);
+            $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'да' ? 1 : 0));
+            $banner->setImg(null);
+            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(4)->getCell('R'.$num)->getValue());
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
             $em->persist($banner);
