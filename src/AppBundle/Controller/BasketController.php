@@ -98,6 +98,7 @@ class BasketController extends Controller
         $i = 0;
         $grp = 0;
         $ots = 0;
+        $ots2 = 0;
         $sideA = 0;
         $side = '';
         $sideB = 0;
