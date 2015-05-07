@@ -258,24 +258,27 @@
 
                         if ( objects != null && objects.length != 0 ) {
                             for (var i in objects) {
-                                if (objects[i].hot != '0' && objects[i].hot != 0 && objects[i].hot != null) {
-                                    var img = '/bundles/app/images/fire.gif';
-                                } else {
-                                    if (objects[i].format == '3x6') {
-                                        var img = '/bundles/app/images/mapIcon3.png';
+                                {% if thisBanner != null %}
+                                    var img = '/bundles/app/images/arrow-down.png';
+                                {% else %}
+                                    if (objects[i].hot != '0' && objects[i].hot != 0 && objects[i].hot != null) {
+                                        var img = '/bundles/app/images/fire.gif';
                                     } else {
-                                        if (objects[i].format == 'big') {
-                                            var img = '/bundles/app/images/mapIcon4.png';
+                                        if (objects[i].format == '3x6') {
+                                            var img = '/bundles/app/images/mapIcon3.png';
                                         } else {
-                                            if (objects[i].format == 'small') {
-                                                var img = '/bundles/app/images/mapIcon5.png';
+                                            if (objects[i].format == 'big') {
+                                                var img = '/bundles/app/images/mapIcon4.png';
                                             } else {
-                                                var img = '/bundles/app/images/mapIcon1.png';
+                                                if (objects[i].format == 'small') {
+                                                    var img = '/bundles/app/images/mapIcon5.png';
+                                                } else {
+                                                    var img = '/bundles/app/images/mapIcon1.png';
+                                                }
                                             }
                                         }
                                     }
-
-                                }
+                                {% endif %}
                                 placemarks[j] = new ym.GeoObject({
                                             geometry: {
                                                 type: "Point",
@@ -293,7 +296,11 @@
                                             openEmptyBalloon: true,
                                             iconLayout: 'default#image',
                                             iconImageHref: img,
-                                            iconImageSize: [16, 16]
+                                            {% if thisBanner != null %}
+                                                iconImageSize: [32, 32],
+                                            {% else %}
+                                                iconImageSize: [16, 16],
+                                            {% endif %}
                                         }
                                 );
 
