@@ -1,5 +1,5 @@
 {#{% extends "TwigBundle::layout.html.twig" %}#}
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     {% block head %}
     {% block javascripts %}
@@ -169,8 +169,8 @@
                 <div class="title">
                     Заказчикам
                 </div>
-                Техтребования<br />
-                Поиск щитов<br />
+                <a href="{{ path('page',{'url' : 'requirements'}) }}" style="color: #FFF">Техтребования</a><br />
+                <a href="{{ path('page',{'url' : 'instruction'}) }}" style="color: #FFF">Поиск щитов</a><br />
                 Отзывы<br />
                 Производство
             </div>
