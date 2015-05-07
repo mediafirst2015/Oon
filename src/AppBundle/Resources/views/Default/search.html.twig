@@ -13,14 +13,14 @@
         <div class="row">
             <div class="col-sm-2"></div>
             <div class="col-sm-4">
-                <select name="city">
+                <select name="city" id="city3">
                     <option value="null" disabled>Город</option>
                     <option value="Москва" {{ params.city == 'Москва' ? 'selected="selected"' }}>Москва</option>
-                    <option value="Московская область" {{ params.city == 'Московская область' ? 'selected="selected"' }}>МО</option>
+                    <option value="Московская область" {{ params.city == 'Московская область' ? 'selected="selected"' }}>Московская область</option>
                 </select>
             </div>
             <div class="col-sm-4">
-                <select name="area">
+                <select name="area" id="area3">
                     <option value="" disabled selected>Округ</option>
                     <option value="" selected>Все округа</option>
                     <option value="ЦАО" {{ params.area == 'ЦАО' ? 'selected="selected"' }}>ЦАО</option>
@@ -375,6 +375,14 @@
                 });
             });
 
+            $('#city3').change(function(){
+                if ($(this).val() != 'Москва'){
+                    $('#area3').prop( "disabled", true  );
+                    $('#area3 option').eq(0).prop('selected', true);
+                }else{
+                    $('#area3').prop( "disabled", false);
+                }
+            });
         });
     </script>
 {% endblock %}

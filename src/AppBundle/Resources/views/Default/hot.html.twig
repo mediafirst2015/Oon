@@ -15,11 +15,12 @@
                     <div class="form">
                         <div class="title" style="font-size: 20px">Поиск горящих предложений</div>
                         <br />
-                        <select name="city">
+                        <select name="city" id="city5">
                             <option value="" disabled selected>Город</option>
                             <option value="Москва" {{ params.city == 'Москва' ? 'selected="selected"' }}>Москва</option>
+                            <option value="Московская область" {{ params.city == 'Московская область' ? 'selected="selected"' }}>Московская область</option>
                         </select>
-                        <select name="area">
+                        <select name="area" id="area5">
                             <option value="0" disabled selected>Округ</option>
                             <option value="0" selected>Все округа</option>
                             <option value="ЦАО"  {{ params.area=='ЦАО' ? 'selected="selected"' : '' }}>ЦАО</option>
@@ -154,6 +155,15 @@
                         }
                     });
                     return false;
+                });
+
+                $('#city5').change(function(){
+                    if ($(this).val() != 'Москва'){
+                        $('#area5').prop( "disabled", true  );
+                        $('#area5 option').eq(0).prop('selected', true);
+                    }else{
+                        $('#area5').prop( "disabled", false);
+                    }
                 });
             });
         </script>

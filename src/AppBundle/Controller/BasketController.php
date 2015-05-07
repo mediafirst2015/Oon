@@ -39,6 +39,8 @@ class BasketController extends Controller
                 $fullprice += $val['price'];
             }
         }
+        $fullprice = number_format($fullprice,1);
+        $fullprice = $fullprice += 0;
         return new Response($fullprice);
     }
 

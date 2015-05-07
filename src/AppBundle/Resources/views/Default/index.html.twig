@@ -61,7 +61,7 @@
                             <select id="city" name="city" required="true" class="required">
                                 <option value="0" disabled selected>Город</option>
                                 <option value="Москва">Москва</option>
-                                <option value="Московская область">МО</option>
+                                <option value="Московская область">Московская область</option>
                             </select>
                         </div>
                         <div class="relative">
@@ -184,12 +184,13 @@
                     <div class="form">
                         <div class="title">Поиск щитов по параметрам</div>
                         <br />
-                        <select name="city">
+                        <select name="city" id="city2">
                             <option value="" disabled selected>Город</option>
                             <option value="Москва">Москва</option>
+                            <option value="Московская область">Московская область</option>
                         </select>
                         <br />
-                        <select name="area">
+                        <select name="area" id="area2">
                             <option value="" disabled selected>Округ</option>
                             <option value="" selected>Все округа</option>
                             <option value="ЦАО">ЦАО</option>
@@ -594,7 +595,23 @@
                     $('#form-map').submit();
                 });
 
+                $('#city').change(function(){
+                    if ($(this).val() != 'Москва'){
+                        $('#area').prop( "disabled", true  );
+                        $('#area option').eq(0).prop('selected', true);
+                    }else{
+                        $('#area').prop( "disabled", false);
+                    }
+                });
 
+                $('#city2').change(function(){
+                    if ($(this).val() != 'Москва'){
+                        $('#area2').prop( "disabled", true );
+                        $('#area2 option').eq(0).prop('selected', true);
+                    }else{
+                        $('#area2').prop( "disabled", false );
+                    }
+                });
 
             });
         </script>
