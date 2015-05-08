@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 class VeraParserController extends Controller
 {
 
-//    public $filePath = '/var/www/navigator/current/web/Vera.xls';
-    public $filePath = '/var/www/map/web/Vera.xls';
+    public $filePath = '/var/www/navigator/current/web/Vera.xls';
+//    public $filePath = '/var/www/map/web/Vera.xls';
     public function getLetter($num){
         switch ($num){
             case 1: return 'A';
