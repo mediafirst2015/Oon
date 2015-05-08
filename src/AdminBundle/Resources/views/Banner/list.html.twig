@@ -51,3 +51,34 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.remove').click(function () {
+                var title = $(this).attr('data-title')
+                var url = $(this).attr('data-href');
+                BootstrapDialog.show({
+                    title: 'УДАЛЕНИЕ',
+                    size: BootstrapDialog.SIZE_SMALL,
+                    type: BootstrapDialog.TYPE_DANGER,
+                    message: 'Вы точно хотите удалить щит "'+ title +'"',
+                    buttons: [{
+                        label: 'Удалить',
+                        cssClass: 'btn-danger',
+                        autospin: true,
+                        action: function (dialogRef) {
+                            window.locationnger.href = url;
+                        }
+                    }, {
+                        label: 'Отмена',
+                        action: function (dialogRef) {
+                            dialogRef.close();
+                        }
+                    }]
+                });
+            });
+        });
+    </script>
+{% endblock %}
