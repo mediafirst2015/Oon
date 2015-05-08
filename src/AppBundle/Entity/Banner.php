@@ -84,6 +84,11 @@ class Banner extends BaseEntity
     /**
      * @ORM\Column(type="string", nullable=true)
      */
+    protected $link;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
     protected $adrs;
 
     /**
@@ -604,6 +609,23 @@ class Banner extends BaseEntity
     {
         $this->company = $company;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param mixed $link
+     */
+    public function setLink($link)
+    {
+        $this->link = $link;
+    }
+
 
 
 }

@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class VeraParserController extends Controller
 {
+
+//    public $filePath = '/var/www/navigator/current/web/Vera.xls';
+    public $filePath = '/var/www/map/web/Vera.xls';
     public function getLetter($num){
         switch ($num){
             case 1: return 'A';
@@ -62,9 +65,7 @@ class VeraParserController extends Controller
             $em->refresh($company);
         }
 
-        $filePath = '/var/www/navigator/current/web/Vera.xls';
-//        $filePath = '/var/www/map/mapweb/Vera.xls';
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
         $num = 11;
 
 
@@ -90,6 +91,9 @@ class VeraParserController extends Controller
             $banner->setArea($phpExcelObject->setActiveSheetIndex(0)->getCell('R'.$num)->getValue());
             $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('P'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('P'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
+            $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getHyperlink()->getUrl());
+            echo $phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getHyperlink()->getUrl();
+//            exit;
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(0)->getCell('Q'.$num)->getValue());
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
@@ -116,9 +120,7 @@ class VeraParserController extends Controller
         $em->refresh($company);
         }
 
-        $filePath = '/var/www/navigator/current/web/Vera.xls';
-//        $filePath = '/var/www/map/web/Vera.xls';
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
         $num = 11;
 
 
@@ -144,6 +146,7 @@ class VeraParserController extends Controller
             $banner->setArea($phpExcelObject->setActiveSheetIndex(1)->getCell('R'.$num)->getValue());
             $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('P'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('P'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
+            $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getHyperlink()->getUrl());
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(1)->getCell('Q'.$num)->getValue());
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
@@ -170,9 +173,7 @@ class VeraParserController extends Controller
             $em->refresh($company);
         }
 
-        $filePath = '/var/www/navigator/current/web/Vera.xls';
-//        $filePath = '/var/www/map/web/Vera.xls';
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
         $num = 11;
 
 
@@ -198,6 +199,7 @@ class VeraParserController extends Controller
             $banner->setArea($phpExcelObject->setActiveSheetIndex(2)->getCell('S'.$num)->getValue());
             $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
+            $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getHyperlink()->getUrl());
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(2)->getCell('R'.$num)->getValue());
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
@@ -223,9 +225,8 @@ class VeraParserController extends Controller
             $em->refresh($company);
         }
 
-        $filePath = '/var/www/navigator/current/web/Vera.xls';
-//        $filePath = '/var/www/map/web/Vera.xls';
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
+
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
         $num = 11;
 
 
@@ -251,6 +252,7 @@ class VeraParserController extends Controller
             $banner->setArea($phpExcelObject->setActiveSheetIndex(3)->getCell('S'.$num)->getValue());
             $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
+            $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getHyperlink()->getUrl());
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(3)->getCell('R'.$num)->getValue());
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
@@ -277,9 +279,8 @@ class VeraParserController extends Controller
             $em->refresh($company);
         }
 
-        $filePath = '/var/www/navigator/current/web/Vera.xls';
-//        $filePath = '/var/www/map/web/Vera.xls';
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
+
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
         $num = 11;
 
 
@@ -305,6 +306,7 @@ class VeraParserController extends Controller
             $banner->setArea($phpExcelObject->setActiveSheetIndex(4)->getCell('S'.$num)->getValue());
             $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
+            $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getHyperlink()->getUrl());
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(4)->getCell('R'.$num)->getValue());
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
@@ -330,9 +332,8 @@ class VeraParserController extends Controller
             $em->refresh($company);
         }
 
-        $filePath = '/var/www/navigator/current/web/Vera.xls';
-//        $filePath = '/var/www/map/web/Vera.xls';
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
+
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
         $num = 11;
 
 
@@ -358,6 +359,7 @@ class VeraParserController extends Controller
             $banner->setArea(null);
             $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
+            $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getHyperlink()->getUrl());
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(4)->getCell('R'.$num)->getValue());
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
@@ -368,6 +370,28 @@ class VeraParserController extends Controller
 
         return new Response('открылось');
     }
+
+    /**
+     * @Route("/parserVera/images")
+     */
+    public function parseImageAction(){
+        $em = $this->getDoctrine()->getManager();
+        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
+        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->findByCompany($company);
+
+        foreach ( $banners as $b ){
+            $link = $b->getLink();
+            $image = str_replace('http://www.olymp.ru/index.php?op=sidedb&keyid=','',$link);
+            preg_match ('%\d+%', $image, $matches);
+            $image = $matches[0];
+            $image = 'http://olymp.ru/pic/standsKID/'.$image.'.jpg';
+            $b->setImg($image);
+            $em->flush($b);
+        }
+
+        return new Response('Все');
+    }
+
 
     public function getArea($ares){
         switch($ares){
