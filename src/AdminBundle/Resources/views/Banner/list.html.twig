@@ -36,11 +36,9 @@
                         </a>
                             &nbsp;
                             &nbsp;
-                        <a href="{{ path('banner_remove',{'id' : item.id}) }}">
-                            <button type="button" class="btn btn-default btn-bg">
+                            <button type="button" class="btn btn-default btn-bg remove" data-href="{{ path('banner_remove',{'id' : item.id}) }}" data-title="{{ item.adrs }}">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
-                        </a>
                         {% endspaceless %}
                     </td>
                 </tr>
@@ -69,7 +67,7 @@
                         cssClass: 'btn-danger',
                         autospin: true,
                         action: function (dialogRef) {
-                            window.locationnger.href = url;
+                            window.location.href = url;
                         }
                     }, {
                         label: 'Отмена',
