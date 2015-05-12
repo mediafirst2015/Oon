@@ -40,7 +40,7 @@ class BasketController extends Controller
             }
         }
         $fullprice = number_format($fullprice,1);
-        $fullprice = $fullprice += 0;
+//        $fullprice = $fullprice += 0;
         return new Response($fullprice);
     }
 
