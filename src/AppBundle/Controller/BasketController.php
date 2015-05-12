@@ -600,7 +600,7 @@ class BasketController extends Controller
         $name = $request->request->get('name');
         $phone = $request->request->get('phone');
         $this->get('email.service')->send(
-            'tulupov.m@gmail.com',
+            array('tulupov.m@gmail.com','ryabova.t@mediafirst.ru'),
             array('AppBundle:Email:contact.html.twig', array(
                 'name'  => $name,
                 'email'  => $email,
@@ -637,7 +637,7 @@ class BasketController extends Controller
 
 
         $this->get('email.service')->send(
-            'tulupov.m@gmail.com',
+            array('tulupov.m@gmail.com','ryabova.t@mediafirst.ru'),
             array('AppBundle:Email:mediaplan.html.twig', $params),
             'Сообщение от navigator mediaFirst',
             null
