@@ -78,7 +78,7 @@ class VeraParserController extends Controller
             $banner->setAdrs(explode("\n",$phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue())[0]);
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue());
-            $banner->setSide($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue());
+            $banner->setSide($phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue());
             $banner->setCity('Москва');
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
