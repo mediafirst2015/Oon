@@ -1,3 +1,4 @@
+{% set fullPrice2 = 0 %}
 <table class="table">
     <tr>
         <th></th>
@@ -56,6 +57,7 @@
             <td>{{ (l.price |number_format(1, '.', '')) | replace("/\.?0*$/",'') }}</td>
             <td>{{ l.taxType }}</td>
             <td>{{ l.price2 |number_format(1, '.', '') | replace("/\.?0*$/",'') }}</td>
+            {% set fullPrice2 = fullPrice2 + l.price2 %}
             <td>{{ ((l.priceDeploy ? priceDeploy : 0)|number_format(1, '.', ''))  | replace("/\.?0*$/",'') }}</td>
             <td style="text-align: center">
                 <a href="{{ l.img }}" class="fancybox" data-fancybox-group="gallery">
@@ -85,7 +87,7 @@
         </td>
         <td style="background: none;"></td>
         <td style="background: none;">
-            <b>{{ fullPrice }}&nbsp;р.</b>
+            <b>{{ fullPrice2 | number_format(1, '.', '') }}&nbsp;р.</b>
         </td>
         <td style="background: none; border: 0" colspan="2"></td>
         <td colspan="3" style="text-align: right; color: #CC0000; background: none; border: 0;">

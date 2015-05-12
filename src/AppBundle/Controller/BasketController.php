@@ -115,7 +115,7 @@ class BasketController extends Controller
                 }else{
                     $sideB ++;
                 }
-                $price += $val['price'];
+                $price += $val['price2'];
             }
             $lists = $basket;
             $grp = $grp / $i;
@@ -225,6 +225,7 @@ class BasketController extends Controller
             $i = 0;
             $grp = 0;
             $ots = 0;
+            $ots2 = 0;
             $sideA = 0;
             $side = '';
             $sideB = 0;
@@ -242,7 +243,7 @@ class BasketController extends Controller
                     }else{
                         $sideB ++;
                     }
-                    $price += $val['price'];
+                    $price += $val['price2'];
                 }
                 $lists = $basket;
                 $grp = $grp / $i;
