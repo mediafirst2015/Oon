@@ -438,7 +438,11 @@
                     method: 'POST',
                     success: function(msg){
                         $('#basket-table').html(msg);
-                        $('.thrumb').notify("позиция добавлена в медиаплан",{ className: 'success', autoHideDelay: 1200, position: "bottom",  showDuration: 0,  hideDuration: 0  });
+                        if ( item.prop('checked') == true ){
+                            $('.thrumb').notify("позиция добавлена в медиаплан",{ className: 'success', autoHideDelay: 1200, position: "bottom",  showDuration: 0,  hideDuration: 0  });
+                        }else{
+                            $('.thrumb').notify("позиция удалена из медиаплана",{ className: 'success', autoHideDelay: 1200, position: "bottom",  showDuration: 0,  hideDuration: 0  });
+                        }
                         orderRefresh();
                     }
                 });

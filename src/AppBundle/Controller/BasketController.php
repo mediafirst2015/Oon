@@ -57,8 +57,8 @@ class BasketController extends Controller
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
         $lists = $session->get('lists');
-        if (isset($lists[$itemId])){
-            unset($lists[$itemId]);
+        if (isset($lists[$itemId.'-'.$month.'-'.$year])){
+            unset($lists[$itemId.'-'.$month.'-'.$year]);
             $status = 'remove';
         }else{
             $banner = $em->getRepository('AppBundle:Banner')->findOneById($itemId);
