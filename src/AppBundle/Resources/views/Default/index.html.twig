@@ -53,7 +53,7 @@
                 <div class="form">
                     <form method="POST" id="form-top" action="{{ path('send_getmedia') }}">
                         <div class="title" style="font-size: 20px; margin-bottom: 10px">Закажите свой медиа-план!</div>
-                        <div class="error">
+                        <div class="error2">
 
                         </div>
                         <div class="relative">
@@ -557,37 +557,46 @@
 
                 $('#form-top-submit').click(function(){
                     // Валидация полей
-                    var error = '';
+                    var error2 = '';
                     if ($('#name').val() == ''){
-                        error += 'Поле имя обязательно для заполнения <br />';
+                        error2 += 'Поле имя обязательно для заполнения <br />';
+                        $('#name').css('border','1px solid #CC0000');
                     }
                     if ($('#city').val() == '0' || $('#city').val() == null){
-                        error += 'Поле город обязательно для заполнения <br />';
+                        error2 += 'Поле город обязательно для заполнения <br />';
+                        $('#city').css('border','1px solid #CC0000');
                     }
                     if ($('#dateStart').val() == '0' || $('#dateEnd').val() == '0' || $('#dateStart').val() == null || $('#dateEnd').val() == null){
-                        error += 'Поля период обязательны для заполнения <br />';
+                        error2 += 'Поля период обязательны для заполнения <br />';
+                        $('#dateStart').css('border','1px solid #CC0000');
                     }
                     if ($('#count').val() == ''){
-                        error += 'Поле кол-во щитов обязательно для заполнения <br />';
+                        error2 += 'Поле кол-во щитов обязательно для заполнения <br />';
+                        $('#count').css('border','1px solid #CC0000');
                     }
                     if ($('#priceAll').val() == ''){
-                        error += 'Поле стоимость обязательно для заполнения <br />';
+                        error2 += 'Поле стоимость обязательно для заполнения <br />';
+                        $('#priceAll').css('border','1px solid #CC0000');
                     }
                     if ($('#email').val() == ''){
-                        error += 'Поле e-mail обязательно для заполнения <br />';
+                        error2 += 'Поле e-mail обязательно для заполнения <br />';
+                        $('#email').css('border','1px solid #CC0000');
                     }else{
                         var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
                         if (!re.test($('#email').val())){
-                            error += 'Поле e-mail Заполнено некорректно <br />';
+                            error2 += 'Поле e-mail Заполнено некорректно <br />';
+                            $('#email').css('border','1px solid #CC0000');
                         }
                     }
                     if ($('#phone').val() == ''){
-                        error += 'Поле телефон обязательно для заполнения <br />';
+                        error2 += 'Поле телефон обязательно для заполнения <br />';
+                        $('#phone').css('border','1px solid #CC0000');
                     }
-                    if (error == ''){
+                    if (error2 == ''){
                         $('#form-top').submit();
                     }else{
-                        $('.error').html(error);
+                        error2 = 'Поля выделенные красным обязательны к заполнению';
+                        $('.error2').html(error2);
                     }
                 });
 

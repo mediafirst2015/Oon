@@ -618,7 +618,8 @@ input.mini {
   position: relative;
   overflow: hidden;
 }
-.error {
+.error,
+.error2 {
   color: #cc0000;
 }
 .flashbag-success {
