@@ -127,6 +127,7 @@ class DefaultController extends Controller
         $side = '';
         $sideB = 0;
         $price = 0;
+        $price2 = 0;
         $fullprice = 0;
         $session = $request->getSession();
         $basket = $session->get('lists');
@@ -142,16 +143,19 @@ class DefaultController extends Controller
                     $sideB ++;
                 }
                 $price += $val['price'];
+                $price2 += $val['price2'];
             }
             $lists = $basket;
             $grp = $grp / $i;
             $ots2 = $ots;
             $ots = $ots / $i;
-            $fullprice = $price;
+            $fullprice = $price2;
             $price = $price / $i;
+            $price2 = $price2 / $i;
             $grp = number_format($grp,2,'.','');
             $ots = number_format($ots,2,'.','');
             $price = number_format($price,2,'.','');
+            $price2 = number_format($price2,2,'.','');
             $sideA = number_format(100/$i*$sideA,0,'.','');
             $sideB = number_format(100/$i*$sideB,0,'.','');
             $side = $sideA.'/'.$sideB;
@@ -166,6 +170,7 @@ class DefaultController extends Controller
             'ots'=>$ots,
             'otsSum'=> $ots2,
             'price' => $price,
+            'price2' => $price2,
             'count' => $i,
             'side'=> $side,
             'fullPrice' => $fullprice);
@@ -248,6 +253,7 @@ class DefaultController extends Controller
         $side = '';
         $sideB = 0;
         $price = 0;
+        $price2 = 0;
         $fullprice = 0;
         $session = $request->getSession();
         $basket = $session->get('lists');
@@ -263,16 +269,19 @@ class DefaultController extends Controller
                     $sideB ++;
                 }
                 $price += $val['price'];
+                $price2 += $val['price2'];
             }
             $lists = $basket;
             $grp = $grp / $i;
             $ots2 = $ots;
             $ots = $ots / $i;
-            $fullprice = $price;
+            $fullprice = $price2;
             $price = $price / $i;
+            $price2 = $price2 / $i;
             $grp = number_format($grp,2,'.','');
             $ots = number_format($ots,2,'.','');
             $price = number_format($price,2,'.','');
+            $price2 = number_format($price2,2,'.','');
             $sideA = number_format(100/$i*$sideA,0,'.','');
             $sideB = number_format(100/$i*$sideB,0,'.','');
             $side = $sideA.'/'.$sideB;
@@ -285,6 +294,7 @@ class DefaultController extends Controller
             'ots'=>$ots,
             'otsSum'=> $ots2,
             'price' => $price,
+            'price2' => $price2,
             'count' => $i,
             'side'=> $side,
             'fullPrice' => $fullprice,
@@ -333,10 +343,12 @@ class DefaultController extends Controller
         $i = 0;
         $grp = 0;
         $ots = 0;
+        $ots2 = 0;
         $sideA = 0;
         $side = '';
         $sideB = 0;
         $price = 0;
+        $price2 = 0;
         $fullprice = 0;
         $session = $request->getSession();
         $basket = $session->get('lists');
@@ -346,22 +358,25 @@ class DefaultController extends Controller
 //                $lists[] = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($key);
                 $grp += $val['grp'];
                 $ots += $val['ots'];
-                if ($val['side'] == 'A'){
+                if ($val['side'] == 'А' || $val['side'] == 'A'){
                     $sideA ++;
                 }else{
                     $sideB ++;
                 }
                 $price += $val['price'];
+                $price2 += $val['price2'];
             }
             $lists = $basket;
             $grp = $grp / $i;
             $ots2 = $ots;
             $ots = $ots / $i;
-            $fullprice = $price;
+            $fullprice = $price2;
             $price = $price / $i;
+            $price2 = $price2 / $i;
             $grp = number_format($grp,2,'.','');
             $ots = number_format($ots,2,'.','');
             $price = number_format($price,2,'.','');
+            $price2 = number_format($price2,2,'.','');
             $sideA = number_format(100/$i*$sideA,0,'.','');
             $sideB = number_format(100/$i*$sideB,0,'.','');
             $side = $sideA.'/'.$sideB;
@@ -373,6 +388,7 @@ class DefaultController extends Controller
             'ots'=>$ots,
             'otsSum'=>$ots2,
             'price' => $price,
+            'price2' => $price2,
             'count' => $i,
             'side'=> $side,
             'fullPrice' => $fullprice,

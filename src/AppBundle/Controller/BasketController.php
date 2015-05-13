@@ -103,6 +103,7 @@ class BasketController extends Controller
         $side = '';
         $sideB = 0;
         $price = 0;
+        $price2 = 0;
         $fullprice = 0;
         $basket = $session->get('lists');
         if ($basket){
@@ -115,17 +116,20 @@ class BasketController extends Controller
                 }else{
                     $sideB ++;
                 }
-                $price += $val['price2'];
+                $price += $val['price'];
+                $price2 += $val['price2'];
             }
             $lists = $basket;
             $grp = $grp / $i;
             $ots2 = $ots;
             $ots = $ots / $i;
-            $fullprice = $price;
+            $fullprice = $price2;
             $price = $price / $i;
+            $price2 = $price2 / $i;
             $grp = number_format($grp,2,'.','');
             $ots = number_format($ots,2,'.','');
             $price = number_format($price,2,'.','');
+            $price2 = number_format($price2,2,'.','');
             $sideA = number_format(100/$i*$sideA,0,'.','');
             $sideB = number_format(100/$i*$sideB,0,'.','');
             $side = $sideA.'/'.$sideB;
@@ -136,6 +140,7 @@ class BasketController extends Controller
             'otsSum'=> $ots2,
             'ots'=>$ots,
             'price' => $price,
+            'price2' => $price2,
             'count' => $i,
             'side'=> $side,
             'fullPrice' => $fullprice,
@@ -230,6 +235,7 @@ class BasketController extends Controller
             $side = '';
             $sideB = 0;
             $price = 0;
+            $price2 = 0;
             $fullprice = 0;
             $basket = $session->get('lists');
             if ($basket){
@@ -243,16 +249,18 @@ class BasketController extends Controller
                     }else{
                         $sideB ++;
                     }
-                    $price += $val['price2'];
+                    $price += $val['price'];
+                    $price2 += $val['price2'];
                 }
                 $lists = $basket;
                 $grp = $grp / $i;
                 $ots2 = $ots;
                 $ots = $ots / $i;
-                $fullprice = $price;
+                $fullprice = $price2;
                 $price = $price / $i;
                 $grp = number_format($grp,2,'.','');
                 $ots = number_format($ots,2,'.','');
+                $price2 = number_format($price2,2,'.','');
                 $price = number_format($price,2,'.','');
                 $sideA = number_format(100/$i*$sideA,0,'.','');
                 $sideB = number_format(100/$i*$sideB,0,'.','');
@@ -264,6 +272,7 @@ class BasketController extends Controller
                 'ots'=>$ots,
                 'otsSum'=>$ots2,
                 'price' => $price,
+                'price2' => $price2,
                 'count' => $i,
                 'side'=> $side,
                 'fullPrice' => $fullprice,
