@@ -36,7 +36,7 @@ class BasketController extends Controller
         $basket = $session->get('lists');
         if ($basket){
             foreach ($basket as $key=>$val){
-                $fullprice += $val['price'];
+                $fullprice += $val['price2'];
             }
         }
         $fullprice = number_format($fullprice,1);
