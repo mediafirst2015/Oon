@@ -58,7 +58,7 @@ class GellaryParserController extends Controller
     public function parserGellary1Action(){
         $this->filePath = $this->filePath.'G1.XLSX';
         $em = $this->getDoctrine()->getManager();
-        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
+        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Gallery');
         if ($company == null){
             $company = new Company();
             $company->setTitle('Gallery');
@@ -113,7 +113,7 @@ class GellaryParserController extends Controller
     public function parserGellary2Action(){
         $this->filePath = $this->filePath.'G2.XLSX';
         $em = $this->getDoctrine()->getManager();
-        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
+        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Gallery');
         if ($company == null){
             $company = new Company();
             $company->setTitle('Gallery');
