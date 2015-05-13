@@ -155,14 +155,22 @@ class GellaryParserController extends Controller
             $url = 'http://geocode-maps.yandex.ru/1.x/?geocode='.urlencode($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $content = file_get_contents($url);
             $XmlObj = simplexml_load_string($content);
-            $pos['x'] = explode(' ',$XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)[1];
-            $pos['y'] = explode(' ',$XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)[0];
+            if (isset($XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)){
+                $pos['x'] = explode(' ',$XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)[1];
+                $pos['y'] = explode(' ',$XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)[0];
+            }else{
+                $pos['x'] = 0;
+                $pos['y'] = 0;
+            }
 
             $banner->setLongitude($pos['y']);
             $banner->setLatitude($pos['x']);
             $em->persist($banner);
             $em->flush($banner);
             $num ++;
+            if ($num % 50 == 0){
+                sleep(rand(1,5));
+            }
         }
 
         return new Response('открылось');
