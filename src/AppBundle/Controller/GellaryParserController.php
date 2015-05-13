@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 class GellaryParserController extends Controller
 {
 
-//    public $filePath = '/var/www/navigator/current/web/';
-    public $filePath = '/var/www/map/web/';
+    public $filePath = '/var/www/navigator/current/web/';
+//    public $filePath = '/var/www/map/web/';
 
     public function getLetter($num){
         switch ($num){
