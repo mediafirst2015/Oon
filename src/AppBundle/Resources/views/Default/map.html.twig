@@ -41,34 +41,34 @@
                                 с&nbsp;&nbsp;
                                 <select class="mini" name="dateStart">
                                     <option value="0" selected="selected">Нач</option>
-                                    <option value="1"  {{ params.dateStart == '1' ? 'selected="selected"' : ''}}>Янв</option>
-                                    <option value="2"  {{ params.dateStart == '2' ? 'selected="selected"' : ''}}>Фев</option>
-                                    <option value="3"  {{ params.dateStart == '3' ? 'selected="selected"' : ''}}>Мар</option>
-                                    <option value="4"  {{ params.dateStart == '4' ? 'selected="selected"' : ''}}>Апр</option>
-                                    <option value="5"  {{ params.dateStart == '5' ? 'selected="selected"' : ''}}>Май</option>
-                                    <option value="6"  {{ params.dateStart == '6' ? 'selected="selected"' : ''}}>Июн</option>
-                                    <option value="7"  {{ params.dateStart == '7' ? 'selected="selected"' : ''}}>Июл</option>
-                                    <option value="8"  {{ params.dateStart == '8' ? 'selected="selected"' : ''}}>Авг</option>
-                                    <option value="9"  {{ params.dateStart == '9' ? 'selected="selected"' : ''}}>Сен</option>
-                                    <option value="10" {{ params.dateStart == '10' ? 'selected="selected"' : ''}}>Окт</option>
-                                    <option value="11" {{ params.dateStart == '11' ? 'selected="selected"' : ''}}>Ноя</option>
-                                    <option value="12" {{ params.dateStart == '12' ? 'selected="selected"' : ''}}>Дек</option>
+                                    <option value="1"  {{ params.dateStart == '1' ? 'selected="selected"' :  'now'|date('m') == 1 ? 'selected="selected"' : '' }}>Янв</option>
+                                    <option value="2"  {{ params.dateStart == '2' ? 'selected="selected"' :  'now'|date('m') == 2 ? 'selected="selected"' : '' }}>Фев</option>
+                                    <option value="3"  {{ params.dateStart == '3' ? 'selected="selected"' :  'now'|date('m') == 3 ? 'selected="selected"' : '' }}>Мар</option>
+                                    <option value="4"  {{ params.dateStart == '4' ? 'selected="selected"' :  'now'|date('m') == 4 ? 'selected="selected"' : '' }}>Апр</option>
+                                    <option value="5"  {{ params.dateStart == '5' ? 'selected="selected"' :  'now'|date('m') == 5 ? 'selected="selected"' : '' }}>Май</option>
+                                    <option value="6"  {{ params.dateStart == '6' ? 'selected="selected"' :  'now'|date('m') == 6 ? 'selected="selected"' : '' }}>Июн</option>
+                                    <option value="7"  {{ params.dateStart == '7' ? 'selected="selected"' :  'now'|date('m') == 7 ? 'selected="selected"' : '' }}>Июл</option>
+                                    <option value="8"  {{ params.dateStart == '8' ? 'selected="selected"' :  'now'|date('m') == 8 ? 'selected="selected"' : '' }}>Авг</option>
+                                    <option value="9"  {{ params.dateStart == '9' ? 'selected="selected"' :  'now'|date('m') == 9 ? 'selected="selected"' : '' }}>Сен</option>
+                                    <option value="10" {{ params.dateStart == '10' ? 'selected="selected"' : 'now'|date('m') == 10 ? 'selected="selected"' : '' }}>Окт</option>
+                                    <option value="11" {{ params.dateStart == '11' ? 'selected="selected"' : 'now'|date('m') == 11 ? 'selected="selected"' : '' }}>Ноя</option>
+                                    <option value="12" {{ params.dateStart == '12' ? 'selected="selected"' : 'now'|date('m') == 12 ? 'selected="selected"' : '' }}>Дек</option>
                                 </select>
                                 &nbsp;&nbsp;по&nbsp;&nbsp;
                                 <select class="mini" name="dateEnd">
                                     <option value="0" selected="selected">Кон</option>
-                                    <option value="1"  {{ params.dateEnd == '1' ? 'selected="selected"' : ''}}>Янв</option>
-                                    <option value="2"  {{ params.dateEnd == '2' ? 'selected="selected"' : ''}}>Фев</option>
-                                    <option value="3"  {{ params.dateEnd == '3' ? 'selected="selected"' : ''}}>Мар</option>
-                                    <option value="4"  {{ params.dateEnd == '4' ? 'selected="selected"' : ''}}>Апр</option>
-                                    <option value="5"  {{ params.dateEnd == '5' ? 'selected="selected"' : ''}}>Май</option>
-                                    <option value="6"  {{ params.dateEnd == '6' ? 'selected="selected"' : ''}}>Июн</option>
-                                    <option value="7"  {{ params.dateEnd == '7' ? 'selected="selected"' : ''}}>Июл</option>
-                                    <option value="8"  {{ params.dateEnd == '8' ? 'selected="selected"' : ''}}>Авг</option>
-                                    <option value="9"  {{ params.dateEnd == '9' ? 'selected="selected"' : ''}}>Сен</option>
-                                    <option value="10" {{ params.dateEnd == '10' ? 'selected="selected"' : ''}}>Окт</option>
-                                    <option value="11" {{ params.dateEnd == '11' ? 'selected="selected"' : ''}}>Ноя</option>
-                                    <option value="12" {{ params.dateEnd == '12' ? 'selected="selected"' : ''}}>Дек</option>
+                                    <option value="1"  {{ params.dateEnd == '1' ? 'selected="selected"' :  'now'|date('m') == 1 ? 'selected="selected"' : ''  }}>Янв</option>
+                                    <option value="2"  {{ params.dateEnd == '2' ? 'selected="selected"' :  'now'|date('m') == 2 ? 'selected="selected"' : ''  }}>Фев</option>
+                                    <option value="3"  {{ params.dateEnd == '3' ? 'selected="selected"' :  'now'|date('m') == 3 ? 'selected="selected"' : ''  }}>Мар</option>
+                                    <option value="4"  {{ params.dateEnd == '4' ? 'selected="selected"' :  'now'|date('m') == 4 ? 'selected="selected"' : ''  }}>Апр</option>
+                                    <option value="5"  {{ params.dateEnd == '5' ? 'selected="selected"' :  'now'|date('m') == 5 ? 'selected="selected"' : ''  }}>Май</option>
+                                    <option value="6"  {{ params.dateEnd == '6' ? 'selected="selected"' :  'now'|date('m') == 6 ? 'selected="selected"' : ''  }}>Июн</option>
+                                    <option value="7"  {{ params.dateEnd == '7' ? 'selected="selected"' :  'now'|date('m') == 7 ? 'selected="selected"' : ''  }}>Июл</option>
+                                    <option value="8"  {{ params.dateEnd == '8' ? 'selected="selected"' :  'now'|date('m') == 8 ? 'selected="selected"' : ''  }}>Авг</option>
+                                    <option value="9"  {{ params.dateEnd == '9' ? 'selected="selected"' :  'now'|date('m') == 9 ? 'selected="selected"' : ''  }}>Сен</option>
+                                    <option value="10" {{ params.dateEnd == '10' ? 'selected="selected"' : 'now'|date('m') == 10 ? 'selected="selected"' : '' }}>Окт</option>
+                                    <option value="11" {{ params.dateEnd == '11' ? 'selected="selected"' : 'now'|date('m') == 11 ? 'selected="selected"' : '' }}>Ноя</option>
+                                    <option value="12" {{ params.dateEnd == '12' ? 'selected="selected"' : 'now'|date('m') == 12 ? 'selected="selected"' : '' }}>Дек</option>
                                 </select>
                             </div>
                         </div>
