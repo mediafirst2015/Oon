@@ -347,11 +347,14 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Цена</td>
-                                                    <td style="text-align: right"><b class="pink">{{ b.price2 |number_format(1, '.', '') }}&nbsp;р.</b></td>
+                                                    <td style="text-align: right">
+                                                        <span style="font-size: 12px; text-decoration: line-through">{{ b.price2 |number_format(1, '.', '') }} р.</span> <br />
+                                                        <b class="pink">{{ b.price2 |number_format(1, '.', '') }}&nbsp;р.</b>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>Период</td>
-                                                    <td style="text-align: right"><b class="pink">Апрель</b></td>
+                                                    <td style="text-align: right"><b class="pink">Июнь</b></td>
                                                 </tr>
                                             </table>
                                         </td>

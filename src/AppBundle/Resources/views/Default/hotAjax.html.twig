@@ -26,7 +26,10 @@
             </tr>
             <tr>
                 <td>Цена</td>
-                <td><b class="pink">{{ b.price2 |number_format(1, '.', '') }} р.</b></td>
+                <td>
+                    <span style="font-size: 14px; text-decoration: line-through">{{ b.price2 |number_format(1, '.', '') }} р.</span> <br />
+                    <b class="pink">{{ b.price2 |number_format(1, '.', '') }} р.</b>
+                </td>
             </tr>
             <tr>
                 <td>Период</td>
