@@ -753,7 +753,8 @@ class BasketController extends Controller
         foreach ($basket as $o){
             $num ++ ;
             $url = 'https://maps.yandex.ru/?text='.$o['latitude'].','.$o['longitude'];
-
+            $o['grp'] =  ( $o['grp'] == 0 ? 'нд' : $o['grp'] );
+            $o['ots'] =  ( $o['ots'] == 0 ? 'нд' : $o['ots'] );
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('B'.$line, $num);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, $o['city']);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('D'.$line, $o['area']);

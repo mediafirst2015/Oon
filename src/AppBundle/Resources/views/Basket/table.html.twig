@@ -53,8 +53,16 @@
             <td>{{ l.format }}</td>
             <td>{{ l.type }}</td>
             <td>{{ l.light == 1 ? 'да' : 'нет' }}</td>
-            <td>{{ l.grp|number_format(1, '.', ',') | replace("/\.?0*$/",'') }}</td>
-            <td>{{ l.ots|number_format(1, '.', ',') | replace("/\.?0*$/",'') }}</td>
+            {% if l.grp == 0 %}
+                    <td>нд</td>
+            {% else %}
+                    <td>{{ l.grp|number_format(2, '.', ',') | replace("/\.?0*$/",'') }}</td>
+            {% endif %}
+            {% if l.ots == 0 %}
+                <td>нд</td>
+            {% else %}
+                <td>{{ l.ots|number_format(2, '.', ',') | replace("/\.?0*$/",'') }}</td>
+            {% endif %}
             <td>{{ (l.price |number_format(1, '.', '')) | replace("/\.?0*$/",'') }}</td>
             <td>{{ l.taxType }}</td>
             <td>{{ l.price2 |number_format(1, '.', '') | replace("/\.?0*$/",'') }}</td>

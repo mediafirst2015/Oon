@@ -31,11 +31,19 @@
     </tr>
     <tr>
         <td>GRP</td>
-        <td>{{ object.grp |number_format(2, '.', '')}}</td>
+        {% if object.grp == 0 %}
+            <td>нд</td>
+        {% else %}
+            <td>{{ object.grp|number_format(2, '.', ',') | replace("/\.?0*$/",'') }}</td>
+        {% endif %}
     </tr>
     <tr>
         <td>OTS</td>
-        <td>{{ object.ots |number_format(2, '.', '') }}</td>
+        {% if object.ots == 0 %}
+            <td>нд</td>
+        {% else %}
+            <td>{{ object.ots|number_format(2, '.', ',') | replace("/\.?0*$/",'') }}</td>
+        {% endif %}
     </tr>
 </table>
 {% if object.hot == 0 or object.hot == '0' or object.hot == null %}
