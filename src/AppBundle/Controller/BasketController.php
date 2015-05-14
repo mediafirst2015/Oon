@@ -783,8 +783,8 @@ class BasketController extends Controller
 
         // create the writer
         $time = time();
-        $path = '/tmp/'.$time.'xls';
-        $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
+        $path = $this->container->getParameter('path_tmp').$time.'.xls';
+        $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
         $writer->save($path);
 
 
