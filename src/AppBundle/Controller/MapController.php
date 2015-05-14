@@ -13,6 +13,22 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MapController extends Controller
 {
+
+    protected $month = array(
+        1 => 'Янв',
+        2 => 'Фев',
+        3 => 'Мар',
+        4 => 'Апр',
+        5 => 'Май',
+        6 => 'Июн',
+        7 => 'Июл',
+        8 => 'Авг',
+        9 => 'Сен',
+        10 => 'окт',
+        11 => 'ноя',
+        12 => 'Дек',
+    );
+
     /**
      * @Route("/get-more-info" , name="get_more_info", options={ "expose" = true })
      */
@@ -26,7 +42,8 @@ class MapController extends Controller
             }else{
                 $object = null;
             }
-            return $this->render("AppBundle:Map:getInfo.html.twig", array('object' => $object,'myBasket' => $myBasket));
+
+            return $this->render("AppBundle:Map:getInfo.html.twig", array('object' => $object,'myBasket' => $myBasket,'month' => $this->month));
         }else{
             $items = $request->request->get('items');
             $items = explode('|',$items);
@@ -36,7 +53,7 @@ class MapController extends Controller
                     $object = $this->getDoctrine()->getRepository('AppBundle:Banner')->find($id);
                     $resourses[] = array(
                         'title' => 'Объект '.$id,
-                        'body'  => $this->renderView("AppBundle:Map:getInfo.html.twig", array('object' => $object,'myBasket' => $myBasket))
+                        'body'  => $this->renderView("AppBundle:Map:getInfo.html.twig", array('object' => $object,'myBasket' => $myBasket,'month' => $this->month))
                     );
                 }
             }

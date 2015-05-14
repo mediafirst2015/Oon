@@ -40,112 +40,77 @@
 </table>
 {% if object.hot == 0 or object.hot == '0' or object.hot == null %}
     <table style='margin: 0 auto' class="month-table">
-        <tr>
-            <td>Янв</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="1" {{ myBasket[object.id~'-1-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-            <td>Фев</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="2" {{ myBasket[object.id~'-2-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-        </tr>
-        <tr>
-            <td>Мар</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="3" {{ myBasket[object.id~'-3-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-            <td>Апр</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="4" {{ myBasket[object.id~'-4-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-        </tr>
-        <tr>
-            <td>Май</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="5" {{ myBasket[object.id~'-5-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-            <td>Июн</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="6" {{ myBasket[object.id~'-6-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-        </tr>
-        <tr>
-            <td>Июл</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="7" {{ myBasket[object.id~'-7-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-            <td>Авг</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="8" {{ myBasket[object.id~'-8-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-        </tr>
-        <tr>
-            <td>Сен</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="9" {{ myBasket[object.id~'-9-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-            <td>Окт</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="10" {{ myBasket[object.id~'-10-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-        </tr>
-        <tr>
-            <td>Ноя</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="11" {{ myBasket[object.id~'-11-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-            <td>Дек</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="12" {{ myBasket[object.id~'-12-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-        </tr>
+        {% for row in ( 'now' | date('m') .. 12 ) | batch( 2 ) %}
+            <tr>
+                {#{{ dump(row) }}#}
+                {% for column in row %}
+                    <td>{{ month[column] }}</td>
+                    <td>
+                        <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="{{ column }}" {{ myBasket[object.id ~ '-' ~ column ~ '-2015'] is defined ? 'checked="checked"' }}>
+                    </td>
+                    <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
     </table>
 {% else %}
     <br />
-    <table style='margin-left:  20px' class="month-table">
-        <tr>
-            <td>
-                Апрель
-                <img src="{{ asset('bundles/app/images/fire.gif') }}" title="Горящее предложение">
-            </td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="4" {{ myBasket[object.id~'-4-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>
-                <span style="text-decoration: line-through">&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</span>
-                <span style="color: #cc0000; font-weight: bold">&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</span>
-            </td>
-        </tr>
-        <tr><td>&nbsp;</td></tr>
-        <tr>
-            <td>Май</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="5" {{ myBasket[object.id~'-5-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-        </tr>
-        <tr><td>&nbsp;</td></tr>
-        <tr>
-            <td>Июнь</td>
-            <td>
-                <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="6" {{ myBasket[object.id~'-6-2015'] is defined ? 'checked="checked"' }}>
-            </td>
-            <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
-        </tr>
+    <table style='margin: 0 auto' class="month-table">
+
+        {% for row in ( 'now' | date('m') .. ('now' | date('m') + 2) ) | batch( 2 ) %}
+            <tr>
+                {#{{ dump(row) }}#}
+                {% for column in row %}
+                    <td>{{ month[column] }}</td>
+                    <td>
+                        <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="{{ column }}" {{ myBasket[object.id ~ '-' ~ column ~ '-2015'] is defined ? 'checked="checked"' }}>
+                    </td>
+                    {% if column == 'now' | date('m') %}
+                    <td>
+                        <span style="text-decoration: line-through">&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</span>
+                        <span style="color: #cc0000; font-weight: bold">&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</span>
+                    </td>
+                    {% else %}
+                        <td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
     </table>
+
+
+
+    {#<table style='margin-left:  20px' class="month-table">#}
+        {#<tr>#}
+            {#<td>#}
+                {#Апрель#}
+                {#<img src="{{ asset('bundles/app/images/fire.gif') }}" title="Горящее предложение">#}
+            {#</td>#}
+            {#<td>#}
+                {#<input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="4" {{ myBasket[object.id~'-4-2015'] is defined ? 'checked="checked"' }}>#}
+            {#</td>#}
+            {#<td>#}
+                {#<span style="text-decoration: line-through">&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</span>#}
+                {#<span style="color: #cc0000; font-weight: bold">&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</span>#}
+            {#</td>#}
+        {#</tr>#}
+        {#<tr><td>&nbsp;</td></tr>#}
+        {#<tr>#}
+            {#<td>Май</td>#}
+            {#<td>#}
+                {#<input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="5" {{ myBasket[object.id~'-5-2015'] is defined ? 'checked="checked"' }}>#}
+            {#</td>#}
+            {#<td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>#}
+        {#</tr>#}
+        {#<tr><td>&nbsp;</td></tr>#}
+        {#<tr>#}
+            {#<td>Июнь</td>#}
+            {#<td>#}
+                {#<input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="6" {{ myBasket[object.id~'-6-2015'] is defined ? 'checked="checked"' }}>#}
+            {#</td>#}
+            {#<td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>#}
+        {#</tr>#}
+    {#</table>#}
 
 {% endif %}
 <br />
