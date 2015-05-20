@@ -33,6 +33,16 @@ class Month extends BaseEntity
     /**
      * @ORM\Column(type="integer")
      */
+    protected $sale;
+
+    /**
+     * @ORM\ManyToOne(targetEntity = "City", inversedBy = "sales")
+     */
+    protected $city;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
     protected $status = 1;
 
 
@@ -82,6 +92,54 @@ class Month extends BaseEntity
     public function setStatus($status = true)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBanner()
+    {
+        return $this->banner;
+    }
+
+    /**
+     * @param mixed $banner
+     */
+    public function setBanner($banner)
+    {
+        $this->banner = $banner;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSale()
+    {
+        return $this->sale;
+    }
+
+    /**
+     * @param mixed $sale
+     */
+    public function setSale($sale)
+    {
+        $this->sale = $sale;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
     }
 
 

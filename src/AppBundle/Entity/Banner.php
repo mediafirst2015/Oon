@@ -41,7 +41,7 @@ class Banner extends BaseEntity
     protected $months;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity = "City", inversedBy = "banners")
      */
     protected $city;
 
