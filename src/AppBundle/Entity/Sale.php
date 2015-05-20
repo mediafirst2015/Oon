@@ -40,6 +40,9 @@ class Sale extends BaseEntity
      */
     protected $percent;
 
+    public function __toString(){
+        return $this->percent;
+    }
     /**
      * @return mixed
      */

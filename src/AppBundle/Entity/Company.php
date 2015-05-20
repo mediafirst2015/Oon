@@ -92,6 +92,15 @@ class Company extends BaseEntity
         $this->sales->removeElement($sale);
     }
 
+    public function getMonthlySales(){
+        $sales = array();
+        foreach ($this->sales as $sale){
+            $key = $sale->getDate()->format('mY');
+            $key = $key*1;
+            $sales[$key] = $sale;
+        }
+        return $sales;
+    }
 
 
 }
