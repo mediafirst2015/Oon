@@ -1,55 +1,59 @@
 {% extends "AdminBundle::mini_layout.html.twig" %}
 
-<h3>Модуль скидки</h3>
-<div class="well">
-    <div class="form-group row">
-        <div class="col-sm-2">Добавление скидки</div>
-        <div class="col-sm-3">
-            <select class="form-control" name="city">
-                {% for c in cities %}
-                    <option value="{{ c.id }}">{{ c.title }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-sm-2">
-            <select class="form-control" name="month">
-                <option value="1">Январь</option>
-                <option value="2">Февраль</option>
-                <option value="3">Март</option>
-                <option value="4">Апрель</option>
-                <option value="5">Май</option>
-                <option value="6">Июнь</option>
-                <option value="7">Июль</option>
-                <option value="8">Август</option>
-                <option value="9">Сентябрь</option>
-                <option value="10">Октябрь</option>
-                <option value="11">Ноябрь</option>
-                <option value="12">Декабрь</option>
-            </select>
-        </div>
-        <div class="col-sm-2">
-            <div class="input-group">
-                <input type="text" class="form-control" >
-                <span class="input-group-addon">%</span>
-            </div>
+{% block content %}
+    <div style="margin-left: 20px">
+        <h3>Модуль скидки</h3>
+        <div class="well">
+            <div class="form-group row">
+                <div class="col-sm-2">Добавление скидки</div>
+                <div class="col-sm-3">
+                    <select class="form-control" name="city">
+                        {% for c in cities %}
+                            <option value="{{ c.id }}">{{ c.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-control" name="month">
+                        <option value="1">Январь</option>
+                        <option value="2">Февраль</option>
+                        <option value="3">Март</option>
+                        <option value="4">Апрель</option>
+                        <option value="5">Май</option>
+                        <option value="6">Июнь</option>
+                        <option value="7">Июль</option>
+                        <option value="8">Август</option>
+                        <option value="9">Сентябрь</option>
+                        <option value="10">Октябрь</option>
+                        <option value="11">Ноябрь</option>
+                        <option value="12">Декабрь</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        <input type="text" class="form-control" >
+                        <span class="input-group-addon">%</span>
+                    </div>
 
-        </div>
-        <div class="col-sm-2">
-            <button class="btn btn-primary">Добавить</button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-primary">Добавить</button>
+                </div>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>Город</th>
+                    <th>Месяц</th>
+                    <th>Скидка</th>
+                </tr>
+                {% for s in sales %}
+                    <tr>
+                        <td>{{ s.city }}</td>
+                        <td>{{ s.month | date ('F Y') }}</td>
+                        <td>{{ s.percent }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
         </div>
     </div>
-    <table class="table">
-        <tr>
-            <th>Город</th>
-            <th>Месяц</th>
-            <th>Скидка</th>
-        </tr>
-        {% for s in sales %}
-            <tr>
-                <td>{{ s.city }}</td>
-                <td>{{ s.month | date ('F Y') }}</td>
-                <td>{{ s.percent }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-</div>
+{% endblock %}

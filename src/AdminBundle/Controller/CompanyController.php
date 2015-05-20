@@ -70,8 +70,6 @@ class CompanyController extends Controller{
         $form = $this->createForm(new CompanyType($em), $item);
         $formData = $form->handleRequest($request);
 
-        $sales = $item->getSales();
-
         if ($request->getMethod() == 'POST'){
             if ($formData->isValid()){
                 $item = $formData->getData();
@@ -80,7 +78,7 @@ class CompanyController extends Controller{
                 return $this->redirect($this->generateUrl('company_list'));
             }
         }
-        return array('form' => $form->createView(), 'sales' => $sales);
+        return array('form' => $form->createView(), 'id' => $id);
     }
 
     /**
@@ -96,4 +94,26 @@ class CompanyController extends Controller{
         }
         return $this->redirect($request->headers->get('referer'));
     }
+
+
+    /**
+     * @Security("has_role('ROLE_OPERATOR')")
+     * @Route("/sale-list/{companyId}", name="sale_list")
+     * @Template()
+     */
+    public function salesAction(Request $request, $companyId){
+        $item = $this->getDoctrine()->getRepository('AppBundle:'.self::ENTITY_NAME)->findOneById($companyId);
+        $cities = $this->getDoctrine()->getRepository('AppBundle:City')->findAll();
+        $sales = $item->getSales();
+
+//        $paginator  = $this->get('knp_paginator');
+//        $pagination = $paginator->paginate(
+//            $items,
+//            $this->get('request')->query->get('company', 1),
+//            500
+//        );
+
+        return array('cities' => $cities, 'sales' => $sales);
+    }
+
 }
