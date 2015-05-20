@@ -63,6 +63,17 @@ class BasketController extends Controller
         }else{
             $banner = $em->getRepository('AppBundle:Banner')->findOneById($itemId);
             if ($banner){
+
+                if ($banner->getHot() == false){
+//                    * ((100 - monthlySales[column~'2015'].percent)/100)
+                    $company = $banner->getCompany();
+                    $price = $banner->getPrice() * ((100 - $company->getMonthlySales()[$month.$year]->getPercent())/100);
+                    $price2 = $banner->getPrice2() * ((100 - $company->getMonthlySales()[$month.$year]->getPercent())/100);
+                }else{
+                    $price = $banner->getPrice();
+                    $price2 = $banner->getPrice2();
+                }
+
                 $lists[$itemId.'-'.$month.'-'.$year] = array(
                     'id' => $banner->getId(),
                     'city' => $banner->getCity(),
@@ -71,8 +82,8 @@ class BasketController extends Controller
                     'area' => $banner->getArea(),
                     'adrs' => $banner->getAdrs(),
                     'img'  => $banner->getImg(),
-                    'price'=> $banner->getPrice(),
-                    'price2'=> $banner->getPrice2(),
+                    'price'=> $price,
+                    'price2'=> $price2,
                     'priceDeploy'=> $banner->getPriceDeploy(),
                     'tax'=> $banner->getTax(),
                     'taxType'=> $banner->getTaxType(),
