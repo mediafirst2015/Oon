@@ -1,6 +1,7 @@
 <?php
 namespace AdminBundle\Controller;
 
+use AppBundle\Entity\Sale;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -10,6 +11,7 @@ use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Company;
 use AppBundle\Form\CompanyType;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * Class CompanyController
@@ -113,7 +115,47 @@ class CompanyController extends Controller{
 //            500
 //        );
 
-        return array('cities' => $cities, 'sales' => $sales);
+        return array('cities' => $cities, 'sales' => $sales, 'id' => $companyId);
+    }
+
+
+    /**
+     * @Security("has_role('ROLE_OPERATOR')")
+     * @Route("/sale-add/{companyId}", name="sale_add")
+     * @Template()
+     */
+    public function saleAddAction(Request $request, $companyId){
+        if ($request->getMethod() == 'POST'){
+            $city = $this->getDoctrine()->getRepository('AppBundle:City')->findOneById($request->request->get('city'));
+            $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneById($companyId);
+            $date = new \DateTime();
+            $dateString = $date->format('Y').'-'.$request->request->get('month').'-01 00:00:00';
+            $date = new \DateTime($dateString);
+
+            $sale = new Sale();
+            $sale->setCity($city);
+            $sale->setDate($date);
+            $sale->setCompany($company);
+            $sale->setPercent($request->request->get('percent'));
+
+            $this->getDoctrine()->getManager()->persist($sale);
+            $this->getDoctrine()->getManager()->flush($sale);
+        }
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Security("has_role('ROLE_OPERATOR')")
+     * @Route("/sale-remove/{saleId}", name="sale_remove")
+     * @Template()
+     */
+    public function saleRemoveAction(Request $request, $saleId){
+        $sale = $this->getDoctrine()->getRepository('AppBundle:Sale')->findOneById($saleId);
+        if ($sale){
+            $this->getDoctrine()->getManager()->remove($sale);
+            $this->getDoctrine()->getManager()->flush();
+        }
+        return $this->redirect($request->headers->get('referer'));
     }
 
 }

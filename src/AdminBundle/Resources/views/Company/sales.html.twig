@@ -4,53 +4,84 @@
     <div style="margin-left: 20px">
         <h3>Модуль скидки</h3>
         <div class="well">
-            <div class="form-group row">
-                <div class="col-sm-2">Добавление скидки</div>
-                <div class="col-sm-3">
-                    <select class="form-control" name="city">
-                        {% for c in cities %}
-                            <option value="{{ c.id }}">{{ c.title }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <select class="form-control" name="month">
-                        <option value="1">Январь</option>
-                        <option value="2">Февраль</option>
-                        <option value="3">Март</option>
-                        <option value="4">Апрель</option>
-                        <option value="5">Май</option>
-                        <option value="6">Июнь</option>
-                        <option value="7">Июль</option>
-                        <option value="8">Август</option>
-                        <option value="9">Сентябрь</option>
-                        <option value="10">Октябрь</option>
-                        <option value="11">Ноябрь</option>
-                        <option value="12">Декабрь</option>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <div class="input-group">
-                        <input type="text" class="form-control" >
-                        <span class="input-group-addon">%</span>
+            <form method="POST" action="{{ path('sale_add', { 'companyId' : id }) }}">
+                <div class="form-group row">
+                    <div class="col-sm-2">Добавление скидки</div>
+                    <div class="col-sm-3">
+                        <select class="form-control" name="city">
+                            {% for c in cities %}
+                                <option value="{{ c.id }}">{{ c.title }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
+                    <div class="col-sm-2">
+                        <select class="form-control" name="month">
+                            <option value="1">Январь</option>
+                            <option value="2">Февраль</option>
+                            <option value="3">Март</option>
+                            <option value="4">Апрель</option>
+                            <option value="5">Май</option>
+                            <option value="6">Июнь</option>
+                            <option value="7">Июль</option>
+                            <option value="8">Август</option>
+                            <option value="9">Сентябрь</option>
+                            <option value="10">Октябрь</option>
+                            <option value="11">Ноябрь</option>
+                            <option value="12">Декабрь</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="percent">
+                            <span class="input-group-addon">%</span>
+                        </div>
 
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-primary">Добавить</button>
+                    </div>
                 </div>
-                <div class="col-sm-2">
-                    <button class="btn btn-primary">Добавить</button>
-                </div>
-            </div>
+            </form>
             <table class="table">
                 <tr>
                     <th>Город</th>
                     <th>Месяц</th>
                     <th>Скидка</th>
+                    <th></th>
                 </tr>
                 {% for s in sales %}
                     <tr>
                         <td>{{ s.city }}</td>
-                        <td>{{ s.month | date ('F Y') }}</td>
-                        <td>{{ s.percent }}</td>
+                        <td>
+                            {% if s.date | date ('m') == 1 %}
+                                Январь
+                            {% elseif s.date | date ('m') == 2 %}
+                                Февраль
+                            {% elseif s.date | date ('m') == 3 %}
+                                Март
+                            {% elseif s.date | date ('m') == 4 %}
+                                Апрель
+                            {% elseif s.date | date ('m') == 5 %}
+                                Май
+                            {% elseif s.date | date ('m') == 6 %}
+                                Июнь
+                            {% elseif s.date | date ('m') == 7 %}
+                                Июль
+                            {% elseif s.date | date ('m') == 8 %}
+                                Август
+                            {% elseif s.date | date ('m') == 9 %}
+                                Сентябрь
+                            {% elseif s.date | date ('m') == 10 %}
+                                Октябрь
+                            {% elseif s.date | date ('m') == 11 %}
+                                Ноябрь
+                            {% elseif s.date | date ('m') == 12 %}
+                                Декабрь
+                            {% endif %}
+                            {{ s.date | date ('Y') }}
+                        </td>
+                        <td>{{ s.percent }} % </td>
+                        <td><a href="{{ path('sale_remove', {'saleId' : s.id }) }}"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a></td>
                     </tr>
                 {% endfor %}
             </table>
