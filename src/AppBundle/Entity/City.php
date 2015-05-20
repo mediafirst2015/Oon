@@ -32,9 +32,10 @@ class City
     protected $banners;
 
     /**
-     * @ORM\OneToMany(targetEntity = "Month", mappedBy = "city")
+     * @ORM\OneToMany(targetEntity = "Sale", mappedBy = "city")
      */
     protected $sales;
+
 
     public function __construct()
     {

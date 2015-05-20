@@ -70,6 +70,8 @@ class CompanyController extends Controller{
         $form = $this->createForm(new CompanyType($em), $item);
         $formData = $form->handleRequest($request);
 
+        $sales = $item->getSales();
+
         if ($request->getMethod() == 'POST'){
             if ($formData->isValid()){
                 $item = $formData->getData();
@@ -78,7 +80,7 @@ class CompanyController extends Controller{
                 return $this->redirect($this->generateUrl('company_list'));
             }
         }
-        return array('form' => $form->createView());
+        return array('form' => $form->createView(), 'sales' => $sales);
     }
 
     /**

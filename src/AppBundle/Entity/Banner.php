@@ -41,6 +41,11 @@ class Banner extends BaseEntity
     protected $months;
 
     /**
+     * @ORM\OneToMany(targetEntity="Sale", mappedBy="banners")
+     */
+    protected $sales;
+
+    /**
      * @ORM\ManyToOne(targetEntity = "City", inversedBy = "banners")
      */
     protected $city;
@@ -158,6 +163,7 @@ class Banner extends BaseEntity
     public function __construct(){
         $this->orders = new ArrayCollection();
         $this->months = new ArrayCollection();
+        $this->sales = new ArrayCollection();
     }
 
     public function getId(){

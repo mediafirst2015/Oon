@@ -17,6 +17,11 @@ class Company extends BaseEntity
 {
 
     /**
+     * @ORM\OneToMany(targetEntity = "Sale", mappedBy = "company")
+     */
+    protected $sales;
+
+    /**
      * @ORM\OneToMany(targetEntity="Banner", mappedBy="company")
      */
     protected $banners;
@@ -63,7 +68,29 @@ class Company extends BaseEntity
         $this->title = $title;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSales()
+    {
+        return $this->sales;
+    }
 
+    /**
+     * @param mixed $sales
+     */
+    public function setSales($sales)
+    {
+        $this->sales = $sales;
+    }
+
+    public function addSale($sale){
+        $this->sales[] = $sale;
+    }
+
+    public function removeSale($sale){
+        $this->sales->removeElement($sale);
+    }
 
 
 
