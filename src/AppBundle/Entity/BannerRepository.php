@@ -11,6 +11,7 @@ class BannerRepository extends EntityRepository
         $qb = $this->_em->createQueryBuilder();
         $qb->select('b')
             ->from('AppBundle:Banner','b')
+            ->leftJoin('b.city', 'c')
             ->where('b.enabled = 1');
         if ($id != null){
             $qb->andWhere("b.id = '$id'");
@@ -20,7 +21,7 @@ class BannerRepository extends EntityRepository
             }
 
             if ($city != null){
-                $qb->andWhere("b.city = '$city'");
+                $qb->andWhere("c.title = '$city'");
             }
 
             $format = null;
@@ -81,6 +82,7 @@ class BannerRepository extends EntityRepository
         $qb = $this->_em->createQueryBuilder();
         $qb->select('b')
             ->from('AppBundle:Banner','b')
+            ->leftJoin('b.city', 'c')
             ->where('b.enabled = 1')
             ->andWhere('b.hot = 1');
 
@@ -89,7 +91,7 @@ class BannerRepository extends EntityRepository
         }
 
         if ($params['city'] != null){
-            $qb->andWhere("b.city = '".$params['city']."'");
+            $qb->andWhere("c.title = '".$params['city']."'");
         }
 
         $format = null;
