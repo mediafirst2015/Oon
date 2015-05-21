@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 class RosveroParserController extends Controller
 {
 
-//    public $filePath = '/var/www/navigator/current/web/RV.xls';
-    public $filePath = '/var/www/map/web/RV.xls';
+    public $filePath = '/var/www/navigator/current/web/RV.xls';
+//    public $filePath = '/var/www/map/web/RV.xls';
 
     public function getLetter($num)
     {
