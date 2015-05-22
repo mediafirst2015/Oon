@@ -81,7 +81,7 @@ class BasketController extends Controller
 
                 $lists[$itemId.'-'.$month.'-'.$year] = array(
                     'id' => $banner->getId(),
-                    'city' => $banner->getCity(),
+                    'city' => $banner->getCity()->getTitle(),
                     'gid' => $banner->getGid(),
                     'hot' => $banner->getHot(),
                     'area' => $banner->getArea(),
