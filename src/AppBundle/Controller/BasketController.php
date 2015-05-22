@@ -67,8 +67,13 @@ class BasketController extends Controller
                 if ($banner->getHot() == false){
 //                    * ((100 - monthlySales[column~'2015'].percent)/100)
                     $company = $banner->getCompany();
-                    $price = $banner->getPrice() * ((100 - $company->getMonthlySales()[$month.$year]->getPercent())/100);
-                    $price2 = $banner->getPrice2() * ((100 - $company->getMonthlySales()[$month.$year]->getPercent())/100);
+                    if (!isset($company->getMonthlySales()[$month.$year])){
+                        $percent = 0;
+                    }else{
+                        $percent = $company->getMonthlySales()[$month.$year]->getPercent();
+                    }
+                    $price = $banner->getPrice() * ((100 - $percent)/100);
+                    $price2 = $banner->getPrice2() * ((100 - $percent)/100);
                 }else{
                     $price = $banner->getPrice();
                     $price2 = $banner->getPrice2();
