@@ -1,6 +1,7 @@
 <?php
-
 namespace AppBundle\Controller;
+
+ini_set('memory_limit', '-1');
 
 use AppBundle\Entity\Banner;
 use AppBundle\Entity\Company;
