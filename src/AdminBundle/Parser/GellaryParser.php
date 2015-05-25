@@ -1,65 +1,24 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AdminBundle\Parser;
 
 use AppBundle\Entity\Banner;
-use AppBundle\Entity\City;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\User;
 use AppBundle\Parser\NokogiriParser;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 
-class GellaryParserController extends Controller
+class GellaryParser extends MainParser
 {
 
-    public $filePath = '/var/www/navigator/current/web/';
+//    public $filePath = '/var/www/navigator/current/web/';
 //    public $filePath = '/var/www/map/web/';
-
-    public function getLetter($num){
-        switch ($num){
-            case 1: return 'A';
-            case 2: return 'B';
-            case 3: return 'C';
-            case 4: return 'D';
-            case 5: return 'E';
-            case 6: return 'F';
-            case 7: return 'G';
-            case 8: return 'H';
-            case 9: return 'I';
-            case 10: return 'J';
-            case 11: return 'K';
-            case 12: return 'L';
-            case 13: return 'M';
-            case 14: return 'N';
-            case 15: return 'O';
-            case 16: return 'P';
-            case 17: return 'Q';
-            case 18: return 'R';
-            case 19: return 'S';
-            case 20: return 'T';
-            case 21: return 'U';
-            case 22: return 'V';
-            case 23: return 'W';
-            case 24: return 'X';
-            case 25: return 'Y';
-            case 26: return 'Z';
-            default: return false;
-        }
-    }
-
 
     /**
      * @Route("/parserGellary/1")
      */
     public function parserGellary1Action(){
-        $this->filePath = $this->filePath.'G1.XLSX';
-        $em = $this->getDoctrine()->getManager();
+//        $this->filePath = $this->filePath.'G1.XLSX';
+        $em = $this->em->getDoctrine()->getManager();
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Gallery');
         if ($company == null){
             $company = new Company();
@@ -83,17 +42,7 @@ class GellaryParserController extends Controller
             $banner->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setSide($this->getSide($phpExcelObject->setActiveSheetIndex(0)->getCell('D'.$num)->getValue()));
-
-            $city = $this->em->getRepository('AppBundle:City')->findOneByTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue());
-            if ($city == null){
-                $city = new City();
-                $city->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue());
-                $em->persist($city);
-                $em->flush($city);
-                $em->refresh($city);
-            }
-
-            $banner->setCity($city);
+            $banner->setCity( ($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue() == 'Москва' ? 'Москва' : 'Московская область') );
 
             $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('N'.$num)->getValue()));
@@ -116,15 +65,15 @@ class GellaryParserController extends Controller
             $num ++;
         }
 
-        return new Response('открылось');
+        return true;
     }
 
     /**
      * @Route("/parserGellary/2")
      */
     public function parserGellary2Action(){
-        $this->filePath = $this->filePath.'G2.XLSX';
-        $em = $this->getDoctrine()->getManager();
+//        $this->filePath = $this->filePath.'G2.XLSX';
+        $em = $this->em->getDoctrine()->getManager();
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Gallery');
         if ($company == null){
             $company = new Company();
@@ -148,18 +97,7 @@ class GellaryParserController extends Controller
             $banner->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setSide($this->getSide($phpExcelObject->setActiveSheetIndex(0)->getCell('D'.$num)->getValue()));
-
-
-            $city = $this->em->getRepository('AppBundle:City')->findOneByTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue());
-            if ($city == null){
-                $city = new City();
-                $city->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue());
-                $em->persist($city);
-                $em->flush($city);
-                $em->refresh($city);
-            }
-
-            $banner->setCity($city);
+            $banner->setCity( ($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue() == 'Москва' ? 'Москва' : 'Московская область') );
 
             $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('K'.$num)->getValue()));
@@ -196,31 +134,8 @@ class GellaryParserController extends Controller
             }
         }
 
-        return new Response('открылось');
+        return true;
     }
-
-
-//    /**
-//     * @Route("/parserVera/images")
-//     */
-//    public function parseImageAction(){
-//        $em = $this->getDoctrine()->getManager();
-//        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
-//        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->findByCompany($company);
-//
-//        foreach ( $banners as $b ){
-//            $link = $b->getLink();
-//            $image = str_replace('http://www.olymp.ru/index.php?op=sidedb&keyid=','',$link);
-//            preg_match ('%\d+%', $image, $matches);
-//            $image = $matches[0];
-//            $image = 'http://olymp.ru/pic/standsKID/'.$image.'.jpg';
-//            $b->setImg($image);
-//            $em->flush($b);
-//        }
-//
-//        return new Response('Все');
-//    }
-
 
     public function getArea($ares){
         switch($ares){
@@ -267,8 +182,8 @@ class GellaryParserController extends Controller
         $html = $this->get_url($link);
         $parser  = new NokogiriParser($html);
         $parser = $parser->get('img')->toArray();
-        $txt = '<img src="http://www.gallerymedia.com/Services/'.$parser[2]['src'].'"/>';
-        return new Response($txt);
+        $txt = $parser[2]['src'];
+        return $txt;
     }
 
     public function get_url($url)

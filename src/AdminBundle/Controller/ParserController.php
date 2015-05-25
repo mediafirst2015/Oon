@@ -24,9 +24,14 @@ class ParserController extends Controller{
      * @Template()
      */
     public function indexAction(Request $request){
-//        if ($request->getMethod() == 'POST'){
-//            if ($request->files)
-//        }
+        if ($request->getMethod() == 'POST'){
+            $file = $request->files->get('xml');
+            if ($file){
+                $type = $request->request->get('type');
+                $percent = $request->request->get('percent');
+                $hot = $request->request->get('hot');
+            }
+        }
         return array();
     }
 }

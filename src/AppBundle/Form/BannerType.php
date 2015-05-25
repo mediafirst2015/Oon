@@ -57,15 +57,15 @@ class BannerType extends AbstractType
             ->add('longitude', null, array('label' => 'Долгота GPS'))
             ->add('latitude', null, array('label' => 'Широта GPS'))
             ->add('body', null, array('label' => 'Описание баннера'))
-            ->add('enabled','choice',  array(
-                'empty_value' => false,
-                'choices' => array(
-                    '1' => 'Активен',
-                    '0' => 'Заблокирован',
-                ),
-                'label' => 'Активность',
-                'required'  => false,
-            ))
+//            ->add('enabled','choice',  array(
+//                'empty_value' => false,
+//                'choices' => array(
+//                    '1' => 'Активен',
+//                    '0' => 'Заблокирован',
+//                ),
+//                'label' => 'Активность',
+//                'required'  => false,
+//            ))
             ->add('hot','choice',  array(
                 'empty_value' => false,
                 'choices' => array(
