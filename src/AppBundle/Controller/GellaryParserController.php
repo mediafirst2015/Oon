@@ -262,8 +262,8 @@ class GellaryParserController extends Controller
         $html = $this->get_url($link);
         $parser  = new NokogiriParser($html);
         $parser = $parser->get('img')->toArray();
-        $txt = '<img src="http://www.gallerymedia.com/Services/'.$parser[2]['src'].'"/>';
-        return new Response($txt);
+        $txt = 'http://www.gallerymedia.com/Services/'.$parser[2]['src'];
+        return $txt;
     }
 
     public function get_url($url)
