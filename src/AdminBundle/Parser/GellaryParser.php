@@ -1,7 +1,7 @@
 <?php
 
 namespace AdminBundle\Parser;
-
+ini_set('memory_limit', '-1');
 use AppBundle\Entity\Banner;
 use AppBundle\Entity\City;
 use AppBundle\Entity\Company;
@@ -229,7 +229,6 @@ class GellaryParser extends MainParser
             'Accept-Language: ru,en-us;q=0.7,en;q=0.3',
             'Accept-Charset: windows-1251, utf-8;q=0.7,*;q=0.7'
         );
-//    'Accept-Encoding: deflate',  убрал, т.к. без сжатия проще парсить потом
 
         curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
         curl_setopt($ch, CURLOPT_REFERER, "www.gallerymedia.com");

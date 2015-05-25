@@ -1,7 +1,7 @@
 <?php
 
 namespace AppBundle\Controller;
-
+ini_set('memory_limit', '-1');
 use AppBundle\Entity\Banner;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\User;
@@ -238,8 +238,25 @@ class GellaryParserController extends Controller
 
 
     /**
-     * @Route("/parserGellary/testImg")
+     * @Route("/parserGellary/Image")
      */
+    public function getImageAction(){
+        $em  = $this->getDoctrine()->getManager();
+        $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Gallery');
+        $banners = $company->getBanners();
+        $i = 0;
+        foreach ($banners as $b) {
+            $b->setImg($this->getImage($b->getLink()));
+            $em->flush($b);
+            $i ++;
+            if ($i % 10 == 0){
+                sleep(rand(0,4));
+            }
+        }
+        return new Response('Все');
+    }
+
+
     public function getImage($link = 'http://www.gallerymedia.com/Services/FaceInfo.aspx?FaceId=49429FD59AE252CF6DD9--54654A4-GM'){
 //        $html = file_get_contents($link);
         $html = $this->get_url($link);
