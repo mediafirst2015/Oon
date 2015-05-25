@@ -31,7 +31,7 @@ class VeraParser extends MainParser
 
         $city = $em->getRepository('AppBundle:City')->findOneById(1);
         while(true){
-            if ($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue() == ''){
+            if ($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue() == ''){
                 break;
             }
             $banner = new Banner();
@@ -54,6 +54,9 @@ class VeraParser extends MainParser
             $banner->setImg(null);
             $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getHyperlink()->getUrl());
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(0)->getCell('Q'.$num)->getValue());
+            if (!isset($pos[1]) || !isset($pos[0]) ){
+                echo $phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue().'<br />';
+            }
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
             if ($hot){
