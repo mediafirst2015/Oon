@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Banner;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\User;
+use AppBundle\Parser\NokogiriParser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -177,26 +178,26 @@ class GellaryParserController extends Controller
     }
 
 
-    /**
-     * @Route("/parserVera/images")
-     */
-    public function parseImageAction(){
-        $em = $this->getDoctrine()->getManager();
-        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
-        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->findByCompany($company);
-
-        foreach ( $banners as $b ){
-            $link = $b->getLink();
-            $image = str_replace('http://www.olymp.ru/index.php?op=sidedb&keyid=','',$link);
-            preg_match ('%\d+%', $image, $matches);
-            $image = $matches[0];
-            $image = 'http://olymp.ru/pic/standsKID/'.$image.'.jpg';
-            $b->setImg($image);
-            $em->flush($b);
-        }
-
-        return new Response('Все');
-    }
+//    /**
+//     * @Route("/parserVera/images")
+//     */
+//    public function parseImageAction(){
+//        $em = $this->getDoctrine()->getManager();
+//        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
+//        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->findByCompany($company);
+//
+//        foreach ( $banners as $b ){
+//            $link = $b->getLink();
+//            $image = str_replace('http://www.olymp.ru/index.php?op=sidedb&keyid=','',$link);
+//            preg_match ('%\d+%', $image, $matches);
+//            $image = $matches[0];
+//            $image = 'http://olymp.ru/pic/standsKID/'.$image.'.jpg';
+//            $b->setImg($image);
+//            $em->flush($b);
+//        }
+//
+//        return new Response('Все');
+//    }
 
 
     public function getArea($ares){
@@ -233,5 +234,39 @@ class GellaryParserController extends Controller
         $link = str_replace('д=','',$link);
         $link = explode(',',$link);
         return $link;
+    }
+
+
+    /**
+     * @Route("/parserGellary/testImg")
+     */
+    public function getImage($link = 'http://www.gallerymedia.com/Services/FaceInfo.aspx?FaceId=49429FD59AE252CF6DD9--54654A4-GM'){
+//        $html = file_get_contents($link);
+        $html = $this->get_url($link);
+        $parser  = new NokogiriParser($html);
+        $parser = $parser->get('img')->toArray();
+        $txt = '<img src="http://www.gallerymedia.com/Services/'.$parser[2]['src'].'"/>';
+        return new Response($txt);
+    }
+
+    public function get_url($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.0.17) Gecko/2009122116 Firefox/3.0.17");
+        $headers = array
+        (
+            'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*;q=0.8',
+            'Accept-Language: ru,en-us;q=0.7,en;q=0.3',
+            'Accept-Charset: windows-1251, utf-8;q=0.7,*;q=0.7'
+        );
+//    'Accept-Encoding: deflate',  убрал, т.к. без сжатия проще парсить потом
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
+        curl_setopt($ch, CURLOPT_REFERER, "www.gallerymedia.com");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($ch); // выполняем запрос curl
+        curl_close($ch);
+        return $result;
     }
 }
