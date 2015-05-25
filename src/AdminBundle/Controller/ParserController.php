@@ -75,14 +75,29 @@ class ParserController extends Controller{
                 }
 
                 if ($type == 1){
+                    $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Гема');
+                    if ($company) {
+                        $em = $this->getDoctrine()->getManager();
+                        $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
+                    }
                     $parser = new GemaParser($em,$container,$path);
                     $parser->parserGema1Action($hot);
                 }
                 if ($type == 3){
+                    $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Расверо');
+                    if ($company) {
+                        $em = $this->getDoctrine()->getManager();
+                        $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
+                    }
                     $parser = new RosveroParser($em,$container,$path);
                     $parser->parserRasvero1Action($hot);
                 }
                 if ($type == 2){
+                    $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
+                    if ($company) {
+                        $em = $this->getDoctrine()->getManager();
+                        $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
+                    }
                     $parser = new VeraParser($em,$container,$path);
                     $parser->parserVera1Action($hot);
                     $parser->parserVera2Action($hot);
