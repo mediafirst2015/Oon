@@ -2,6 +2,7 @@
 namespace AdminBundle\Controller;
 
 use AdminBundle\Parser\GellaryParser;
+use AdminBundle\Parser\GemaParser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -47,6 +48,11 @@ class ParserController extends Controller{
                     $parser = new GellaryParser($em,$container,$path);
                     $parser->parserGellary2Action($hot);
                 }
+                if ($type == 1){
+                    $parser = new GemaParser($em,$container,$path);
+                    $parser->parserGema1Action($hot);
+                }
+
 
 
             }
