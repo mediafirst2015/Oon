@@ -1,9 +1,12 @@
 <?php
 namespace AdminBundle\Controller;
 
+ini_set('memory_limit', '-1');
+
 use AdminBundle\Parser\GellaryParser;
 use AdminBundle\Parser\GemaParser;
 use AdminBundle\Parser\RosveroParser;
+use AdminBundle\Parser\VeraParser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -57,7 +60,17 @@ class ParserController extends Controller{
                     $parser = new RosveroParser($em,$container,$path);
                     $parser->parserRasvero1Action($hot);
                 }
+                if ($type == 2){
+                    $parser = new VeraParser($em,$container,$path);
+                    $parser->parserVera1Action($hot);
+                    $parser->parserVera2Action($hot);
+                    $parser->parserVera3Action($hot);
+                    $parser->parserVera4Action($hot);
+                    $parser->parserVera5Action($hot);
+                    $parser->parserVera6Action($hot);
+                    $parser->parseImageAction();
 
+                }
 
 
 

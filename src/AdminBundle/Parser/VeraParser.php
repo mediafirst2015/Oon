@@ -1,61 +1,20 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AdminBundle\Parser;
 
+use AdminBundle\Parser\MainParser;
 use AppBundle\Entity\Banner;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 
-class VeraParserController extends Controller
+class VeraParser extends MainParser
 {
-
-    public $filePath = '/var/www/navigator/current/web/Vera.xls';
-//    public $filePath = '/var/www/map/web/Vera.xls';
-    public function getLetter($num){
-        switch ($num){
-            case 1: return 'A';
-            case 2: return 'B';
-            case 3: return 'C';
-            case 4: return 'D';
-            case 5: return 'E';
-            case 6: return 'F';
-            case 7: return 'G';
-            case 8: return 'H';
-            case 9: return 'I';
-            case 10: return 'J';
-            case 11: return 'K';
-            case 12: return 'L';
-            case 13: return 'M';
-            case 14: return 'N';
-            case 15: return 'O';
-            case 16: return 'P';
-            case 17: return 'Q';
-            case 18: return 'R';
-            case 19: return 'S';
-            case 20: return 'T';
-            case 21: return 'U';
-            case 22: return 'V';
-            case 23: return 'W';
-            case 24: return 'X';
-            case 25: return 'Y';
-            case 26: return 'Z';
-            default: return false;
-        }
-    }
-
 
     /**
      * @Route("/parserVera/1")
      */
-    public function parserVera1Action(){
-        $em = $this->getDoctrine()->getManager();
+    public function parserVera1Action($hot = false){
+        $em = $this->em;
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
         if ($company == null){
             $company = new Company();
@@ -65,10 +24,10 @@ class VeraParserController extends Controller
             $em->refresh($company);
         }
 
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
+        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($this->filePath);
         $num = 11;
 
-
+        $city = $em->getRepository('AppBundle:City')->findOneById(1);
         while(true){
             if ($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue() == ''){
                 break;
@@ -79,7 +38,7 @@ class VeraParserController extends Controller
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue());
             $banner->setSide($phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue());
-            $banner->setCity('Москва');
+            $banner->setCity($city);
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
             $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getValue()));
@@ -92,25 +51,28 @@ class VeraParserController extends Controller
             $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('P'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('P'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
             $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getHyperlink()->getUrl());
-            echo $phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getHyperlink()->getUrl();
-//            exit;
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(0)->getCell('Q'.$num)->getValue());
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
+            if ($hot){
+                $banner->setHot(true);
+            }else{
+                $banner->setHot(false);
+            }
             $em->persist($banner);
             $em->flush($banner);
             $num ++;
         }
 
-        return new Response('открылось');
+        return true;
     }
 
 
     /**
      * @Route("/parserVera/2")
      */
-    public function parserVera2Action(){
-        $em = $this->getDoctrine()->getManager();
+    public function parserVera2Action($hot = false){
+        $em = $this->em;
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
         if ($company == null){
         $company = new Company();
@@ -120,9 +82,9 @@ class VeraParserController extends Controller
         $em->refresh($company);
         }
 
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
+        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($this->filePath);
         $num = 11;
-
+        $city = $em->getRepository('AppBundle:City')->findOneById(1);
 
         while(true){
             if ($phpExcelObject->setActiveSheetIndex(1)->getCell('A'.$num)->getValue() == ''){
@@ -134,7 +96,7 @@ class VeraParserController extends Controller
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(1)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(1)->getCell('B'.$num)->getValue());
             $banner->setSide($phpExcelObject->setActiveSheetIndex(1)->getCell('C'.$num)->getValue());
-            $banner->setCity('Москва');
+            $banner->setCity($city);
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(1)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(1)->getCell('F'.$num)->getValue());
             $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(1)->getCell('G'.$num)->getValue()));
@@ -150,20 +112,25 @@ class VeraParserController extends Controller
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(1)->getCell('Q'.$num)->getValue());
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
+            if ($hot){
+                $banner->setHot(true);
+            }else{
+                $banner->setHot(false);
+            }
             $em->persist($banner);
             $em->flush($banner);
             $num ++;
         }
 
-        return new Response('открылось');
+        return true;
     }
 
 
     /**
      * @Route("/parserVera/3")
      */
-    public function parserVera3Action(){
-        $em = $this->getDoctrine()->getManager();
+    public function parserVera3Action($hot = false){
+        $em = $this->em;
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
         if ($company == null){
             $company = new Company();
@@ -173,9 +140,9 @@ class VeraParserController extends Controller
             $em->refresh($company);
         }
 
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
+        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($this->filePath);
         $num = 11;
-
+        $city = $em->getRepository('AppBundle:City')->findOneById(1);
 
         while(true){
             if ($phpExcelObject->setActiveSheetIndex(2)->getCell('A'.$num)->getValue() == ''){
@@ -187,7 +154,7 @@ class VeraParserController extends Controller
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(2)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(2)->getCell('B'.$num)->getValue());
             $banner->setSide($phpExcelObject->setActiveSheetIndex(2)->getCell('C'.$num)->getValue());
-            $banner->setCity('Москва');
+            $banner->setCity($city);
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(2)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(2)->getCell('F'.$num)->getValue());
             $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(2)->getCell('G'.$num)->getValue()));
@@ -203,19 +170,24 @@ class VeraParserController extends Controller
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(2)->getCell('R'.$num)->getValue());
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
+            if ($hot){
+                $banner->setHot(true);
+            }else{
+                $banner->setHot(false);
+            }
             $em->persist($banner);
             $em->flush($banner);
             $num ++;
         }
 
-        return new Response('открылось');
+        return true;
     }
 
     /**
      * @Route("/parserVera/4")
      */
-    public function parserVera4Action(){
-        $em = $this->getDoctrine()->getManager();
+    public function parserVera4Action($hot = false){
+        $em = $this->em;
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
         if ($company == null){
             $company = new Company();
@@ -226,9 +198,9 @@ class VeraParserController extends Controller
         }
 
 
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
+        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($this->filePath);
         $num = 11;
-
+        $city = $em->getRepository('AppBundle:City')->findOneById(1);
 
         while(true){
             if ($phpExcelObject->setActiveSheetIndex(3)->getCell('A'.$num)->getValue() == ''){
@@ -240,7 +212,7 @@ class VeraParserController extends Controller
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(3)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(3)->getCell('B'.$num)->getValue());
             $banner->setSide($phpExcelObject->setActiveSheetIndex(3)->getCell('C'.$num)->getValue());
-            $banner->setCity('Москва');
+            $banner->setCity($city);
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(3)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(3)->getCell('F'.$num)->getValue());
             $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(3)->getCell('G'.$num)->getValue()));
@@ -256,20 +228,25 @@ class VeraParserController extends Controller
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(3)->getCell('R'.$num)->getValue());
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
+            if ($hot){
+                $banner->setHot(true);
+            }else{
+                $banner->setHot(false);
+            }
             $em->persist($banner);
             $em->flush($banner);
             $num ++;
         }
 
-        return new Response('открылось');
+        return true;
     }
 
 
     /**
      * @Route("/parserVera/5")
      */
-    public function parserVera5Action(){
-        $em = $this->getDoctrine()->getManager();
+    public function parserVera5Action($hot = false){
+        $em = $this->em;
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
         if ($company == null){
             $company = new Company();
@@ -280,9 +257,9 @@ class VeraParserController extends Controller
         }
 
 
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
+        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($this->filePath);
         $num = 11;
-
+        $city = $em->getRepository('AppBundle:City')->findOneById(1);
 
         while(true){
             if ($phpExcelObject->setActiveSheetIndex(4)->getCell('A'.$num)->getValue() == ''){
@@ -294,7 +271,7 @@ class VeraParserController extends Controller
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(4)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(4)->getCell('B'.$num)->getValue());
             $banner->setSide($phpExcelObject->setActiveSheetIndex(4)->getCell('C'.$num)->getValue());
-            $banner->setCity('Москва');
+            $banner->setCity($city);
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(4)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(4)->getCell('F'.$num)->getValue());
             $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(4)->getCell('G'.$num)->getValue()));
@@ -310,19 +287,24 @@ class VeraParserController extends Controller
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(4)->getCell('R'.$num)->getValue());
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
+            if ($hot){
+                $banner->setHot(true);
+            }else{
+                $banner->setHot(false);
+            }
             $em->persist($banner);
             $em->flush($banner);
             $num ++;
         }
 
-        return new Response('открылось');
+        return true;
     }
 
     /**
      * @Route("/parserVera/6")
      */
-    public function parserVera6Action(){
-        $em = $this->getDoctrine()->getManager();
+    public function parserVera6Action($hot = false){
+        $em = $this->em;
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
         if ($company == null){
             $company = new Company();
@@ -333,9 +315,9 @@ class VeraParserController extends Controller
         }
 
 
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
+        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($this->filePath);
         $num = 11;
-
+        $city = $em->getRepository('AppBundle:City')->findOneById(2);
 
         while(true){
             if ($phpExcelObject->setActiveSheetIndex(4)->getCell('A'.$num)->getValue() == ''){
@@ -347,7 +329,7 @@ class VeraParserController extends Controller
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(4)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(4)->getCell('B'.$num)->getValue());
             $banner->setSide($phpExcelObject->setActiveSheetIndex(4)->getCell('C'.$num)->getValue());
-            $banner->setCity('Московская область');
+            $banner->setCity($city);
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(4)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(4)->getCell('F'.$num)->getValue());
             $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(4)->getCell('G'.$num)->getValue()));
@@ -363,21 +345,26 @@ class VeraParserController extends Controller
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(4)->getCell('R'.$num)->getValue());
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
+            if ($hot){
+                $banner->setHot(true);
+            }else{
+                $banner->setHot(false);
+            }
             $em->persist($banner);
             $em->flush($banner);
             $num ++;
         }
 
-        return new Response('открылось');
+        return true;
     }
 
     /**
      * @Route("/parserVera/images")
      */
     public function parseImageAction(){
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->em;
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
-        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->findByCompany($company);
+        $banners = $em->getRepository('AppBundle:Banner')->findByCompany($company);
 
         foreach ( $banners as $b ){
             $link = $b->getLink();
@@ -389,7 +376,7 @@ class VeraParserController extends Controller
             $em->flush($b);
         }
 
-        return new Response('Все');
+        return true;
     }
 
 
