@@ -1,92 +1,26 @@
 <?php
-namespace AppBundle\Controller;
+namespace AdminBundle\Parser;
 
 ini_set('memory_limit', '-1');
 
 use AppBundle\Entity\Banner;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 
-class RosveroParserController extends Controller
+class RosveroParser extends MainParser
 {
 
 //    public $filePath = '/var/www/navigator/current/web/RV.xls';
-    public $filePath = '/var/www/map/web/RV.xls';
+//    public $filePath = '/var/www/map/web/RV.xls';
 
-    public function getLetter($num)
-    {
-        switch ($num) {
-            case 1:
-                return 'A';
-            case 2:
-                return 'B';
-            case 3:
-                return 'C';
-            case 4:
-                return 'D';
-            case 5:
-                return 'E';
-            case 6:
-                return 'F';
-            case 7:
-                return 'G';
-            case 8:
-                return 'H';
-            case 9:
-                return 'I';
-            case 10:
-                return 'J';
-            case 11:
-                return 'K';
-            case 12:
-                return 'L';
-            case 13:
-                return 'M';
-            case 14:
-                return 'N';
-            case 15:
-                return 'O';
-            case 16:
-                return 'P';
-            case 17:
-                return 'Q';
-            case 18:
-                return 'R';
-            case 19:
-                return 'S';
-            case 20:
-                return 'T';
-            case 21:
-                return 'U';
-            case 22:
-                return 'V';
-            case 23:
-                return 'W';
-            case 24:
-                return 'X';
-            case 25:
-                return 'Y';
-            case 26:
-                return 'Z';
-            default:
-                return false;
-        }
-    }
 
 
     /**
      * @Route("/parserRasvero/1")
      */
-    public function parserVera1Action()
+    public function parserRasvero1Action()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->em;
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Расверо');
         if ($company == null) {
             $company = new Company();
@@ -96,9 +30,9 @@ class RosveroParserController extends Controller
             $em->refresh($company);
         }
 
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
+        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($this->filePath);
         $num = 7;
-        $city = $this->getDoctrine()->getRepository('AppBundle:City')->findOneById(1);
+        $city = $em->getRepository('AppBundle:City')->findOneById(1);
 
         while (true) {
             if ($phpExcelObject->setActiveSheetIndex(0)->getCell('B' . $num)->getValue() == '') {
@@ -161,7 +95,7 @@ class RosveroParserController extends Controller
             }
         }
 
-        return new Response('открылось');
+        return true;
     }
 
     public function getSide($side){
