@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Banner;
-use AppBundle\Entity\City;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\User;
 use AppBundle\Parser\NokogiriParser;
@@ -83,17 +82,7 @@ class GellaryParserController extends Controller
             $banner->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setSide($this->getSide($phpExcelObject->setActiveSheetIndex(0)->getCell('D'.$num)->getValue()));
-
-            $city = $this->em->getRepository('AppBundle:City')->findOneByTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue());
-            if ($city == null){
-                $city = new City();
-                $city->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue());
-                $em->persist($city);
-                $em->flush($city);
-                $em->refresh($city);
-            }
-
-            $banner->setCity($city);
+            $banner->setCity( ($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue() == 'Москва' ? 'Москва' : 'Московская область') );
 
             $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('N'.$num)->getValue()));
@@ -148,18 +137,7 @@ class GellaryParserController extends Controller
             $banner->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setSide($this->getSide($phpExcelObject->setActiveSheetIndex(0)->getCell('D'.$num)->getValue()));
-
-
-            $city = $this->em->getRepository('AppBundle:City')->findOneByTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue());
-            if ($city == null){
-                $city = new City();
-                $city->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue());
-                $em->persist($city);
-                $em->flush($city);
-                $em->refresh($city);
-            }
-
-            $banner->setCity($city);
+            $banner->setCity( ($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue() == 'Москва' ? 'Москва' : 'Московская область') );
 
             $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('K'.$num)->getValue()));

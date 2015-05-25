@@ -1,6 +1,7 @@
 <?php
 namespace AdminBundle\Controller;
 
+use AdminBundle\Parser\GellaryParser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -30,6 +31,24 @@ class ParserController extends Controller{
                 $type = $request->request->get('type');
                 $percent = $request->request->get('percent');
                 $hot = $request->request->get('hot');
+                if ($hot == 'on'){
+                    $hot = true;
+                }else{
+                    $hot = false;
+                }
+                $em = $this->getDoctrine()->getManager();
+                $path = $file->getPathName();
+                $container = $this->container;
+                if ($type == 4){
+                    $parser = new GellaryParser($em,$container,$path);
+                    $parser->parserGellary1Action($hot);
+                }
+                if ($type == 5){
+                    $parser = new GellaryParser($em,$container,$path);
+                    $parser->parserGellary2Action($hot);
+                }
+
+
             }
         }
         return array();

@@ -8,9 +8,12 @@ class MainParser{
 
     protected $filePath;
 
-    public function __construct($em, $path){
+    protected $container;
+
+    public function __construct(&$em, &$container,$path){
         $this->em = $em;
-        $this->$filePath = $path;
+        $this->filePath = $path;
+        $this->container = $container;
     }
 
     public function getLetter($num){

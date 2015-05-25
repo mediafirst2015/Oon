@@ -3,6 +3,7 @@
 namespace AdminBundle\Parser;
 
 use AppBundle\Entity\Banner;
+use AppBundle\Entity\City;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\User;
 use AppBundle\Parser\NokogiriParser;
@@ -16,9 +17,9 @@ class GellaryParser extends MainParser
     /**
      * @Route("/parserGellary/1")
      */
-    public function parserGellary1Action(){
+    public function parserGellary1Action($hot = false){
 //        $this->filePath = $this->filePath.'G1.XLSX';
-        $em = $this->em->getDoctrine()->getManager();
+        $em = $this->em;
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Gallery');
         if ($company == null){
             $company = new Company();
@@ -28,8 +29,8 @@ class GellaryParser extends MainParser
             $em->refresh($company);
         }
 
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
-        $num = 11;
+        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($this->filePath);
+        $num = 2;
 
 
         while(true){
@@ -42,7 +43,16 @@ class GellaryParser extends MainParser
             $banner->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setSide($this->getSide($phpExcelObject->setActiveSheetIndex(0)->getCell('D'.$num)->getValue()));
-            $banner->setCity( ($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue() == 'Москва' ? 'Москва' : 'Московская область') );
+            $city = $this->em->getRepository('AppBundle:City')->findOneByTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue());
+            if ($city == null){
+                $city = new City();
+                $city->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue());
+                $em->persist($city);
+                $em->flush($city);
+                $em->refresh($city);
+            }
+
+            $banner->setCity($city);
 
             $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('N'.$num)->getValue()));
@@ -57,12 +67,20 @@ class GellaryParser extends MainParser
             $banner->setLight(($phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg($this->getImage($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getHyperlink()->getUrl()));
             $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getHyperlink()->getUrl());
-
+            if ($hot){
+                $banner->setHot(true);
+            }else{
+                $banner->setHot(false);
+            }
             $banner->setLongitude(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('AA'.$num)->getValue()));
             $banner->setLatitude(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('Z'.$num)->getValue()));
             $em->persist($banner);
             $em->flush($banner);
             $num ++;
+
+            if ($num % 50 == 0){
+                sleep(rand(1,3));
+            }
         }
 
         return true;
@@ -71,9 +89,9 @@ class GellaryParser extends MainParser
     /**
      * @Route("/parserGellary/2")
      */
-    public function parserGellary2Action(){
+    public function parserGellary2Action($hot = false){
 //        $this->filePath = $this->filePath.'G2.XLSX';
-        $em = $this->em->getDoctrine()->getManager();
+        $em = $this->em;
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Gallery');
         if ($company == null){
             $company = new Company();
@@ -83,8 +101,8 @@ class GellaryParser extends MainParser
             $em->refresh($company);
         }
 
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($this->filePath);
-        $num = 11;
+        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($this->filePath);
+        $num = 2;
 
 
         while(true){
@@ -97,7 +115,16 @@ class GellaryParser extends MainParser
             $banner->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setSide($this->getSide($phpExcelObject->setActiveSheetIndex(0)->getCell('D'.$num)->getValue()));
-            $banner->setCity( ($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue() == 'Москва' ? 'Москва' : 'Московская область') );
+            $city = $this->em->getRepository('AppBundle:City')->findOneByTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue());
+            if ($city == null){
+                $city = new City();
+                $city->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue());
+                $em->persist($city);
+                $em->flush($city);
+                $em->refresh($city);
+            }
+
+            $banner->setCity($city);
 
             $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('K'.$num)->getValue()));
@@ -112,7 +139,11 @@ class GellaryParser extends MainParser
             $banner->setLight(($phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg($this->getImage($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getHyperlink()->getUrl()));
             $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getHyperlink()->getUrl());
-
+            if ($hot){
+                $banner->setHot(true);
+            }else{
+                $banner->setHot(false);
+            }
             $url = 'http://geocode-maps.yandex.ru/1.x/?geocode='.urlencode($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $content = file_get_contents($url);
             $XmlObj = simplexml_load_string($content);
@@ -132,6 +163,7 @@ class GellaryParser extends MainParser
             if ($num % 50 == 0){
                 sleep(rand(1,5));
             }
+
         }
 
         return true;
@@ -182,7 +214,7 @@ class GellaryParser extends MainParser
         $html = $this->get_url($link);
         $parser  = new NokogiriParser($html);
         $parser = $parser->get('img')->toArray();
-        $txt = $parser[2]['src'];
+        $txt = 'http://www.gallerymedia.com/Services/'.$parser[2]['src'];
         return $txt;
     }
 
