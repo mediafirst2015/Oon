@@ -30,7 +30,7 @@ class GemaParser extends MainParser
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($filePath);
         $num = 9;
 
-
+        $city = $em->getRepository('AppBundle:City')->findOneById(1);
         while(true){
             if ($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue() == ''){
                 break;
@@ -42,6 +42,7 @@ class GemaParser extends MainParser
             $banner->setAdrs($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setSide($this->getSide($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getValue()));
+            $banner->setCity($city);
             $banner->setLight(($phpExcelObject->setActiveSheetIndex(0)->getCell('H'.$num)->getValue() == 'Да' ? 1 : 0));
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('I'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getValue());
