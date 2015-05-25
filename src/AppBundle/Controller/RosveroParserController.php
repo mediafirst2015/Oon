@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 class RosveroParserController extends Controller
 {
 
-    public $filePath = '/var/www/navigator/current/web/RV.xls';
-//    public $filePath = '/var/www/map/web/RV.xls';
+//    public $filePath = '/var/www/navigator/current/web/RV.xls';
+    public $filePath = '/var/www/map/web/RV.xls';
 
     public function getLetter($num)
     {
@@ -129,7 +129,7 @@ class RosveroParserController extends Controller
             $banner->setArea($phpExcelObject->setActiveSheetIndex(0)->getCell('G' . $num)->getValue());
             $banner->setLight(0);
 
-            $banner->setImg($phpExcelObject->setActiveSheetIndex(0)->getCell('P'.$num)->getHyperlink()->getUrl());
+            $banner->setImg($this->getPhoto($phpExcelObject->setActiveSheetIndex(0)->getCell('P'.$num)->getValue()));
 
             $banner->setLink(0);
 
@@ -172,4 +172,11 @@ class RosveroParserController extends Controller
             return 'B';
         }
     }
+
+    public function getPhoto($str){
+        $str = str_replace('=HYPERLINK("','',$str);
+        $str = str_replace('","Фото")','',$str);
+        return $str;
+    }
+
 }
