@@ -45,13 +45,34 @@ class ParserController extends Controller{
                 $path = $file->getPathName();
                 $container = $this->container;
                 if ($type == 4){
+                    $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Gallery 3x6');
+                    if ($company){
+                        $em = $this->getDoctrine()->getManager();
+                        $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = '.$company->getId())->execute();
+                    }
+
                     $parser = new GellaryParser($em,$container,$path);
                     $parser->parserGellary1Action($hot);
                 }
                 if ($type == 5){
+                    $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Gallery scroll');
+                    if ($company) {
+                        $em = $this->getDoctrine()->getManager();
+                        $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
+                    }
                     $parser = new GellaryParser($em,$container,$path);
                     $parser->parserGellary2Action($hot);
                 }
+                if ($type == 6){
+                    $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Gallery  roller');
+                    if ($company) {
+                        $em = $this->getDoctrine()->getManager();
+                        $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
+                    }
+                    $parser = new GellaryParser($em,$container,$path);
+                    $parser->parserGellary3Action($hot);
+                }
+
                 if ($type == 1){
                     $parser = new GemaParser($em,$container,$path);
                     $parser->parserGema1Action($hot);
