@@ -99,7 +99,7 @@ class BasketController extends Controller
                     'grp'=>$banner->getGrp(),
                     'ots'=>$banner->getOts(),
                     'format'=>$banner->getFormat(),
-                    'type'=>$banner->getFormat(),
+                    'type'=>$banner->getType(),
                     'month'=>$month,
                     'monthStr'=>$this->getMonth($month),
                     'year'=>$year,
