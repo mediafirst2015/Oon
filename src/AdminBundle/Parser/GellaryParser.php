@@ -39,10 +39,11 @@ class GellaryParser extends MainParser
             }
             $banner = new Banner();
             $banner->setCompany($company);
-            $banner->setAdrs($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
-            $banner->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
-            $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
-            $banner->setSide($this->getSide($phpExcelObject->setActiveSheetIndex(0)->getCell('D'.$num)->getValue()));
+            $banner->setAdrs($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
+            $banner->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
+            $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
+            $banner->setSide($this->getSide($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue()));
+
             $city = $this->em->getRepository('AppBundle:City')->findOneByTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('A'.$num)->getValue());
             if ($city == null){
                 $city = new City();
@@ -54,26 +55,27 @@ class GellaryParser extends MainParser
 
             $banner->setCity($city);
 
-            $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
-            $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('N'.$num)->getValue()));
-            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('O'.$num)->getValue()));
-            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getValue())*0.82);
-            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getValue()));
-            $banner->setPriceDeploy(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('M'.$num)->getValue()));
+            $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getValue());
+            $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('S'.$num)->getValue()));
+            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('T'.$num)->getValue()));
+            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('P'.$num)->getValue()));
+            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('O'.$num)->getValue()));
+            $banner->setPriceDeploy(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('Q'.$num)->getValue()));
             $banner->setTaxType('НДС (18%)');
-            $banner->setFormat(($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue() == 'Биллборд 3x6 [BB]' ? '3x6' : 'big' ));
+            $banner->setFormat(($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue() == 'Биллборд 3x6 [BB]' || $phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue() ==  'Биллборд цифровой 3*6 [PL]' ? '3x6' : 'big' ));
             $banner->setType($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue());
-            $banner->setArea($phpExcelObject->setActiveSheetIndex(0)->getCell('U'.$num)->getValue());
-            $banner->setLight(($phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue() == 'да' ? 1 : 0));
-            $banner->setImg($this->getImage($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getHyperlink()->getUrl()));
-            $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getHyperlink()->getUrl());
+            $banner->setArea($phpExcelObject->setActiveSheetIndex(0)->getCell('AH'.$num)->getValue());
+            $banner->setLight(($phpExcelObject->setActiveSheetIndex(0)->getCell('D'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(0)->getCell('D'.$num)->getValue() == 'да' ? 1 : 0));
+            $banner->setImg($phpExcelObject->setActiveSheetIndex(0)->getCell('I'.$num)->getHyperlink()->getUrl());
+//            $banner->setImg($this->getImage($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getHyperlink()->getUrl()));
+            $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('H'.$num)->getHyperlink()->getUrl());
             if ($hot){
                 $banner->setHot(true);
             }else{
                 $banner->setHot(false);
             }
-            $banner->setLongitude(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('AA'.$num)->getValue()));
-            $banner->setLatitude(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('Z'.$num)->getValue()));
+            $banner->setLongitude(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('AM'.$num)->getValue()));
+            $banner->setLatitude(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('AL'.$num)->getValue()));
             $em->persist($banner);
             $em->flush($banner);
             $num ++;
@@ -294,7 +296,7 @@ class GellaryParser extends MainParser
     /**
      * @Route("/parserGellary/testImg")
      */
-    public function getImage($link = 'http://www.gallerymedia.com/Services/FaceInfo.aspx?FaceId=49429FD59AE252CF6DD9--54654A4-GM'){
+    public function getImage($link = ''){
 //        $html = file_get_contents($link);
         $html = $this->get_url($link);
         $parser  = new NokogiriParser($html);
