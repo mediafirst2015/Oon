@@ -225,16 +225,18 @@ class DefaultController extends Controller
             $area = '';
         }
         $val = $city.' '.$area.' '.$request->query->get('street');
-        if ($area != '' ){
+
             $url = 'http://geocode-maps.yandex.ru/1.x/?geocode='.urlencode($val);
             $content = file_get_contents($url);
             $XmlObj = simplexml_load_string($content);
+        if (isset($XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)){
             $pos['x'] = explode(' ',$XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)[1];
             $pos['y'] = explode(' ',$XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)[0];
         }else{
             $pos['x'] = null;
             $pos['y'] = null;
         }
+
 
         $id = $request->query->get('bannerId');
         if ($id){
@@ -300,6 +302,7 @@ class DefaultController extends Controller
             'fullPrice' => $fullprice,
             'thisBanner' => $thisBanner,
             'pos' => $pos,
+            'street'=> $request->query->get('street')
         );
     }
 
