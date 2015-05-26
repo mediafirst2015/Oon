@@ -308,8 +308,10 @@
                             }
                             var clusterer = new ym.Clusterer({
                                 preset: 'islands#darkGreenClusterIcons',
-                                clusterOpenBalloonOnClick: true
+                                clusterOpenBalloonOnClick: true,
+                                maxZoom: 14
                             });
+
                             clusterer.events
                                 // Можно слушать сразу несколько событий, указывая их имена в массиве.
                                     .add(['mouseenter', 'mouseleave'], function (e) {
