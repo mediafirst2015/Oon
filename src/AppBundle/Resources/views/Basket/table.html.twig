@@ -10,7 +10,7 @@
         <th>Гид</th>
         <th>Период</th>
         <th>Сторона</th>
-        <th>Формат</th>
+        {#<th>Формат</th>#}
         <th>Тип</th>
         <th>Свет</th>
         <th>GRP</th>
@@ -50,7 +50,7 @@
             <td>{{ l.gid }}</td>
             <td>{{ l.monthStr }}</td>
             <td>{{ l.side }}</td>
-            <td>{{ l.format }}</td>
+            {#<td>{{ l.format }}</td>#}
             <td>{{ l.type }}</td>
             <td>{{ l.light == 1 ? 'да' : 'нет' }}</td>
             {% if l.grp == 0 %}
