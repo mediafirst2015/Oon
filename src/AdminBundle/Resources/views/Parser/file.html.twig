@@ -1,0 +1,73 @@
+{% extends "AdminBundle::layout.html.twig" %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb well">
+        <li>Добавление Файлов</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="well">
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group row">
+                <label class="col-sm-2" for="appbundle_banner_url" >
+                    Файл (JSON или XML)
+                </label>
+                <div class="col-sm-5">
+                    <input type="file"  name="xml" required="required">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2" for="appbundle_banner_url" >
+                    Тип файла
+                </label>
+                <div class="col-sm-5">
+                    <select class="form-control" name="type">
+                        <option value="1">Гема</option>
+                        <option value="2">Вера Олимп</option>
+                        <option value="3">Расверо</option>
+                        <option value="4">Геллари 3x6</option>
+                        <option value="5">Геллари scroll</option>
+                        <option value="6">Геллари roller</option>
+                    </select>
+                </div>
+            </div>
+            {#<div class="form-group row">#}
+            {#<label class="col-sm-2" for="appbundle_banner_url" >#}
+            {#размер скидки#}
+            {#</label>#}
+            {#<div class="col-sm-5">#}
+            {#<input type="text" class="form-control" placeholder="Скидка %" name="percent">#}
+            {#</div>#}
+            {#</div>#}
+            <div class="form-group row">
+                <label class="col-sm-2" for="appbundle_banner_url" >
+                    Горящее предложение
+                </label>
+                <div class="col-sm-5">
+                    <input type="checkbox" style="height: 24px; width: 24px" name="hot"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2" for="appbundle_banner_url" >
+                </label>
+                <div class="col-sm-5">
+                    <button type="submit" id="appbundle_banner_submit" name="appbundle_banner[submit]" class="btn btn-primary">Сохранить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="well">
+        <table class="table">
+            {% for f in files %}
+                {% if f != '.' and f != '..' %}
+                    <tr>
+                        <td>{{ f }}</td>
+                        <td><span class="glyphicon glyphicon-remove-circle text-danger" style="cursor: pointer" title="Удалить {{ f }}"></span></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+        <button class="btn btn-danger">Начать синхронизацию файлов</button>
+    </div>
+{% endblock %}

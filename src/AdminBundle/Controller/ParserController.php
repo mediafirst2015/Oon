@@ -117,4 +117,15 @@ class ParserController extends Controller{
         }
         return array();
     }
+
+    /**
+     * @Security("has_role('ROLE_OPERATOR')")
+     * @Route("/files", name="parser-files")
+     * @Template()
+     */
+    public function fileAction(Request $request){
+        $files = array( 0 => array('title' => 'sdfasds'));
+        $files = scandir('../web/upload/files');
+        return array('files' => $files);
+    }
 }
