@@ -4,6 +4,7 @@ namespace AdminBundle\Command;
 use AdminBundle\Parser\GellaryParser;
 use AppBundle\Entity\Log;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -64,65 +65,91 @@ class ParserCommand extends ContainerAwareCommand
             }
 
             if ($type == 1){
-                $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Гема');
-//                if ($company) {
-//                    $em = $this->getDoctrine()->getManager();
-//                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
-//                }
                 $parser = new GemaParser($em,$container,$path);
-                $parser->parserGema1Action($hot);
+                try{
+                    $parser->parserGema1Action($hot);
+                }catch (\Exception $e){
+                    if ($type != 0){
+                        $log = new Log();
+                        $log->setTitle($f.' Строка: '.$e->getLine().'. '.$e->getMessage());
+                        $em->persist($log);
+                        $em->flush($log);
+                    }
+                }
+
             }
             if ($type == 2){
-                $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
-//                if ($company) {
-//                    $em = $this->getDoctrine()->getManager();
-//                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
-//                }
                 $parser = new VeraParser($em,$container,$path);
-                $parser->parserVera1Action($hot);
-                $parser->parserVera2Action($hot);
-                $parser->parserVera3Action($hot);
-                $parser->parserVera4Action($hot);
-                $parser->parserVera5Action($hot);
-                $parser->parserVera6Action($hot);
-                $parser->parseImageAction();
+                try{
+                    $parser->parserVera1Action($hot);
+                    $parser->parserVera2Action($hot);
+                    $parser->parserVera3Action($hot);
+                    $parser->parserVera4Action($hot);
+                    $parser->parserVera5Action($hot);
+                    $parser->parserVera6Action($hot);
+                    $parser->parseImageAction();
+                }catch (\Exception $e){
+                    if ($type != 0){
+                        $log = new Log();
+                        $log->setTitle($f.' Строка: '.$e->getLine().'. '.$e->getMessage());
+                        $em->persist($log);
+                        $em->flush($log);
+                    }
+                }
 
             }
             if ($type == 3){
-                $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Расверо');
-//                if ($company) {
-//                    $em = $this->getDoctrine()->getManager();
-//                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
-//                }
                 $parser = new RosveroParser($em,$container,$path);
-                $parser->parserRasvero1Action($hot);
+                try{
+                    $parser->parserRasvero1Action($hot);
+                }catch (\Exception $e){
+                    if ($type != 0){
+                        $log = new Log();
+                        $log->setTitle($f.' Строка: '.$e->getLine().'. '.$e->getMessage());
+                        $em->persist($log);
+                        $em->flush($log);
+                    }
+                }
             }
             if ($type == 4){
-//                $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Gallery 3x6');
-//                if ($company){
-//                    $em = $this->getDoctrine()->getManager();
-//                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = '.$company->getId())->execute();
-//                }
                 $parser = new GellaryParser($em,$container,$path);
-                $parser->parserGellary1Action($hot);
+                try{
+                    $parser->parserGellary1Action($hot);
+                }catch (\Exception $e){
+                    if ($type != 0){
+                        $log = new Log();
+                        $log->setTitle($f.' Строка: '.$e->getLine().'. '.$e->getMessage());
+                        $em->persist($log);
+                        $em->flush($log);
+                    }
+                }
+
             }
             if ($type == 5){
-//                $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Gallery scroll');
-//                if ($company) {
-//                    $em = $this->getDoctrine()->getManager();
-//                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
-//                }
                 $parser = new GellaryParser($em,$container,$path);
-                $parser->parserGellary2Action($hot);
+                try{
+                    $parser->parserGellary2Action($hot);
+                }catch (\Exception $e){
+                    if ($type != 0){
+                        $log = new Log();
+                        $log->setTitle($f.' Строка: '.$e->getLine().'. '.$e->getMessage());
+                        $em->persist($log);
+                        $em->flush($log);
+                    }
+                }
             }
             if ($type == 6){
-//                $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Gallery  roller');
-//                if ($company) {
-//                    $em = $this->getDoctrine()->getManager();
-//                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
-//                }
                 $parser = new GellaryParser($em,$container,$path);
-                $parser->parserGellary3Action($hot);
+                try{
+                    $parser->parserGellary3Action($hot);
+                }catch (\Exception $e){
+                    if ($type != 0){
+                        $log = new Log();
+                        $log->setTitle($f.' Строка: '.$e->getLine().'. '.$e->getMessage());
+                        $em->persist($log);
+                        $em->flush($log);
+                    }
+                }
             }
 
             if ($type != 0){

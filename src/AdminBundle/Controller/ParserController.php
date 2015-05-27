@@ -171,13 +171,13 @@ class ParserController extends Controller{
         $container = $this->container;
         exec("/bin/ps -axw | awk '{print $1\" \"$5\" \"$6}'", $out);
         foreach ( $out as $val){
-            if (!preg_match('/file:parser/', $val)) {
+            if (preg_match('/file:parser/', $val)) {
                 $val = explode(' ',$val)[0];
                 exec("/bin/kill -9 $val");
             }
         }
-        $cmd = 'nohup php ' . $container->get('kernel')->getRootDir() . '/console file:parser &';
-        system($cmd);
+        $cmd = 'php ' . $container->get('kernel')->getRootDir() . '/console file:parser >> /dev/null &';
+        exec($cmd);
         return $this->redirect($this->generateUrl('parser-files'));
     }
 

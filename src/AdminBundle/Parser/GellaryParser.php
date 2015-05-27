@@ -93,7 +93,7 @@ class GellaryParser extends MainParser
      * @Route("/parserGellary/2")
      */
     public function parserGellary2Action($hot = false){
-//        $this->filePath = $this->filePath.'G2.XLSX';
+
         $em = $this->em;
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Gallery scroll');
         if ($company == null){
@@ -332,6 +332,7 @@ class GellaryParser extends MainParser
             case '9ACD32': return 2; // Зеленый
             case 'FFA500': return 1; //Желтый
             case 'FF4500': return 0; // Красный 2
+            default: return 0;
         }
     }
 }
