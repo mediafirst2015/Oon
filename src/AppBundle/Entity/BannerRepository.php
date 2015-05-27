@@ -119,4 +119,21 @@ class BannerRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findOldBanner($gid,$side,$companyId){
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('b')
+            ->from('AppBundle:Banner','b')
+            ->leftJoin('b.company', 'c')
+            ->where('b.gid = :gid')
+            ->andWhere('b.side = :side')
+            ->andWhere('c.id = :companyId')
+            ->setParameters(array(
+                ':gid' =>$gid,
+                ':side' =>$side,
+                ':companyId' =>$companyId,
+                )
+            );
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }

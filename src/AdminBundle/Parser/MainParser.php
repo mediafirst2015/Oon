@@ -2,6 +2,9 @@
 
 namespace AdminBundle\Parser;
 
+use AppBundle\Entity\Banner;
+use AppBundle\Entity\Month;
+
 class MainParser{
 
     public $em;
@@ -45,6 +48,54 @@ class MainParser{
             case 25: return 'Y';
             case 26: return 'Z';
             default: return false;
+        }
+    }
+
+    public function setBanner(Banner &$banner){
+        $oldBanner = $this->em->getRepository('AppBundle:Banner')->findOldBanner($banner->getGid(),$banner->getSide(),$banner->getCompany()->getId());
+        if ($oldBanner){
+            $oldBanner->setAdrs($banner->getAdrs());
+            $oldBanner->setTitle($banner->getTitle());
+            $oldBanner->setBody($banner->getBody());
+            $oldBanner->setSide($banner->getSide());
+            $oldBanner->setCity($banner->getCity());;
+            $oldBanner->setGid($banner->getGid());
+            $oldBanner->setGrp($banner->getGrp());
+            $oldBanner->setOts($banner->getOts());
+            $oldBanner->setPrice($banner->getPrice());
+            $oldBanner->setPrice2($banner->getPrice2());
+            $oldBanner->setPriceDeploy($banner->getPriceDeploy());
+            $oldBanner->setTaxType($banner->getTaxType());
+            $oldBanner->setFormat($banner->getFormat());
+            $oldBanner->setType($banner->getType());
+            $oldBanner->setArea($banner->getArea());
+            $oldBanner->setLight($banner->getLight());
+            $oldBanner->setImg($banner->getImg());
+            $oldBanner->setLink($banner->getLight());
+            $oldBanner->setLongitude($banner->getLongitude());
+            $oldBanner->setLatitude($banner->getLatitude());
+            $this->em->flush($oldBanner);
+            $banner = $oldBanner;
+        }else{
+            $this->em->persist($banner);
+            $this->em->flush($banner);
+        }
+        $this->em->refresh($banner);
+        return $banner;
+    }
+
+    public function refreshStatus(Banner $banner, $status){
+        $months = $banner->getMonths();
+        foreach ($months as $m){
+            $this->em->remove($m);
+        }
+
+        foreach ($status as $m => $s) {
+            $date = new \DateTime($m.' 00:00:00');
+            $month = new Month();
+            $month->setBanner($banner);
+            $month->setDate($date);
+            $month->setStatus($s);
         }
     }
 
