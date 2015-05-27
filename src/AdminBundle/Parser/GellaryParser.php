@@ -129,16 +129,16 @@ class GellaryParser extends MainParser
 
             $banner->setCity($city);
 
-            $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
-            $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('K'.$num)->getValue()));
-            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('L'.$num)->getValue()));
+            $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('N'.$num)->getValue());
+            $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('L'.$num)->getValue()));
+            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('M'.$num)->getValue()));
             $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getValue()));
             $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('I'.$num)->getValue()));
             $banner->setPriceDeploy(0);
             $banner->setTaxType('НДС (18%)');
             $banner->setFormat('small');
             $banner->setType($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue());
-            $banner->setArea($phpExcelObject->setActiveSheetIndex(0)->getCell('X'.$num)->getValue());
+            $banner->setArea($phpExcelObject->setActiveSheetIndex(0)->getCell('W'.$num)->getValue());
             $banner->setLight(($phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg($this->getImage($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getHyperlink()->getUrl()));
             $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getHyperlink()->getUrl());
@@ -161,7 +161,17 @@ class GellaryParser extends MainParser
             $banner->setLongitude($pos['y']);
             $banner->setLatitude($pos['x']);
 
-            $this->setBanner($banner);
+            $banner = $this->setBanner($banner);
+            $month = array(
+                '2015-06-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('O'.$num)->getFill()->getStartColor()->getRGB()),
+                '2015-07-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('P'.$num)->getFill()->getStartColor()->getRGB()),
+                '2015-08-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('Q'.$num)->getFill()->getStartColor()->getRGB()),
+                '2015-09-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('R'.$num)->getFill()->getStartColor()->getRGB()),
+                '2015-10-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('S'.$num)->getFill()->getStartColor()->getRGB()),
+                '2015-11-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('T'.$num)->getFill()->getStartColor()->getRGB()),
+                '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('U'.$num)->getFill()->getStartColor()->getRGB()),
+            );
+            $this->refreshStatus($banner,$month);
 
             $num ++;
             if ($num % 50 == 0){
@@ -212,16 +222,16 @@ class GellaryParser extends MainParser
 
             $banner->setCity($city);
 
-            $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
-            $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('K'.$num)->getValue()));
-            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('L'.$num)->getValue()));
+            $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('N'.$num)->getValue());
+            $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('L'.$num)->getValue()));
+            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('M'.$num)->getValue()));
             $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getValue()));
             $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('I'.$num)->getValue()));
             $banner->setPriceDeploy(0);
             $banner->setTaxType('НДС (18%)');
             $banner->setFormat('small');
             $banner->setType($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue());
-            $banner->setArea($phpExcelObject->setActiveSheetIndex(0)->getCell('X'.$num)->getValue());
+            $banner->setArea($phpExcelObject->setActiveSheetIndex(0)->getCell('W'.$num)->getValue());
             $banner->setLight(($phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg($this->getImage($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getHyperlink()->getUrl()));
             $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getHyperlink()->getUrl());
@@ -244,7 +254,17 @@ class GellaryParser extends MainParser
             $banner->setLongitude($pos['y']);
             $banner->setLatitude($pos['x']);
 
-            $this->setBanner($banner);
+            $banner = $this->setBanner($banner);
+            $month = array(
+                '2015-06-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('O'.$num)->getFill()->getStartColor()->getRGB()),
+                '2015-07-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('P'.$num)->getFill()->getStartColor()->getRGB()),
+                '2015-08-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('Q'.$num)->getFill()->getStartColor()->getRGB()),
+                '2015-09-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('R'.$num)->getFill()->getStartColor()->getRGB()),
+                '2015-10-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('S'.$num)->getFill()->getStartColor()->getRGB()),
+                '2015-11-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('T'.$num)->getFill()->getStartColor()->getRGB()),
+                '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('U'.$num)->getFill()->getStartColor()->getRGB()),
+            );
+            $this->refreshStatus($banner,$month);
 
             $num ++;
             if ($num % 50 == 0){
@@ -270,12 +290,13 @@ class GellaryParser extends MainParser
 
     public function getSide($side){
         $side = str_replace('Сторона ','',$side);
-        $side = preg_replace('/\d/','',$side);
-        if ($side == 'А'){
-            return 'A';
-        }else{
-            return 'B';
-        }
+//        $side = preg_replace('/\d/','',$side);
+//        if ($side == 'А'){
+//            return 'A';
+//        }else{
+//            return 'B';
+//        }
+        return $side;
     }
 
     public function getFormat($format){
