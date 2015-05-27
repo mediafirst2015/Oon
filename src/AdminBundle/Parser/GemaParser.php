@@ -107,6 +107,9 @@ class GemaParser extends MainParser
 
     public function getSide($side){
         $side = str_replace('Сторона ','',$side);
+        $side = str_replace('Б','B',$side);
+        $side = str_replace('А','A',$side);
+
 //        $side = preg_replace('/\d/','',$side);
 //        if ($side == 'А'){
 //            return 'A';
