@@ -30,7 +30,7 @@ class BannerController extends Controller{
         $pagination = $paginator->paginate(
             $items,
             $this->get('request')->query->get('banner', 1),
-            500
+            100
         );
 
         return array('pagination' => $pagination);
