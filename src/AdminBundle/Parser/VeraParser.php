@@ -122,8 +122,8 @@ class VeraParser extends MainParser
             }else{
                 $banner->setHot(false);
             }
-            $em->persist($banner);
-            $em->flush($banner);
+//            $em->persist($banner);
+//            $em->flush($banner);
             $num ++;
         }
 

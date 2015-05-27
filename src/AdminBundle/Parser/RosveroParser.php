@@ -99,7 +99,7 @@ class RosveroParser extends MainParser
                 '2015-11-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('X'.$num)->getValue()),
                 '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('Y'.$num)->getValue()),
             );
-            $this->refreshStatus($banner,$month);
+            $this->refreshStatus($banner,$month, array('date' => '2015-06-01' , 'sale' => $hot));
 
             $num ++;
             if ($num % 50 == 0){

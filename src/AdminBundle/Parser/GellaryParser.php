@@ -78,7 +78,7 @@ class GellaryParser extends MainParser
                 '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('AB'.$num)->getFill()->getStartColor()->getRGB()),
             );
 //            echo 'обновление статусы';
-            $this->refreshStatus($banner,$month);
+            $this->refreshStatus($banner,$month, array('date' => '2015-06-01' , 'sale' => $hot));
 
             $num ++;
             if ($num % 50 == 0){
@@ -171,7 +171,7 @@ class GellaryParser extends MainParser
                 '2015-11-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('T'.$num)->getFill()->getStartColor()->getRGB()),
                 '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('U'.$num)->getFill()->getStartColor()->getRGB()),
             );
-            $this->refreshStatus($banner,$month);
+            $this->refreshStatus($banner,$month, array('date' => '2015-06-01' , 'sale' => $hot));
 
             $num ++;
             if ($num % 50 == 0){
@@ -264,7 +264,7 @@ class GellaryParser extends MainParser
                 '2015-11-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('T'.$num)->getFill()->getStartColor()->getRGB()),
                 '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('U'.$num)->getFill()->getStartColor()->getRGB()),
             );
-            $this->refreshStatus($banner,$month);
+            $this->refreshStatus($banner,$month, array('date' => '2015-06-01' , 'sale' => $hot));
 
             $num ++;
             if ($num % 50 == 0){
