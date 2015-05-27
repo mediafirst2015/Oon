@@ -1,6 +1,7 @@
 <?php
 namespace AdminBundle\Command;
 
+use AdminBundle\Parser\GellaryParser;
 use AppBundle\Entity\Log;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -23,20 +24,17 @@ class ParserCommand extends ContainerAwareCommand
 
         $container = $this->getContainer();
         $em    = $this->getContainer()->get('doctrine')->getManager();
-        $em->createQuery('DELETE FROM AppBundle:log l')->execute(); // Удаляем старые логи
+        $em->createQuery('DELETE FROM AppBundle:Log l')->execute(); // Удаляем старые логи
 
         $log = new Log();
         $log->setTitle('Начало синхронизации');
         $em->persist($log);
         $em->flush($log);
 
-        $files = scandir($this->get('kernel')->getRootDir().'../web/upload/files');
+        $files = scandir($container->get('kernel')->getRootDir().'/../web/upload/files');
 
         foreach($files as $f){
-            $log = new Log();
-            $log->setTitle('Синхронизация '.$f);
-            $em->persist($log);
-            $em->flush($log);
+
 
             /**
              * Проверяем этот файл горящих предложений или нет
@@ -48,7 +46,7 @@ class ParserCommand extends ContainerAwareCommand
                 $hot = true;
             }
 
-            $path = $this->get('kernel')->getRootDir().'../web/upload/files'.$f;
+            $path = $container->get('kernel')->getRootDir().'/../web/upload/files/'.$f;
 
             $type = 0;
             if ( strripos($f,'Gema') !== false ){ $type = 1; }
@@ -58,21 +56,28 @@ class ParserCommand extends ContainerAwareCommand
             if ( strripos($f,'Gallery_scroll') !== false ){ $type = 5; }
             if ( strripos($f,'Gallery_roller') !== false ){ $type = 6; }
 
+            if ($type != 0){
+                $log = new Log();
+                $log->setTitle('Синхронизация '.$f);
+                $em->persist($log);
+                $em->flush($log);
+            }
+
             if ($type == 1){
                 $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Гема');
-                if ($company) {
-                    $em = $this->getDoctrine()->getManager();
-                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
-                }
+//                if ($company) {
+//                    $em = $this->getDoctrine()->getManager();
+//                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
+//                }
                 $parser = new GemaParser($em,$container,$path);
                 $parser->parserGema1Action($hot);
             }
             if ($type == 2){
                 $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
-                if ($company) {
-                    $em = $this->getDoctrine()->getManager();
-                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
-                }
+//                if ($company) {
+//                    $em = $this->getDoctrine()->getManager();
+//                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
+//                }
                 $parser = new VeraParser($em,$container,$path);
                 $parser->parserVera1Action($hot);
                 $parser->parserVera2Action($hot);
@@ -85,40 +90,46 @@ class ParserCommand extends ContainerAwareCommand
             }
             if ($type == 3){
                 $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Расверо');
-                if ($company) {
-                    $em = $this->getDoctrine()->getManager();
-                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
-                }
+//                if ($company) {
+//                    $em = $this->getDoctrine()->getManager();
+//                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
+//                }
                 $parser = new RosveroParser($em,$container,$path);
                 $parser->parserRasvero1Action($hot);
             }
-            if ($f == 4){
-                $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Gallery 3x6');
-                if ($company){
-                    $em = $this->getDoctrine()->getManager();
-                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = '.$company->getId())->execute();
-                }
-
+            if ($type == 4){
+//                $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Gallery 3x6');
+//                if ($company){
+//                    $em = $this->getDoctrine()->getManager();
+//                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = '.$company->getId())->execute();
+//                }
                 $parser = new GellaryParser($em,$container,$path);
                 $parser->parserGellary1Action($hot);
             }
             if ($type == 5){
-                $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Gallery scroll');
-                if ($company) {
-                    $em = $this->getDoctrine()->getManager();
-                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
-                }
+//                $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Gallery scroll');
+//                if ($company) {
+//                    $em = $this->getDoctrine()->getManager();
+//                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
+//                }
                 $parser = new GellaryParser($em,$container,$path);
                 $parser->parserGellary2Action($hot);
             }
             if ($type == 6){
-                $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Gallery  roller');
-                if ($company) {
-                    $em = $this->getDoctrine()->getManager();
-                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
-                }
+//                $company = $this->getDoctrine()->getRepository('AppBundle:Company')->findOneByTitle('Gallery  roller');
+//                if ($company) {
+//                    $em = $this->getDoctrine()->getManager();
+//                    $em->createQuery('DELETE FROM AppBundle:Banner b WHERE b.company = ' . $company->getId())->execute();
+//                }
                 $parser = new GellaryParser($em,$container,$path);
                 $parser->parserGellary3Action($hot);
+            }
+
+            if ($type != 0){
+                $log = new Log();
+                $log->setTitle('Синхронизация '.$f.' завершена');
+                $em->persist($log);
+                $em->flush($log);
             }
 
         }

@@ -77,6 +77,7 @@ class GellaryParser extends MainParser
                 '2015-11-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('AA'.$num)->getFill()->getStartColor()->getRGB()),
                 '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getStyle('AB'.$num)->getFill()->getStartColor()->getRGB()),
             );
+//            echo 'обновление статусы';
             $this->refreshStatus($banner,$month);
 
             $num ++;

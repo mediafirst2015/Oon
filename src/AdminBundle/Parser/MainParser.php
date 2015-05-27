@@ -96,6 +96,8 @@ class MainParser{
             $month->setBanner($banner);
             $month->setDate($date);
             $month->setStatus($s);
+            $this->em->persist($month);
+            $this->em->flush($month);
         }
     }
 

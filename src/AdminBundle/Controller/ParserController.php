@@ -169,15 +169,15 @@ class ParserController extends Controller{
      */
     public function runSyncAction(){
         $container = $this->container;
-        exec("/bin/ps -axw", $out);
-//        if (!preg_match('/file:parser/', implode(' ', $out))) {
-        if (!preg_match('/java/', implode(' ', $out))) {
-            $cmd = 'nohup php ' . $container->get('kernel')->getRootDir() . '/console file:parser &';
-            system($cmd);
+        exec("/bin/ps -axw | awk '{print $1\" \"$5\" \"$6}'", $out);
+        foreach ( $out as $val){
+            if (!preg_match('/file:parser/', $val)) {
+                $val = explode(' ',$val)[0];
+                exec("/bin/kill -9 $val");
+            }
         }
-        else {
-
-        }
+        $cmd = 'nohup php ' . $container->get('kernel')->getRootDir() . '/console file:parser &';
+        system($cmd);
         return $this->redirect($this->generateUrl('parser-files'));
     }
 

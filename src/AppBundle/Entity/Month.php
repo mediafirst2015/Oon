@@ -31,7 +31,7 @@ class Month extends BaseEntity
     protected $price;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $sale;
 
