@@ -124,7 +124,29 @@ class ParserController extends Controller{
      * @Template()
      */
     public function fileAction(Request $request){
-        $files = array( 0 => array('title' => 'sdfasds'));
+        if ($request->getMethod() == 'POST'){
+            $file = $request->files->get('file');
+            $name = '';
+            if ($request->request->get('hot') == 'on'){
+                $name = 'HOT_';
+            }
+            $type = $request->request->get('type');
+            switch ($type){
+                case 1 : $name .= 'Gema'; break;
+                case 2 : $name .= 'VeraOlimp'; break;
+                case 3 : $name .= 'Rosvero'; break;
+                case 4 : $name .= 'Gallery_3x6'; break;
+                case 5 : $name .= 'Gallery_scroll'; break;
+                case 6 : $name .= 'Gallery_roller'; break;
+            }
+
+            if (is_file('../web/upload/files/'.$name)){
+                unlink('../web/upload/files/'.$name);
+            }
+            move_uploaded_file($file->getPathName(),'../web/upload/files/'.$name);
+            $session = new Session();
+            $session->getFlashBag()->add('success','Файл добавлен');
+        }
         $files = scandir('../web/upload/files');
         $logs = $this->getDoctrine()->getRepository('AppBundle:Log')->findBy(array('enabled' => true), array('id' => 'DESC'));
         return array('files' => $files, 'logs' => $logs);
