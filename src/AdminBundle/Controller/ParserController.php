@@ -130,6 +130,9 @@ class ParserController extends Controller{
             if ($request->request->get('hot') == 'on'){
                 $name = 'HOT_';
             }
+            if ($request->request->get('sale')){
+                $name .= $request->request->get('sale').'_';
+            }
             $type = $request->request->get('type');
             switch ($type){
                 case 1 : $name .= 'Gema'; break;

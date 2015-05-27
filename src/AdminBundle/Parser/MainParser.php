@@ -84,7 +84,7 @@ class MainParser{
         return $banner;
     }
 
-    public function refreshStatus(Banner $banner, $status){
+    public function refreshStatus(Banner $banner, $status, $hot = null){
         $months = $banner->getMonths();
         foreach ($months as $m){
             $this->em->remove($m);
@@ -96,6 +96,11 @@ class MainParser{
             $month->setBanner($banner);
             $month->setDate($date);
             $month->setStatus($s);
+            if ($hot){
+                if ($m == $hot['date']){
+                    $month->setSale($hot['sale']);
+                }
+            }
             $this->em->persist($month);
             $this->em->flush($month);
         }

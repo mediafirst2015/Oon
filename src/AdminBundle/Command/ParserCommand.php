@@ -47,7 +47,8 @@ class ParserCommand extends ContainerAwareCommand
             if ($pos === false){
                 $hot = false;
             }else{
-                $hot = true;
+
+                $hot = explode('_',$f)[1];
             }
 
             $path = $container->get('kernel')->getRootDir().'/../web/upload/files/'.$f;
