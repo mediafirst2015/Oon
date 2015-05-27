@@ -140,4 +140,23 @@ class ParserController extends Controller{
         unlink('../web/upload/files/'.$filename);
         return $this->redirect($this->generateUrl('parser-files'));
     }
+
+    /**
+     * @Security("has_role('ROLE_OPERATOR')")
+     * @Route("/files/sync", name="parser-files-sync")
+     */
+    public function runSyncAction(){
+        $container = $this->container;
+        exec("/bin/ps -axw", $out);
+//        if (!preg_match('/file:parser/', implode(' ', $out))) {
+        if (!preg_match('/java/', implode(' ', $out))) {
+            $cmd = 'nohup php ' . $container->get('kernel')->getRootDir() . '/console file:parser &';
+            system($cmd);
+        }
+        else {
+
+        }
+        return $this->redirect($this->generateUrl('parser-files'));
+    }
+
 }

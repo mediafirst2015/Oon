@@ -84,6 +84,6 @@
                 {% endif %}
             {% endfor %}
         </table>
-        <button class="btn btn-danger">Начать синхронизацию файлов</button>
+        <a href="{{ path('parser-files-sync') }}"><button class="btn btn-danger">Начать синхронизацию файлов</button></a>
     </div>
 {% endblock %}

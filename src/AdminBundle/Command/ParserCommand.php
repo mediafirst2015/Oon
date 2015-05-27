@@ -18,6 +18,10 @@ class ParserCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        set_time_limit(0);
+        ini_set("memory_limit","-1");
+
+
         $em    = $this->getContainer()->get('doctrine')->getManager();
         $raw   = $em->createQuery('
             DELETE FROM AppBundle:log l
