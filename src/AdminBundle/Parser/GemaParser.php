@@ -31,6 +31,7 @@ class GemaParser extends MainParser
         $num = 9;
 
         $city = $em->getRepository('AppBundle:City')->findOneById(1);
+        $city2 = $em->getRepository('AppBundle:City')->findOneById(2);
         while(true){
             if ($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue() == ''){
                 break;
@@ -41,11 +42,16 @@ class GemaParser extends MainParser
             $banner->setArea($this->getArea($phpExcelObject->setActiveSheetIndex(0)->getCell('D'.$num)->getValue()));
             $banner->setAdrs($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setTitle($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
+            $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue());
             $banner->setSide($this->getSide($phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getValue()));
-            $banner->setCity($city);
+            if ($banner->getArea() == null){
+                $banner->setCity($city2);
+            }else{
+                $banner->setCity($city);
+            }
             $banner->setLight(($phpExcelObject->setActiveSheetIndex(0)->getCell('H'.$num)->getValue() == 'Да' ? 1 : 0));
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('I'.$num)->getValue()));
-            $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getValue());
+            $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue());
             $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('K'.$num)->getValue()));
             $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('L'.$num)->getValue()));
             $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('M'.$num)->getValue()));
@@ -63,11 +69,20 @@ class GemaParser extends MainParser
                 $banner->setHot(false);
             }
 
-            $banner->setBody(' ');
-//            if ($isNew == true){
-            $em->persist($banner);
-//            }
-            $em->flush($banner);
+            $banner = $this->setBanner($banner);
+            $month = array(
+                '2015-06-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('U'.$num)->getValue()),
+                '2015-07-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('V'.$num)->getValue()),
+                '2015-08-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('W'.$num)->getValue()),
+                '2015-09-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('X'.$num)->getValue()),
+                '2015-10-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('Y'.$num)->getValue()),
+                '2015-11-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('Z'.$num)->getValue()),
+                '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('AA'.$num)->getValue()),
+            );
+            $this->refreshStatus($banner,$month);
+
+
+
             $num ++;
 
             if ($num % 50 == 0){
@@ -85,18 +100,20 @@ class GemaParser extends MainParser
             case 'Восточный': return 'ВАО';
             case 'Южный': return 'ЮАО';
             case 'Центральный': return 'ЦАО';
+            case 'Московская область': return null;
         }
         return null;
     }
 
     public function getSide($side){
         $side = str_replace('Сторона ','',$side);
-        $side = preg_replace('/\d/','',$side);
-        if ($side == 'А'){
-            return 'A';
-        }else{
-            return 'B';
-        }
+//        $side = preg_replace('/\d/','',$side);
+//        if ($side == 'А'){
+//            return 'A';
+//        }else{
+//            return 'B';
+//        }
+        return $side;
     }
 
     public function getFormat($format){
@@ -112,5 +129,12 @@ class GemaParser extends MainParser
         $link = str_replace(',pmb&z=16','',$link);
         $link = explode(',',$link);
         return $link;
+    }
+
+    public function getStatus($str){
+        if ( strripos($str,'продано') !== false ) return '0';
+        elseif ( strripos($str,'свободно') !== false ) return '2';
+        elseif ( strripos($str,'в резерве') !== false ) return '1';
+        else return '1';
     }
 }
