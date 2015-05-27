@@ -43,27 +43,27 @@ class RosveroParser extends MainParser
             $banner->setAdrs(explode("\n", $phpExcelObject->setActiveSheetIndex(0)->getCell('E' . $num)->getValue())[0]);
             $banner->setTitle(explode("\n", $phpExcelObject->setActiveSheetIndex(0)->getCell('E' . $num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('E' . $num)->getValue());
-            $banner->setSide($this->getSide($phpExcelObject->setActiveSheetIndex(0)->getCell('I' . $num)->getValue()));
+            $banner->setSide($this->getSide($phpExcelObject->setActiveSheetIndex(0)->getCell('H' . $num)->getValue()));
             $banner->setCity($city);
-            $banner->setGrp(str_replace(',', '.', $phpExcelObject->setActiveSheetIndex(0)->getCell('M' . $num)->getValue()));
-            $banner->setOts(str_replace(',', '.', $phpExcelObject->setActiveSheetIndex(0)->getCell('N' . $num)->getValue()));
-            $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('C' . $num)->getValue());
+            $banner->setGrp(str_replace(',', '.', $phpExcelObject->setActiveSheetIndex(0)->getCell('L' . $num)->getValue()));
+            $banner->setOts(str_replace(',', '.', $phpExcelObject->setActiveSheetIndex(0)->getCell('M' . $num)->getValue()));
+            $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('K' . $num)->getValue());
 
-            $banner->setPrice(str_replace(array(',', ''), array('.', ''), $phpExcelObject->setActiveSheetIndex(0)->getCell('R' . $num)->getValue()));
-            $banner->setPrice2(str_replace(array(',', ''), array('.', ''), $phpExcelObject->setActiveSheetIndex(0)->getCell('T' . $num)->getValue()));
+            $banner->setPrice(str_replace(array(',', ''), array('.', ''), $phpExcelObject->setActiveSheetIndex(0)->getCell('R' . $num)->getValue()*0.82));
+            $banner->setPrice2(str_replace(array(',', ''), array('.', ''), $phpExcelObject->setActiveSheetIndex(0)->getCell('R' . $num)->getValue()));
             $banner->setTaxType('НДС (18%)');
 
             $banner->setFormat('small');
             $banner->setType(
+                $phpExcelObject->setActiveSheetIndex(0)->getCell('I' . $num)->getValue().' '.
                 $phpExcelObject->setActiveSheetIndex(0)->getCell('J' . $num)->getValue().' '.
-                $phpExcelObject->setActiveSheetIndex(0)->getCell('K' . $num)->getValue().' '.
-                ' ( '.$phpExcelObject->setActiveSheetIndex(0)->getCell('H' . $num)->getValue().' ) '
+                ' ( '.$phpExcelObject->setActiveSheetIndex(0)->getCell('G' . $num)->getValue().' ) '
             );
 
-            $banner->setArea($phpExcelObject->setActiveSheetIndex(0)->getCell('G' . $num)->getValue());
+            $banner->setArea($phpExcelObject->setActiveSheetIndex(0)->getCell('F' . $num)->getValue());
             $banner->setLight(0);
 
-            $banner->setImg($this->getPhoto($phpExcelObject->setActiveSheetIndex(0)->getCell('P'.$num)->getValue()));
+            $banner->setImg($this->getPhoto($phpExcelObject->setActiveSheetIndex(0)->getCell('O'.$num)->getValue()));
 
             $banner->setLink(0);
 
