@@ -1,6 +1,7 @@
 <?php
 namespace AdminBundle\Command;
 
+use AppBundle\Entity\Log;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,11 +18,13 @@ class ParserCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-//        $em    = $this->getContainer()->get('doctrine')->getManager();
-//        $raw   = $em->createQuery('
-//            SELECT d.avatarPath
-//            FROM EvrikaMainBundle:Doctor d
-//        ')->getResult();
+        $em    = $this->getContainer()->get('doctrine')->getManager();
+        $raw   = $em->createQuery('
+            DELETE FROM AppBundle:log l
+        ')->execute();
+
+        $log = new Log();
+        $log->setTitle('Начало парсинга');
 
         $output->writeln("+++ начало парсинга!");
 

@@ -2,11 +2,27 @@
 
 {% block breadcrumb %}
     <ul class="breadcrumb well">
-        <li>Добавление Файлов</li>
+        <li>Интерфейс синхронизации файлов</li>
     </ul>
 {% endblock %}
 
 {% block content %}
+    <div class="well">
+        <h3>Статистика прошлой синхронизации</h3>
+        <table class="table">
+            {% for l in logs %}
+                <tr>
+                    <td>{{ l.created | date('d.m.Y H:i:s') }}</td>
+                    <td>{{ l.title }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td class="text-danger">Логов не обнаружено</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    </div>
     <div class="well">
         <form method="post" enctype="multipart/form-data">
             <div class="form-group row">
@@ -63,7 +79,7 @@
                 {% if f != '.' and f != '..' %}
                     <tr>
                         <td>{{ f }}</td>
-                        <td><span class="glyphicon glyphicon-remove-circle text-danger" style="cursor: pointer" title="Удалить {{ f }}"></span></td>
+                        <td><a href="{{ path('parser-files-remove',{ 'filename' : f }) }}"><span class="glyphicon glyphicon-remove-circle text-danger" style="cursor: pointer" title="Удалить {{ f }}"></span></a></td>
                     </tr>
                 {% endif %}
             {% endfor %}

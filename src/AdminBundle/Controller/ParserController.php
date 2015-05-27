@@ -126,6 +126,18 @@ class ParserController extends Controller{
     public function fileAction(Request $request){
         $files = array( 0 => array('title' => 'sdfasds'));
         $files = scandir('../web/upload/files');
-        return array('files' => $files);
+        $logs = $this->getDoctrine()->getRepository('AppBundle:Log')->findBy(array('enabled' => true), array('id' => 'DESC'));
+        return array('files' => $files, 'logs' => $logs);
+    }
+
+    /**
+     * @Security("has_role('ROLE_OPERATOR')")
+     * @Route("/files/remove/{filename}", name="parser-files-remove")
+     * @Template()
+     */
+    public function fileremoveAction(Request $request,$filename){
+
+        unlink('../web/upload/files/'.$filename);
+        return $this->redirect($this->generateUrl('parser-files'));
     }
 }
