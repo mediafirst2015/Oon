@@ -60,10 +60,10 @@ class BannerRepository extends EntityRepository
             }
 
             if ($sideA === 0 ){
-                $qb->andWhere(" b.side != 'A' ");
+                $qb->andWhere(" b.side NOT LIKE '%A%' ");
             }
-            if ($sideA === 0 ){
-                $qb->andWhere(" b.side != 'B' ");
+            if ($sideB === 0 ){
+                $qb->andWhere(" b.side NOT LIKE '%B%' ");
             }
 
             if ($gid != null ){

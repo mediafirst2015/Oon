@@ -74,7 +74,7 @@ class RosveroParser extends MainParser
 //                echo '<br /><br />'.$num;
 //                break;
 //            }
-//            $url = 'http://geocode-maps.yandex.ru/1.x/?geocode='.urlencode($url);
+            $url = 'http://geocode-maps.yandex.ru/1.x/?geocode='.urlencode($url);
 //            echo $url.'<br />';
             $content = file_get_contents($url);
             $XmlObj = simplexml_load_string($content);

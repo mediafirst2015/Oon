@@ -2,6 +2,9 @@
 namespace AdminBundle\Command;
 
 use AdminBundle\Parser\GellaryParser;
+use AdminBundle\Parser\GemaParser;
+use AdminBundle\Parser\RosveroParser;
+use AdminBundle\Parser\VeraParser;
 use AppBundle\Entity\Log;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -91,7 +94,7 @@ class ParserCommand extends ContainerAwareCommand
                 }catch (\Exception $e){
                     if ($type != 0){
                         $log = new Log();
-                        $log->setTitle($f.' Строка: '.$e->getLine().'. '.$e->getMessage());
+                        $log->setTitle('<span class="text-danger">'.$f.' Строка: '.$e->getLine().'. '.$e->getMessage().'</span>');
                         $em->persist($log);
                         $em->flush($log);
                     }
