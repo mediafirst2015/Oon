@@ -48,7 +48,7 @@
 
 {#{% if object.hot == 0 or object.hot == '0' or object.hot == null %}#}
     <table style='margin: 0 auto' class="month-table">
-        {% for row in ( 'now' | date('m') .. 12 ) | batch( 2 ) %}
+        {% for row in ( 'now' | date('m')+1 .. 12 ) | batch( 2 ) %}
             <tr>
                 {#{{ dump(row) }}#}
                 {% for column in row %}
