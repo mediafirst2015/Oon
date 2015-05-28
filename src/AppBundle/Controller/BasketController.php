@@ -608,10 +608,20 @@ class BasketController extends Controller
         $email = $request->request->get('email');
         $name = $request->request->get('name');
         $file = $this->generateExcel();
+        $basket = $session->get('lists');
+        $banners = array();
+        foreach ($basket as $b){
+            $banners[$b['id']] = $b['id'];
+        }
+        $url = 'banners=';
+        foreach($banners as $b){
+            $url .= $b.';';
+        }
         $this->get('email.service')->send(
             $email,
             array('AppBundle:Email:order.html.twig', array(
                 'name'  => $name,
+                'url' => $url
             )),
             'Медиаплан от MediaFirst !',
             $file

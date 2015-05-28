@@ -218,4 +218,31 @@ class MapController extends Controller
         ));
         return new JsonResponse($coords);
     }
+
+
+    /**
+     * @Route("get-objects-mediaplan", name="get_objects_mediaplan", options={"expose"=true})
+     */
+    public function getObjectsMediaplanAction(Request $request){
+        $banners = $request->query->get('banners');
+
+        $banners = explode(';',$banners);
+        $objects = array();
+        foreach ($banners as $b){
+            if ($b && $b != ''){
+                $banner = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($b);
+                $objects[] = array(
+                    'coords' => [ $banner->getLatitude(), $banner->getLongitude()],
+                    'alt' => $banner->getAdrs(),
+                    'id' => $banner->getId(),
+                    'hot' => ( $banner->getHotMonth() == false ? 0 : 1),
+                    'format' => $banner->getFormat(),
+//                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
+                );
+            }
+        }
+        $objects = array('data' => $objects);
+
+        return new JsonResponse($objects);
+    }
 }
