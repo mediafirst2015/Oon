@@ -171,6 +171,7 @@
             <th>Стоимость без налогов (р.)</th>
             <th>Налог</th>
             <th>Стоимость с налогом (р.)</th>
+            <th>На карте</th>
         </tr>
         {% set j = 0 %}
         {% for k,l in banners %}
@@ -192,6 +193,11 @@
                 <td>{{ l.price |number_format(1, '.', '') }}</td>
                 <td>{{ l.taxType }}</td>
                 <td>{{ l.price2 |number_format(1, '.', '') }}</td>
+                <td style="text-align: center">
+                    <a href="{{ path('map') }}?bannerId={{ l.id }}" target="_top">
+                        <img src="{{ asset('bundles/app/images/adrs-icon.png') }}" class="icon" title="Показать щит на карте">
+                    </a>
+                </td>
             </tr>
         {% else %}
             <tr>
