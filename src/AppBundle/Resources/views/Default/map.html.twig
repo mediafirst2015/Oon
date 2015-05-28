@@ -74,6 +74,12 @@
                         </div>
                         <br />
                         <div class="check-group">
+                            Только горящие
+                            <div class="check {{ params.hot == 1 ? 'active' : '' }}"></div>
+                            <input type="hidden" name="hot" value="{{ params.hot == 1 ? 1 : 0 }}">
+                        </div>
+                        <br />
+                        <div class="check-group">
                             Формат 3х6
                             <div class="check {{ params.formatM == 1 ? 'active' : '' }}"></div>
                             <input type="hidden" name="formatM" value="{{ params.formatM == 1 ? 1 : 0 }}">
@@ -229,7 +235,8 @@
                         '&otsMin={{ params.otsMin }}'+
                         '&otsMax={{ params.otsMax }}'+
                         '&priceMin={{ params.priceMin }}'+
-                        '&priceMax={{ params.priceMax }}';
+                        '&priceMax={{ params.priceMax }}'+
+                        '&hot={{ params.hot }}';
                 objects = getObjects(filter);
             }
 

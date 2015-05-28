@@ -107,7 +107,8 @@ class DefaultController extends Controller
             $params['priceMax'],
             $params['sideA'],
             $params['sideB'],
-            $params['gid']
+            $params['gid'],
+            0
         );
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -196,6 +197,7 @@ class DefaultController extends Controller
             'light' => $request->query->get('light'),
             'street' => $request->query->get('street'),
             'city' => $request->query->get('city'),
+            'hot' => $request->query->get('hot'),
 
             'dateStart' => $request->query->get('dateStart'),
             'dateEnd' => $request->query->get('dateEnd'),

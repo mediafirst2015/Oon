@@ -77,6 +77,10 @@
             <div id="items" style="margin-top: -70px;">
             {{ render(path('hot_ajax')) }}
             </div>
+            <div style="text-align: center" id="hotmap">
+                <a href="{{ path('map') }}?hot=1"><span class="btn2">Показать на карте</span></a>
+            </div>
+            <br />
             <br />
         </div>
     </div>
@@ -167,4 +171,13 @@
                 });
             });
         </script>
+    {% endblock %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <style>
+            #hotmap a:hover{
+                text-decoration: none !important;
+            }
+        </style>
     {% endblock %}

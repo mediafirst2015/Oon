@@ -96,10 +96,15 @@ class MapController extends Controller
         $priceMin = $request->request->get('priceMin');
         $priceMax = $request->request->get('priceMax');
 
+        $hot = $request->request->get('hot');
+        if ($hot == 'on'){
+            $hot = 1;
+        }
+
         $id = $request->request->get('id');
 
 
-        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->filter($id,$city,$area,$formatS,$formatM,$formatL,$formatSB,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax);
+        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->filter($id,$city,$area,$formatS,$formatM,$formatL,$formatSB,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax,null,null,null,$hot);
         $objects = array();
         if ($banners != null){
             foreach ($banners as $banner){

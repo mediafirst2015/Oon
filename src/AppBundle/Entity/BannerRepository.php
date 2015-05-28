@@ -5,13 +5,18 @@ use Doctrine\ORM\EntityRepository;
 
 class BannerRepository extends EntityRepository
 {
-    public function filter($id,$city,$area,$formatS,$formatM,$formatL,$formatSB,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax, $sideA = null, $sideB = null, $gid = null)
+    public function filter($id,$city,$area,$formatS,$formatM,$formatL,$formatSB,$type,$light,$grpMin,$grpMax,$otsMin,$otsMax,$priceMin,$priceMax, $sideA = null, $sideB = null, $gid = null, $hot = null)
     {
+
+        $currentDate = new \DateTime();
+        $currentDate  = $currentDate->modify('+1 month');
+        $currentDate = $currentDate->format('Y-m').'-01 00:00:00';
 
         $qb = $this->_em->createQueryBuilder();
         $qb->select('b')
             ->from('AppBundle:Banner','b')
             ->leftJoin('b.city', 'c')
+            ->leftJoin('AppBundle:Month', 'm',"WITH","m.banner = b.id AND m.date = '".$currentDate."'")
             ->where('b.enabled = 1');
         if ($id != null){
             $qb->andWhere("b.id = '$id'");
@@ -68,6 +73,10 @@ class BannerRepository extends EntityRepository
 
             if ($gid != null ){
                 $qb->andWhere(" b.gid = '".$gid."' ");
+            }
+
+            if ($hot == 1){
+                $qb->andWhere('m.sale is not NULL AND m.sale != 0');
             }
 
         }
