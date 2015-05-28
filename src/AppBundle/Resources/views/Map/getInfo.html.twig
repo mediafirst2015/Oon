@@ -14,13 +14,9 @@
         <td>{{ object.side }}</td>
     </tr>
     <tr>
-        <td>Формат</td>
-        <td>{{ object.format }}</td>
+        <td>Тип</td>
+        <td>{{ object.type }}</td>
     </tr>
-    {#<tr>#}
-        {#<td>Тип</td>#}
-        {#<td>{{ object.type }}</td>#}
-    {#</tr>#}
     <tr>
         <td>Свет</td>
         <td>{{ object.light == 1 ? 'Да' : 'нет' }}</td>
@@ -50,7 +46,7 @@
 
 {#{{ dump(monthlySales) }}#}
 
-{% if object.hot == 0 or object.hot == '0' or object.hot == null %}
+{#{% if object.hot == 0 or object.hot == '0' or object.hot == null %}#}
     <table style='margin: 0 auto' class="month-table">
         {% for row in ( 'now' | date('m') .. 12 ) | batch( 2 ) %}
             <tr>
@@ -60,39 +56,20 @@
                     <td>
                         <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="{{ column }}" {{ myBasket[object.id ~ '-' ~ column ~ '-2015'] is defined ? 'checked="checked"' }}>
                     </td>
-                    {% if monthlySales[column~'2015'] is defined %}
-                        <td>&nbsp;{{ object.price2 * ((100 - monthlySales[column~'2015'].percent)/100)  |number_format(1, '.', '') }}&nbsp;р.</td>
-                    {% else %}
-                        <td>&nbsp;{{ object.price2  |number_format(1, '.', '') }}&nbsp;р.</td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
-{% else %}
-    <br />
-    <table style='margin: 0 auto' class="month-table">
+                    {% if object.hotMonth.date is defined and object.hotMonth.date | date('Y')~'-'~column~'-01' == "+1 month" | date('Y-n')~'-01' %}
+                        <td>
+                        <span style="text-decoration: line-through">
+                            {% if monthlySales[column~'2015'] is defined %}
+                                &nbsp;{{ object.price2 * ((100 - monthlySales[column~'2015'].percent)/100)  |number_format(1, '.', '') }}&nbsp;р.
+                            {% else %}
+                                &nbsp;{{ object.price2  |number_format(1, '.', '') }}&nbsp;р.
+                            {% endif %}
+                        </span>
+                            <span style="color: #FF0000">&nbsp;{{ object.price2 * ((100 - object.hotMonth.sale)/100)  |number_format(1, '.', '') }}&nbsp;р.</span>
+                        </td>
 
-        {% for row in ( 'now' | date('m') .. ('now' | date('m') + 2) ) | batch( 2 ) %}
-            <tr>
-                {#{{ dump(row) }}#}
-                {% for column in row %}
-                    <td>{{ month[column] }}</td>
-                    <td>
-                        <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="{{ column }}" {{ myBasket[object.id ~ '-' ~ column ~ '-2015'] is defined ? 'checked="checked"' }}>
-                    </td>
-                    {% if column == 'now' | date('m') %}
-                    <td>
-                        {% if monthlySales[column~'2015'].percent is defined %}
-                            <td>&nbsp;{{ object.price2 * ((100 - monthlySales[column~'2015'].percent)/100)  |number_format(1, '.', '') }}&nbsp;р.</td>
-                            <td>&nbsp;{{ object.price2 * ((100 - monthlySales[column~'2015'].percent)/100)  |number_format(1, '.', '') }}&nbsp;р.</td>
-                        {% else %}
-                            <td>&nbsp;{{ object.price2  |number_format(1, '.', '') }}&nbsp;р.</td>
-                            <td>&nbsp;{{ object.price2  |number_format(1, '.', '') }}&nbsp;р.</td>
-                        {% endif %}
-                    </td>
                     {% else %}
-                        {% if monthlySales[column~'2015'].percent is defined %}
+                        {% if monthlySales[column~'2015'] is defined %}
                             <td>&nbsp;{{ object.price2 * ((100 - monthlySales[column~'2015'].percent)/100)  |number_format(1, '.', '') }}&nbsp;р.</td>
                         {% else %}
                             <td>&nbsp;{{ object.price2  |number_format(1, '.', '') }}&nbsp;р.</td>
@@ -102,42 +79,40 @@
             </tr>
         {% endfor %}
     </table>
+{#{% else %}#}
+    {#<br />#}
+    {#<table style='margin: 0 auto' class="month-table">#}
 
-
-
-    {#<table style='margin-left:  20px' class="month-table">#}
-        {#<tr>#}
-            {#<td>#}
-                {#Апрель#}
-                {#<img src="{{ asset('bundles/app/images/fire.gif') }}" title="Горящее предложение">#}
-            {#</td>#}
-            {#<td>#}
-                {#<input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="4" {{ myBasket[object.id~'-4-2015'] is defined ? 'checked="checked"' }}>#}
-            {#</td>#}
-            {#<td>#}
-                {#<span style="text-decoration: line-through">&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</span>#}
-                {#<span style="color: #cc0000; font-weight: bold">&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</span>#}
-            {#</td>#}
-        {#</tr>#}
-        {#<tr><td>&nbsp;</td></tr>#}
-        {#<tr>#}
-            {#<td>Май</td>#}
-            {#<td>#}
-                {#<input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="5" {{ myBasket[object.id~'-5-2015'] is defined ? 'checked="checked"' }}>#}
-            {#</td>#}
-            {#<td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>#}
-        {#</tr>#}
-        {#<tr><td>&nbsp;</td></tr>#}
-        {#<tr>#}
-            {#<td>Июнь</td>#}
-            {#<td>#}
-                {#<input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="6" {{ myBasket[object.id~'-6-2015'] is defined ? 'checked="checked"' }}>#}
-            {#</td>#}
-            {#<td>&nbsp;{{ object.price2 |number_format(1, '.', '') }}&nbsp;р.</td>#}
-        {#</tr>#}
+        {#{% for row in ( 'now' | date('m') .. ('now' | date('m') + 2) ) | batch( 2 ) %}#}
+            {#<tr>#}
+                {#&#123;&#35;{{ dump(row) }}&#35;&#125;#}
+                {#{% for column in row %}#}
+                    {#<td>{{ month[column] }}</td>#}
+                    {#<td>#}
+                        {#<input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="{{ column }}" {{ myBasket[object.id ~ '-' ~ column ~ '-2015'] is defined ? 'checked="checked"' }}>#}
+                    {#</td>#}
+                    {#{% if column == 'now' | date('m') %}#}
+                    {#<td>#}
+                        {#{% if monthlySales[column~'2015'].percent is defined %}#}
+                            {#<td>&nbsp;{{ object.price2 * ((100 - monthlySales[column~'2015'].percent)/100)  |number_format(1, '.', '') }}&nbsp;р.</td>#}
+                            {#<td>&nbsp;{{ object.price2 * ((100 - monthlySales[column~'2015'].percent)/100)  |number_format(1, '.', '') }}&nbsp;р.</td>#}
+                        {#{% else %}#}
+                            {#<td>&nbsp;{{ object.price2  |number_format(1, '.', '') }}&nbsp;р.</td>#}
+                            {#<td>&nbsp;{{ object.price2  |number_format(1, '.', '') }}&nbsp;р.</td>#}
+                        {#{% endif %}#}
+                    {#</td>#}
+                    {#{% else %}#}
+                        {#{% if monthlySales[column~'2015'].percent is defined %}#}
+                            {#<td>&nbsp;{{ object.price2 * ((100 - monthlySales[column~'2015'].percent)/100)  |number_format(1, '.', '') }}&nbsp;р.</td>#}
+                        {#{% else %}#}
+                            {#<td>&nbsp;{{ object.price2  |number_format(1, '.', '') }}&nbsp;р.</td>#}
+                        {#{% endif %}#}
+                    {#{% endif %}#}
+                {#{% endfor %}#}
+            {#</tr>#}
+        {#{% endfor %}#}
     {#</table>#}
-
-{% endif %}
+{#{% endif %}#}
 <br />
 {#<div style='text-align: right'>#}
     {#<span class='btn addbasket' style='font-size: 15px'  >Добавить в заказ</span>#}

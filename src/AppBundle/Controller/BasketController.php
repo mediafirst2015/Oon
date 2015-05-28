@@ -64,8 +64,14 @@ class BasketController extends Controller
             $banner = $em->getRepository('AppBundle:Banner')->findOneById($itemId);
             if ($banner){
 
-                if ($banner->getHot() == false){
-//                    * ((100 - monthlySales[column~'2015'].percent)/100)
+
+                if ($banner->getHotMonth($month)){
+
+                    $percent = $banner->getHotMonth($month)->getSale();
+
+                    $price = $banner->getPrice() * ((100 - $percent)/100);
+                    $price2 = $banner->getPrice2() * ((100 - $percent)/100);
+                }else{
                     $company = $banner->getCompany();
                     if (!isset($company->getMonthlySales()[$month.$year])){
                         $percent = 0;
@@ -74,10 +80,8 @@ class BasketController extends Controller
                     }
                     $price = $banner->getPrice() * ((100 - $percent)/100);
                     $price2 = $banner->getPrice2() * ((100 - $percent)/100);
-                }else{
-                    $price = $banner->getPrice();
-                    $price2 = $banner->getPrice2();
                 }
+
 
                 $lists[$itemId.'-'.$month.'-'.$year] = array(
                     'id' => $banner->getId(),

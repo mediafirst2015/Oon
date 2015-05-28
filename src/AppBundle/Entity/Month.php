@@ -75,6 +75,9 @@ class Month extends BaseEntity
      */
     public function setPrice($price)
     {
+        if ($price == 0){
+            $price = null;
+        }
         $this->price = $price;
     }
 
@@ -123,6 +126,9 @@ class Month extends BaseEntity
      */
     public function setSale($sale)
     {
+        if ($sale == 0){
+            $sale = null;
+        }
         $this->sale = $sale;
     }
 

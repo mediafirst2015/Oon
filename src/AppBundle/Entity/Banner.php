@@ -632,6 +632,23 @@ class Banner extends BaseEntity
         $this->link = $link;
     }
 
+    public function getHotMonth($month = null){
+        $currentDate = new \DateTime();
+        if ($month == null){
+            $currentDate  = $currentDate->modify('+1 month');
+            $currentDate = $currentDate->format('Y-m').'-01 00:00:00';
+        }else{
+            $currentDate = new \DateTime($currentDate->format('Y').'-'.$month.'-01 00:00:00');
+            $currentDate = $currentDate->format('Y-m').'-01 00:00:00';
+        }
 
+        $months = $this->months;
+        foreach ($months as $m){
+            if ( $m->getDate()->format('Y-m').'-01 00:00:00' == $currentDate AND $m->getSale() != 0 AND $m->getSale() != null){
+                return $m;
+            }
+        }
+        return false;
+    }
 
 }

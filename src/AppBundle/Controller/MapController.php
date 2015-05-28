@@ -136,7 +136,7 @@ class MapController extends Controller
                     'coords' => [ $banner->getLatitude(), $banner->getLongitude()],
                     'alt' => $banner->getAdrs(),
                     'id' => $banner->getId(),
-                    'hot' => $banner->getHot(),
+                    'hot' => ( $banner->getHotMonth() == false ? 0 : 1),
                     'format' => $banner->getFormat(),
 //                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
                 );

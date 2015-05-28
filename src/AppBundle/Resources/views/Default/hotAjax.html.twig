@@ -28,12 +28,13 @@
                 <td>Цена</td>
                 <td>
                     <span style="font-size: 14px; text-decoration: line-through">{{ b.price2 |number_format(1, '.', '') }} р.</span> <br />
-                    <b class="pink">{{ b.price2 |number_format(1, '.', '') }} р.</b>
+                    <b class="pink">{{ b.price2 * ((100-b.hotMonth.sale)/100) |number_format(1, '.', '') }} р.</b>
+                    {#{{ dump(b.hotMonth) }}#}
                 </td>
             </tr>
             <tr>
                 <td>Период</td>
-                <td><b class="pink">Апрель</b></td>
+                <td><b class="pink">Июнь</b></td>
             </tr>
         </table>
         <div>
@@ -46,7 +47,7 @@
                         </a>
                     </td>
                     <td style="text-align: right">
-                        <span class="btn-pink addBasket" data-id="{{ b.id }}" data-month="4">Заказать</span>
+                        <span class="btn-pink addBasket" data-id="{{ b.id }}" data-month="6">Заказать</span>
                     </td>
                 </tr>
             </table>

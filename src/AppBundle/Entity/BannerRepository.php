@@ -79,12 +79,15 @@ class BannerRepository extends EntityRepository
 
     public function filterHot($params, $page = null)
     {
+        $currentDate = new \DateTime();
+        $currentDate  = $currentDate->modify('+1 month');
+        $currentDate = $currentDate->format('Y-m').'-01 00:00:00';
         $qb = $this->_em->createQueryBuilder();
         $qb->select('b')
             ->from('AppBundle:Banner','b')
             ->leftJoin('b.city', 'c')
-            ->where('b.enabled = 1')
-            ->andWhere('b.hot = 1');
+            ->leftJoin('AppBundle:Month', 'm',"WITH","m.banner = b.id AND m.date = '".$currentDate."'")
+            ->where('b.enabled = 1 AND m.sale is not NULL AND m.sale != 0');
 
         if ($params['area'] != null && $params['area'] != 0 && $params['area'] != '0'){
             $qb->andWhere("b.area = '".$params['area']."'");
@@ -117,6 +120,7 @@ class BannerRepository extends EntityRepository
                 ->setMaxResults(4);
         }
 
+//        echo $qb->getQuery()->getSQL();
         return $qb->getQuery()->getResult();
     }
 
