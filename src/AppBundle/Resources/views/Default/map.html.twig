@@ -313,7 +313,11 @@
                             var clusterer = new ym.Clusterer({
                                 preset: 'islands#darkGreenClusterIcons',
                                 clusterOpenBalloonOnClick: true,
-                                maxZoom: 14
+                                {% if app.request.query.all.my is defined and app.request.query.all.my == 1 %}
+                                    maxZoom: 0,
+                                {% else %}
+                                    maxZoom: 12,
+                                {% endif %}
                             });
 
                             clusterer.events
