@@ -179,8 +179,9 @@ class ParserController extends Controller{
                 exec("/bin/kill -9 $val");
             }
         }
-        $cmd = 'php ' . $container->get('kernel')->getRootDir() . '/console file:parser >> /dev/null &';
-        exec($cmd);
+        $cmd = 'php ' . $container->get('kernel')->getRootDir() . '/console file:parser';
+//        exec($cmd);
+        shell_exec( $cmd . "> /dev/null 2>/dev/null &" );
         return $this->redirect($this->generateUrl('parser-files'));
     }
 
