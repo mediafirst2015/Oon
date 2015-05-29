@@ -173,9 +173,10 @@
 
 {% block javascripts %}
     {{ parent() }}
-
+    <script src="{{ asset('bundles/app/pieChartClusterer/pie-chart-clusterer.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/app/kladrapi/jquery.kladr.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
+
         $(document).ready(function(){
 
             $('#form-submit').click(function(){
@@ -191,350 +192,396 @@
             var map;
             var objects;
             var clusterer = null;
-            ym.ready(init);
-            function init(){
-                map = new ym.Map('map', {
+            ymaps.ready(init);
+            function init() {
+                map = new ymaps.Map('map', {
                     {% if app.request.query.all.my is defined and app.request.query.all.my == 1 %}
-                        center: [55.755381, 37.619044],
-                        zoom: 11,
+                    center: [55.755381, 37.619044],
+                    zoom: 11,
                     {% else %}
-                        {% if thisBanner != null %}
-                            center: [{{ thisBanner.latitude }}, {{ thisBanner.longitude }}],
-                            zoom: 15,
-                        {% elseif pos.x != null and pos.y != null %}
-                            center: [{{ pos.x }}, {{ pos.y }}],
-                            {% if (street) %}
-                                zoom: 15,
-                            {% else %}
-                                zoom: 12,
-                            {% endif %}
-                        {% else %}
-                            center: [55.755381, 37.619044],
-                            zoom: 11,
-                        {% endif %}
+                    {% if thisBanner != null %}
+                    center: [{{ thisBanner.latitude }}, {{ thisBanner.longitude }}],
+                    zoom: 15,
+                    {% elseif pos.x != null and pos.y != null %}
+                    center: [{{ pos.x }}, {{ pos.y }}],
+                    {% if (street) %}
+                    zoom: 15,
+                    {% else %}
+                    zoom: 12,
+                    {% endif %}
+                    {% else %}
+                    center: [55.755381, 37.619044],
+                    zoom: 11,
+                    {% endif %}
                     {% endif %}
                     controls: ['zoomControl']
                 });
+
+                {#ymaps.modules.require(['PieChartClustererLayout'], function (PieChartClustererLayout) {#}
+                    {#var objectManager = ymaps.ObjectManager({#}
+                        {#clusterize: true,#}
+                        {#clusterIconLayout: PieChartClustererLayout#}
+                    {#});#}
+
+                    {#var filter =#}
+                            {#'id={{ id }}'+#}
+                            {#'&city={{ params.city }}'+#}
+                            {#'&street={{ params.street }}'+#}
+                            {#'&area={{ params.area }}'+#}
+                            {#'&formatS={{ params.formatS }}'+#}
+                            {#'&formatM={{ params.formatM }}'+#}
+                            {#'&formatL={{ params.formatL }}'+#}
+                            {#'&formatSB={{ params.formatSB }}'+#}
+                            {#'&type='+#}
+                            {#'&light={{ params.light }}'+#}
+                            {#'&grpMin={{ params.grpMin }}'+#}
+                            {#'&grpMax={{ params.grpMax }}'+#}
+                            {#'&otsMin={{ params.otsMin }}'+#}
+                            {#'&otsMax={{ params.otsMax }}'+#}
+                            {#'&priceMin={{ params.priceMin }}'+#}
+                            {#'&priceMax={{ params.priceMax }}'+#}
+                            {#'&hot={{ params.hot }}';#}
+
+                    {#objects = getObjects(filter);#}
+
+                    {#objectManager.add(points);#}
+                    {#map.geoObjects.add(objectManager);#}
+
+                {#});#}
+
+
+
+                ymaps.modules.require(['PieChartClusterer'], function (PieChartClusterer) {
+
+                    clusterer = new PieChartClusterer({margin: 10});
+                    var filter =
+                            'id={{ id }}'+
+                            '&city={{ params.city }}'+
+                            '&street={{ params.street }}'+
+                            '&area={{ params.area }}'+
+                            '&formatS={{ params.formatS }}'+
+                            '&formatM={{ params.formatM }}'+
+                            '&formatL={{ params.formatL }}'+
+                            '&formatSB={{ params.formatSB }}'+
+                            '&type='+
+                            '&light={{ params.light }}'+
+                            '&grpMin={{ params.grpMin }}'+
+                            '&grpMax={{ params.grpMax }}'+
+                            '&otsMin={{ params.otsMin }}'+
+                            '&otsMax={{ params.otsMax }}'+
+                            '&priceMin={{ params.priceMin }}'+
+                            '&priceMax={{ params.priceMax }}'+
+                            '&hot={{ params.hot }}';
+
+                    objects = getObjects(filter);
+//                    console.log(objects);
+//                    clusterer.add(objects);
+//                    myMap.geoObjects.add(clusterer);
+
+                });
+
+
+
                 map.events.add('click', function (e) {
                     var target = e.get('target')
                     target.balloon.close();
                 });
-                var filter =
-                        'id={{ id }}'+
-                        '&city={{ params.city }}'+
-                        '&street={{ params.street }}'+
-                        '&area={{ params.area }}'+
-                        '&formatS={{ params.formatS }}'+
-                        '&formatM={{ params.formatM }}'+
-                        '&formatL={{ params.formatL }}'+
-                        '&formatSB={{ params.formatSB }}'+
-                        '&type='+
-                        '&light={{ params.light }}'+
-                        '&grpMin={{ params.grpMin }}'+
-                        '&grpMax={{ params.grpMax }}'+
-                        '&otsMin={{ params.otsMin }}'+
-                        '&otsMax={{ params.otsMax }}'+
-                        '&priceMin={{ params.priceMin }}'+
-                        '&priceMax={{ params.priceMax }}'+
-                        '&hot={{ params.hot }}';
-                objects = getObjects(filter);
             }
 
-            function orderRefresh(){
-                $.ajax({
-                    url: Routing.generate('order_price'),
-                    method: 'GET',
-                    success: function(msg){
-                        $('#order-btn').html('Выбрано на сумму '+msg+' р.');
-                        $('#order-btn').css('display','block');
-                    }
-                });
-            }
 
-            function getObjects(filter){
-                {% if app.request.query.all.my is defined and app.request.query.all.my == 1 %}
-                var url = '{{ path('get_my_objects') }}';
-                {% else %}
-                var url = '{{ path('get_objects') }}';
-                {% endif %}
-                $.ajax({
-                    url: url,
-                    processData: false,
-                    method: 'POST',
-                    data: filter,
-                    success: function(msg){
-                        objects = msg.data;
-                        var placemarks = [];
-                        var j = 0;
+                function orderRefresh(){
+                    $.ajax({
+                        url: Routing.generate('order_price'),
+                        method: 'GET',
+                        success: function(msg){
+                            $('#order-btn').html('Выбрано на сумму '+msg+' р.');
+                            $('#order-btn').css('display','block');
+                        }
+                    });
+                }
 
-                        if ( objects != null && objects.length != 0 ) {
-                            for (var i in objects) {
-                                {% if thisBanner != null %}
+                function getObjects(filter){
+                    {% if app.request.query.all.my is defined and app.request.query.all.my == 1 %}
+                    var url = '{{ path('get_my_objects') }}';
+                    {% else %}
+                    var url = '{{ path('get_objects') }}';
+                    {% endif %}
+                    $.ajax({
+                        url: url,
+                        processData: false,
+                        method: 'POST',
+                        data: filter,
+                        success: function(msg){
+                            objects = msg.data;
+                            var placemarks = [];
+                            var j = 0;
+
+                            if ( objects != null && objects.length != 0 ) {
+                                for (var i in objects) {
+                                    {% if thisBanner != null %}
                                     var img = '/bundles/app/images/arrow-down.png';
-                                {% else %}
+                                    {% else %}
+//                                    if (objects[i].hot != '0' && objects[i].hot != 0 && objects[i].hot != null) {
+//                                        var img = '/bundles/app/images/fire.gif';
+//                                    } else {
+//                                        if (objects[i].format == '3x6') {
+//                                            var img = '/bundles/app/images/mapIcon3.png';
+//                                        } else {
+//                                            if (objects[i].format == 'big') {
+//                                                var img = '/bundles/app/images/mapIcon4.png';
+//                                            } else {
+//                                                if (objects[i].format == 'small') {
+//                                                    var img = '/bundles/app/images/mapIcon5.png';
+//                                                } else {
+//                                                    var img = '/bundles/app/images/mapIcon1.png';
+//                                                }
+//                                            }
+//                                        }
+//                                    }
                                     if (objects[i].hot != '0' && objects[i].hot != 0 && objects[i].hot != null) {
-                                        var img = '/bundles/app/images/fire.gif';
+                                        var img = 'islands#darkOrangeDotIcon';
                                     } else {
                                         if (objects[i].format == '3x6') {
-                                            var img = '/bundles/app/images/mapIcon3.png';
+                                            var img = 'islands#blueDotIcon';
                                         } else {
                                             if (objects[i].format == 'big') {
-                                                var img = '/bundles/app/images/mapIcon4.png';
+                                                var img = 'islands#darkGreenDotIcon';
                                             } else {
                                                 if (objects[i].format == 'small') {
-                                                    var img = '/bundles/app/images/mapIcon5.png';
+                                                    var img = 'islands#violetDotIcon';
                                                 } else {
-                                                    var img = '/bundles/app/images/mapIcon1.png';
+                                                    var img = 'islands#blueDotIcon';
                                                 }
                                             }
                                         }
                                     }
-                                {% endif %}
-                                placemarks[j] = new ym.GeoObject({
-                                            geometry: {
-                                                type: "Point",
-                                                coordinates: objects[i].coords //Массив
-                                            },
-                                            properties: {
-                                                hintContent: objects[i].alt, //Подсказка
+                                    {% endif %}
+                                    placemarks[j] = new ymaps.GeoObject({
+//                                                id: objects[i].id,
+                                                geometry: {
+                                                    type: "Point",
+                                                    coordinates: objects[i].coords //Массив
+                                                },
+                                                properties: {
+                                                    hintContent: objects[i].alt, //Подсказка
 //                                    balloonContent: objects[i].content
-                                                balloonContent: '',
-                                                itemId: objects[i].id
+                                                    balloonContent: '',
+                                                    itemId: objects[i].id
 
+                                                }
+                                            }, {
+                                                balloonPanelMaxMapArea: 0,
+                                                openEmptyBalloon: true,
+//                                            iconLayout: 'default#image',
+//                                            iconImageHref: img,
+                                                preset: img,
+                                                {#{% if thisBanner != null %}#}
+//                                                iconImageSize: [32, 32],
+                                                {#{% else %}#}
+//                                                iconImageSize: [16, 16],
+                                                {#{% endif %}#}
                                             }
-                                        }, {
-                                            balloonPanelMaxMapArea: 0,
-                                            openEmptyBalloon: true,
-                                            iconLayout: 'default#image',
-                                            iconImageHref: img,
-                                            {% if thisBanner != null %}
-                                                iconImageSize: [32, 32],
-                                            {% else %}
-                                                iconImageSize: [16, 16],
-                                            {% endif %}
-                                        }
-                                );
+                                    );
 
-                                j++;
-                            }
-                            var clusterer = new ym.Clusterer({
-                                preset: 'islands#darkGreenClusterIcons',
-                                clusterOpenBalloonOnClick: true,
-                                {% if app.request.query.all.my is defined and app.request.query.all.my == 1 %}
-                                    maxZoom: 0,
-                                {% else %}
-                                    maxZoom: 12,
-                                {% endif %}
-                            });
-
-                            clusterer.events
-                                // Можно слушать сразу несколько событий, указывая их имена в массиве.
-                                    .add(['mouseenter', 'mouseleave'], function (e) {
-                                        var target = e.get('target'),
-                                                type = e.get('type');
-                                        if (typeof target.getGeoObjects != 'undefined') {
-                                            // Событие произошло на кластере.
-                                            if (type == 'mouseenter') {
-                                                target.options.set('preset', 'islands#greenClusterIcons');
-                                            } else {
-                                                target.options.set('preset', 'islands#darkGreenClusterIcons');
-                                            }
-                                        }
-                                    });
-
-//                        s.getData().cluster.properties.getAll().geoObjects[1]
-                            clusterer.events.add('balloonopen',function(e){
-                                var target = e.get('target');
-                                if (typeof target.getData != 'undefined') {
-//                                console.log('Кластер');
-//                                console.log(s=target);
-                                    // Кластер
-                                    var objs = target.getData().cluster.properties.getAll().geoObjects;
-                                    var str = '';
-                                    for ( i = 0 ; i < objs.length ; i ++ ){
-                                        str += objs[i].properties.get('itemId')+'|';
-                                    }
-//                                console.log('dates =>' +str);
-                                    $.ajax({
-                                        url: Routing.generate('get_more_info'),
-                                        data: 'items='+str,
-                                        method: 'POST',
-                                        success: function(msg){
-//                                        console.log('ajax success');
-//                                        target.properties.set('balloonContent', msg);
-                                            for ( i = 0 ; i < msg.data.length ; i++ ){
-                                                objs[i].properties.set('name', msg.data[i].title);
-                                                objs[i].properties.set('clusterCaption', msg.data[i].title);
-                                                objs[i].properties.set('balloonContentBody', msg.data[i].body);
-                                            }
-                                        },
-                                        error: function(){
-                                            target.properties.set('balloonContent', 'Не удалось загрузить контент');
-                                            console.log('ajax error');
-                                        }
-                                    });
-//                                console.log('ajax closed');
-                                }else{
-//                                console.log('Точка');
-//                                console.log(s=target);
-                                    $.ajax({
-                                        url: Routing.generate('get_more_info'),
-                                        data: 'itemId='+ target.properties.get('itemId'),
-                                        method: 'POST',
-                                        success: function(msg){
-//                                            console.log('ajax');
-                                            target.properties.set('balloonContent', msg);
-                                        },
-                                        error: function(){
-//                                            console.log('ajax error');
-                                            target.properties.set('balloonContent', 'Не удалось загрузить контент');
-                                        }
-                                    });
-//                                console.log('close ajax');
+                                    j++;
                                 }
-                            });
-                            clusterer.add(placemarks);
-                            map.geoObjects.add(clusterer);
+//                                return placemarks;
+                                {#var clusterer = new ymaps.Cl({#}
+{#//#}
+                                    {#preset: 'islands#darkGreenClusterIcons',#}
+                                    {#clusterOpenBalloonOnClick: true,#}
+                                    {#clusterBalloonCycling: false,#}
+{#//                                groupByCoordinates: true,#}
+                                    {#{% if app.request.query.all.my is defined and app.request.query.all.my == 1 %}#}
+{#//                                    maxZoom: 0,#}
+                                    {#&#123;&#35;{% else %}&#35;&#125;#}
+                                    {#maxZoom: 12, //24#}
+                                    {#&#123;&#35;{% endif %}&#35;&#125;#}
+                                {#});#}
 
 
 
-                            $('#loader-map').css('display','none');
-                            $('#gray').css('display','none');
 
-                        }else{
-                            $('#gray').css('display','block');
-                            $('#loader-map').css('display','none');
-                            $('#dinamys-popups').css('display','block');
-                            $('#dinamys-popups').html('<div class="flashbag-success-2"><span>Не найдено предложений,<br />удовлетворяющих Вашему запросу</span></div>');
+                                clusterer.events.add('balloonopen',function(e){
+                                    var target = e.get('target');
+                                    if (typeof target.getData != 'undefined') {//
+                                        var objs = target.getData().cluster.properties.getAll().geoObjects;
+                                        var str = '';
+                                        for ( i = 0 ; i < objs.length ; i ++ ){
+                                            str += objs[i].properties.get('itemId')+'|';
+                                        }
+                                        $.ajax({
+                                            url: Routing.generate('get_more_info'),
+                                            data: 'items='+str,
+                                            method: 'POST',
+                                            success: function(msg){
+                                                for ( i = 0 ; i < msg.data.length ; i++ ){
+                                                    objs[i].properties.set('name', msg.data[i].title);
+                                                    objs[i].properties.set('clusterCaption', msg.data[i].title);
+                                                    objs[i].properties.set('balloonContentBody', msg.data[i].body);
+                                                }
+                                            },
+                                            error: function(){
+                                                target.properties.set('balloonContent', 'Не удалось загрузить контент');
+                                                console.log('ajax error');
+                                            }
+                                        });
+                                    }else{
+                                        $.ajax({
+                                            url: Routing.generate('get_more_info'),
+                                            data: 'itemId='+ target.properties.get('itemId'),
+                                            method: 'POST',
+                                            success: function(msg){
+                                                target.properties.set('balloonContent', msg);
+                                            },
+                                            error: function(){
+                                                target.properties.set('balloonContent', 'Не удалось загрузить контент');
+                                            }
+                                        });
+                                    }
+                                });
+                                clusterer.add(placemarks);
+                                map.geoObjects.add(clusterer);
 
+
+
+                                $('#loader-map').css('display','none');
+                                $('#gray').css('display','none');
+
+                            }else{
+                                $('#gray').css('display','block');
+                                $('#loader-map').css('display','none');
+                                $('#dinamys-popups').css('display','block');
+                                $('#dinamys-popups').html('<div class="flashbag-success-2"><span>Не найдено предложений,<br />удовлетворяющих Вашему запросу</span></div>');
+
+                            }
                         }
+                    });
+                }
+
+
+                $('#excel').click(function () {
+                    var area = $('#area').val();
+                    var format = $('#format').val();
+                    var type = $('#type').val();
+                    var light = $('#light').val();
+                    var grpMin = $("#grp").slider("values", 0) / 100;
+                    var grpMax = $("#grp").slider("values", 1) / 100;
+                    var otsMin = $("#ots").slider("values", 0);
+                    var otsMax = $("#ots").slider("values", 1);
+
+                    var filter =
+                            'street='+street+
+                            'area='+area+
+                            '&format='+format+
+                            '&type='+type+
+                            '&light='+light+
+                            '&grpMin='+grpMin+
+                            '&grpMax='+grpMax+
+                            '&otsMin='+otsMin+
+                            '&otsMax='+otsMax;
+                    var url = '{{ path('all_export') }}?'+filter;
+                    window.location.href = url;
+                });
+
+                $('#street' ).kladr({
+                    token: '541ee4ac7c52392c7d8b457e',
+                    key: '181d5e2c44994c335e5e81e9ae46e79a67b6b495',
+                    type: $.kladr.type.street,
+                    parentType: $.kladr.type.city,
+                    parentId: '7700000000000',
+                    select: function(obj){
+                        $('#street').val(obj.name);
                     }
                 });
-            }
 
-
-            $('#excel').click(function () {
-                var area = $('#area').val();
-                var format = $('#format').val();
-                var type = $('#type').val();
-                var light = $('#light').val();
-                var grpMin = $("#grp").slider("values", 0) / 100;
-                var grpMax = $("#grp").slider("values", 1) / 100;
-                var otsMin = $("#ots").slider("values", 0);
-                var otsMax = $("#ots").slider("values", 1);
-
-                var filter =
-                        'street='+street+
-                        'area='+area+
-                        '&format='+format+
-                        '&type='+type+
-                        '&light='+light+
-                        '&grpMin='+grpMin+
-                        '&grpMax='+grpMax+
-                        '&otsMin='+otsMin+
-                        '&otsMax='+otsMax;
-                var url = '{{ path('all_export') }}?'+filter;
-                window.location.href = url;
-            });
-
-            $('#street' ).kladr({
-                token: '541ee4ac7c52392c7d8b457e',
-                key: '181d5e2c44994c335e5e81e9ae46e79a67b6b495',
-                type: $.kladr.type.street,
-                parentType: $.kladr.type.city,
-                parentId: '7700000000000',
-                select: function(obj){
-                    $('#street').val(obj.name);
-                }
-            });
-
-            $('#map').on('click','input.addBasket', function(){
-                var item = $(this)
-                $.ajax({
-                    url: Routing.generate('basket_add', {'itemId': $(this).attr('data-id'), 'month': $(this).attr('data-month')}),
-                    method: 'POST',
-                    success: function(msg){
-                        $('#basket-table').html(msg);
-                        if ( item.prop('checked') == true ){
-                            $('.thrumb').notify("позиция добавлена в медиаплан",{ className: 'success', autoHideDelay: 1200, position: "bottom",  showDuration: 0,  hideDuration: 0  });
-                        }else{
-                            $('.thrumb').notify("позиция удалена из медиаплана",{ className: 'success', autoHideDelay: 1200, position: "bottom",  showDuration: 0,  hideDuration: 0  });
+                $('#map').on('click','input.addBasket', function(){
+                    var item = $(this)
+                    $.ajax({
+                        url: Routing.generate('basket_add', {'itemId': $(this).attr('data-id'), 'month': $(this).attr('data-month')}),
+                        method: 'POST',
+                        success: function(msg){
+                            $('#basket-table').html(msg);
+                            if ( item.prop('checked') == true ){
+                                $('.thrumb').notify("позиция добавлена в медиаплан",{ className: 'success', autoHideDelay: 1200, position: "bottom",  showDuration: 0,  hideDuration: 0  });
+                            }else{
+                                $('.thrumb').notify("позиция удалена из медиаплана",{ className: 'success', autoHideDelay: 1200, position: "bottom",  showDuration: 0,  hideDuration: 0  });
+                            }
+                            orderRefresh();
                         }
-                        orderRefresh();
+                    });
+                });
+
+                $('#basket-table').on('click','.removeBasket', function(){
+                    var item = $(this)
+                    $.ajax({
+                        url: Routing.generate('basket_remove', {'itemId': $(this).attr('data-id') }),
+                        method: 'POST',
+                        success: function(msg){
+                            var item2 = item.parent().parent().next();
+                            item2 = item2.attr('class');
+                            $('#basket-table').html(msg);
+                            console.log(item2);
+                            item2 = $('.'+item2);
+                            console.log(item2);
+                            item2.notify("позиция удалена",{ className: 'success', autoHideDelay: 1200, position: "bottom right",  showDuration: 0,  hideDuration: 0  });
+                            orderRefresh();
+                        }
+                    });
+                });
+
+
+                $( "#grp" ).slider({
+                    range: true,
+                    min: 0,
+                    max: 300,
+                    values: [ {{ params.grpMin != null ? params.grpMin*100 : 0 }}, {{ params.grpMax != null ? params.grpMax*100 : 300 }} ],
+                    slide: function( event, ui ) {
+                        $( "#grp-amount" ).html( "" + ui.values[ 0 ]/100 + " - " + ui.values[ 1 ]/100 );
+                        $( "#grp-min" ).val(ui.values[ 0 ]/100);
+                        $( "#grp-max" ).val(ui.values[ 1 ]/100);
+                    }
+                });
+                $( "#grp-amount" ).html( "" + $( "#grp" ).slider( "values", 0 )/100 +
+                " - " + $( "#grp" ).slider( "values", 1 )/100 );
+
+                $( "#ots" ).slider({
+                    range: true,
+                    min: 0,
+                    max: 500,
+                    values: [ {{ params.otsMin != null ? params.otsMin : 0 }}, {{ params.otsMax != null ? params.otsMax : 500 }} ],
+                    slide: function( event, ui ) {
+                        $( "#ots-amount" ).html( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                        $( "#ots-min" ).val(ui.values[ 0 ]);
+                        $( "#ots-max" ).val(ui.values[ 1 ]);
+                    }
+                });
+                $( "#ots-amount" ).html( "" + $( "#ots" ).slider( "values", 0 ) +
+                " - " + $( "#ots" ).slider( "values", 1 ) );
+
+                $( "#price" ).slider({
+                    range: true,
+                    min: 0,
+                    max: 999,
+                    values: [ {{ params.priceMin != null ? params.priceMin : 0 }}, {{ params.priceMax != null ? params.priceMax : 999 }} ],
+                    slide: function( event, ui ) {
+                        $( "#price-amount" ).html( "" + ui.values[ 0 ] + " т.р. - " + ui.values[ 1 ] + ' т.р.' );
+                        $( "#price-min" ).val(ui.values[ 0 ]);
+                        $( "#price-max" ).val(ui.values[ 1 ]);
+                    }
+                });
+                $( "#price-amount" ).html( "" + $( "#price" ).slider( "values", 0 ) +
+                " т.р. - " + $( "#price" ).slider( "values", 1 ) + ' т.р.' );
+
+                $('#city2').change(function(){
+                    if ($(this).val() != 'Москва'){
+                        $('#area2').prop( "disabled", true  );
+                        $('#area2 option').eq(0).prop('selected', true);
+                    }else{
+                        $('#area2').prop( "disabled", false);
                     }
                 });
             });
-
-            $('#basket-table').on('click','.removeBasket', function(){
-                var item = $(this)
-                $.ajax({
-                    url: Routing.generate('basket_remove', {'itemId': $(this).attr('data-id') }),
-                    method: 'POST',
-                    success: function(msg){
-                        var item2 = item.parent().parent().next();
-                        item2 = item2.attr('class');
-                        $('#basket-table').html(msg);
-                        console.log(item2);
-                        item2 = $('.'+item2);
-                        console.log(item2);
-                        item2.notify("позиция удалена",{ className: 'success', autoHideDelay: 1200, position: "bottom right",  showDuration: 0,  hideDuration: 0  });
-                        orderRefresh();
-                    }
-                });
-            });
-
-
-            $( "#grp" ).slider({
-                range: true,
-                min: 0,
-                max: 300,
-                values: [ {{ params.grpMin != null ? params.grpMin*100 : 0 }}, {{ params.grpMax != null ? params.grpMax*100 : 300 }} ],
-                slide: function( event, ui ) {
-                    $( "#grp-amount" ).html( "" + ui.values[ 0 ]/100 + " - " + ui.values[ 1 ]/100 );
-                    $( "#grp-min" ).val(ui.values[ 0 ]/100);
-                    $( "#grp-max" ).val(ui.values[ 1 ]/100);
-                }
-            });
-            $( "#grp-amount" ).html( "" + $( "#grp" ).slider( "values", 0 )/100 +
-            " - " + $( "#grp" ).slider( "values", 1 )/100 );
-
-            $( "#ots" ).slider({
-                range: true,
-                min: 0,
-                max: 500,
-                values: [ {{ params.otsMin != null ? params.otsMin : 0 }}, {{ params.otsMax != null ? params.otsMax : 500 }} ],
-                slide: function( event, ui ) {
-                    $( "#ots-amount" ).html( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-                    $( "#ots-min" ).val(ui.values[ 0 ]);
-                    $( "#ots-max" ).val(ui.values[ 1 ]);
-                }
-            });
-            $( "#ots-amount" ).html( "" + $( "#ots" ).slider( "values", 0 ) +
-            " - " + $( "#ots" ).slider( "values", 1 ) );
-
-            $( "#price" ).slider({
-                range: true,
-                min: 0,
-                max: 999,
-                values: [ {{ params.priceMin != null ? params.priceMin : 0 }}, {{ params.priceMax != null ? params.priceMax : 999 }} ],
-                slide: function( event, ui ) {
-                    $( "#price-amount" ).html( "" + ui.values[ 0 ] + " т.р. - " + ui.values[ 1 ] + ' т.р.' );
-                    $( "#price-min" ).val(ui.values[ 0 ]);
-                    $( "#price-max" ).val(ui.values[ 1 ]);
-                }
-            });
-            $( "#price-amount" ).html( "" + $( "#price" ).slider( "values", 0 ) +
-            " т.р. - " + $( "#price" ).slider( "values", 1 ) + ' т.р.' );
-
-            $('#city2').change(function(){
-                if ($(this).val() != 'Москва'){
-                    $('#area2').prop( "disabled", true  );
-                    $('#area2 option').eq(0).prop('selected', true);
-                }else{
-                    $('#area2').prop( "disabled", false);
-                }
-            });
-        });
     </script>
 {% endblock %}
 
