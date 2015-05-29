@@ -18,7 +18,7 @@ class RosveroParser extends MainParser
     /**
      * @Route("/parserRasvero/1")
      */
-    public function parserRasvero1Action()
+    public function parserRasvero1Action($hot = false)
     {
         $em = $this->em;
         $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Расверо');
