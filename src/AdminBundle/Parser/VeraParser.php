@@ -55,7 +55,9 @@ class VeraParser extends MainParser
             $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getHyperlink()->getUrl());
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(0)->getCell('Q'.$num)->getValue());
             if (!isset($pos[1]) || !isset($pos[0]) ){
-                echo $phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue().'<br />';
+//                echo $phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue().'<br />';
+                $pos[1] = 0;
+                $pos[0] = 0;
             }
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
@@ -115,6 +117,11 @@ class VeraParser extends MainParser
             $banner->setImg(null);
             $banner->setLink($phpExcelObject->setActiveSheetIndex(1)->getCell('J'.$num)->getHyperlink()->getUrl());
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(1)->getCell('Q'.$num)->getValue());
+            if (!isset($pos[1]) || !isset($pos[0]) ){
+//                echo $phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue().'<br />';
+                $pos[1] = 0;
+                $pos[0] = 0;
+            }
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
             if ($hot){
@@ -173,6 +180,11 @@ class VeraParser extends MainParser
             $banner->setImg(null);
             $banner->setLink($phpExcelObject->setActiveSheetIndex(2)->getCell('J'.$num)->getHyperlink()->getUrl());
             $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(2)->getCell('R'.$num)->getValue());
+            if (!isset($pos[1]) || !isset($pos[0]) ){
+//                echo $phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue().'<br />';
+                $pos[1] = 0;
+                $pos[0] = 0;
+            }
             $banner->setLongitude($pos[1]);
             $banner->setLatitude($pos[0]);
             if ($hot){
