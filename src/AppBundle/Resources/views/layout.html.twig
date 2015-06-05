@@ -112,14 +112,14 @@
 {% block body %}
     <div class="body" id="body">
         <header>
-            <div class="row">
+            <div class="row" style="  max-width: 1200px;margin: 0 auto;">
                 <div class="col-sm-4">
-                    <a href="{{ path('homepage') }}"><img src="{{ asset('bundles/app/images/logo.png') }}" id="logo"></a>
+                    <a href="{{ path('homepage') }}"><img src="{{ asset('bundles/app/images/logo.png') }}" id="logo" style="  z-index: 999; position: absolute;"></a>
                 </div>
-                <div class="col-sm-5">
+                <div class="col-sm-4">
                     <img src="{{ asset('bundles/app/images/top-img.png') }}" id="top-img">
                 </div>
-                <div class="col-sm-3" style="text-align: right">
+                <div class="col-sm-4" style="text-align: right">
                     <span id="s-phone">8 495 987 35 95</span>
                     <br />
                     <span class="btn" data-toggle="modal" data-target=".set-contacts">
