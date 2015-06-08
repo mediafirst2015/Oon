@@ -6,6 +6,8 @@ use AdminBundle\Parser\GemaParser;
 use AdminBundle\Parser\RosveroParser;
 use AdminBundle\Parser\VeraParser;
 use AppBundle\Entity\Log;
+use AppBundle\Entity\Sale;
+use Proxies\__CG__\AppBundle\Entity\Company;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputArgument;
@@ -28,7 +30,7 @@ class ParserCommand extends ContainerAwareCommand
 
         $container = $this->getContainer();
         $em    = $this->getContainer()->get('doctrine')->getManager();
-        $em->createQuery('DELETE FROM AppBundle:Log l')->execute(); // Удаляем старые логи
+//        $em->createQuery('DELETE FROM AppBundle:Log l')->execute(); // Удаляем старые логи
 
         $log = new Log();
         $log->setTitle('Начало синхронизации');
@@ -43,13 +45,26 @@ class ParserCommand extends ContainerAwareCommand
             /**
              * Проверяем этот файл горящих предложений или нет
              */
-            $pos = strripos($f, 'HOT');
-            if ($pos === false){
-                $hot = false;
+//            $output->write('1');
+            $p = explode('_',$f);
+//            $sale = 0;
+            if ($p[0] === 'HOT'){
+                $hot = $p[1];
+//                $output->write('3');
             }else{
-
-                $hot = explode('_',$f)[1];
+                $hot = false;
+//                $output->write($p[0]);
+                if (is_numeric($p[0])){
+                    $sale = $p[0];
+//                    $output->write($sale);
+                }else{
+                    $sale = 0;
+                }
             }
+//            $sale = $sale*1
+
+//            var_dump(explode('_',$f));
+//            exit;
 
             $path = $container->get('kernel')->getRootDir().'/../web/upload/files/'.$f;
 
@@ -92,7 +107,34 @@ class ParserCommand extends ContainerAwareCommand
                     $parser->parserVera5Action($hot);
                     $parser->parserVera6Action($hot);
                     $parser->parseImageAction();
+//                    $output->write($sale);
+                    if ($sale != 0){
+                        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
+                        if ($company == null){
+                            $company = new Company();
+                            $company->setTitle('Вера Олимп');
+                            $em->persist($company);
+                            $em->flush($company);
+                            $em->refresh($company);
+                        }
+                        $city = $em->getRepository('AppBundle:City')->findOneById(1);
+                        for ($i = 1; $i <= 12 ; $i ++){
+                            $date = new \DateTime('2015-'.$i.'-01 00:00:00');
+                            $month = $em->getRepository('AppBundle:Sale')->findOneBy(array('date' => $date, 'company' => $company, 'city' => $city));
+                            if (!$month){
+
+                                $month = new Sale();
+                                $month->setCity($city);
+                                $month->setDate($date);
+                                $month->setCompany($company);
+                                $month->setPercent($sale);
+                                $em->persist($month);
+                                $em->flush($month);
+                            }
+                        }
+                    }
                 }catch (\Exception $e){
+                    echo $f.' Строка: '.$e->getLine().'. '.$e->getMessage();
                     if ($type != 0){
                         $log = new Log();
                         $log->setTitle('<span class="text-danger">'.$f.' Строка: '.$e->getLine().'. '.$e->getMessage().'</span>');

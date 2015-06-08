@@ -7,6 +7,7 @@ ini_set('memory_limit', '-1');
 use AdminBundle\Parser\MainParser;
 use AppBundle\Entity\Banner;
 use AppBundle\Entity\Company;
+use AppBundle\Entity\Sale;
 use AppBundle\Entity\User;
 
 class VeraParser extends MainParser
@@ -432,4 +433,14 @@ class VeraParser extends MainParser
         $link = explode(',',$link);
         return $link;
     }
+
+//    public function setSale($sale = 0, $em){
+//
+////        if (!$em->isOpen()){
+////            $em->open();
+////        }
+////        $em = $this->em;
+//
+//
+//    }
 }
