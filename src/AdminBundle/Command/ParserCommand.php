@@ -30,7 +30,7 @@ class ParserCommand extends ContainerAwareCommand
 
         $container = $this->getContainer();
         $em    = $this->getContainer()->get('doctrine')->getManager();
-//        $em->createQuery('DELETE FROM AppBundle:Log l')->execute(); // Удаляем старые логи
+        $em->createQuery('DELETE FROM AppBundle:Log l')->execute(); // Удаляем старые логи
 
         $log = new Log();
         $log->setTitle('Начало синхронизации');
