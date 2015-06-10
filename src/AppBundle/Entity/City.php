@@ -36,6 +36,11 @@ class City
      */
     protected $sales;
 
+    /**
+     * @ORM\Column(type = "boolean", nullable = true)
+     */
+    protected $enabled = true;
+
 
     public function __construct()
     {
@@ -127,5 +132,22 @@ class City
     public function removeSale($sale){
         $this->sales->removeElement($sale);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param mixed $enabled
+     */
+    public function setEnabled($enabled = 1)
+    {
+        $this->enabled = $enabled;
+    }
+
 
 }
