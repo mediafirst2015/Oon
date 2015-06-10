@@ -60,8 +60,9 @@
                             <span class="required"></span>
                             <select id="city" name="city" required="true" class="required">
                                 <option value="0" disabled selected>Город</option>
-                                <option value="Москва">Москва</option>
-                                <option value="Московская область">Московская область</option>
+                                {% for c in cities %}
+                                    <option value="{{ c.title }}">{{ c.title }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="relative">
@@ -185,9 +186,10 @@
                         <div class="title">Поиск щитов по параметрам</div>
                         <br />
                         <select name="city" id="city2">
-                            <option value="" disabled selected>Город</option>
-                            <option value="Москва">Москва</option>
-                            <option value="Московская область">Московская область</option>
+                            <option value="0" disabled selected>Город</option>
+                            {% for c in cities %}
+                                <option value="{{ c.title }}">{{ c.title }}</option>
+                            {% endfor %}
                         </select>
                         <br />
                         <select name="area" id="area2">

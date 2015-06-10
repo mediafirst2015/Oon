@@ -16,9 +16,12 @@
                         <h2 class="green">Фильтры</h2>
                         <select name="city" id="city2">
                             <option value="" disabled selected>Город</option>
-                            <option value="Москва" {{ params.city == 'Москва' ? 'selected="selected"' }}>Москва</option>
-                            <option value="Московская область" {{ params.city == 'Московская область' ? 'selected="selected"' }}>Московская область</option>
+                            {% for c in cities %}
+                                <option value="{{ c.title }}" {{ params.city == c.title  ? 'selected="selected"' }}>{{ c.title }}</option>
+                            {% endfor %}
                         </select>
+
+
                         <select name="area" id="area2">
                             <option value="" disabled selected>Округ</option>
                             <option value="" selected>Все округа</option>

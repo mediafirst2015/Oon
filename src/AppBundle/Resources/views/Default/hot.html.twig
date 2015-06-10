@@ -17,8 +17,9 @@
                         <br />
                         <select name="city" id="city5">
                             <option value="" disabled selected>Город</option>
-                            <option value="Москва" {{ params.city == 'Москва' ? 'selected="selected"' }}>Москва</option>
-                            <option value="Московская область" {{ params.city == 'Московская область' ? 'selected="selected"' }}>Московская область</option>
+                            {% for c in cities %}
+                                <option value="{{ c.title }}" {{ params.city == c.title  ? 'selected="selected"' }}>{{ c.title }}</option>
+                            {% endfor %}
                         </select>
                         <select name="area" id="area5">
                             <option value="0" disabled selected>Округ</option>

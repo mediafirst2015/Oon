@@ -25,7 +25,8 @@ class DefaultController extends Controller
         $reviews = $this->getDoctrine()->getRepository('AppBundle:Review')->findBy(array('enabled'=> true),array(),3);
         $logos = $this->getDoctrine()->getRepository('AppBundle:Logo')->findBy(array('enabled'=> true),array(),11);
         $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->findBy(array('enabled'=> true,'hot' => true),array(),3);
-        return array('banners'=> $banners, 'reviews' => $reviews, 'logos' => $logos);
+        $cities = $this->getDoctrine()->getRepository('AppBundle:City')->findBy(array('enabled'=> true));
+        return array('banners'=> $banners, 'reviews' => $reviews, 'logos' => $logos, 'cities' => $cities);
     }
 
 
@@ -162,6 +163,7 @@ class DefaultController extends Controller
             $side = $sideA.'/'.$sideB;
         }
 
+        $cities = $this->getDoctrine()->getRepository('AppBundle:City')->findBy(array('enabled'=> true));
 
         return array(
             'params' => $params,
@@ -174,7 +176,9 @@ class DefaultController extends Controller
             'price2' => $price2,
             'count' => $i,
             'side'=> $side,
-            'fullPrice' => $fullprice);
+            'fullPrice' => $fullprice,
+            'cities' => $cities
+        );
     }
 
     /**
@@ -290,8 +294,10 @@ class DefaultController extends Controller
             $sideB = number_format(100/$i*$sideB,0,'.','');
             $side = $sideA.'/'.$sideB;
         }
+        $cities = $this->getDoctrine()->getRepository('AppBundle:City')->findBy(array('enabled'=> true));
         return array(
             'id'=> $id,
+            'cities' => $cities,
             'params' => $params,
             'lists' => $lists,
             'grp' => $grp,
@@ -386,6 +392,8 @@ class DefaultController extends Controller
             $sideB = number_format(100/$i*$sideB,0,'.','');
             $side = $sideA.'/'.$sideB;
         }
+
+        $cities = $this->getDoctrine()->getRepository('AppBundle:City')->findBy(array('enabled'=> true));
         return array(
             'params' => $params,
             'lists' => $lists,
@@ -397,7 +405,9 @@ class DefaultController extends Controller
             'count' => $i,
             'side'=> $side,
             'fullPrice' => $fullprice,
-            'banners' => $pagination
+            'banners' => $pagination,
+            'cities' => $cities
+
         );
     }
 
