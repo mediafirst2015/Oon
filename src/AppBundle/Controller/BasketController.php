@@ -618,7 +618,7 @@ class BasketController extends Controller
             $url .= $b.';';
         }
         $this->get('email.service')->send(
-            $email,
+            array('tulupov.m@gmail.com','ryabova.t@mediafirst.ru','kravtsova.m@mediafirst.ru', $email),
             array('AppBundle:Email:order.html.twig', array(
                 'name'  => $name,
                 'url' => $url
@@ -639,7 +639,7 @@ class BasketController extends Controller
         $name = $request->request->get('name');
         $phone = $request->request->get('phone');
         $this->get('email.service')->send(
-            array('tulupov.m@gmail.com','ryabova.t@mediafirst.ru'),
+            array('tulupov.m@gmail.com','ryabova.t@mediafirst.ru','kravtsova.m@mediafirst.ru'),
             array('AppBundle:Email:contact.html.twig', array(
                 'name'  => $name,
                 'email'  => $email,
@@ -676,7 +676,7 @@ class BasketController extends Controller
 
 
         $this->get('email.service')->send(
-            array('tulupov.m@gmail.com','ryabova.t@mediafirst.ru'),
+            array('tulupov.m@gmail.com','ryabova.t@mediafirst.ru','kravtsova.m@mediafirst.ru'),
             array('AppBundle:Email:mediaplan.html.twig', $params),
             'Сообщение от navigator mediaFirst',
             null

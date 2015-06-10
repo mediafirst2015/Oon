@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Banner;
+use AppBundle\Entity\City;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,6 +13,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+
+set_time_limit(0);
+ini_set("memory_limit","-1");
 
 class ParserController extends Controller
 {
@@ -332,5 +336,95 @@ class ParserController extends Controller
     }
 
 
+    /**
+     * @Route("/parserRus/{type}", name="parserRus")
+     */
+    public function parserRusAction($type){
+
+        set_time_limit(0);
+        ini_set("memory_limit","-1");
+
+//        if ($type == 1){
+//            $filename = '3x6/'.$filename.'.json';
+//        }elseif($type == 2){
+//            $filename = 'big/'.$filename;
+//        }
+
+        if ($type == 1){
+            $folder = '3x6';
+        }elseif($type == 2){
+            $folder = 'big';
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Russoutdoor');
+        if ($company == null){
+            $company = new Company();
+            $company->setTitle('Russoutdoor');
+            $em->persist($company);
+            $em->flush($company);
+            $em->refresh($company);
+        }
+
+        $files = scandir($this->get('kernel')->getRootDir().'/../web/'.$folder);
+        unset($files[1]);
+        unset($files[0]);
+        foreach($files as $f){
+            $filename = $this->get('kernel')->getRootDir().'/../web/'.$folder.'/'.$f;
+            $file = file_get_contents($filename);
+            $array = json_decode($file,true);
+
+            $i = 0;
+            foreach ($array['billboards'] as $val){
+                if (isset($val['longtitude']) && isset($val['latitude']) && isset($val['address'])){
+                    $i ++ ;
+                    $banner = new Banner();
+
+                    $city = $this->getDoctrine()->getRepository('AppBundle:City')->findOneByTitle($val['cityName']);
+                    if ($city == null){
+                        $city = new City();
+                        $city->setTitle($val['cityName']);
+                        $em->persist($city);
+                        $em->flush($city);
+                        $em->refresh($city);
+                    }
+
+                    $banner->setCity($city);
+                    $banner->setCompany($company);
+                    $banner->setAdrs($val['address']);
+                    $banner->setTitle($val['address']);
+                    $banner->setGid($val['gid']);
+                    $banner->setGrp($val['grp']);
+                    $banner->setOts($val['ots']);
+                    $banner->setPrice((isset($val['price']) ? $val['price'] : 0));
+                    $banner->setLight($val['light']);
+                    $banner->setSide($val['side']);
+                    $desc = (isset($val['top']) ? $val['top'] : '').'<br />'.(isset($val['distance']) ? $val['distance'] : '' );
+                    $banner->setBody($desc);
+                    if ($type == 1){
+                        $banner->setFormat('3x6');
+                    }elseif($type == 2){
+                        $banner->setFormat('big');
+                    }
+                    $banner->setLongitude($val['longtitude']);
+                    $banner->setLatitude($val['latitude']);
+                    $banner->setImg(str_replace('//','http://',$val['imageURL']));
+
+                    $em->persist($banner);
+                    $em->flush();
+
+                }else{
+                    echo $val['address'].'<br />';
+                    echo '<br />';
+                    print_r($val);
+                    echo '<br />';
+                    echo '<br />';
+                }
+            }
+        }
+
+        exit;
+
+    }
 
 }
