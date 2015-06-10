@@ -396,7 +396,8 @@ class ParserController extends Controller
                     $banner->setGid($val['gid']);
                     $banner->setGrp($val['grp']);
                     $banner->setOts($val['ots']);
-                    $banner->setPrice((isset($val['price']) ? $val['price'] : 0));
+                    $banner->setPrice((isset($val['price']) ? $val['price'] : 0)*0.82);
+                    $banner->setPrice2((isset($val['price']) ? $val['price'] : 0));
                     $banner->setLight($val['light']);
                     $banner->setSide($val['side']);
                     $desc = (isset($val['top']) ? $val['top'] : '').'<br />'.(isset($val['distance']) ? $val['distance'] : '' );
