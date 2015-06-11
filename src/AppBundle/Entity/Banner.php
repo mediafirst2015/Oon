@@ -159,6 +159,10 @@ class Banner extends BaseEntity
      */
     protected $format;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default" = 0})
+     */
+    public $offer = false;
 
     public function __construct(){
         $this->orders = new ArrayCollection();
@@ -650,5 +654,38 @@ class Banner extends BaseEntity
         }
         return false;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSales()
+    {
+        return $this->sales;
+    }
+
+    /**
+     * @param mixed $sales
+     */
+    public function setSales($sales)
+    {
+        $this->sales = $sales;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOffer()
+    {
+        return $this->offer;
+    }
+
+    /**
+     * @param mixed $offer
+     */
+    public function setOffer($offer = false)
+    {
+        $this->offer = $offer;
+    }
+
 
 }

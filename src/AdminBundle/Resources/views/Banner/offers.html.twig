@@ -1,0 +1,70 @@
+{% extends "AdminBundle::layout.html.twig" %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb well">
+        <li>Предложение дня</li>
+        <li><a href="{{ path('offer_add') }}"><span class="btn btn-primary">Добавить</span></a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="well">
+        <table class="table">
+            <tr>
+                <th data-field="number"
+                    data-sortable="true">№</th>
+                <th data-field="title"
+                    data-sortable="true">Адрес</th>
+                <th data-field="setting"
+                    data-sortable="false" class="setting">Инструменты</th>
+            </tr>
+            {% for item in pagination %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.adrs }}</td>
+                    <td class="setting">
+                        {% spaceless %}
+                            <button type="button" class="btn btn-default btn-bg remove" data-href="{{ path('offer_remove',{'id' : item.id}) }}" data-title="{{ item.adrs }}">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        {% endspaceless %}
+                    </td>
+                </tr>
+            {% endfor%}
+        </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.remove').click(function () {
+                var title = $(this).attr('data-title')
+                var url = $(this).attr('data-href');
+                BootstrapDialog.show({
+                    title: 'УДАЛЕНИЕ',
+                    size: BootstrapDialog.SIZE_SMALL,
+                    type: BootstrapDialog.TYPE_DANGER,
+                    message: 'Вы точно хотите удалить щит "'+ title +'"',
+                    buttons: [{
+                        label: 'Удалить',
+                        cssClass: 'btn-danger',
+                        autospin: true,
+                        action: function (dialogRef) {
+                            window.location.href = url;
+                        }
+                    }, {
+                        label: 'Отмена',
+                        action: function (dialogRef) {
+                            dialogRef.close();
+                        }
+                    }]
+                });
+            });
+        });
+    </script>
+{% endblock %}

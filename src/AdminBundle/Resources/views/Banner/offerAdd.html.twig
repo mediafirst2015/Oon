@@ -1,0 +1,69 @@
+{% extends "AdminBundle::layout.html.twig" %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb well">
+        <li>Предложение дня</li>
+        <li>Добавление</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="well">
+        <form method="GET" class="form">
+            <div class="row">
+                <div class="col-xs-8"><input type="tex" id="search" value="" name="search" class="form-control"></div>
+                <div class="col-xs-4"><button class="btn">Найти</button></div>
+            </div>
+        </form>
+
+        <table class="table">
+            <tr>
+                <th data-field="number"
+                    data-sortable="true">№</th>
+                <th data-field="title"
+                    data-sortable="true">Адрес</th>
+                <th data-field="setting"
+                    data-sortable="false" class="setting">Инструменты</th>
+            </tr>
+            {% for item in pagination %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.adrs }}</td>
+                    <td class="setting">
+                        {% spaceless %}
+                            <button type="button" class="btn btn-default btn-bg add" data-href="{{ path('offer_add',{'id' : item.id}) }}" data-title="{{ item.adrs }}">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                        {% endspaceless %}
+                    </td>
+                </tr>
+            {% endfor%}
+        </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.add').click(function () {
+                $item = $(this);
+                var url = $(this).attr('data-href');
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    success: function(msg){
+                        if (msg == 'add'){
+                            $item.parent().parent().remove();
+                        }else{
+                            alert("произошла ошибка.\r\n Проверьте соединение с интернетом и попробуйде еще раз");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

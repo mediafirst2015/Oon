@@ -149,4 +149,18 @@ class BannerRepository extends EntityRepository
             );
         return $qb->getQuery()->getOneOrNullResult();
     }
+
+    public function findBanners($str){
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('b')
+            ->from('AppBundle:Banner','b')
+            ->where('b.enabled = 1')
+            ->andWhere('b.offer = 0')
+            ->andWhere('b.adrs LIKE :str')
+            ->setParameters(array(
+                    'str' => '%'.$str.'%',
+                )
+            );
+        return $qb->getQuery()->getResult();
+    }
 }

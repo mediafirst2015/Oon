@@ -26,7 +26,8 @@ class DefaultController extends Controller
         $logos = $this->getDoctrine()->getRepository('AppBundle:Logo')->findBy(array('enabled'=> true),array(),11);
         $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->findBy(array('enabled'=> true,'hot' => true),array(),3);
         $cities = $this->getDoctrine()->getRepository('AppBundle:City')->findBy(array('enabled'=> true));
-        return array('banners'=> $banners, 'reviews' => $reviews, 'logos' => $logos, 'cities' => $cities);
+        $offers = $this->getDoctrine()->getRepository('AppBundle:Banner')->findBy(array('enabled'=> true,'offer' => true));
+        return array('banners'=> $banners, 'reviews' => $reviews, 'logos' => $logos, 'cities' => $cities, 'offers' => $offers);
     }
 
 

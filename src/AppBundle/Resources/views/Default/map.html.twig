@@ -22,7 +22,7 @@
                         </select>
 
 
-                        <select name="area" id="area2">
+                        <select name="area" id="area2" {{ params.city != 'Москва' ? 'disabled="disabled" style="color:#CCC;"' : '' }}>
                             <option value="" disabled selected>Округ</option>
                             <option value="" selected>Все округа</option>
                             <option value="ЦАО" {{ params.area == 'ЦАО' ? 'selected="selected"' }}>ЦАО</option>
