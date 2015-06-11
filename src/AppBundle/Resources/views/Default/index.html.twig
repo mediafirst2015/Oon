@@ -326,48 +326,87 @@
         <div class="col-xs-4">
             <div class="box">
                 <div class="form" style="  height: 620px;">
-                    <div class="title pink">Горящие предложения</div>
-                    <br />
-                    {% for b in banners %}
-                        <div class="hot-box-mini">
-                            <a href="{{ path('hot') }}">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <div class="hot-img">
-                                                <img class="img" src="{{ b.img }}">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <table class="hot-params">
-                                                <tr>
-                                                    <td colspan="2">{{ b.adrs }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Формат</td>
-                                                    <td style="text-align: right">{{ b.format }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Цена</td>
-                                                    <td style="text-align: right">
-                                                        <span style="font-size: 12px; text-decoration: line-through">{{ b.price2 |number_format(1, '.', '') }} р.</span> <br />
-                                                        <b class="pink">{{ b.price2 |number_format(1, '.', '') }}&nbsp;р.</b>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Период</td>
-                                                    <td style="text-align: right"><b class="pink">Июнь</b></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </a>
+                    {% if banners | length != 0 %}
+                        <div class="title pink">Горящие предложения</div>
+                        <br />
+                        {% for b in banners %}
+                            <div class="hot-box-mini">
+                                <a href="{{ path('hot') }}">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div class="hot-img">
+                                                    <img class="img" src="{{ b.img }}">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <table class="hot-params">
+                                                    <tr>
+                                                        <td colspan="2">{{ b.adrs }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Формат</td>
+                                                        <td style="text-align: right">{{ b.format }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Цена</td>
+                                                        <td style="text-align: right">
+                                                            <span style="font-size: 12px; text-decoration: line-through">{{ b.price2 |number_format(1, '.', '') }} р.</span> <br />
+                                                            <b class="pink">{{ b.price2 |number_format(1, '.', '') }}&nbsp;р.</b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Период</td>
+                                                        <td style="text-align: right"><b class="pink">Июнь</b></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </a>
+                            </div>
+                        {% endfor %}
+                        <div style="text-align: right">
+                            <a href="{{ path('hot') }}" class="pink" style="font-size: 23px">Показать ВСЕ</a>
                         </div>
-                    {% endfor %}
-                    <div style="text-align: right">
-                        <a href="{{ path('hot') }}" class="pink" style="font-size: 23px">Показать ВСЕ</a>
-                    </div>
+                    {% else %}
+                        <div class="title pink">Предложение дня</div>
+                        <br />
+                        <div class="offers-block">
+                            {% for k,b in offers %}
+                                <div class="hot-box-mini offers-item" {{ k > 2 ? 'style="display:none"' : '' }}>
+                                    <a href="{{ path('map') }}?bannerId={{ b.id }}">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div class="hot-img">
+                                                        <img class="img" src="{{ b.img }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <table class="hot-params">
+                                                        <tr>
+                                                            <td colspan="2">{{ b.adrs }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Формат</td>
+                                                            <td style="text-align: right">{{ b.format }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Цена</td>
+                                                            <td style="text-align: right">
+                                                                <b class="pink">{{ b.price2 |number_format(1, '.', '') }}&nbsp;р.</b>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                     <br/>
                 </div>
             </div>
@@ -627,6 +666,14 @@
                     }
                 });
 
+
+                var timerId = setInterval(function (){
+
+                    $('.offers-item:first').css('display','none');
+                    $('.offers-item:first').appendTo('.offers-block');
+                    $('.offers-item').eq(2).css('display','block');
+
+                },7000);
             });
         </script>
     {% endblock %}
