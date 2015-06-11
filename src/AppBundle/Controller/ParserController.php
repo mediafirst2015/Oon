@@ -66,14 +66,14 @@ class ParserController extends Controller
                 $banner->setPrice((isset($val['price']) ? $val['price'] : 0));
                 $banner->setPrice2((isset($val['price']) ? $val['price']*1.18 : 0));
                 $banner->setLight($val['light']);
-                if ($type == 1) {
-                    $banner->setSide($val['side']);
-                }else{
-                    $banner->setSide($val['big']);
-                }
+                $banner->setSide($val['side']);
                 $desc = (isset($val['top']) ? $val['top'] : '').'<br />'.(isset($val['distance']) ? $val['distance'] : '' );
                 $banner->setBody($desc);
-                $banner->setFormat('3x6');
+                if ($type == 1){
+                    $banner->setFormat('3x6');
+                }else{
+                    $banner->setFormat('big');
+                }
                 $banner->setLongitude($val['longtitude']);
                 $banner->setLatitude($val['latitude']);
                 $banner->setImg(str_replace('//','http://',$val['imageURL']));
