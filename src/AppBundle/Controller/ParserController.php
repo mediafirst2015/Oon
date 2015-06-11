@@ -22,39 +22,65 @@ class ParserController extends Controller
 
 
     /**
-     * @Route("/parser34", name="parser34")
+     * @Route("/parser34/{type}", name="parser34")
      */
-    public function parser34Action(){
-        $file = file_get_contents('Moscow-16.json');
+    public function parser34Action($type){
+        if ($type == 1){
+            $file = file_get_contents('m36.json');
+        }else{
+            $file = file_get_contents('mbig.json');
+        }
         $array = json_decode($file,true);
 
+        $em = $this->getDoctrine()->getManager();
+        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Russoutdoor');
+        if ($company == null){
+            $company = new Company();
+            $company->setTitle('Russoutdoor');
+            $em->persist($company);
+            $em->flush($company);
+            $em->refresh($company);
+        }
         $area = array();
         foreach ($array['areasMap'][4] as $val){
             $area[$val['id']] = $val['code'];
         }
-        $em = $this->getDoctrine()->getManager();
         foreach ($array['billboards'] as $val){
             if (isset($val['longtitude']) && isset($val['latitude']) && isset($val['address'])){
-                $banner = $this->getDoctrine()->getRepository('AppBundle:Banner')->findBy(Array('longitude' => $val['longtitude'], 'latitude' => $val['latitude'] ));
-                if (!$banner){
-                    $banner = new Banner();
-                    $banner->setAdrs($val['address']);
-                    $banner->setTitle($val['address']);
-                    $banner->setGrp($val['grp']);
-                    $banner->setOts($val['ots']);
-                    $banner->setPrice((isset($val['price']) ? $val['price'] : 0));
-                    $banner->setLight($val['light']);
-                    $banner->setSide($val['side']);
-                    $desc = (isset($val['top']) ? $val['top'] : '').'<br />'.(isset($val['distance']) ? $val['distance'] : '' );
-                    $banner->setBody($desc);
-                    $banner->setFormat('3x6');
-                    $banner->setLongitude($val['longtitude']);
-                    $banner->setLatitude($val['latitude']);
-                    $banner->setImg(str_replace('//','http://',$val['imageURL']));
-                    $banner->setArea((isset($val['subAreaId']) && isset($area[$val['subAreaId']]) ? $area[$val['subAreaId']] : null ));
-//                    $em->persist($banner);
-//                    $em->flush($banner);
+                $banner = new Banner();
+                $city = $this->getDoctrine()->getRepository('AppBundle:City')->findOneByTitle($val['cityName']);
+                if ($city == null){
+                    $city = new City();
+                    $city->setTitle($val['cityName']);
+                    $em->persist($city);
+                    $em->flush($city);
+                    $em->refresh($city);
                 }
+                $banner->setCity($city);
+                $banner->setCompany($company);
+                $banner->setAdrs($val['address']);
+                $banner->setTitle($val['address']);
+                $banner->setGid($val['gid']);
+                $banner->setGrp($val['grp']);
+                $banner->setOts($val['ots']);
+                $banner->setPrice((isset($val['price']) ? $val['price'] : 0));
+                $banner->setPrice2((isset($val['price']) ? $val['price']*1.18 : 0));
+                $banner->setLight($val['light']);
+                if ($type == 1) {
+                    $banner->setSide($val['side']);
+                }else{
+                    $banner->setSide($val['big']);
+                }
+                $desc = (isset($val['top']) ? $val['top'] : '').'<br />'.(isset($val['distance']) ? $val['distance'] : '' );
+                $banner->setBody($desc);
+                $banner->setFormat('3x6');
+                $banner->setLongitude($val['longtitude']);
+                $banner->setLatitude($val['latitude']);
+                $banner->setImg(str_replace('//','http://',$val['imageURL']));
+
+                $banner->setArea((isset($val['subAreaId']) && isset($area[$val['subAreaId']]) ? $area[$val['subAreaId']] : null ));
+                $em->persist($banner);
+                $em->flush($banner);
             }else{
                 echo $val['address'].'<br />';
                 echo '<br />';
