@@ -57,7 +57,7 @@ class DefaultController extends Controller
         if ($url == 'about'){
             return $this->render('AppBundle:Default:about.html.twig');
         }elseif($url == 'contacts'){
-            return $this->render('AppBundle:Default:about.html.twig');
+            return $this->render('AppBundle:Default:contacts.html.twig');
         }else{
         $page = $this->getDoctrine()->getRepository('AppBundle:Page')->findOneByUrl($url);
         return array('page' => $page);

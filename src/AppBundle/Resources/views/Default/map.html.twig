@@ -113,7 +113,7 @@
                             <span id="grp-amount" class="val"></span>
                             <span class="slider" id="grp"></span>
                             <input type="hidden" name="grp-min" id="grp-min" value="{{ params.grpMin != null ? params.grpMin : 0 }}">
-                            <input type="hidden" name="grp-max" id="grp-max" value="{{ params.grpMax != null ? params.grpMax : 5 }}">
+                            <input type="hidden" name="grp-max" id="grp-max" value="{{ params.grpMax != null ? params.grpMax : 15 }}">
                         </div>
                         <div class="slider-group">
                             <span class="caption">OTS</span>
@@ -537,8 +537,8 @@
                 $( "#grp" ).slider({
                     range: true,
                     min: 0,
-                    max: 500,
-                    values: [ {{ params.grpMin != null ? params.grpMin*100 : 0 }}, {{ params.grpMax != null ? params.grpMax*100 : 500 }} ],
+                    max: 1500,
+                    values: [ {{ params.grpMin != null ? params.grpMin*100 : 0 }}, {{ params.grpMax != null ? params.grpMax*100 : 1500 }} ],
                     slide: function( event, ui ) {
                         $( "#grp-amount" ).html( "" + ui.values[ 0 ]/100 + " - " + ui.values[ 1 ]/100 );
                         $( "#grp-min" ).val(ui.values[ 0 ]/100);

@@ -254,7 +254,7 @@
                             <span id="grp-amount" class="val"></span>
                             <span class="slider" id="grp" style="float: right"></span>
                             <input type="hidden" name="grp-min" id="grp-min" value="0">
-                            <input type="hidden" name="grp-max" id="grp-max" value="5">
+                            <input type="hidden" name="grp-max" id="grp-max" value="15">
                         </div>
                         <br />
                         <div class="slider-group">
@@ -558,8 +558,8 @@
                 $( "#grp" ).slider({
                     range: true,
                     min: 0,
-                    max: 500,
-                    values: [ 0, 500 ],
+                    max: 1500,
+                    values: [ 0, 1500 ],
                     slide: function( event, ui ) {
                         $( "#grp-amount" ).html( "" + ui.values[ 0 ]/100 + " - " + ui.values[ 1 ]/100 );
                         $( "#grp-min" ).val(ui.values[ 0 ]/100);
