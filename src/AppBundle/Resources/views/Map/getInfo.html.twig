@@ -47,9 +47,9 @@
         {% endif %}
 
         <table style='margin: 0 auto' class="month-table">
-                {#<tr>#}
-                    {#<td colspan="5"><b>Сторона A</b></td>#}
-                {#</tr>#}
+            {#<tr>#}
+            {#<td colspan="5"><b>Сторона A</b></td>#}
+            {#</tr>#}
             {% for row in ( 'now' | date('m')+1 .. 12 ) | batch( 2 ) %}
                 <tr>
                     {#{{ dump(row) }}#}
@@ -60,19 +60,18 @@
                         </td>
                         {% if object.hotMonth.date is defined and object.hotMonth.date | date('Y')~'-'~column~'-01' == "+1 month" | date('Y-n')~'-01' %}
                             <td>
-                    <span style="text-decoration: line-through">
-                        {% if monthlySales[column~'2015'] is defined %}
-                            &nbsp;{{ object.price2 * ((100 - monthlySales[column~'2015'].percent)/100)  |number_format(1, '.', '') }}&nbsp;р.
-                        {% else %}
-                            &nbsp;{{ object.price2  |number_format(1, '.', '') }}&nbsp;р.
-                        {% endif %}
-                    </span>
-                                <span style="color: #FF0000">&nbsp;{{ object.price2 * ((100 - object.hotMonth.sale)/100)  |number_format(1, '.', '') }}&nbsp;р.</span>
+                                <span style="text-decoration: line-through">
+                                    {% if monthlySales[column~'2015'] is defined %}
+                                        &nbsp;{{ (object.price2 * ((100 - monthlySales[column~'2015'].percent)/100))  |number_format(1, '.', '') }}&nbsp;р.
+                                    {% else %}
+                                        &nbsp;{{ object.price2  |number_format(1, '.', '') }}&nbsp;р.
+                                    {% endif %}
+                                </span>
+                                <span style="color: #FF0000">&nbsp;{{ (object.price2 * ((100 - object.hotMonth.sale)/100))  |number_format(1, '.', '') }}&nbsp;р.</span>
                             </td>
-
                         {% else %}
                             {% if monthlySales[column~'2015'] is defined %}
-                                <td>&nbsp;{{ object.price2 * ((100 - monthlySales[column~'2015'].percent)/100)  |number_format(1, '.', '') }}&nbsp;р.</td>
+                                <td>&nbsp;{{ (object.price2 * ((100 - monthlySales[column~'2015'].percent)/100))  |number_format(1, '.', '') }}&nbsp;р.</td>
                             {% else %}
                                 <td>&nbsp;{{ object.price2  |number_format(1, '.', '') }}&nbsp;р.</td>
                             {% endif %}
