@@ -45,7 +45,7 @@
             </script>
             <br />
             <h1 class="pink" style="margin-top: 20px;">
-                МЕДИА-ПЛАН ПО НАРУЖКЕ ЗА ТРИ МИНУТЫ!
+                <a href="{{ asset('bundles/app/assets/instructon.png') }}" class="fancybox noa">МЕДИА-ПЛАН ПО НАРУЖКЕ ЗА ТРИ МИНУТЫ!</a>
             </h1>
         </div>
         <div class="col-xs-4">
@@ -424,7 +424,7 @@
                                 <img src="{{ asset('bundles/app/images/like.png') }}"/>
                                 <br />
                                 <div style="  text-align: left;color: #444;font-size: 15px;padding-top: 10px;">
-                                    Синхронизация конструкций о наличии/стоимости в on-line режиме с владельцами конструкций
+                                    Online – синхронизация наличия/ стоимости с владельцами конструкций
                                 </div>
 
                             </td>
@@ -432,7 +432,7 @@
                                 <img src="{{ asset('bundles/app/images/like.png') }}"/>
                                 <br />
                                 <div style="text-align: left;color: #444;font-size: 15px;padding-top: 10px;">
-                                    Взаимодействие с более чем 90 регионами по всей России
+                                    Взаимодействие со всеми регионами России
                                 </div>
                             </td>
                             <td style="text-align: center; width: 20%; vertical-align: top;">
@@ -503,6 +503,11 @@
 
     {% block stylesheets %}
         {{ parent() }}
+        <style>
+            .noa, .noa:hover{
+                color: inherit;
+            }
+        </style>
     {% endblock %}
 
     {% block javascripts %}
