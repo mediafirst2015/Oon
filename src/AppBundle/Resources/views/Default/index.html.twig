@@ -49,137 +49,6 @@
             </h1>
         </div>
         <div class="col-xs-4">
-            <div class="box" style="  margin-top: -15px;">
-                <div class="form">
-                    <form method="POST" id="form-top" action="{{ path('send_getmedia') }}">
-                        <div class="title" style="font-size: 20px; margin-bottom: 10px">Закажите свой медиа-план!</div>
-                        <div class="error2">
-
-                        </div>
-                        <div class="relative">
-                            <span class="required"></span>
-                            <select id="city" name="city" required="true" class="required">
-                                <option value="0" disabled selected>Город</option>
-                                {% for c in cities %}
-                                    <option value="{{ c.title }}">{{ c.title }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="relative">
-                            <select id="area" name="area">
-                                <option value="0" disabled selected>Округ</option>
-                                <option value="0" selected>Все округа</option>
-                                <option value="ЦАО">ЦАО</option>
-                                <option value="СВАО">СВАО</option>
-                                <option value="ВАО">ВАО</option>
-                                <option value="ЮВАО">ЮВАО</option>
-                                <option value="ЮАО">ЮАО</option>
-                                <option value="ЮЗАО">ЮЗАО</option>
-                                <option value="ЗАО">ЗАО</option>
-                                <option value="CЗАО">CЗАО</option>
-                                <option value="САО">САО</option>
-                            </select>
-                        </div>
-                        <div class="relative">
-                            <div class="check-group">
-                                Формат 3х6
-                                <div class="check"></div>
-                                <input type="hidden" name="formatM" value="0">
-                            </div>
-                            <div class="check-group">
-                                Малые форматы
-                                <div class="check"></div>
-                                <input type="hidden" name="formatS" value="0">
-                            </div>
-                            <div class="check-group">
-                                Большие форматы
-                                <div class="check"></div>
-                                <input type="hidden" name="formatL" value="0">
-                            </div>
-                            <div class="check-group">
-                                Ситиборды
-                                <div class="check"></div>
-                                <input type="hidden" name="formatSB" value="0">
-                            </div>
-                        </div>
-                        <div class="relative">
-                            <div class="input-group" style="padding-left: 20px">
-                                <span class="required" style="  margin-left: -20px;padding-right: 10px;"></span>
-                                Период
-                                <div style="float: right;">
-                                    с&nbsp;&nbsp;
-                                    <select class="mini" id="dateStart" name="dateStart">
-                                        <option value="0" disabled selected="selected">Дата начала</option>
-                                        <option value="1"  {{ 'now'|date('m')+1 == 1 ? 'selected="selected"' : '' }}>Янв</option>
-                                        <option value="2"  {{ 'now'|date('m')+1 == 2 ? 'selected="selected"' : '' }}>Фев</option>
-                                        <option value="3"  {{ 'now'|date('m')+1 == 3 ? 'selected="selected"' : '' }}>Мар</option>
-                                        <option value="4"  {{ 'now'|date('m')+1 == 4 ? 'selected="selected"' : '' }}>Апр</option>
-                                        <option value="5"  {{ 'now'|date('m')+1 == 5 ? 'selected="selected"' : '' }}>Май</option>
-                                        <option value="6"  {{ 'now'|date('m')+1 == 6 ? 'selected="selected"' : '' }}>Июн</option>
-                                        <option value="7"  {{ 'now'|date('m')+1 == 7 ? 'selected="selected"' : '' }}>Июл</option>
-                                        <option value="8"  {{ 'now'|date('m')+1 == 8 ? 'selected="selected"' : '' }}>Авг</option>
-                                        <option value="9"  {{ 'now'|date('m')+1 == 9 ? 'selected="selected"' : '' }}>Сен</option>
-                                        <option value="10" {{ 'now'|date('m')+1 == 10 ? 'selected="selected"' : '' }}>Окт</option>
-                                        <option value="11" {{ 'now'|date('m')+1 == 11 ? 'selected="selected"' : '' }}>Ноя</option>
-                                        <option value="12" {{ 'now'|date('m')+1 == 12 ? 'selected="selected"' : '' }}>Дек</option>
-                                    </select>
-                                    &nbsp;&nbsp;по&nbsp;&nbsp;
-                                    <select class="mini" id="dateEnd" name="dateEnd">
-                                        <option value="0" disabled selected="selected">Дата окончания</option>
-                                        <option value="1"  {{ 'now'|date('m')+1 == 1 ? 'selected="selected"' : '' }}>Янв</option>
-                                        <option value="2"  {{ 'now'|date('m')+1 == 2 ? 'selected="selected"' : '' }}>Фев</option>
-                                        <option value="3"  {{ 'now'|date('m')+1 == 3 ? 'selected="selected"' : '' }}>Мар</option>
-                                        <option value="4"  {{ 'now'|date('m')+1 == 4 ? 'selected="selected"' : '' }}>Апр</option>
-                                        <option value="5"  {{ 'now'|date('m')+1 == 5 ? 'selected="selected"' : '' }}>Май</option>
-                                        <option value="6"  {{ 'now'|date('m')+1 == 6 ? 'selected="selected"' : '' }}>Июн</option>
-                                        <option value="7"  {{ 'now'|date('m')+1 == 7 ? 'selected="selected"' : '' }}>Июл</option>
-                                        <option value="8"  {{ 'now'|date('m')+1 == 8 ? 'selected="selected"' : '' }}>Авг</option>
-                                        <option value="9"  {{ 'now'|date('m')+1 == 9 ? 'selected="selected"' : '' }}>Сен</option>
-                                        <option value="10" {{ 'now'|date('m')+1 == 10 ? 'selected="selected"' : '' }}>Окт</option>
-                                        <option value="11" {{ 'now'|date('m')+1 == 11 ? 'selected="selected"' : '' }}>Ноя</option>
-                                        <option value="12" {{ 'now'|date('m')+1 == 12 ? 'selected="selected"' : '' }}>Дек</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div  class="relative">
-                            <span class="required"></span>
-                            <input type="text" placeholder="Количество конструкций" id="count" required="required" name="count">
-                        </div>
-                        <div  class="relative">
-                            <span class="required"></span>
-                            <input type="text" placeholder="Стоимость" id="priceAll" required="required" name="priceAll">
-                        </div>
-                        <div  class="relative">
-                            <span class="required"></span>
-                            <input type="text" class="name" placeholder="Имя" name="name" id="name" required="required">
-                        </div>
-                        <div  class="relative">
-                            <span class="required"></span>
-                            <input type="text" class="email" placeholder="Email" name="email" id="email" required="required">
-                        </div>
-                        <div  class="relative">
-                            <span class="required"></span>
-                            <input type="text" class="phone" placeholder="Телефон" name="phone" id="phone" required="required">
-                        </div>
-                        <br />
-                        <div style="text-align: right">
-                            <span class="btn2" id="form-top-submit">
-                                Заказать
-                            </span>
-                        </div>
-                        <br />
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    {#<div class="row">#}
-    {#<div class="col-xs-12">#}
-    {#</div>#}
-    {#</div>#}
-    <div class="row">
-        <div class="col-xs-4">
             <div class="box" style="height: 620px;">
                 <form method="GET" action="{{ path('map') }}" id="form-map">
                     <div class="form">
@@ -308,20 +177,137 @@
                 </form>
             </div>
         </div>
+    </div>
+    {#<div class="row">#}
+    {#<div class="col-xs-12">#}
+    {#</div>#}
+    {#</div>#}
+    <div class="row">
         <div class="col-xs-4">
-            <div class="box">
+            <div class="box" style="  margin-top: -15px;">
                 <div class="form">
-                    <div class="title">Поиск щитов на карте</div>
-                    <br />
-                    <div style="text-align: center">
-                        <a href="{{ path('map') }}">
-                            <img src="{{ asset('bundles/app/images/map.png') }}" class="round"/>
-                        </a>
-                    </div>
-                    <br />
-                    <br />
+                    <form method="POST" id="form-top" action="{{ path('send_getmedia') }}">
+                        <div class="title" style="font-size: 20px; margin-bottom: 10px">Закажите свой медиа-план!</div>
+                        <div class="error2">
+
+                        </div>
+                        <div class="relative">
+                            <span class="required"></span>
+                            <select id="city" name="city" required="true" class="required">
+                                <option value="0" disabled selected>Город</option>
+                                {% for c in cities %}
+                                    <option value="{{ c.title }}">{{ c.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="relative">
+                            <select id="area" name="area">
+                                <option value="0" disabled selected>Округ</option>
+                                <option value="0" selected>Все округа</option>
+                                <option value="ЦАО">ЦАО</option>
+                                <option value="СВАО">СВАО</option>
+                                <option value="ВАО">ВАО</option>
+                                <option value="ЮВАО">ЮВАО</option>
+                                <option value="ЮАО">ЮАО</option>
+                                <option value="ЮЗАО">ЮЗАО</option>
+                                <option value="ЗАО">ЗАО</option>
+                                <option value="CЗАО">CЗАО</option>
+                                <option value="САО">САО</option>
+                            </select>
+                        </div>
+                        <div class="relative">
+                            <div class="check-group">
+                                Формат 3х6
+                                <div class="check"></div>
+                                <input type="hidden" name="formatM" value="0">
+                            </div>
+                            <div class="check-group">
+                                Малые форматы
+                                <div class="check"></div>
+                                <input type="hidden" name="formatS" value="0">
+                            </div>
+                            <div class="check-group">
+                                Большие форматы
+                                <div class="check"></div>
+                                <input type="hidden" name="formatL" value="0">
+                            </div>
+                            <div class="check-group">
+                                Ситиборды
+                                <div class="check"></div>
+                                <input type="hidden" name="formatSB" value="0">
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="input-group" style="padding-left: 20px">
+                                <span class="required" style="  margin-left: -20px;padding-right: 10px;"></span>
+                                Период
+                                <div style="float: right;">
+                                    с&nbsp;&nbsp;
+                                    <select class="mini" id="dateStart" name="dateStart">
+                                        <option value="0" disabled selected="selected">Дата начала</option>
+                                        <option value="1"  {{ 'now'|date('m')+1 == 1 ? 'selected="selected"' : '' }}>Янв</option>
+                                        <option value="2"  {{ 'now'|date('m')+1 == 2 ? 'selected="selected"' : '' }}>Фев</option>
+                                        <option value="3"  {{ 'now'|date('m')+1 == 3 ? 'selected="selected"' : '' }}>Мар</option>
+                                        <option value="4"  {{ 'now'|date('m')+1 == 4 ? 'selected="selected"' : '' }}>Апр</option>
+                                        <option value="5"  {{ 'now'|date('m')+1 == 5 ? 'selected="selected"' : '' }}>Май</option>
+                                        <option value="6"  {{ 'now'|date('m')+1 == 6 ? 'selected="selected"' : '' }}>Июн</option>
+                                        <option value="7"  {{ 'now'|date('m')+1 == 7 ? 'selected="selected"' : '' }}>Июл</option>
+                                        <option value="8"  {{ 'now'|date('m')+1 == 8 ? 'selected="selected"' : '' }}>Авг</option>
+                                        <option value="9"  {{ 'now'|date('m')+1 == 9 ? 'selected="selected"' : '' }}>Сен</option>
+                                        <option value="10" {{ 'now'|date('m')+1 == 10 ? 'selected="selected"' : '' }}>Окт</option>
+                                        <option value="11" {{ 'now'|date('m')+1 == 11 ? 'selected="selected"' : '' }}>Ноя</option>
+                                        <option value="12" {{ 'now'|date('m')+1 == 12 ? 'selected="selected"' : '' }}>Дек</option>
+                                    </select>
+                                    &nbsp;&nbsp;по&nbsp;&nbsp;
+                                    <select class="mini" id="dateEnd" name="dateEnd">
+                                        <option value="0" disabled selected="selected">Дата окончания</option>
+                                        <option value="1"  {{ 'now'|date('m')+1 == 1 ? 'selected="selected"' : '' }}>Янв</option>
+                                        <option value="2"  {{ 'now'|date('m')+1 == 2 ? 'selected="selected"' : '' }}>Фев</option>
+                                        <option value="3"  {{ 'now'|date('m')+1 == 3 ? 'selected="selected"' : '' }}>Мар</option>
+                                        <option value="4"  {{ 'now'|date('m')+1 == 4 ? 'selected="selected"' : '' }}>Апр</option>
+                                        <option value="5"  {{ 'now'|date('m')+1 == 5 ? 'selected="selected"' : '' }}>Май</option>
+                                        <option value="6"  {{ 'now'|date('m')+1 == 6 ? 'selected="selected"' : '' }}>Июн</option>
+                                        <option value="7"  {{ 'now'|date('m')+1 == 7 ? 'selected="selected"' : '' }}>Июл</option>
+                                        <option value="8"  {{ 'now'|date('m')+1 == 8 ? 'selected="selected"' : '' }}>Авг</option>
+                                        <option value="9"  {{ 'now'|date('m')+1 == 9 ? 'selected="selected"' : '' }}>Сен</option>
+                                        <option value="10" {{ 'now'|date('m')+1 == 10 ? 'selected="selected"' : '' }}>Окт</option>
+                                        <option value="11" {{ 'now'|date('m')+1 == 11 ? 'selected="selected"' : '' }}>Ноя</option>
+                                        <option value="12" {{ 'now'|date('m')+1 == 12 ? 'selected="selected"' : '' }}>Дек</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div  class="relative">
+                            <span class="required"></span>
+                            <input type="text" placeholder="Количество конструкций" id="count" required="required" name="count">
+                        </div>
+                        <div  class="relative">
+                            <span class="required"></span>
+                            <input type="text" placeholder="Стоимость" id="priceAll" required="required" name="priceAll">
+                        </div>
+                        <div  class="relative">
+                            <span class="required"></span>
+                            <input type="text" class="name" placeholder="Имя" name="name" id="name" required="required">
+                        </div>
+                        <div  class="relative">
+                            <span class="required"></span>
+                            <input type="text" class="email" placeholder="Email" name="email" id="email" required="required">
+                        </div>
+                        <div  class="relative">
+                            <span class="required"></span>
+                            <input type="text" class="phone" placeholder="Телефон" name="phone" id="phone" required="required">
+                        </div>
+                        <br />
+                        <div style="text-align: right">
+                            <span class="btn2" id="form-top-submit">
+                                Заказать
+                            </span>
+                        </div>
+                        <br />
+                    </form>
                 </div>
             </div>
+
         </div>
         <div class="col-xs-4">
             <div class="box">
@@ -395,7 +381,7 @@
                                                         <tr>
                                                             <td>Цена</td>
                                                             <td style="text-align: right">
-                                                                <b class="pink">{{ b.price2 |number_format(1, '.', '') }}&nbsp;р.</b>
+                                                                <b class="pink">{{ b.price2 |number_format(1, '.', ' ') }}&nbsp;р.</b>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -408,6 +394,21 @@
                         </div>
                     {% endif %}
                     <br/>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="box">
+                <div class="form">
+                    <div class="title">Поиск щитов на карте</div>
+                    <br />
+                    <div style="text-align: center">
+                        <a href="{{ path('map') }}">
+                            <img src="{{ asset('bundles/app/images/map.png') }}" class="round"/>
+                        </a>
+                    </div>
+                    <br />
+                    <br />
                 </div>
             </div>
         </div>
