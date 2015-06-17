@@ -520,19 +520,19 @@ input.mini {
   text-align: right;
   padding-right: 10px;
 }
-.ymaps-2-1-23-input__control {
+.ymaps-2-1-26-input__control {
   box-shadow: none;
 }
-.ymaps-2-1-23-balloon__content {
+.ymaps-2-1-26-balloon__content {
   margin-right: 0 !important;
 }
-.ymaps-2-1-23-balloon__layout {
+.ymaps-2-1-26-balloon__layout {
   min-width: 410px !important;
 }
-.ymaps-2-1-23-balloon__layout {
+.ymaps-2-1-26-balloon__layout {
   height: 630px;
 }
-.ymaps-2-1-23-balloon__content ymaps {
+.ymaps-2-1-26-balloon__content ymaps {
   height: auto !important;
 }
 .addBasket {
