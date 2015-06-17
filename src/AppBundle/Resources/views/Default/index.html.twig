@@ -362,7 +362,7 @@
                             {% for k,b in offers %}
                                 <div class="hot-box-mini offers-item" {{ k > 2 ? 'style="display:none"' : '' }}>
                                     <a href="{{ path('map') }}?bannerId={{ b.id }}">
-                                        <table>
+                                        <table style=" max-width: 310px;">
                                             <tr>
                                                 <td>
                                                     <div class="hot-img">
@@ -372,7 +372,7 @@
                                                 <td>
                                                     <table class="hot-params">
                                                         <tr>
-                                                            <td colspan="2">{{ b.adrs }}</td>
+                                                            <td colspan="2" style="font-size: 12px;">{{ b.adrs }}</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Формат</td>
@@ -380,7 +380,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Цена</td>
-                                                            <td style="text-align: right">
+                                                            <td style="text-align: right; width: 175px;font-size: 12px;">
                                                                 <b class="pink">{{ b.price2 |number_format(1, '.', ' ') }}&nbsp;р.</b>
                                                             </td>
                                                         </tr>
@@ -679,7 +679,7 @@
                     $('.offers-item:first').appendTo('.offers-block');
                     $('.offers-item').eq(2).css('display','block');
 
-                },7000);
+                },700000);
             });
         </script>
     {% endblock %}
