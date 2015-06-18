@@ -17,8 +17,8 @@ class EmailService
         $mail = new \PHPMailer();
         $portal = 'mediafirst.ru';
         $mail->isSMTP();
-        $mail->SMTPDebug = 2;
-        $mail->isHTML(true);
+//        $mail->SMTPDebug = 2;
+//        $mail->isHTML(true);
         $mail->CharSet  = 'UTF-8';
         $mail->FromName = $portal;
         $mail->Subject  = $subject;
