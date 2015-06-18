@@ -485,7 +485,7 @@ class DefaultController extends Controller
      */
     public function mapMediaplanAction(Request $request){
 
-        $banners = $request->query->get('banners');
+        $banners2 = $request->query->get('banners');
 
 //        $banners = explode(';',$banners);
 //        $objects = array();
@@ -528,7 +528,7 @@ class DefaultController extends Controller
 
         return array(
 //            'objects' => $objects,
-            'get' => $banners,
+            'get' => $banners2,
             'pos' => $pos
         );
     }
