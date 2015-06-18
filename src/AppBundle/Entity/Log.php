@@ -15,7 +15,7 @@ use Iphp\FileStoreBundle\Mapping\Annotation as FileStore;
 class Log extends BaseEntity
 {
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $title;
 

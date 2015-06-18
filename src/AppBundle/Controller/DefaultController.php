@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class DefaultController extends Controller
 {
@@ -187,6 +188,21 @@ class DefaultController extends Controller
      * @Template()
      */
     public function mapAction(Request $request){
+        $session = new Session();
+        $refer = $request->headers->get('referer');
+        if ($request->query->get('my') == 0 && $session->get('referer') != null){
+            if ($session->get('referer') != $refer ){
+                $refer = $session->get('referer');
+                $session->set('referer',null);
+                return $this->redirect($refer);
+
+            }
+        }
+
+        if ($request->query->get('my') != 1){
+            $session->set('referer',$refer);
+            $session->save();
+        }
         $params = array(
             'grpMin' => $request->query->get('grp-min'),
             'grpMax' => $request->query->get('grp-max'),
@@ -231,7 +247,16 @@ class DefaultController extends Controller
         }else{
             $area = '';
         }
-        $val = $city.' '.$area.' '.$request->query->get('street');
+        if ( $request->query->get('my') == 1 ){
+            $basket = $session->get('lists');
+            if (isset(array_values($basket)[0])){
+                $val = array_values($basket)[0]['city'];
+            }else{
+                $val = 'Москва';
+            }
+        }else{
+            $val = $city.' '.$area.' '.$request->query->get('street');
+        }
 
             $url = 'http://geocode-maps.yandex.ru/1.x/?geocode='.urlencode($val);
             $content = file_get_contents($url);

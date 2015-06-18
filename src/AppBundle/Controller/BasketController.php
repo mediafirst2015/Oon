@@ -841,7 +841,7 @@ class BasketController extends Controller
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('H'.$line, $o['format']);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('I'.$line, ($o['light'] == 1 ? 'Есть' : 'Нет'));
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('J'.$line, $o['grp']);
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('K'.$line, $o['ots']);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('K'.$line, number_format($o['ots'],2));
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('L'.$line, $o['price'].'р.');
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('M'.$line, $o['taxType']);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('N'.$line, $o['price2'].'р.');

@@ -151,7 +151,7 @@ class ParserCommand extends ContainerAwareCommand
                 }catch (\Exception $e){
                     if ($type != 0){
                         $log = new Log();
-                        $log->setTitle($f.' Строка: '.$e->getLine().'. '.$e->getMessage());
+                        $log->setTitle($f.' Строка: '.$e->getLine().'. '.$e->getFile().'. '.$e->getMessage());
                         $em->persist($log);
                         $em->flush($log);
                     }

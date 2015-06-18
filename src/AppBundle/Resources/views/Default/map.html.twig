@@ -198,24 +198,19 @@
             ymaps.ready(init);
             function init() {
                 map = new ymaps.Map('map', {
-                    {% if app.request.query.all.my is defined and app.request.query.all.my == 1 %}
-                    center: [55.755381, 37.619044],
-                    zoom: 11,
-                    {% else %}
                     {% if thisBanner != null %}
-                    center: [{{ thisBanner.latitude }}, {{ thisBanner.longitude }}],
-                    zoom: 15,
+                        center: [{{ thisBanner.latitude }}, {{ thisBanner.longitude }}],
+                        zoom: 15,
                     {% elseif pos.x != null and pos.y != null %}
-                    center: [{{ pos.x }}, {{ pos.y }}],
+                        center: [{{ pos.x }}, {{ pos.y }}],
                     {% if (street) %}
-                    zoom: 15,
+                        zoom: 15,
                     {% else %}
-                    zoom: 12,
+                        zoom: 12,
                     {% endif %}
                     {% else %}
-                    center: [55.755381, 37.619044],
-                    zoom: 11,
-                    {% endif %}
+                        center: [55.755381, 37.619044],
+                        zoom: 11,
                     {% endif %}
                     controls: ['zoomControl']
                 });
@@ -499,15 +494,17 @@
                 });
 
                 $('#map').on('click','input.addBasket', function(){
-                    var item = $(this)
+                    var item = $(this);
                     $.ajax({
                         url: Routing.generate('basket_add', {'itemId': $(this).attr('data-id'), 'month': $(this).attr('data-month')}),
                         method: 'POST',
                         success: function(msg){
                             $('#basket-table').html(msg);
                             if ( item.prop('checked') == true ){
+                                item.attr('checked','checked');
                                 $('.thrumb').notify("позиция добавлена в медиаплан",{ className: 'success', autoHideDelay: 1200, position: "bottom",  showDuration: 0,  hideDuration: 0  });
                             }else{
+                                item.removeAttr('checked');
                                 $('.thrumb').notify("позиция удалена из медиаплана",{ className: 'success', autoHideDelay: 1200, position: "bottom",  showDuration: 0,  hideDuration: 0  });
                             }
                             orderRefresh();

@@ -191,6 +191,7 @@ class MapController extends Controller
                     'ots'    => $ots,
                     'months' => $months
                 );
+
                 $objects[$id] = array(
                     'coords' => [ $banner->getLatitude(), $banner->getLongitude()],
                     'alt' => $banner->getAdrs(),
