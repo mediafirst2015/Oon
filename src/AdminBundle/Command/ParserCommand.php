@@ -45,26 +45,17 @@ class ParserCommand extends ContainerAwareCommand
             /**
              * Проверяем этот файл горящих предложений или нет
              */
-//            $output->write('1');
             $p = explode('_',$f);
-//            $sale = 0;
             if ($p[0] === 'HOT'){
                 $hot = $p[1];
-//                $output->write('3');
             }else{
                 $hot = false;
-//                $output->write($p[0]);
                 if (is_numeric($p[0])){
                     $sale = $p[0];
-//                    $output->write($sale);
                 }else{
                     $sale = 0;
                 }
             }
-//            $sale = $sale*1
-
-//            var_dump(explode('_',$f));
-//            exit;
 
             $path = $container->get('kernel')->getRootDir().'/../web/upload/files/'.$f;
 

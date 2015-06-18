@@ -15,7 +15,7 @@ class Month extends BaseEntity
 {
 
     /**
-     * @ORM\ManyToOne(targetEntity="Banner", inversedBy="months")
+     * @ORM\ManyToOne(targetEntity="Banner", inversedBy="months", cascade={"persist"})
      */
     protected $banner;
 
@@ -48,7 +48,7 @@ class Month extends BaseEntity
 
     public function __toString()
     {
-        return $this->date->format('m');
+        return "".$this->date->format('m')."";
     }
 
     /**

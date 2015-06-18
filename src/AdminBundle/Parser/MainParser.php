@@ -85,6 +85,7 @@ class MainParser{
     }
 
     public function refreshStatus(Banner $banner, $status, $hot = null){
+        return true;
         $months = $banner->getMonths();
         foreach ($months as $m){
             $this->em->remove($m);
