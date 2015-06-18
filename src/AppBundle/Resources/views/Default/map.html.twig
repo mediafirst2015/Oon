@@ -110,21 +110,21 @@
                         <br />
                         <div class="slider-group">
                             <span class="caption">GRP</span>
-                            <span id="grp-amount" class="val"></span>
+                            <span id="grp-amount" class="val contentEditable" contentEditable="true"></span>
                             <span class="slider" id="grp"></span>
                             <input type="hidden" name="grp-min" id="grp-min" value="{{ params.grpMin != null ? params.grpMin : 0 }}">
                             <input type="hidden" name="grp-max" id="grp-max" value="{{ params.grpMax != null ? params.grpMax : 15 }}">
                         </div>
                         <div class="slider-group">
                             <span class="caption">OTS</span>
-                            <span id="ots-amount" class="val"></span>
+                            <span id="ots-amount" class="val contentEditable" contentEditable="true"></span>
                             <span class="slider"  id="ots"></span>
                             <input type="hidden" name="ots-min" id="ots-min" value="{{ params.otsMin != null ? params.otsMin : 0 }}">
                             <input type="hidden" name="ots-max" id="ots-max" value="{{ params.otsMax != null ? params.otsMax : 500 }}">
                         </div>
                         <div class="slider-group">
-                            <span class="caption">Стоимость</span>
-                            <span id="price-amount" class="val"></span>
+                            <span class="caption">Стоимость (тыс.р. вкл НДС)</span>
+                            <span id="price-amount" class="val contentEditable" contentEditable="true"></span>
                             <span class="slider" id="price"></span>
                             <input type="hidden" name="price-min" id="price-min" value="{{ params.priceMin != null ? params.priceMin : 0 }}">
                             <input type="hidden" name="price-max" id="price-max" value="{{ params.priceMax != null ? params.priceMax : 999 }}">
@@ -568,13 +568,13 @@
                     max: 999,
                     values: [ {{ params.priceMin != null ? params.priceMin : 0 }}, {{ params.priceMax != null ? params.priceMax : 999 }} ],
                     slide: function( event, ui ) {
-                        $( "#price-amount" ).html( "" + ui.values[ 0 ] + " т.р. - " + ui.values[ 1 ] + ' т.р.' );
+                        $( "#price-amount" ).html( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ]);
                         $( "#price-min" ).val(ui.values[ 0 ]);
                         $( "#price-max" ).val(ui.values[ 1 ]);
                     }
                 });
                 $( "#price-amount" ).html( "" + $( "#price" ).slider( "values", 0 ) +
-                " т.р. - " + $( "#price" ).slider( "values", 1 ) + ' т.р.' );
+                " - " + $( "#price" ).slider( "values", 1 ) );
 
                 $('#city2').change(function(){
                     if ($(this).val() != 'Москва'){
@@ -582,6 +582,41 @@
                         $('#area2 option').eq(0).prop('selected', true);
                     }else{
                         $('#area2').prop( "disabled", false);
+                    }
+                });
+
+                $(".contentEditable").keypress(function(event){
+                    if ( event.which == 13 ) {
+                        event.preventDefault();
+                        var myArray = $(this).text().split('-');
+                        var min = myArray[0];
+                        var max = myArray[1];
+                        min = parseFloat(min);
+                        max = parseFloat(max);
+                        var slider = $(this).parent().children('.slider');
+                        //Теперь меняем input hidden
+                        if (slider.attr('id') == 'grp'){
+                            $(this).parent().children('#grp-min').val(min);
+                            $(this).parent().children('#grp-max').val(max);
+                        }
+                        if (slider.attr('id') == 'ots'){
+                            $(this).parent().children('#ots-min').val(min);
+                            $(this).parent().children('#ots-max').val(max);
+                        }
+                        if (slider.attr('id') == 'price'){
+                            $(this).parent().children('#price-min').val(min);
+                            $(this).parent().children('#price-max').val(max);
+                        }
+
+                        if (slider.attr('id') == 'grp'){
+                            min = min*100;
+                            max = max*100;
+                        }
+                        slider.slider( "values", [min, max] );
+                    }else{
+                        if ( event.which < 48 || event.which > 57 ) {
+                            event.preventDefault();
+                        }
                     }
                 });
             });

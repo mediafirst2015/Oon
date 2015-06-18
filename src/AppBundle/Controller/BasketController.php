@@ -627,7 +627,7 @@ class BasketController extends Controller
             $file
         );
         $session->getFlashBag()->set('success', '<span>Дорогой клиент,</span><br /><br />Спасибо за обращение к нам. Будем рады ответить на все ваши вопросы.');
-        return $this->redirect($this->generateUrl('map').'#basket');
+        return $this->redirect($this->generateUrl('basket_clear'));
     }
 
     /**
