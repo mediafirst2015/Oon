@@ -190,7 +190,7 @@ class DefaultController extends Controller
     public function mapAction(Request $request){
         $session = new Session();
         $refer = $request->headers->get('referer');
-        if ($request->query->get('my') == 0 && $session->get('referer') != null){
+        if ($request->query->get('my') == '0' && $session->get('referer') != null){
             if ($session->get('referer') != $refer ){
                 $refer = $session->get('referer');
                 $session->set('referer',null);
