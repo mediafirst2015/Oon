@@ -482,7 +482,7 @@
                     {% for r in reviews %}
                         <div style="overflow: hidden; padding: 5px 0 10px 0">
                             {% if r.image.path is defined %}
-                                <img src="{{ r.image.path }}" style="width: 120px; float: left; margin: 10px;">
+                                <a href="{{ r.image.path }}" class="fancybox"><img src="{{ r.image.path }}" style="width: 120px; float: left; margin: 10px;"></a>
                             {% endif %}
                             <div style="font-size: 20px; line-height: 20px">{{ r.title }}</div>
                             <br />

@@ -199,10 +199,10 @@ class DefaultController extends Controller
             }
         }
 
-        if ($request->query->get('my') != 1){
+//        if ($request->query->get('my') != 1){
             $session->set('referer',$refer);
             $session->save();
-        }
+//        }
         $params = array(
             'grpMin' => $request->query->get('grp-min'),
             'grpMax' => $request->query->get('grp-max'),
@@ -249,7 +249,7 @@ class DefaultController extends Controller
         }
         if ( $request->query->get('my') == 1 ){
             $basket = $session->get('lists');
-            if (isset(array_values($basket)[0])){
+            if (isset($basket) && $basket != null  && isset(array_values($basket)[0])){
                 $val = array_values($basket)[0]['city'];
             }else{
                 $val = 'Москва';
