@@ -10,12 +10,7 @@ use AppBundle\Entity\User;
 class RosveroParser extends MainParser
 {
 
-//    public $filePath = '/var/www/navigator/current/web/RV.xls';
-//    public $filePath = '/var/www/map/web/RV.xls';
-
-
-
-    /**
+     /**
      * @Route("/parserRasvero/1")
      */
     public function parserRasvero1Action($hot = false)
@@ -67,15 +62,9 @@ class RosveroParser extends MainParser
 
             $banner->setLink(0);
 
-
-//            $url = substr ($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue(), 0, strrpos($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue(), '.'));
             $url = $phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue();
-//            if ($url == ''){
-//                echo '<br /><br />'.$num;
-//                break;
-//            }
             $url = 'http://geocode-maps.yandex.ru/1.x/?geocode='.urlencode($url);
-//            echo $url.'<br />';
+
             $content = file_get_contents($url);
             $XmlObj = simplexml_load_string($content);
             if (isset($XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)){
@@ -91,15 +80,21 @@ class RosveroParser extends MainParser
 
             $banner = $this->setBanner($banner);
             $month = array(
-                '2015-06-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('S'.$num)->getValue()),
-                '2015-07-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('T'.$num)->getValue()),
-                '2015-08-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('U'.$num)->getValue()),
-                '2015-09-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('V'.$num)->getValue()),
-                '2015-10-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('W'.$num)->getValue()),
-                '2015-11-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('X'.$num)->getValue()),
-                '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('Y'.$num)->getValue()),
+                '2015-07-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('S'.$num)->getValue()),
+                '2015-08-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('T'.$num)->getValue()),
+                '2015-09-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('U'.$num)->getValue()),
+                '2015-10-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('V'.$num)->getValue()),
+                '2015-11-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('W'.$num)->getValue()),
+                '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('X'.$num)->getValue()),
+//                '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('Y'.$num)->getValue()),
             );
             $this->refreshStatus($banner,$month, array('date' => '2015-06-01' , 'sale' => $hot));
+
+            if ($hot){
+                $banner->setHot(true);
+            }else{
+                $banner->setHot(false);
+            }
 
             $num ++;
             if ($num % 50 == 0){

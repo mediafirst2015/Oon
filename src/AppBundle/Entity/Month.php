@@ -46,6 +46,11 @@ class Month extends BaseEntity
     protected $status = 1;
 
 
+    public function __toString()
+    {
+        return $this->date->format('m');
+    }
+
     /**
      * @return mixed
      */
