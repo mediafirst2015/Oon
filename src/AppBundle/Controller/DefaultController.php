@@ -502,7 +502,7 @@ class DefaultController extends Controller
 //               );
 //           }
 //        }
-        $banners = explode(';',$banners);
+        $banners = explode(';',$banners2);
         $objects = array();
         foreach ($banners as $b) {
             if ($b && $b != '') {
