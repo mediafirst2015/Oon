@@ -57,10 +57,7 @@
             ymaps.ready(init);
             function init(){
                 map = new ymaps.Map('map', {
-                    {% if thisBanner != null %}
-                    center: [{{ thisBanner.latitude }}, {{ thisBanner.longitude }}],
-                    zoom: 15,
-                    {% elseif pos.x != null and pos.y != null %}
+                    {% if pos.x != null and pos.y != null %}
                     center: [{{ pos.x }}, {{ pos.y }}],
                     {% if (street) %}
                     zoom: 15,
