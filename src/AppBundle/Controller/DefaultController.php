@@ -60,8 +60,8 @@ class DefaultController extends Controller
         }elseif($url == 'contacts'){
             return $this->render('AppBundle:Default:contacts.html.twig');
         }else{
-        $page = $this->getDoctrine()->getRepository('AppBundle:Page')->findOneByUrl($url);
-        return array('page' => $page);
+            $page = $this->getDoctrine()->getRepository('AppBundle:Page')->findOneByUrl($url);
+            return array('page' => $page);
         }
 //        }
     }
@@ -200,8 +200,8 @@ class DefaultController extends Controller
         }
 
 //        if ($request->query->get('my') != 1){
-            $session->set('referer',$refer);
-            $session->save();
+        $session->set('referer',$refer);
+        $session->save();
 //        }
         $params = array(
             'grpMin' => $request->query->get('grp-min'),
@@ -258,9 +258,9 @@ class DefaultController extends Controller
             $val = $city.' '.$area.' '.$request->query->get('street');
         }
 
-            $url = 'http://geocode-maps.yandex.ru/1.x/?geocode='.urlencode($val);
-            $content = file_get_contents($url);
-            $XmlObj = simplexml_load_string($content);
+        $url = 'http://geocode-maps.yandex.ru/1.x/?geocode='.urlencode($val);
+        $content = file_get_contents($url);
+        $XmlObj = simplexml_load_string($content);
         if (isset($XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)){
             $pos['x'] = explode(' ',$XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)[1];
             $pos['y'] = explode(' ',$XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)[0];
@@ -502,10 +502,34 @@ class DefaultController extends Controller
 //               );
 //           }
 //        }
+        $banners = explode(';',$banners);
+        $objects = array();
+        foreach ($banners as $b) {
+            if ($b && $b != '') {
+                $banner = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($b);
+                $val = $b->getCity()->getTitle();
+            }else{
+                $val = 'Москва';
+            }
+
+            $url = 'http://geocode-maps.yandex.ru/1.x/?geocode='.urlencode($val);
+            $content = file_get_contents($url);
+            $XmlObj = simplexml_load_string($content);
+            if (isset($XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)){
+                $pos['x'] = explode(' ',$XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)[1];
+                $pos['y'] = explode(' ',$XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)[0];
+            }else{
+                $pos['x'] = null;
+                $pos['y'] = null;
+            }
+            break;
+        }
+
 
         return array(
 //            'objects' => $objects,
             'get' => $banners,
+            'pos' => $pos
         );
     }
 
