@@ -88,7 +88,42 @@
                         $('#order-btn').css('bottom',0);
                         $('#order-btn').css('right',0);
                     }
-                })
+                });
+
+                $(".contentEditable").keypress(function(event){
+                    if ( event.which == 13 ) {
+                        event.preventDefault();
+                        var myArray = $(this).text().split('-');
+                        var min = myArray[0];
+                        var max = myArray[1];
+                        min = parseFloat(min);
+                        max = parseFloat(max);
+                        var slider = $(this).parent().children('.slider');
+                        //Теперь меняем input hidden
+                        if (slider.attr('id') == 'grp'){
+                            $(this).parent().children('#grp-min').val(min);
+                            $(this).parent().children('#grp-max').val(max);
+                        }
+                        if (slider.attr('id') == 'ots'){
+                            $(this).parent().children('#ots-min').val(min);
+                            $(this).parent().children('#ots-max').val(max);
+                        }
+                        if (slider.attr('id') == 'price'){
+                            $(this).parent().children('#price-min').val(min);
+                            $(this).parent().children('#price-max').val(max);
+                        }
+
+                        if (slider.attr('id') == 'grp'){
+                            min = min*100;
+                            max = max*100;
+                        }
+                        slider.slider( "values", [min, max] );
+                    }else{
+                        if ( event.which < 48 || event.which > 57 ) {
+                            event.preventDefault();
+                        }
+                    }
+                });
             });
         </script>
     {% endblock %}
