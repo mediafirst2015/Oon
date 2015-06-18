@@ -697,6 +697,22 @@ class BasketController extends Controller
         $basket = $session->get('lists');
 
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+
+
+        $file = $this->get('kernel')->getRootDir() . '/../web'.'/bundles/app/assets/logomediafirst.png';
+        if (file_exists($file)) {
+            $objDrawing = new \PHPExcel_Worksheet_Drawing();
+            $objDrawing->setName('Customer Signature');
+            $objDrawing->setDescription('Customer Signature');
+            //Path to signature .jpg file
+            $signature = $file;
+            $objDrawing->setPath($signature);
+            $objDrawing->setOffsetX(8);                     //setOffsetX works properly
+            $objDrawing->setCoordinates('B2');             //set image to cell E38
+            $objDrawing->setHeight(50);                     //signature height
+            $objDrawing->setWorksheet($phpExcelObject->getActiveSheet(0));  //save
+        }
+
         for($i = 1; $i<500; $i ++){
             $phpExcelObject->setActiveSheetIndex(0)->getRowDimension($i)->setRowHeight(20);
         }
@@ -727,6 +743,17 @@ class BasketController extends Controller
             ->setKeywords("")
             ->setCategory("");
 
+        $background = array(
+            'fill' => array(
+                'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                'color' => array('rgb' => '1C3F95')
+            ),
+            'font'  => array(
+                'bold'  => true,
+                'color' => array('rgb' => 'FFFFFF'),
+            )
+        );
+
         $phpExcelObject->setActiveSheetIndex(0)->setCellValue('B5', '№');
         $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C5', 'Город');
         $phpExcelObject->setActiveSheetIndex(0)->setCellValue('D5', 'Округ');
@@ -746,23 +773,43 @@ class BasketController extends Controller
         $phpExcelObject->setActiveSheetIndex(0)->setCellValue('R5', 'Налог');
 
 
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("B5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("C5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("D5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("E5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("F5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("G5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("H5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("I5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("J5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("K5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("L5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("M5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("N5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("O5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("P5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("Q5")->getFont()->setBold(true);
-        $phpExcelObject->setActiveSheetIndex(0)->getStyle("R5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("B5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("C5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("D5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("E5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("F5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("G5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("H5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("I5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("J5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("K5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("L5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("M5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("N5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("O5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("P5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("Q5")->getFont()->setBold(true);
+//        $phpExcelObject->setActiveSheetIndex(0)->getStyle("R5")->getFont()->setBold(true);
+
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("B5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("C5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("D5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("E5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("F5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("G5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("H5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("I5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("J5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("K5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("L5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("M5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("N5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("O5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("P5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("Q5")->applyFromArray($background);
+        $phpExcelObject->setActiveSheetIndex(0)->getStyle("R5")->applyFromArray($background);
+
+
 
         $line = 6;
         $sum = array(
@@ -804,6 +851,35 @@ class BasketController extends Controller
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('Q'.$line, 'Фото');
             $phpExcelObject->setActiveSheetIndex(0)->getHyperlink('Q'.$line)->setUrl($o['img']);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('R'.$line, $o['taxType']);
+
+            $border = array(
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => \PHPExcel_Style_Border::BORDER_THIN
+                    )
+                )
+            );
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('B'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('C'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('D'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('G'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('H'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('I'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('J'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('K'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('L'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('M'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('N'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('O'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('P'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('P'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('Q'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('Q'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('R'.$line)->applyFromArray($border);
+
+
 
             $line++;
         }
