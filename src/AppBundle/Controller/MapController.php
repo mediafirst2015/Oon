@@ -237,14 +237,16 @@ class MapController extends Controller
         foreach ($banners as $b){
             if ($b && $b != ''){
                 $banner = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($b);
-                $objects[] = array(
-                    'coords' => [ $banner->getLatitude(), $banner->getLongitude()],
-                    'alt' => $banner->getAdrs(),
-                    'id' => $banner->getId(),
-                    'hot' => ( $banner->getHotMonth() == false ? 0 : 1),
-                    'format' => $banner->getFormat(),
+                if ($banner){
+                    $objects[] = array(
+                        'coords' => [ $banner->getLatitude(), $banner->getLongitude()],
+                        'alt' => $banner->getAdrs(),
+                        'id' => $banner->getId(),
+                        'hot' => ( $banner->getHotMonth() == false ? 0 : 1),
+                        'format' => $banner->getFormat(),
 //                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
-                );
+                    );
+                }
             }
         }
         $objects = array('data' => $objects);
