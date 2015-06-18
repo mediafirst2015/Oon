@@ -507,7 +507,7 @@ class DefaultController extends Controller
         foreach ($banners as $b) {
             if ($b && $b != '') {
                 $banner = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($b);
-                $val = $b->getCity()->getTitle();
+                $val = $banner->getCity()->getTitle();
             }else{
                 $val = 'Москва';
             }
