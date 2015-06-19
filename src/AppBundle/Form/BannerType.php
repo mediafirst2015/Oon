@@ -16,7 +16,11 @@ class BannerType extends AbstractType
     {
         $builder
             ->add('title', null, array('label' => 'Название места'))
+            ->add('type', null, array('label' => 'тип'))
+            ->add('format', null, array('label' => 'Формат'))
+            ->add('title', null, array('label' => 'Название места'))
             ->add('img', null, array('label' => 'Картинка'))
+            ->add('city', null, array('label' => 'Город'))
             ->add('area','choice',  array(
                 'empty_value' => false,
                 'choices' => array(

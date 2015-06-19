@@ -143,6 +143,7 @@ class MapController extends Controller
                     'id' => $banner->getId(),
                     'hot' => ( $banner->getHotMonth() == false ? 0 : 1),
                     'format' => $banner->getFormat(),
+                    'type' => $banner->getType(),
 //                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
                 );
             }
@@ -244,6 +245,8 @@ class MapController extends Controller
                         'id' => $banner->getId(),
                         'hot' => ( $banner->getHotMonth() == false ? 0 : 1),
                         'format' => $banner->getFormat(),
+                        'type' => $banner->getType(),
+
 //                    'content' => $this->renderView('AppBundle:Map:getInfo.html.twig', $params),
                     );
                 }
