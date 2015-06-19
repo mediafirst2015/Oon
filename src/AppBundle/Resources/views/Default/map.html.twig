@@ -14,7 +14,7 @@
                 <form method="GET" id="form" action="{{ path('map') }}">
                     <div class="form">
                         <h2 class="green">Фильтры</h2>
-                        <select name="city" id="city2">
+                        <select name="city" id="city2" class="clear">
                             <option value="" disabled selected>Город</option>
                             {% for c in cities %}
                                 <option value="{{ c.title }}" {{ params.city == c.title  ? 'selected="selected"' }}>{{ c.title }}</option>
@@ -586,6 +586,10 @@
                     }
                 });
 
+                $('.clear').click(function(event){
+                    event.preventDefault();
+                    alert('1');
+                });
 
             });
     </script>
