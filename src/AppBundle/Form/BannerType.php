@@ -58,7 +58,12 @@ class BannerType extends AbstractType
                 'label' => 'Сторона',
                 'required'  => false,
             ))
+
+            ->add('price', null, array('label' => 'Цена без налога'))
+            ->add('price2', null, array('label' => 'Ценс с налогом'))
+            ->add('taxType', null, array('label' => 'тип налога'))
             ->add('longitude', null, array('label' => 'Долгота GPS'))
+
             ->add('latitude', null, array('label' => 'Широта GPS'))
             ->add('body', null, array('label' => 'Описание баннера'))
 //            ->add('enabled','choice',  array(

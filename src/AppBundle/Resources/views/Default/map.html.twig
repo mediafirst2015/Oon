@@ -14,12 +14,15 @@
                 <form method="GET" id="form" action="{{ path('map') }}">
                     <div class="form">
                         <h2 class="green">Фильтры</h2>
-                        <select name="city" id="city2" class="clear">
-                            <option value="" disabled selected>Город</option>
-                            {% for c in cities %}
-                                <option value="{{ c.title }}" {{ params.city == c.title  ? 'selected="selected"' }}>{{ c.title }}</option>
-                            {% endfor %}
-                        </select>
+                        <div style="display:inline-block; position:relative;">
+                            <select name="city" id="city2" style="width: 221px;margin-left: 10px;">
+                                <option value="" disabled selected>Город</option>
+                                {% for c in cities %}
+                                    <option value="{{ c.title }}" {{ params.city == c.title  ? 'selected="selected"' }}>{{ c.title }}</option>
+                                {% endfor %}
+                            </select>
+                            <div style="position:absolute; left:0; right:0; top:0; bottom:0;" class="clear"></div>
+                        </div>​
 
 
                         <select name="area" id="area2" {{ params.city != 'Москва' ? 'disabled="disabled" style="color:#CCC;"' : '' }}>
@@ -294,6 +297,11 @@
                         success: function(msg){
                             $('#order-btn').html('Выбрано на сумму '+msg+' р.');
                             $('#order-btn').css('display','block');
+                            if (msg != 0 || msg != '0' || msg != '0.0'){
+                                $('.clear').css('display','block');
+                            }else{
+                                $('.clear').css('display','none');
+                            }
                         }
                     });
                 }
@@ -586,9 +594,17 @@
                     }
                 });
 
+                {% if price != 0 and price != '0' and price != '0.0'%}
+                    $('.clear').css('display','block');
+                {% endif %}
+
                 $('.clear').click(function(event){
-                    event.preventDefault();
-                    alert('1');
+                    $('.clear').popover({
+                        placement: 'bottom',
+                        title: 'ПРЕДУПРЕЖДЕНИЕ',
+                        content: 'Что бы перейти в другой город удалите все выбраные поверхности из медиаплана',
+                        width: '200'
+                    });
                 });
 
             });
@@ -642,6 +658,12 @@
         /*transform: rotate(-40deg);*/
         .notifyjs-wrapper{
             z-index: 1001;
+        }
+        .popover{
+            width: 280px;
+        }
+        .clear{
+            display: none;
         }
     </style>
 {% endblock %}
