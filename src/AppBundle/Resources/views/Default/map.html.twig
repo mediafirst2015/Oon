@@ -296,9 +296,10 @@
                         success: function(msg){
                             $('#order-btn').html('Выбрано на сумму '+msg+' р.');
                             $('#order-btn').css('display','block');
-                            if (msg != 0 || msg != '0' || msg != '0.0'){
+                            if (msg != 0 && msg != '0' && msg != '0.0'){
                                 $('.clear').css('display','block');
                             }else{
+                                $('.popover').removeClass('in');
                                 $('.clear').css('display','none');
                             }
                         }
