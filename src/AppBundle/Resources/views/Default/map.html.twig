@@ -78,12 +78,14 @@
                             </div>
                         </div>
                         <br />
-                        <div class="check-group">
-                            Только горящие
-                            <div class="check {{ params.hot == 1 ? 'active' : '' }}"></div>
-                            <input type="hidden" name="hot" value="{{ params.hot == 1 ? 1 : 0 }}">
-                        </div>
-                        <br />
+                        {% if 'now'|date('d') >= 25 %}
+                            <div class="check-group">
+                                Только горящие
+                                <div class="check {{ params.hot == 1 ? 'active' : '' }}"></div>
+                                <input type="hidden" name="hot" value="{{ params.hot == 1 ? 1 : 0 }}">
+                            </div>
+                            <br />
+                        {% endif %}
                         <div class="check-group">
                             Формат 3х6
                             <div class="check {{ params.formatM == 1 ? 'active' : '' }}"></div>
@@ -126,7 +128,7 @@
                             <input type="hidden" name="ots-max" id="ots-max" value="{{ params.otsMax != null ? params.otsMax : 500 }}">
                         </div>
                         <div class="slider-group">
-                            <span class="caption">Стоимость (тыс.р. вкл НДС)</span>
+                            <span class="caption">Стоимость (тыс.р.)</span>
                             <span id="price-amount" class="val contentEditable" contentEditable="true"></span>
                             <span class="slider" id="price"></span>
                             <input type="hidden" name="price-min" id="price-min" value="{{ params.priceMin != null ? params.priceMin : 0 }}">
