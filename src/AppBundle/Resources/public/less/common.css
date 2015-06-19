@@ -661,3 +661,6 @@ input.mini {
 .table-about tr td {
   padding: 5px;
 }
+.offers-item {
+  height: 155px;
+}
