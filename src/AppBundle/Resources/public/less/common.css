@@ -520,20 +520,10 @@ input.mini {
   text-align: right;
   padding-right: 10px;
 }
-.ymaps-2-1-26-input__control {
-  box-shadow: none;
-}
-.ymaps-2-1-26-balloon__content {
-  margin-right: 0 !important;
-}
 .ymaps-2-1-26-balloon__layout {
-  min-width: 410px !important;
-}
-.ymaps-2-1-26-balloon__layout {
-  height: 630px;
-}
-.ymaps-2-1-26-balloon__content ymaps {
+  min-height: 200px !important;
   height: auto !important;
+  max-height: 600px !important;
 }
 .addBasket {
   height: 25px;

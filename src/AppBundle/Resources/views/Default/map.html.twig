@@ -220,43 +220,31 @@
                     controls: ['zoomControl']
                 });
 
-                {#ymaps.modules.require(['PieChartClustererLayout'], function (PieChartClustererLayout) {#}
-                    {#var objectManager = ymaps.ObjectManager({#}
-                        {#clusterize: true,#}
-                        {#clusterIconLayout: PieChartClustererLayout#}
-                    {#});#}
 
-                    {#var filter =#}
-                            {#'id={{ id }}'+#}
-                            {#'&city={{ params.city }}'+#}
-                            {#'&street={{ params.street }}'+#}
-                            {#'&area={{ params.area }}'+#}
-                            {#'&formatS={{ params.formatS }}'+#}
-                            {#'&formatM={{ params.formatM }}'+#}
-                            {#'&formatL={{ params.formatL }}'+#}
-                            {#'&formatSB={{ params.formatSB }}'+#}
-                            {#'&type='+#}
-                            {#'&light={{ params.light }}'+#}
-                            {#'&grpMin={{ params.grpMin }}'+#}
-                            {#'&grpMax={{ params.grpMax }}'+#}
-                            {#'&otsMin={{ params.otsMin }}'+#}
-                            {#'&otsMax={{ params.otsMax }}'+#}
-                            {#'&priceMin={{ params.priceMin }}'+#}
-                            {#'&priceMax={{ params.priceMax }}'+#}
-                            {#'&hot={{ params.hot }}';#}
-
-                    {#objects = getObjects(filter);#}
-
-                    {#objectManager.add(points);#}
-                    {#map.geoObjects.add(objectManager);#}
-
-                {#});#}
 
 
 
                 ymaps.modules.require(['PieChartClusterer'], function (PieChartClusterer) {
 
-                    clusterer = new PieChartClusterer({margin: 10});
+                    clusterer = new PieChartClusterer(
+                            {
+                                clusterDisableClickZoom: true,
+                                clusterOpenBalloonOnClick: true,
+                                // Устанавливаем стандартный макет балуна кластера "Аккордеон".
+                                clusterBalloonContentLayout: 'cluster#balloonAccordion',
+                                // Устанавливаем собственный макет.
+                                clusterBalloonItemContentLayout: customItemContentLayout,
+                                // Устанавливаем режим открытия балуна.
+                                // В данном примере балун никогда не будет открываться в режиме панели.
+                                clusterBalloonPanelMaxMapArea: 0,
+                                // Устанавливаем размеры макета контента балуна (в пикселях).
+                                clusterBalloonContentLayoutWidth: 300,
+                                clusterBalloonContentLayoutHeight: 450
+                                // Можно отключить отображение иконок геообъектов в списке.
+                                // В браузере Internet Explorer ниже 9й версии иконки никогда не будут отображаться.
+                                // clusterBalloonAccordionShowIcons: false
+                            }
+                    );
                     var filter =
                             'id={{ id }}'+
                             '&city={{ params.city }}'+
@@ -289,7 +277,16 @@
                     var target = e.get('target')
                     target.balloon.close();
                 });
+
+                var customItemContentLayout = ymaps.templateLayoutFactory.createClass(
+                    // Флаг "raw" означает, что данные вставляют "как есть" без экранирования html.  <h2 class=ballon_header>{{ '{{' }} properties.balloonContentHeader|raw {{ '}}' }}</h2>
+                        '' +
+                        '<div class=ballon_body>{{ '{{' }} properties.balloonContentBody|raw {{ '}}' }}</div>' +
+                        '<div class=ballon_footer>{{ '{{' }} properties.balloonContentFooter|raw {{ '}}' }}</div>'
+                );
             }
+
+
 
 
                 function orderRefresh(){
@@ -623,7 +620,9 @@
             margin: 0 auto;
         }
         .thrumb{
-            width: 300px;
+            margin: 0 auto;
+            display: inline-block;
+            width: 250px;
             border-radius: 10px;
         }
         .map-setting tr td:first-child{
