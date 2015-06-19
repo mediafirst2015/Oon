@@ -119,7 +119,8 @@
                         }
                         slider.slider( "values", [min, max] );
                     }else{
-                        if ( event.which < 48 || event.which > 57 ) {
+                        if ( (event.which < 48 || event.which > 57) && event.which != 46 ) {
+//                            alert(event.which);
                             event.preventDefault();
                         }
                     }

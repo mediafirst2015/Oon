@@ -55,7 +55,7 @@
             <div class="box" style="height: 620px; margin-top: -15px">
                 <form method="GET" action="{{ path('map') }}" id="form-map">
                     <div class="form">
-                        <div class="title">Поиск щитов по параметрам</div>
+                        <div class="title" style="font-size: 22px">Поиск щитов по параметрам</div>
                         <br />
                         <select name="city" id="city2">
                             <option value="0" disabled selected>Город</option>
@@ -139,7 +139,8 @@
                         <br />
                         <div class="slider-group">
                             <span class="caption" style="float: left; margin-top: 8px;">Стоимость</span>
-                            <span id="price-amount" class="val contentEditable" contentEditable="true"></span>
+                            <span id="price-amount" class="val contentEditable" contentEditable="true" style="  margin-left: 95px;"></span>&nbsp;
+                            <div style="float: right; color: #555;">(т.р.)</div>
                             <span class="slider" id="price" style="float: right"></span>
                             <input type="hidden" name="price-min" id="price-min" value="0">
                             <input type="hidden" name="price-max" id="price-max" value="999">
@@ -403,7 +404,7 @@
         <div class="col-xs-4">
             <div class="box">
                 <div class="form">
-                    <div class="title">Поиск щитов на карте</div>
+                    <div class="title" s>Поиск щитов на карте</div>
                     <br />
                     <div style="text-align: center">
                         <a href="{{ path('map') }}">
@@ -605,13 +606,13 @@
                     max: 999,
                     values: [ 0, 999 ],
                     slide: function( event, ui ) {
-                        $( "#price-amount" ).html( "" + ui.values[ 0 ] + " т.р. - " + ui.values[ 1 ] + ' т.р.' );
+                        $( "#price-amount" ).html( "" + ui.values[ 0 ] + "  - " + ui.values[ 1 ] );
                         $( "#price-min" ).val(ui.values[ 0 ]);
                         $( "#price-max" ).val(ui.values[ 1 ]);
                     }
                 });
                 $( "#price-amount" ).html( "" + $( "#price" ).slider( "values", 0 ) +
-                " т.р. - " + $( "#price" ).slider( "values", 1 ) + ' т.р.' );
+                " - " + $( "#price" ).slider( "values", 1 )  );
 
 
 

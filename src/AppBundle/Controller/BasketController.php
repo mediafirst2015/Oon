@@ -131,7 +131,8 @@ class BasketController extends Controller
                 $i ++;
                 $grp += $val['grp'];
                 $ots += $val['ots'];
-                if ($val['side'] == 'А' || $val['side'] == 'A'){
+                if (strripos($val['side'],'A') !== false || strripos($val['side'],'А') !== false){
+//                if ($val['side'] == 'А' || $val['side'] == 'A'){
                     $sideA ++;
                 }else{
                     $sideB ++;

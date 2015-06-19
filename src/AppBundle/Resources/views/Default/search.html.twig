@@ -143,7 +143,7 @@
                 </div>
                 <br />
                 <div class="slider-group">
-                    <span class="caption" style="float: left; margin-top: 8px;  width: 150px;">Стоимость</span>
+                    <span class="caption" style="float: left; margin-top: 8px;  width: 150px;">Стоимость (т.р.)</span>
                     <span id="price-amount" class="val contentEditable" contentEditable="true"></span>
                     <span class="slider" id="price" style="float: right"></span>
                     <input type="hidden" name="price-min" id="price-min" value="{{ params.priceMin != null ? params.priceMin : 0 }}">
@@ -313,13 +313,13 @@
                 max: 999,
                 values: [ {{ params.priceMin != null ? params.priceMin : 0 }}, {{ params.priceMax != null ? params.priceMax : 999 }} ],
                 slide: function( event, ui ) {
-                    $( "#price-amount" ).html( "" + ui.values[ 0 ] + " т.р. - " + ui.values[ 1 ] + ' т.р.' );
+                    $( "#price-amount" ).html( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ]  );
                     $( "#price-min" ).val(ui.values[ 0 ]);
                     $( "#price-max" ).val(ui.values[ 1 ]);
                 }
             });
             $( "#price-amount" ).html( "" + $( "#price" ).slider( "values", 0 ) +
-            " т.р. - " + $( "#price" ).slider( "values", 1 ) + ' т.р.' );
+            " - " + $( "#price" ).slider( "values", 1 ) + '' );
 
             $('#package').click(function(){
                if ($(this).hasClass('act')){

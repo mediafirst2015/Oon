@@ -141,7 +141,7 @@ class DefaultController extends Controller
 //                $lists[] = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($key);
                 $grp += $val['grp'];
                 $ots += $val['ots'];
-                if ($val['side'] == 'А' || $val['side'] == 'A'){
+                if (strripos($val['side'],'A') !== false || strripos($val['side'],'А') !== false){
                     $sideA ++;
                 }else{
                     $sideB ++;
@@ -297,7 +297,7 @@ class DefaultController extends Controller
 //                $lists[] = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($key);
                 $grp += $val['grp'];
                 $ots += $val['ots'];
-                if ($val['side'] == 'А' || $val['side'] == 'A'){
+                if (strripos($val['side'],'A') !== false || strripos($val['side'],'А') !== false){
                     $sideA ++;
                 }else{
                     $sideB ++;
@@ -395,7 +395,7 @@ class DefaultController extends Controller
 //                $lists[] = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($key);
                 $grp += $val['grp'];
                 $ots += $val['ots'];
-                if ($val['side'] == 'А' || $val['side'] == 'A'){
+                if (strripos($val['side'],'A') !== false || strripos($val['side'],'А') !== false){
                     $sideA ++;
                 }else{
                     $sideB ++;

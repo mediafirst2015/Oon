@@ -401,6 +401,16 @@ input.mini {
   line-height: 8px;
   color: #5eba5e;
 }
+.slider-group .contentEditable {
+  display: inline-block;
+  height: 20px;
+  padding-top: 7px;
+  width: 90px;
+  margin-left: 140px;
+}
+.slider-group .contentEditable:focus {
+  background: #FFFFFF;
+}
 .ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
