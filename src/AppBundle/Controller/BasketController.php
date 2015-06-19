@@ -920,6 +920,7 @@ class BasketController extends Controller
             $fullprice = $price2;
             $price = $price / $i;
             $price2 = $price2 / $i;
+            
             $grp = number_format($grp,2,'.','');
             $ots = number_format($ots,2,'.','');
             $price = number_format($price,2,'.','');
@@ -954,7 +955,13 @@ class BasketController extends Controller
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
             $line++;
-
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E'.$line, 'Общая стоимость размещения:');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, number_format($fullprice);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->getFont()->setBold(true);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->getFont()->setBold(true);
+            $line++;
 
         }
 
