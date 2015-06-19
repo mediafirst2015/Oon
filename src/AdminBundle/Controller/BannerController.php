@@ -25,7 +25,7 @@ class BannerController extends Controller{
      * @Template()
      */
     public function listAction(){
-        $items = $this->getDoctrine()->getRepository('AppBundle:'.self::ENTITY_NAME)->findAll();
+        $items = $this->getDoctrine()->getRepository('AppBundle:'.self::ENTITY_NAME)->findBy(array('enabled' => true),array('id' => 'DESC'));
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -33,6 +33,7 @@ class BannerController extends Controller{
             $this->get('request')->query->get('banner', 1),
             100
         );
+        $pagination->setTemplate('AppBundle::default_pagination.html.twig');
 
         return array('pagination' => $pagination);
     }
