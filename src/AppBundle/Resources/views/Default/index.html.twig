@@ -464,13 +464,17 @@
                     <br />
                 </div>
             </div>
-            <div class="box" style="margin-top: 30px; background: #FFF">
+            <div class="box" style="margin-top: 30px; background: #FFF; height: 275px;">
                 <div class="form">
                     <div class="title">Нас выбрали</div>
                     <div style="text-align: center">
-                        {% for l in logos %}
-                            <img src="{{ l.image.path }}" style="max-width: 100px; max-height: 100px; margin: 10px" title="{{ l.title }}"/>
-                        {% endfor %}
+                        {#{% for l in logos %}#}
+                            {#<img src="{{ l.image.path }}" style="max-width: 100px; max-height: 100px; margin: 10px" title="{{ l.title }}"/>#}
+                        {#{% endfor %}#}
+                        <div class="logos-block">
+                            <img class="logos" src="{{ asset('bundles/app/assets/logo1-1.png') }}" style="width: 100%; margin: 10px" />
+                            <img class="logos"  src="{{ asset('bundles/app/assets/logo1-2.png') }}" style="width: 100%; margin: 10px; display: none;" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -680,6 +684,15 @@
                     $('.offers-item').eq(2).css('display','block');
 
                 },7000);
+
+                var timer2Id = setInterval(function (){
+
+                    $('.logos:first').css('display','none');
+                    $('.logos:first').appendTo('.logos-block');
+                    $('.logos').eq(0).css('display','block');
+
+                },7000);
+
             });
         </script>
     {% endblock %}
