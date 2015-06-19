@@ -930,7 +930,7 @@ class BasketController extends Controller
 
 
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E'.$line, 'Средняя стоимость размещения за поверхность:');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, number_format($price2,0,'.','').'руб.');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, number_format($price2,0,'.','').' руб.');
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
             $line++;
