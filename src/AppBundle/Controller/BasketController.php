@@ -885,6 +885,72 @@ class BasketController extends Controller
             $line++;
         }
 
+        $line++;
+        $line++;
+
+        $lists = array();
+        $i = 0;
+        $grp = 0;
+        $ots = 0;
+        $ots2 = 0;
+        $sideA = 0;
+        $side = '';
+        $sideB = 0;
+        $price = 0;
+        $price2 = 0;
+        $fullprice = 0;
+        if ($basket){
+            foreach ($basket as $key=>$val){
+                $i ++;
+//                $lists[] = $this->getDoctrine()->getRepository('AppBundle:Banner')->findOneById($key);
+                $grp += $val['grp'];
+                $ots += $val['ots'];
+                if (strripos($val['side'],'A') !== false || strripos($val['side'],'А') !== false){
+                    $sideA ++;
+                }else{
+                    $sideB ++;
+                }
+                $price += $val['price'];
+                $price2 += $val['price2'];
+            }
+            $lists = $basket;
+            $grp = $grp / $i;
+            $ots2 = $ots;
+            $ots = $ots / $i;
+            $fullprice = $price2;
+            $price = $price / $i;
+            $price2 = $price2 / $i;
+            $grp = number_format($grp,2,'.','');
+            $ots = number_format($ots,2,'.','');
+            $price = number_format($price,2,'.','');
+            $price2 = number_format($price2,2,'.','');
+            $sideA = number_format(100/$i*$sideA,0,'.','');
+            $sideB = number_format(100/$i*$sideB,0,'.','');
+            $side = $sideA.'/'.$sideB;
+
+
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, 'Средняя стоимость размещения за поверхность:');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G'.$line, number_format($price2,0,'.',''));
+            $line++;
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, 'Процентное соотношение сторон A/B в программе:');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G'.$line, $side);
+            $line++;
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, 'Средний показатель GRP за программу:');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G'.$line, number_format($grp,1,'.',''));
+            $line++;
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, 'Средний показатель OTS за программу:');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G'.$line, number_format($ots,1,'.',''));
+            $line++;
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, 'CPT за программу:');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G'.$line, number_format(($fullprice / ( $ots2 * 30 )), 2,'.',''));
+            $line++;
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, 'Количество поверхностей:');
+            $line++;
+        }
+
+
+
+
         $phpExcelObject->getActiveSheet()->setTitle('List');
         // Set active sheet index to the first sheet, so Excel opens this as the first sheet
         $phpExcelObject->setActiveSheetIndex(0);
