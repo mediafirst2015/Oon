@@ -722,7 +722,7 @@ class BasketController extends Controller
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('B')->setWidth(5);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('C')->setWidth(15);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('D')->setWidth(8);
-        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('E')->setWidth(40);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('E')->setWidth(50);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('F')->setWidth(10);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('G')->setWidth(10);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('H')->setWidth(10);
@@ -929,23 +929,33 @@ class BasketController extends Controller
             $side = $sideA.'/'.$sideB;
 
 
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, 'Средняя стоимость размещения за поверхность:');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G'.$line, number_format($price2,0,'.',''));
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E'.$line, 'Средняя стоимость размещения за поверхность:');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, number_format($price2,0,'.','').'руб.');
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
             $line++;
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, 'Процентное соотношение сторон A/B в программе:');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G'.$line, $side);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E'.$line, 'Процентное соотношение сторон A/B в программе:');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, $side);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
             $line++;
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, 'Средний показатель GRP за программу:');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G'.$line, number_format($grp,1,'.',''));
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E'.$line, 'Средний показатель GRP за программу:');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, number_format($grp,1,'.',''));
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
             $line++;
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, 'Средний показатель OTS за программу:');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G'.$line, number_format($ots,1,'.',''));
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E'.$line, 'Средний показатель OTS за программу:');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, number_format($ots,1,'.',''));
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
             $line++;
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, 'CPT за программу:');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G'.$line, number_format(($fullprice / ( $ots2 * 30 )), 2,'.',''));
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E'.$line, 'CPT за программу:');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, number_format(($fullprice / ( $ots2 * 30 )), 2,'.',''));
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
             $line++;
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C'.$line, 'Количество поверхностей:');
-            $line++;
+
+
         }
 
 
