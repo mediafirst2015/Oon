@@ -930,27 +930,27 @@ class BasketController extends Controller
 
 
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E'.$line, 'Средняя стоимость размещения за поверхность:');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, "'".number_format($price2,0,'.','').' руб.');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, number_format($price2,0,'.','').' руб.');
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
             $line++;
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E'.$line, 'Процентное соотношение сторон A/B в программе:');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, "'".$side);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, $side);
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
             $line++;
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E'.$line, 'Средний показатель GRP за программу:');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, "'".number_format($grp,1,'.',''));
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, number_format($grp,1,'.',''));
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
             $line++;
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E'.$line, 'Средний показатель OTS за программу:');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, "'".number_format($ots,1,'.',''));
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, number_format($ots,1,'.',''));
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
             $line++;
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E'.$line, 'CPT за программу:');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, "'".number_format(($fullprice / ( $ots2 * 30 )), 2,'.',''));
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F'.$line, number_format(($fullprice / ( $ots2 * 30 )), 2,'.',''));
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
             $line++;

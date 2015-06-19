@@ -199,7 +199,9 @@ class DefaultController extends Controller
             }
         }
 
-//        if ($request->query->get('my') != 1){
+        if ($request->query->get('my') == 1 && $session->get('lists') == null){
+            return $this->redirect($this->generateUrl('map'));
+        }
         $session->set('referer',$refer);
         $session->save();
 //        }
