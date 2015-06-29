@@ -80,12 +80,12 @@ class RosveroParser extends MainParser
 
             $banner = $this->setBanner($banner);
             $month = array(
-                '2015-07-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('S'.$num)->getValue()),
-                '2015-08-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('T'.$num)->getValue()),
-                '2015-09-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('U'.$num)->getValue()),
-                '2015-10-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('V'.$num)->getValue()),
-                '2015-11-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('W'.$num)->getValue()),
-                '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('X'.$num)->getValue()),
+                '2015-08-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('S'.$num)->getValue()),
+                '2015-09-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('T'.$num)->getValue()),
+                '2015-10-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('U'.$num)->getValue()),
+                '2015-11-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('V'.$num)->getValue()),
+                '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('W'.$num)->getValue()),
+//                '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('X'.$num)->getValue()),
 //                '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('Y'.$num)->getValue()),
             );
             $this->refreshStatus($banner,$month, array('date' => '2015-06-01' , 'sale' => $hot));
