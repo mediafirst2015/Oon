@@ -64,10 +64,10 @@ class BannerRepository extends EntityRepository
                 $qb->andWhere("( b.price >= $priceMin AND b.price <= $priceMax )");
             }
 
-            if ($sideA === '0' ){
+            if ($sideA == '0' ){
                 $qb->andWhere(" b.side NOT LIKE '%A%' ");
             }
-            if ($sideB === '0' ){
+            if ($sideB == '0' ){
                 $qb->andWhere(" b.side NOT LIKE '%B%' ");
             }
 
