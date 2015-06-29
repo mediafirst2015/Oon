@@ -90,6 +90,51 @@
                     }
                 });
 
+                $(".contentEditable").click(function(e){
+                    var val1 = $(this).parent().children('input').eq(0).val();
+                    var val2 = $(this).parent().children('input').eq(1).val();
+                    var id = $(this).attr('id');
+                    var html = '<div id="paramsBox" data-id="'+id+'">' +
+                            'От&nbsp;<input type="text" id="param1" style="float: none; width: 70px" value="'+val1+'"/>&nbsp;&nbsp;' +
+                            'До&nbsp;<input type="text" id="param2" style="float: none; width: 70px" value="'+val2+'"/>&nbsp;&nbsp; ' +
+                            '<div style="text-align: right;  margin-right: 14px;"><span class="btn" id="params-save"> Изменить </span></div>' +
+                            '</div>';
+                    $('body').append(html);
+                    var relativeX = (e.pageX);
+                    var relativeY = (e.pageY);
+                    $('#paramsBox').css('left', relativeX);
+                    $('#paramsBox').css('top', relativeY);
+                });
+
+                $('body').on('click','#params-save', function(){
+                    var min = $('#param1').val();
+                    var max = $('#param2').val();
+                    min = parseFloat(min);
+                    max = parseFloat(max);
+                    $('#'+$('#paramsBox').attr('data-id')).html(min+' - '+max);
+                    var slider = $('#'+$('#paramsBox').attr('data-id')).parent().children('.slider');
+                    //Теперь меняем input hidden
+                    if (slider.attr('id') == 'grp'){
+                        $(this).parent().children('#grp-min').val(min);
+                        $(this).parent().children('#grp-max').val(max);
+                    }
+                    if (slider.attr('id') == 'ots'){
+                        $(this).parent().children('#ots-min').val(min);
+                        $(this).parent().children('#ots-max').val(max);
+                    }
+                    if (slider.attr('id') == 'price'){
+                        $(this).parent().children('#price-min').val(min);
+                        $(this).parent().children('#price-max').val(max);
+                    }
+
+                    if (slider.attr('id') == 'grp'){
+                        min = min*100;
+                        max = max*100;
+                    }
+                    slider.slider( "values", [min, max] );
+                    $('#paramsBox').remove();
+                });
+
                 $(".contentEditable").keypress(function(event){
                     if ( event.which == 13 ) {
                         event.preventDefault();
