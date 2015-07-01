@@ -723,7 +723,7 @@ class BasketController extends Controller
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('C')->setWidth(15);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('D')->setWidth(8);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('E')->setWidth(50);
-        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('F')->setWidth(10);
+        $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('F')->setWidth(20);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('G')->setWidth(10);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('H')->setWidth(10);
         $phpExcelObject->setActiveSheetIndex(0)->getColumnDimension('I')->setWidth(10);
