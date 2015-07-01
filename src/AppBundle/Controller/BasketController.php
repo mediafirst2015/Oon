@@ -860,7 +860,7 @@ class BasketController extends Controller
                     )
                 ),
                 'alignment' => array(
-                    'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                    'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
                 )
             );
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('B'.$line)->applyFromArray($border);
