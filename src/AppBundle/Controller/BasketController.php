@@ -866,10 +866,18 @@ class BasketController extends Controller
                     'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
                 )
             );
+
+            $border2 = array(
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => \PHPExcel_Style_Border::BORDER_THIN
+                    )
+                ),
+            );
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('B'.$line)->applyFromArray($border);
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('C'.$line)->applyFromArray($border);
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('D'.$line)->applyFromArray($border);
-            $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border);
+            $phpExcelObject->setActiveSheetIndex(0)->getStyle('E'.$line)->applyFromArray($border2);
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('F'.$line)->applyFromArray($border);
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('G'.$line)->applyFromArray($border);
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('H'.$line)->applyFromArray($border);
