@@ -752,6 +752,9 @@ class BasketController extends Controller
             'font'  => array(
                 'bold'  => true,
                 'color' => array('rgb' => 'FFFFFF'),
+            ),
+            'alignment' => array(
+                'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
             )
         );
 
