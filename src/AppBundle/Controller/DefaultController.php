@@ -33,6 +33,14 @@ class DefaultController extends Controller
 
 
     /**
+     * @Route("/reviews", name="reviews")
+     * @Template()
+     */
+    public function rewiewsAction(){
+        $reviews = $this->getDoctrine()->getRepository('AppBundle:Review')->findBy(array('enabled' => true),array('id' => 'DESC'));
+        return array('reviews' => $reviews);
+    }
+    /**
      * @Route("/contacts", name="contacts")
      * @Template()
      */

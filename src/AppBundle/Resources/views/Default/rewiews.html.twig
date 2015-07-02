@@ -1,0 +1,26 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+    {% for r in reviews %}
+        <div>
+            <table style="width: 100%">
+                <tr>
+                    {% if r.image | length > 0 %}
+                        <td style="width: 300px">
+                            <a class="fancybox" href="{{ r.image.path }}"><img src="{{ r.image.path }}" style="max-width: 300px"></a>
+                        </td>
+                        <td>
+                            <h2>{{ r.title }}</h2>
+                            {{ r.body }}
+                        </td>
+                    {% else %}
+                        <td colspan="2">
+                            <h2>{{ r.title }}</h2>
+                            {{ r.body }}
+                        </td>
+                    {% endif %}
+                </tr>
+            </table>
+        </div>
+    {% endfor %}
+{% endblock %}
