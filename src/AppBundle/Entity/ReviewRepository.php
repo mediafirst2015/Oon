@@ -10,7 +10,7 @@ class ReviewRepository extends EntityRepository
         $result = $this->createQueryBuilder('r')
             ->addSelect('RAND() as HIDDEN rand')
             ->where('r.enabled = 1')
-            ->orderBy('rand','')
+            ->orderBy('rand','ASC')
             ->setMaxResults($count)
             ->getQuery()
             ->getResult();
