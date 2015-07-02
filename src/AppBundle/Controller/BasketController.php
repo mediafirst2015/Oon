@@ -608,6 +608,7 @@ class BasketController extends Controller
         $session = new Session();
         $email = $request->request->get('email');
         $name = $request->request->get('name');
+        $phone = $request->request->get('phone');
         $file = $this->generateExcel();
         $basket = $session->get('lists');
         $banners = array();
@@ -619,10 +620,22 @@ class BasketController extends Controller
             $url .= $b.';';
         }
         $this->get('email.service')->send(
-            array('tulupov.m@gmail.com','ryabova.t@mediafirst.ru','kravtsova.m@mediafirst.ru', $email),
+            array($email),
             array('AppBundle:Email:order.html.twig', array(
                 'name'  => $name,
                 'url' => $url
+            )),
+            'Медиаплан от MediaFirst !',
+            $file
+        );
+
+        $this->get('email.service')->send(
+            array('tulupov.m@gmail.com','ryabova.t@mediafirst.ru','kravtsova.m@mediafirst.ru'),
+            array('AppBundle:Email:order.html.twig', array(
+                'name'  => $name,
+                'url' => $url,
+                'phone' => $phone,
+                'email' => $email,
             )),
             'Медиаплан от MediaFirst !',
             $file
