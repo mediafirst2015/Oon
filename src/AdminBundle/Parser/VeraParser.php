@@ -40,33 +40,46 @@ class VeraParser extends MainParser
             $banner->setAdrs(explode("\n",$phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue())[0]);
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue());
-            $banner->setSide($phpExcelObject->setActiveSheetIndex(0)->getCell('C'.$num)->getValue());
+            $banner->setSide($phpExcelObject->setActiveSheetIndex(0)->getCell('R'.$num)->getValue());
             $banner->setCity($city);
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue());
-            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getValue()));
-            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getValue())*1.18);
+            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('M'.$num)->getValue()));
+
+            $banner->setPrice(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getValue()));
+            $banner->setPrice2(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('G'.$num)->getValue()*1.18));
             $banner->setTaxType('НДС (18%)');
-            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(0)->getCell('L'.$num)->getValue()));
+            $banner->setPriceDeploy(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(0)->getCell('Q'.$num)->getValue()));
+
             $banner->setFormat('3x6');
-            $banner->setType('3x6');
-            $banner->setArea($phpExcelObject->setActiveSheetIndex(0)->getCell('R'.$num)->getValue());
-            $banner->setLight(($phpExcelObject->setActiveSheetIndex(0)->getCell('P'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(0)->getCell('P'.$num)->getValue() == 'да' ? 1 : 0));
+            $banner->setType($phpExcelObject->setActiveSheetIndex(0)->getCell('O'.$num)->getValue());
+//            $banner->setArea(NULL);
+            $banner->setLight(($phpExcelObject->setActiveSheetIndex(0)->getCell('N'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(0)->getCell('N'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
             $banner->setLink($phpExcelObject->setActiveSheetIndex(0)->getCell('J'.$num)->getHyperlink()->getUrl());
-            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(0)->getCell('Q'.$num)->getValue());
-            if (!isset($pos[1]) || !isset($pos[0]) ){
-//                echo $phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue().'<br />';
-                $pos[1] = 0;
-                $pos[0] = 0;
-            }
-            $banner->setLongitude($pos[1]);
-            $banner->setLatitude($pos[0]);
-            if ($hot){
-                $banner->setHot(true);
+            $banner2 = $em->getRepository('AppBundle:Banner2')->findOneByTitle($banner->getTitle());
+            if ($banner2){
+                $banner->setLatitude($banner2->getLatitude());
+                $banner->setLongitude($banner2->getLongitude());
+                $banner->setArea($banner2->getArea());
             }else{
-                $banner->setHot(false);
+                $banner->setLatitude(0);
+                $banner->setLongitude(0);
+                $banner->setArea(null);
             }
+//            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(0)->getCell('Q'.$num)->getValue());
+//            if (!isset($pos[1]) || !isset($pos[0]) ){
+////                echo $phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue().'<br />';
+//                $pos[1] = 0;
+//                $pos[0] = 0;
+//            }
+//            $banner->setLongitude($pos[1]);
+//            $banner->setLatitude($pos[0]);
+//            if ($hot){
+//                $banner->setHot(true);
+//            }else{
+                $banner->setHot(false);
+//            }
             $em->persist($banner);
             $em->flush($banner);
             $num ++;
@@ -103,33 +116,46 @@ class VeraParser extends MainParser
             $banner->setAdrs(explode("\n",$phpExcelObject->setActiveSheetIndex(1)->getCell('B'.$num)->getValue())[0]);
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(1)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(1)->getCell('B'.$num)->getValue());
-            $banner->setSide($phpExcelObject->setActiveSheetIndex(1)->getCell('C'.$num)->getValue());
+            $banner->setSide($phpExcelObject->setActiveSheetIndex(1)->getCell('R'.$num)->getValue());
             $banner->setCity($city);
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(1)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(1)->getCell('F'.$num)->getValue());
-            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(1)->getCell('G'.$num)->getValue()));
-            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(1)->getCell('G'.$num)->getValue())*1.18);
+            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(1)->getCell('M'.$num)->getValue()));
+
+            $banner->setPrice(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(1)->getCell('G'.$num)->getValue()));
+            $banner->setPrice2(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(1)->getCell('G'.$num)->getValue()*1.18));
             $banner->setTaxType('НДС (18%)');
-            $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(1)->getCell('L'.$num)->getValue()));
+            $banner->setPriceDeploy(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(1)->getCell('Q'.$num)->getValue()));
+
             $banner->setFormat('big');
-            $banner->setType($phpExcelObject->setActiveSheetIndex(1)->getCell('M'.$num)->getValue());
-            $banner->setArea($phpExcelObject->setActiveSheetIndex(1)->getCell('R'.$num)->getValue());
-            $banner->setLight(($phpExcelObject->setActiveSheetIndex(1)->getCell('P'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(1)->getCell('P'.$num)->getValue() == 'да' ? 1 : 0));
+            $banner->setType($phpExcelObject->setActiveSheetIndex(1)->getCell('O'.$num)->getValue());
+//            $banner->setArea($phpExcelObject->setActiveSheetIndex(1)->getCell('R'.$num)->getValue());
+            $banner->setLight(($phpExcelObject->setActiveSheetIndex(1)->getCell('N'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(1)->getCell('N'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
             $banner->setLink($phpExcelObject->setActiveSheetIndex(1)->getCell('J'.$num)->getHyperlink()->getUrl());
-            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(1)->getCell('Q'.$num)->getValue());
-            if (!isset($pos[1]) || !isset($pos[0]) ){
-//                echo $phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue().'<br />';
-                $pos[1] = 0;
-                $pos[0] = 0;
-            }
-            $banner->setLongitude($pos[1]);
-            $banner->setLatitude($pos[0]);
-            if ($hot){
-                $banner->setHot(true);
+//            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(1)->getCell('Q'.$num)->getValue());
+//            if (!isset($pos[1]) || !isset($pos[0]) ){
+////                echo $phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue().'<br />';
+//                $pos[1] = 0;
+//                $pos[0] = 0;
+//            }
+//            $banner->setLongitude($pos[1]);
+//            $banner->setLatitude($pos[0]);
+//            if ($hot){
+//                $banner->setHot(true);
+//            }else{
+            $banner->setHot(false);
+            $banner2 = $em->getRepository('AppBundle:Banner2')->findOneByTitle($banner->getTitle());
+            if ($banner2){
+                $banner->setLatitude($banner2->getLatitude());
+                $banner->setLongitude($banner2->getLongitude());
+                $banner->setArea($banner2->getArea());
             }else{
-                $banner->setHot(false);
+                $banner->setLatitude(0);
+                $banner->setLongitude(0);
+                $banner->setArea(null);
             }
+//            }
 //            $em->persist($banner);
 //            $em->flush($banner);
             $num ++;
@@ -166,32 +192,44 @@ class VeraParser extends MainParser
             $banner->setAdrs(explode("\n",$phpExcelObject->setActiveSheetIndex(2)->getCell('B'.$num)->getValue())[0]);
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(2)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(2)->getCell('B'.$num)->getValue());
-            $banner->setSide($phpExcelObject->setActiveSheetIndex(2)->getCell('C'.$num)->getValue());
+            $banner->setSide($phpExcelObject->setActiveSheetIndex(2)->getCell('R'.$num)->getValue());
             $banner->setCity($city);
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(2)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(2)->getCell('F'.$num)->getValue());
-            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(2)->getCell('G'.$num)->getValue()));
-            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(2)->getCell('G'.$num)->getValue())*1.18);
-            $banner->setTaxType('НДС (18%)');
             $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(2)->getCell('M'.$num)->getValue()));
+
+            $banner->setPrice(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(2)->getCell('G'.$num)->getValue()));
+            $banner->setPrice2(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(2)->getCell('G'.$num)->getValue()*1.18));
+            $banner->setTaxType('НДС (18%)');
+            $banner->setPriceDeploy(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(2)->getCell('Q'.$num)->getValue()));
+
             $banner->setFormat('cityboard');
-            $banner->setType($phpExcelObject->setActiveSheetIndex(2)->getCell('N'.$num)->getValue());
-            $banner->setArea($phpExcelObject->setActiveSheetIndex(2)->getCell('S'.$num)->getValue());
-            $banner->setLight(($phpExcelObject->setActiveSheetIndex(2)->getCell('Q'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(2)->getCell('Q'.$num)->getValue() == 'да' ? 1 : 0));
+            $banner->setType($phpExcelObject->setActiveSheetIndex(2)->getCell('O'.$num)->getValue());
+//            $banner->setArea($phpExcelObject->setActiveSheetIndex(2)->getCell('S'.$num)->getValue());
+            $banner->setLight(($phpExcelObject->setActiveSheetIndex(2)->getCell('N'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(2)->getCell('N'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
             $banner->setLink($phpExcelObject->setActiveSheetIndex(2)->getCell('J'.$num)->getHyperlink()->getUrl());
-            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(2)->getCell('R'.$num)->getValue());
-            if (!isset($pos[1]) || !isset($pos[0]) ){
-//                echo $phpExcelObject->setActiveSheetIndex(0)->getCell('F'.$num)->getValue().'<br />';
-                $pos[1] = 0;
-                $pos[0] = 0;
-            }
-            $banner->setLongitude($pos[1]);
-            $banner->setLatitude($pos[0]);
-            if ($hot){
-                $banner->setHot(true);
-            }else{
+//            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(2)->getCell('R'.$num)->getValue());
+//            if (!isset($pos[1]) || !isset($pos[0]) ){
+//                $pos[1] = 0;
+//                $pos[0] = 0;
+//            }
+//            $banner->setLongitude($pos[1]);
+//            $banner->setLatitude($pos[0]);
+//            if ($hot){
+//                $banner->setHot(true);
+//            }else{
                 $banner->setHot(false);
+//            }
+            $banner2 = $em->getRepository('AppBundle:Banner2')->findOneByTitle($banner->getTitle());
+            if ($banner2){
+                $banner->setLatitude($banner2->getLatitude());
+                $banner->setLongitude($banner2->getLongitude());
+                $banner->setArea($banner2->getArea());
+            }else{
+                $banner->setLatitude(0);
+                $banner->setLongitude(0);
+                $banner->setArea(null);
             }
             $em->persist($banner);
             $em->flush($banner);
@@ -229,27 +267,41 @@ class VeraParser extends MainParser
             $banner->setAdrs(explode("\n",$phpExcelObject->setActiveSheetIndex(3)->getCell('B'.$num)->getValue())[0]);
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(3)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(3)->getCell('B'.$num)->getValue());
-            $banner->setSide($phpExcelObject->setActiveSheetIndex(3)->getCell('C'.$num)->getValue());
+            $banner->setSide($phpExcelObject->setActiveSheetIndex(3)->getCell('R'.$num)->getValue());
             $banner->setCity($city);
+
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(3)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(3)->getCell('F'.$num)->getValue());
-            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(3)->getCell('G'.$num)->getValue()));
-            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(3)->getCell('G'.$num)->getValue())*1.18);
-            $banner->setTaxType('НДС (18%)');
             $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(3)->getCell('M'.$num)->getValue()));
+
+            $banner->setPrice(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(3)->getCell('G'.$num)->getValue()));
+            $banner->setPrice2(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(3)->getCell('G'.$num)->getValue()*1.18));
+            $banner->setPriceDeploy(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(3)->getCell('Q'.$num)->getValue()));
+            $banner->setTaxType('НДС (18%)');
+
             $banner->setFormat('small');
-            $banner->setType($phpExcelObject->setActiveSheetIndex(3)->getCell('N'.$num)->getValue());
-            $banner->setArea($phpExcelObject->setActiveSheetIndex(3)->getCell('S'.$num)->getValue());
-            $banner->setLight(($phpExcelObject->setActiveSheetIndex(3)->getCell('Q'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(3)->getCell('Q'.$num)->getValue() == 'да' ? 1 : 0));
+            $banner->setType($phpExcelObject->setActiveSheetIndex(3)->getCell('O'.$num)->getValue());
+//            $banner->setArea($phpExcelObject->setActiveSheetIndex(3)->getCell('S'.$num)->getValue());
+            $banner->setLight(($phpExcelObject->setActiveSheetIndex(3)->getCell('N'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(3)->getCell('N'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
             $banner->setLink($phpExcelObject->setActiveSheetIndex(3)->getCell('J'.$num)->getHyperlink()->getUrl());
-            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(3)->getCell('R'.$num)->getValue());
-            $banner->setLongitude($pos[1]);
-            $banner->setLatitude($pos[0]);
-            if ($hot){
-                $banner->setHot(true);
-            }else{
+//            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(3)->getCell('R'.$num)->getValue());
+//            $banner->setLongitude($pos[1]);
+//            $banner->setLatitude($pos[0]);
+//            if ($hot){
+//                $banner->setHot(true);
+//            }else{
                 $banner->setHot(false);
+//            }
+            $banner2 = $em->getRepository('AppBundle:Banner2')->findOneByTitle($banner->getTitle());
+            if ($banner2){
+                $banner->setLatitude($banner2->getLatitude());
+                $banner->setLongitude($banner2->getLongitude());
+                $banner->setArea($banner2->getArea());
+            }else{
+                $banner->setLatitude(0);
+                $banner->setLongitude(0);
+                $banner->setArea(null);
             }
             $em->persist($banner);
             $em->flush($banner);
@@ -288,27 +340,40 @@ class VeraParser extends MainParser
             $banner->setAdrs(explode("\n",$phpExcelObject->setActiveSheetIndex(4)->getCell('B'.$num)->getValue())[0]);
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(4)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(4)->getCell('B'.$num)->getValue());
-            $banner->setSide($phpExcelObject->setActiveSheetIndex(4)->getCell('C'.$num)->getValue());
+            $banner->setSide($phpExcelObject->setActiveSheetIndex(4)->getCell('R'.$num)->getValue());
             $banner->setCity($city);
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(4)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(4)->getCell('F'.$num)->getValue());
-            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(4)->getCell('G'.$num)->getValue()));
-            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(4)->getCell('G'.$num)->getValue())*1.18);
-            $banner->setTaxType('НДС (18%)');
             $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(4)->getCell('M'.$num)->getValue()));
+
+            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(4)->getCell('G'.$num)->getValue()));
+            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(4)->getCell('G'.$num)->getValue()*1.18));
+            $banner->setTaxType('НДС (18%)');
+            $banner->setPriceDeploy(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue()));
+
             $banner->setFormat('small');
-            $banner->setType($phpExcelObject->setActiveSheetIndex(4)->getCell('N'.$num)->getValue());
-            $banner->setArea($phpExcelObject->setActiveSheetIndex(4)->getCell('S'.$num)->getValue());
-            $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('Q'.$num)->getValue() == 'да' ? 1 : 0));
+            $banner->setType($phpExcelObject->setActiveSheetIndex(4)->getCell('O'.$num)->getValue());
+//            $banner->setArea($phpExcelObject->setActiveSheetIndex(4)->getCell('S'.$num)->getValue());
+            $banner->setLight(($phpExcelObject->setActiveSheetIndex(4)->getCell('N'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(4)->getCell('N'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
             $banner->setLink($phpExcelObject->setActiveSheetIndex(4)->getCell('J'.$num)->getHyperlink()->getUrl());
-            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(4)->getCell('R'.$num)->getValue());
-            $banner->setLongitude($pos[1]);
-            $banner->setLatitude($pos[0]);
-            if ($hot){
-                $banner->setHot(true);
-            }else{
+//            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(4)->getCell('R'.$num)->getValue());
+//            $banner->setLongitude($pos[1]);
+//            $banner->setLatitude($pos[0]);
+//            if ($hot){
+//                $banner->setHot(true);
+//            }else{
                 $banner->setHot(false);
+//            }
+            $banner2 = $em->getRepository('AppBundle:Banner2')->findOneByTitle($banner->getTitle());
+            if ($banner2){
+                $banner->setLatitude($banner2->getLatitude());
+                $banner->setLongitude($banner2->getLongitude());
+                $banner->setArea($banner2->getArea());
+            }else{
+                $banner->setLatitude(0);
+                $banner->setLongitude(0);
+                $banner->setArea(null);
             }
             $em->persist($banner);
             $em->flush($banner);
@@ -346,27 +411,38 @@ class VeraParser extends MainParser
             $banner->setAdrs(explode("\n",$phpExcelObject->setActiveSheetIndex(5)->getCell('B'.$num)->getValue())[0]);
             $banner->setTitle(explode("\n",$phpExcelObject->setActiveSheetIndex(5)->getCell('B'.$num)->getValue())[0]);
             $banner->setBody($phpExcelObject->setActiveSheetIndex(5)->getCell('B'.$num)->getValue());
-            $banner->setSide($phpExcelObject->setActiveSheetIndex(5)->getCell('C'.$num)->getValue());
+            $banner->setSide($phpExcelObject->setActiveSheetIndex(5)->getCell('R'.$num)->getValue());
             $banner->setCity($city);
             $banner->setGrp(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(5)->getCell('E'.$num)->getValue()));
             $banner->setGid($phpExcelObject->setActiveSheetIndex(5)->getCell('F'.$num)->getValue());
-            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(5)->getCell('G'.$num)->getValue()));
-            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(5)->getCell('G'.$num)->getValue())*1.18);
-            $banner->setTaxType('НДС (18%)');
             $banner->setOts(str_replace(',','.',$phpExcelObject->setActiveSheetIndex(5)->getCell('M'.$num)->getValue()));
+
+            $banner->setPrice(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(5)->getCell('G'.$num)->getValue()));
+            $banner->setPrice2(str_replace(array(',',''),array('.',''),$phpExcelObject->setActiveSheetIndex(5)->getCell('G'.$num)->getValue()*1.18));
+            $banner->setTaxType('НДС (18%)');
+            $banner->setPriceDeploy(str_replace(array(',',' '),array('.',''),$phpExcelObject->setActiveSheetIndex(5)->getCell('Q'.$num)->getValue()));
+
             $banner->setFormat('3x6');
-            $banner->setType($phpExcelObject->setActiveSheetIndex(5)->getCell('N'.$num)->getValue());
+            $banner->setType($phpExcelObject->setActiveSheetIndex(5)->getCell('O'.$num)->getValue());
             $banner->setArea(null);
-            $banner->setLight(($phpExcelObject->setActiveSheetIndex(5)->getCell('Q'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(5)->getCell('Q'.$num)->getValue() == 'да' ? 1 : 0));
+            $banner->setLight(($phpExcelObject->setActiveSheetIndex(5)->getCell('N'.$num)->getValue() == 'Да' || $phpExcelObject->setActiveSheetIndex(5)->getCell('N'.$num)->getValue() == 'да' ? 1 : 0));
             $banner->setImg(null);
             $banner->setLink($phpExcelObject->setActiveSheetIndex(5)->getCell('J'.$num)->getHyperlink()->getUrl());
-            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(5)->getCell('R'.$num)->getValue());
-            $banner->setLongitude($pos[1]);
-            $banner->setLatitude($pos[0]);
-            if ($hot){
-                $banner->setHot(true);
-            }else{
+//            $pos = $this->getPosition($phpExcelObject->setActiveSheetIndex(5)->getCell('R'.$num)->getValue());
+//            $banner->setLongitude($pos[1]);
+//            $banner->setLatitude($pos[0]);
+//            if ($hot){
+//                $banner->setHot(true);
+//            }else{
                 $banner->setHot(false);
+//            }
+            $banner2 = $em->getRepository('AppBundle:Banner2')->findOneByTitle($banner->getTitle());
+            if ($banner2){
+                $banner->setLatitude($banner2->getLatitude());
+                $banner->setLongitude($banner2->getLongitude());
+            }else{
+                $banner->setLatitude(0);
+                $banner->setLongitude(0);
             }
             $em->persist($banner);
             $em->flush($banner);

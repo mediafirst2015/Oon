@@ -99,31 +99,31 @@ class ParserCommand extends ContainerAwareCommand
                     $parser->parserVera6Action($hot);
                     $parser->parseImageAction();
 //                    $output->write($sale);
-                    if ($sale != 0){
-                        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
-                        if ($company == null){
-                            $company = new Company();
-                            $company->setTitle('Вера Олимп');
-                            $em->persist($company);
-                            $em->flush($company);
-                            $em->refresh($company);
-                        }
-                        $city = $em->getRepository('AppBundle:City')->findOneById(1);
-                        for ($i = 1; $i <= 12 ; $i ++){
-                            $date = new \DateTime('2015-'.$i.'-01 00:00:00');
-                            $month = $em->getRepository('AppBundle:Sale')->findOneBy(array('date' => $date, 'company' => $company, 'city' => $city));
-                            if (!$month){
-
-                                $month = new Sale();
-                                $month->setCity($city);
-                                $month->setDate($date);
-                                $month->setCompany($company);
-                                $month->setPercent($sale);
-                                $em->persist($month);
-                                $em->flush($month);
-                            }
-                        }
-                    }
+//                    if ($sale != 0){
+//                        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Вера Олимп');
+//                        if ($company == null){
+//                            $company = new Company();
+//                            $company->setTitle('Вера Олимп');
+//                            $em->persist($company);
+//                            $em->flush($company);
+//                            $em->refresh($company);
+//                        }
+//                        $city = $em->getRepository('AppBundle:City')->findOneById(1);
+//                        for ($i = 1; $i <= 12 ; $i ++){
+//                            $date = new \DateTime('2015-'.$i.'-01 00:00:00');
+//                            $month = $em->getRepository('AppBundle:Sale')->findOneBy(array('date' => $date, 'company' => $company, 'city' => $city));
+//                            if (!$month){
+//
+//                                $month = new Sale();
+//                                $month->setCity($city);
+//                                $month->setDate($date);
+//                                $month->setCompany($company);
+//                                $month->setPercent($sale);
+//                                $em->persist($month);
+//                                $em->flush($month);
+//                            }
+//                        }
+//                    }
                 }catch (\Exception $e){
                     echo $f.' Строка: '.$e->getLine().'. '.$e->getMessage();
                     if ($type != 0){
