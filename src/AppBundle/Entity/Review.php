@@ -10,7 +10,7 @@ use Iphp\FileStoreBundle\Mapping\Annotation as FileStore;
  * Отзывы
  *
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass = "ReviewRepository")
  * @FileStore\Uploadable
  */
 class Review extends BaseEntity
