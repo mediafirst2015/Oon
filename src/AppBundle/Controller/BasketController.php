@@ -846,7 +846,7 @@ class BasketController extends Controller
         $num = 0;
         foreach ($basket as $o){
             $num ++ ;
-            $url = 'https://maps.yandex.ru/?text='.$o['latitude'].','.$o['longitude'];
+            $url = 'navigator.mediafirst.ru/map?bannerId='.$o['id'];
             $o['grp'] =  ( $o['grp'] == 0 ? 'нд' : $o['grp'] );
             $o['ots'] =  ( $o['ots'] == 0 ? 'нд' : $o['ots'] );
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('B'.$line, $num);
