@@ -166,6 +166,7 @@ class BannerController extends Controller{
                 $this->get('request')->query->get('banner', 1),
                 100
             );
+            $pagination->setTemplate('AppBundle::default_pagination.html.twig');
             return array('pagination' => $pagination);
         }
     }
