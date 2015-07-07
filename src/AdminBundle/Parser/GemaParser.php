@@ -5,21 +5,34 @@ namespace AdminBundle\Parser;
 use AppBundle\Entity\Banner;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Log;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class GemaParser extends MainParser
 {
 
 
     /**
-     * @Route("/parser45", name="all_export")
+     * @Route("/parser-gema", name="parser-gema")
      */
     public function parserGema1Action($hot = false){
         $em = $this->em;
         $filePath = $this->filePath;
 
+        $city = $em->getRepository('AppBundle:City')->findOneById(1);
+        $city2 = $em->getRepository('AppBundle:City')->findOneById(2);
 
-        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Гема');
+        $log = new Log();
+        $log->setTitle('Поехали');
+        $em->persist($log);
+        $em->flush($log);
+
+        $company = $em->getRepository('AppBundle:Company')->findOneById(1);
         if ($company == null){
+            $log = new Log();
+            $log->setTitle('Компания не нашлась');
+            $em->persist($log);
+            $em->flush($log);
             $company = new Company();
             $company->setTitle('Гема');
             $em->persist($company);
@@ -27,15 +40,57 @@ class GemaParser extends MainParser
             $em->refresh($company);
         }
 
-        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($filePath);
+        $log = new Log();
+        $log->setTitle('Компания нашлась');
+        $em->persist($log);
+        $em->flush($log);
+
+        $log = new Log();
+        $log->setTitle($filePath);
+        $em->persist($log);
+        $em->flush($log);
+
+        try{
+            $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($this->filePath);
+            $log = new Log();
+            $log->setTitle('4');
+            $em->persist($log);
+            $em->flush($log);
+        }catch (Exception $e){
+            $log = new Log();
+            $log->setTitle($e->getMessage());
+            $em->persist($log);
+            $em->flush($log);
+        }
         $num = 9;
 
-        $city = $em->getRepository('AppBundle:City')->findOneById(1);
-        $city2 = $em->getRepository('AppBundle:City')->findOneById(2);
+        $log = new Log();
+        $log->setTitle('5');
+        $em->persist($log);
+        $em->flush($log);
+
+        $log = new Log();
+        $log->setTitle('Поехали в 2');
+        $em->persist($log);
+        $em->flush($log);
         while(true){
+            $log = new Log();
+            $log->setTitle('1');
+            $em->persist($log);
+            $em->flush($log);
+
             if ($phpExcelObject->setActiveSheetIndex(0)->getCell('B'.$num)->getValue() == ''){
+                $log = new Log();
+                $log->setTitle('икуфл');
+                $em->persist($log);
+                $em->flush($log);
                 break;
             }
+            $log = new Log();
+            $log->setTitle('2');
+            $em->persist($log);
+            $em->flush($log);
+
             $banner = new Banner();
 
             $banner->setCompany($company);
@@ -63,31 +118,42 @@ class GemaParser extends MainParser
             $banner->setLongitude($pos[0]);
             $banner->setLatitude($pos[1]);
 
-            if ($hot){
-                $banner->setHot(true);
-            }else{
+//            if ($hot){
+//                $banner->setHot(true);
+//            }else{
                 $banner->setHot(false);
-            }
+//            }
 
-            $banner = $this->setBanner($banner);
-            $month = array(
-                '2015-06-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('U'.$num)->getValue()),
-                '2015-07-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('V'.$num)->getValue()),
-                '2015-08-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('W'.$num)->getValue()),
-                '2015-09-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('X'.$num)->getValue()),
-                '2015-10-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('Y'.$num)->getValue()),
-                '2015-11-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('Z'.$num)->getValue()),
-                '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('AA'.$num)->getValue()),
-            );
-            $this->refreshStatus($banner,$month, array('date' => '2015-06-01' , 'sale' => $hot));
+            $log = new Log();
+            $log->setTitle('save'.$banner->getAdrs());
+            $em->persist($log);
+            $em->flush($log);
+
+            $em->persist($banner);
+            $em->flush($banner);
+
+//            $banner = $this->setBanner($banner);
+//            $month = array(
+//                '2015-06-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('U'.$num)->getValue()),
+//                '2015-07-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('V'.$num)->getValue()),
+//                '2015-08-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('W'.$num)->getValue()),
+//                '2015-09-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('X'.$num)->getValue()),
+//                '2015-10-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('Y'.$num)->getValue()),
+//                '2015-11-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('Z'.$num)->getValue()),
+//                '2015-12-01' => $this->getStatus($phpExcelObject->setActiveSheetIndex(0)->getCell('AA'.$num)->getValue()),
+//            );
+//            $this->refreshStatus($banner,$month, array('date' => '2015-06-01' , 'sale' => $hot));
 
 
 
-            $num ++;
-
-            if ($num % 50 == 0){
-                sleep(rand(1,5));
-            }
+//            $num ++;
+//
+//            if ($num % 50 == 0){
+//                    $log = new Log();
+//                    $log->setTitle('Синхронизация записи'.$banner->getAdrs());
+//                    $em->persist($log);
+//                    $em->flush($log);
+//            }
         }
 
         return true;

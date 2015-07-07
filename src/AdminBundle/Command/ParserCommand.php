@@ -75,6 +75,10 @@ class ParserCommand extends ContainerAwareCommand
             }
 
             if ($type == 1){
+                $log = new Log();
+                $log->setTitle('Опа');
+                $em->persist($log);
+                $em->flush($log);
                 $parser = new GemaParser($em,$container,$path);
                 try{
                     $parser->parserGema1Action($hot);
