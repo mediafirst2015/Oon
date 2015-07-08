@@ -171,5 +171,18 @@ class BannerController extends Controller{
         }
     }
 
+    /**
+     * @Security("has_role('ROLE_OPERATOR')")
+     * @Route("/offer-remove-all", name="offer_remove_all")
+     */
+    public function offerRemoveAllAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $banners = $this->getDoctrine()->getRepository('AppBundle:Banner')->findByOffer(true);
+        foreach ( $banners as $banner){
+            $banner->setOffer(false);
+            $em->flush();
+        }
+        return $this->redirect($request->headers->get('referer'));
+    }
 
 }
