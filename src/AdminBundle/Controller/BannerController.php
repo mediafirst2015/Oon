@@ -163,7 +163,7 @@ class BannerController extends Controller{
             $paginator  = $this->get('knp_paginator');
             $pagination = $paginator->paginate(
                 $banners,
-                $this->get('request')->query->get('banner', 1),
+                $this->get('request')->query->get('page', 1),
                 100
             );
             $pagination->setTemplate('AppBundle::default_pagination.html.twig');
