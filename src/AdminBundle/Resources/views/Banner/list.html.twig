@@ -10,18 +10,28 @@
 
 {% block content %}
     <div class="well">
+        <form method="GET" class="form">
+            <div class="row">
+                <div class="col-xs-8"><input type="tex" id="search" value="{{ search }}" name="search" class="form-control"></div>
+                <div class="col-xs-4"><button class="btn">Найти</button></div>
+            </div>
+        </form>
+
         <table class="table">
             <tr>
                 <th data-field="number"
                     data-sortable="true">№</th>
+                <th data-field="number"
+                    data-sortable="true">Компания</th>
                 <th data-field="title"
                     data-sortable="true">Адрес</th>
                 <th data-field="setting"
                     data-sortable="false" class="setting">Инструменты</th>
             </tr>
             {% for item in pagination %}
-                <tr>
+                <tr style="{{ item.latitude == 0 or item.longitude == 0 ? 'background: #FFCACA' : '' }}" >
                     <td>{{ item.id }}</td>
+                    <td>{{ item.company }}</td>
                     <td>{{ item.adrs }}</td>
                     <td class="setting">
                         {% spaceless %}

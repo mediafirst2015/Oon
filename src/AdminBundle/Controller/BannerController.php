@@ -24,18 +24,17 @@ class BannerController extends Controller{
      * @Route("/", name="banner_list")
      * @Template()
      */
-    public function listAction(){
-        $items = $this->getDoctrine()->getRepository('AppBundle:'.self::ENTITY_NAME)->findBy(array('enabled' => true),array('id' => 'DESC'));
-
+    public function listAction(Request $request){
+        $items = $this->getDoctrine()->getRepository('AppBundle:Banner')->findBanners($request->query->get('search'));
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $items,
-            $this->get('request')->query->get('banner', 1),
+            $this->get('request')->query->get('page', 1),
             100
         );
         $pagination->setTemplate('AppBundle::default_pagination.html.twig');
 
-        return array('pagination' => $pagination);
+        return array('pagination' => $pagination, 'search' => $request->query->get('search'));
     }
 
     /**

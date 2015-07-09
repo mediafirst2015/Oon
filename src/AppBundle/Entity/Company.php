@@ -36,6 +36,9 @@ class Company extends BaseEntity
         $this->banners = new ArrayCollection();
     }
 
+    public function __toString(){
+        return "".$this->title;
+    }
     /**
      * @return mixed
      */
