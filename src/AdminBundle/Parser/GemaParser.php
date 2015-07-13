@@ -146,7 +146,7 @@ class GemaParser extends MainParser
 
 
 
-//            $num ++;
+            $num ++;
 //
 //            if ($num % 50 == 0){
 //                    $log = new Log();
