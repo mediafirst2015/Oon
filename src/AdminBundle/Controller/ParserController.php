@@ -27,7 +27,6 @@ class ParserController extends Controller{
 
     /**
      * @Security("has_role('ROLE_OPERATOR')")
-     * @Route("/", name="parser")
      * @Template()
      */
     public function indexAction(Request $request){
