@@ -765,6 +765,8 @@ class BasketController extends Controller
             'font'  => array(
                 'bold'  => true,
                 'color' => array('rgb' => 'FFFFFF'),
+                'size'  => 8,
+                'name'  => 'Arial'
             ),
             'alignment' => array(
                 'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
@@ -859,10 +861,10 @@ class BasketController extends Controller
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('I'.$line, ($o['light'] == 1 ? 'Есть' : 'Нет'));
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('J'.$line, $o['grp']);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('K'.$line, number_format($o['ots'],2));
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('L'.$line, $o['price'].'р.');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('L'.$line, number_format($o['price'],2).'р.');
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('M'.$line, $o['taxType']);
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('N'.$line, $o['price2'].'р.');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('O'.$line, ( $o['priceDeploy'] != '' ? $o['priceDeploy'] : '0' ) .'р.');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('N'.$line, number_format($o['price2'],2).'р.');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('O'.$line, ( $o['priceDeploy'] != '' ? number_format($o['priceDeploy'],2) : '0' ) .'р.');
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('P'.$line, 'Карта');
             $phpExcelObject->setActiveSheetIndex(0)->getHyperlink('P'.$line)->setUrl($url);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('Q'.$line, 'Фото');
@@ -875,6 +877,10 @@ class BasketController extends Controller
                         'style' => \PHPExcel_Style_Border::BORDER_THIN
                     )
                 ),
+                'font'  => array(
+                    'size'  => 8,
+                    'name'  => 'Arial'
+                ),
                 'alignment' => array(
                     'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
                 )
@@ -885,6 +891,10 @@ class BasketController extends Controller
                     'allborders' => array(
                         'style' => \PHPExcel_Style_Border::BORDER_THIN
                     )
+                ),
+                'font'  => array(
+                    'size'  => 8,
+                    'name'  => 'Arial'
                 ),
             );
             $phpExcelObject->setActiveSheetIndex(0)->getStyle('B'.$line)->applyFromArray($border);
