@@ -859,7 +859,7 @@ class BasketController extends Controller
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G'.$line, $o['side']);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('H'.$line, $o['format']);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('I'.$line, ($o['light'] == 1 ? 'Есть' : 'Нет'));
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('J'.$line, $o['grp']);
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('J'.$line, number_format($o['grp'],2));
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('K'.$line, number_format($o['ots'],2));
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('L'.$line, number_format($o['price'],2).'р.');
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('M'.$line, $o['taxType']);
