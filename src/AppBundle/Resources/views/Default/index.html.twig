@@ -7,7 +7,7 @@
             <div class="slider-box">
                 <div style="width: 5300px">
                     <div class="slider-image slide-1">
-                        <div class="title">Top-8 Группа по медиа бизнесу за 2013 год<br />
+                        <div class="title">Top-8 Группа по медиа бизнесу за 2014 год<br />
                             (Рейтинг Adindex/RBC, 2014)</div>
                     </div>
                     <div class="slider-image slide-2">
@@ -473,7 +473,7 @@
                     <div class="title">Нас выбрали</div>
                     <div style="text-align: center">
                         {#{% for l in logos %}#}
-                            {#<img src="{{ l.image.path }}" style="max-width: 100px; max-height: 100px; margin: 10px" title="{{ l.title }}"/>#}
+                        {#<img src="{{ l.image.path }}" style="max-width: 100px; max-height: 100px; margin: 10px" title="{{ l.title }}"/>#}
                         {#{% endfor %}#}
                         <div class="logos-block">
                             <img class="logos" src="{{ asset('bundles/app/assets/logo1-1.png') }}" style="width: 100%; margin: 10px" />
@@ -487,16 +487,18 @@
             <div class="box">
                 <div class="form">
                     <div class="title">Отзывы клиентов</div>
-                    {% for r in reviews %}
-                        <div style="overflow: hidden; padding: 5px 0 10px 0">
-                            {% if r.image.path is defined %}
-                                <a href="{{ r.image.path }}" class="fancybox"><img src="{{ r.image.path }}" style="width: 120px; float: left; margin: 10px;"></a>
-                            {% endif %}
-                            <div style="font-size: 20px; line-height: 20px">{{ r.title }}</div>
-                            <br />
-                            <div>{{ r.body }}</div>
-                        </div>
-                    {% endfor %}
+                    <div class="offers-block2">
+                        {% for k,r in reviews %}
+                            <div style="overflow: hidden; padding: 5px 0 10px 0; {{ k > 1 ? 'display:none;' : '' }}" class="offers-item2" >
+                                {% if r.image.path is defined %}
+                                    <a href="{{ r.image.path }}" class="fancybox"><img src="{{ r.image.path }}" style="width: 120px; float: left; margin: 10px;"></a>
+                                {% endif %}
+                                <div style="font-size: 20px; line-height: 20px">{{ r.title }}</div>
+                                <br />
+                                <div>{{ r.body }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
                     <div style="text-align: right">
                         <a href="{{ path('reviews') }}" class="pink" style="font-size: 18px">Посмотреть все</a>
                     </div>
@@ -588,7 +590,7 @@
                     }
                 });
                 $( "#grp-amount" ).html( "" + $( "#grp" ).slider( "values", 0 )/100 +
-                " - " + $( "#grp" ).slider( "values", 1 )/100 );
+                        " - " + $( "#grp" ).slider( "values", 1 )/100 );
 
                 $( "#ots" ).slider({
                     range: true,
@@ -602,7 +604,7 @@
                     }
                 });
                 $( "#ots-amount" ).html( "" + $( "#ots" ).slider( "values", 0 ) +
-                " - " + $( "#ots" ).slider( "values", 1 ) );
+                        " - " + $( "#ots" ).slider( "values", 1 ) );
 
                 $( "#price" ).slider({
                     range: true,
@@ -616,7 +618,7 @@
                     }
                 });
                 $( "#price-amount" ).html( "" + $( "#price" ).slider( "values", 0 ) +
-                " - " + $( "#price" ).slider( "values", 1 )  );
+                        " - " + $( "#price" ).slider( "values", 1 )  );
 
 
 
@@ -703,6 +705,17 @@
                     $('.logos').eq(0).css('display','block');
 
                 },7000);
+
+
+                var timerId3 = setInterval(function (){
+
+                    $('.offers-item2:first').css('display','none');
+                    $('.offers-item2:first').appendTo('.offers-block2');
+                    $('.offers-item2').eq(2).css('display','block');
+
+                },7000);
+
+
 
             });
         </script>
