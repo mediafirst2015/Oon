@@ -787,8 +787,8 @@ class BasketController extends Controller
         $phpExcelObject->setActiveSheetIndex(0)->setCellValue('M5', 'Налог');
         $phpExcelObject->setActiveSheetIndex(0)->setCellValue('N5', 'Стоимость с учетом налогов');
         $phpExcelObject->setActiveSheetIndex(0)->setCellValue('O5', 'Стоимость монтажа с налогом');
-        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('P5', 'Фото');
-        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('Q5', 'Карта');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('P5', 'Карта');
+        $phpExcelObject->setActiveSheetIndex(0)->setCellValue('Q5', 'Фото');
         $phpExcelObject->setActiveSheetIndex(0)->setCellValue('R5', 'Налог');
 
 
@@ -859,12 +859,12 @@ class BasketController extends Controller
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G'.$line, $o['side']);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('H'.$line, $o['format']);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('I'.$line, ($o['light'] == 1 ? 'Есть' : 'Нет'));
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('J'.$line, number_format($o['grp'],2));
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('K'.$line, number_format($o['ots'],2));
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('L'.$line, number_format($o['price'],2).'р.');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('J'.$line, number_format($o['grp'],2,'.',''));
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('K'.$line, number_format($o['ots'],2,'.',''));
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('L'.$line, number_format($o['price'],2,'.','').'р.');
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('M'.$line, $o['taxType']);
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('N'.$line, number_format($o['price2'],2).'р.');
-            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('O'.$line, ( $o['priceDeploy'] != '' ? number_format($o['priceDeploy'],2) : '0' ) .'р.');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('N'.$line, number_format($o['price2'],2,'.','').'р.');
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('O'.$line, ( $o['priceDeploy'] != '' ? number_format($o['priceDeploy'],2,'.','') : '0' ) .'р.');
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('P'.$line, 'Карта');
             $phpExcelObject->setActiveSheetIndex(0)->getHyperlink('P'.$line)->setUrl($url);
             $phpExcelObject->setActiveSheetIndex(0)->setCellValue('Q'.$line, 'Фото');
