@@ -68,25 +68,28 @@ class AuthController extends Controller
      * @Template()
      */
     public function registerAction(Request $request){
-        $em = $this->getDoctrine()->getManager();
-        $user = new User();
-        $form = $this->createForm(new RegisterType($em), $user);
-        $formData = $form->handleRequest($request);
+                if ($request->getMethod() == 'POST'){
+            $manager = $this->getDoctrine()->getManager();
+            $user = new User();
+            $user->setUsername($request->request->get('username'));
+            $user->setSalt(md5(time()));
+            $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
+            $password = $encoder->encodePassword($request->request->get('password'), $user->getSalt());
+            $user->setPassword($password);
 
-        if ($request->getMethod() == 'POST'){
-            if ($formData->isValid()){
-                $user = $formData->getData();
-                $user->setSalt(md5(time()));
-                $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
-                $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
-                $user->setPassword($password);
-                $em->persist($user);
-                $em->flush();
-                $em->refresh($user);
-                return $this->redirect($this->generateUrl('my_profile'));
-            }
+            $user->setRoles('ROLE_USER');
+            $user->setLastName($request->request->get('lastName'));
+            $user->setFirstName($request->request->get('firstName'));
+            $user->setSurName('');
+            $user->setPhone($request->request->get('phone'));
+            $user->setCompany($request->request->get('companyTitle'));
+
+            $manager->persist($user);
+            $manager->flush($user);
+            #@todo add mailsend;
+            return $this->redirect($this->generateUrl('homepage'));
         }
-        return array('form' => $form->createView());
+        return array();
     }
 
     /**
