@@ -238,9 +238,12 @@
                 <span class="btn-top-menu-search {{ url == 'search' or url == 'map' or url == 'hot' ? 'act' : '' }}">
                     Поиск щитов
                     <div class="dropdown">
-                        <a href="{{ path('search') }}"><span>Поиск по параметрам</span></a> <br />
-                        <a href="{{ path('map') }}"><span>Поиск по карте</span></a> <br />
-                        <a href="{{ path('hot') }}"><span>Горящие предложения</span></a>
+                        <a {% if app.user == null %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('search') }}" {% endif %}>
+                            <span>Поиск по параметрам</span></a> <br />
+                        <a {% if app.user == null %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('map') }}" {% endif %}>
+                            <span>Поиск по карте</span></a> <br />
+                        <a {% if app.user == null %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('hot') }}" {% endif %}>
+                            <span>Горящие предложения</span></a>
                     </div>
                 </span>
 
