@@ -77,6 +77,7 @@ class DefaultController extends Controller
     /**
      * @Route("/search", name="search")
      * @Template()
+     * @Security("has_role('ROLE_USER')")
      */
     public function searchAction(Request $request){
         $params = array(
@@ -194,6 +195,7 @@ class DefaultController extends Controller
     /**
      * @Route("/map", name="map")
      * @Template()
+     * @Security("has_role('ROLE_USER')")
      */
     public function mapAction(Request $request){
         $session = new Session();
@@ -353,6 +355,7 @@ class DefaultController extends Controller
     /**
      * @Route("/hot", name="hot")
      * @Template()
+     * @Security("has_role('ROLE_USER')")
      */
     public function hotAction(Request $request){
         $params = array(
@@ -450,6 +453,7 @@ class DefaultController extends Controller
     /**
      * @Route("/hot-ajax", name="hot_ajax" , options={"expose" = true})
      * @Template()
+     * @Security("has_role('ROLE_USER')")
      */
     public function hotAjaxAction(Request $request){
         $session = $request->getSession();
@@ -492,6 +496,7 @@ class DefaultController extends Controller
     /**
      * @Route("/mediaplan", name="mediaplan")
      * @Template()
+     * @Security("has_role('ROLE_USER')")
      */
     public function mapMediaplanAction(Request $request){
 
