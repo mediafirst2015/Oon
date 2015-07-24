@@ -198,12 +198,18 @@
                     <a href="{{ path('homepage') }}"><img src="{{ asset('bundles/app/images/logo.png') }}" id="logo" style="  z-index: 999; position: absolute;"></a>
                 </div>
                 <div class="col-sm-4">
+                    <div id="s-phone" style="position: absolute; left: 55px">8 (495) 508-26-21</div>
                     <img src="{{ asset('bundles/app/images/top-img.png') }}" id="top-img">
                 </div>
                 <div class="col-sm-4" style="text-align: right">
-                    <span id="s-phone">8 (495) 508-26-21</span>
                     <br />
-                    {#<span class="btn" data-toggle="modal" data-target=".bs-auth">#}
+                    {#<span class="btn">#}
+                    <table style="float: right">
+                        <tr>
+                            <td><a href="{{ path('register') }}"><span class="btn3 ">Регистрация</span></a></td>
+                            <td><span class="btn3 " data-toggle="modal" data-target=".bs-auth">Вход на сайт</span></td>
+                        </tr>
+                    </table>
                     <span class="btn" data-toggle="modal" data-target=".set-contacts">
                         СВЯЗАТЬСЯ С НАМИ
                     </span>
