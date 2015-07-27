@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -144,8 +145,11 @@ class RosveroParserController extends Controller
 //                break;
 //            }
             $url = 'http://geocode-maps.yandex.ru/1.x/?geocode='.urlencode($url);
-            echo $url.'<br />';
-            $content = file_get_contents($url);
+            try{
+                $content = file_get_contents($url);
+            }catch (Exception $e){
+                $content = file_get_contents($url);
+            }
             $XmlObj = simplexml_load_string($content);
             if (isset($XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)){
                 $pos['x'] = explode(' ',$XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)[1];
