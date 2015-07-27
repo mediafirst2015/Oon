@@ -78,7 +78,7 @@ class VeraParser extends MainParser
 //            if ($hot){
 //                $banner->setHot(true);
 //            }else{
-                $banner->setHot(false);
+                $banner->setHot(true);
 //            }
             $em->persist($banner);
             $em->flush($banner);

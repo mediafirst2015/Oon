@@ -123,7 +123,7 @@ class GemaParser extends MainParser
 //            }else{
 //                $banner->setHot(true);
 //            }
-
+            $banner->setHot(false);
             $log = new Log();
             $log->setTitle('save'.$banner->getAdrs());
             $em->persist($log);
