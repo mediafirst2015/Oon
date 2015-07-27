@@ -191,11 +191,10 @@ class DefaultController extends Controller
             'cities' => $cities
         );
     }
-
+    #* @Security("has_role('ROLE_USER')")
     /**
      * @Route("/map", name="map")
      * @Template()
-     * @Security("has_role('ROLE_USER')")
      */
     public function mapAction(Request $request){
         $session = new Session();
