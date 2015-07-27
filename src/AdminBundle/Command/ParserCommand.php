@@ -143,31 +143,31 @@ class ParserCommand extends ContainerAwareCommand
                 $parser = new RosveroParser($em,$container,$path);
                 try{
                     $parser->parserRasvero1Action($hot);
-                    if ($sale != 0){
-                        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Расверо');
-                        if ($company == null){
-                            $company = new Company();
-                            $company->setTitle('Расверо');
-                            $em->persist($company);
-                            $em->flush($company);
-                            $em->refresh($company);
-                        }
-                        $city = $em->getRepository('AppBundle:City')->findOneById(1);
-                        for ($i = 1; $i <= 12 ; $i ++){
-                            $date = new \DateTime('2015-'.$i.'-01 00:00:00');
-                            $month = $em->getRepository('AppBundle:Sale')->findOneBy(array('date' => $date, 'company' => $company, 'city' => $city));
-                            if (!$month){
-
-                                $month = new Sale();
-                                $month->setCity($city);
-                                $month->setDate($date);
-                                $month->setCompany($company);
-                                $month->setPercent($sale);
-                                $em->persist($month);
-                                $em->flush($month);
-                            }
-                        }
-                    }
+//                    if ($sale != 0){
+//                        $company = $em->getRepository('AppBundle:Company')->findOneByTitle('Расверо');
+//                        if ($company == null){
+//                            $company = new Company();
+//                            $company->setTitle('Расверо');
+//                            $em->persist($company);
+//                            $em->flush($company);
+//                            $em->refresh($company);
+//                        }
+//                        $city = $em->getRepository('AppBundle:City')->findOneById(1);
+//                        for ($i = 1; $i <= 12 ; $i ++){
+//                            $date = new \DateTime('2015-'.$i.'-01 00:00:00');
+//                            $month = $em->getRepository('AppBundle:Sale')->findOneBy(array('date' => $date, 'company' => $company, 'city' => $city));
+//                            if (!$month){
+//
+//                                $month = new Sale();
+//                                $month->setCity($city);
+//                                $month->setDate($date);
+//                                $month->setCompany($company);
+//                                $month->setPercent($sale);
+//                                $em->persist($month);
+//                                $em->flush($month);
+//                            }
+//                        }
+//                    }
 
                 }catch (\Exception $e){
                     if ($type != 0){

@@ -132,6 +132,9 @@ class RosveroParserController extends Controller
             $banner->setImg($this->getPhoto($phpExcelObject->setActiveSheetIndex(0)->getCell('P'.$num)->getValue()));
 
             $banner->setLink(0);
+            if ($phpExcelObject->setActiveSheetIndex(0)->getCell('S' . $num)->getValue()=='Свободно'){
+                $banner->setHot(true);
+            }
 
 
 //            $url = substr ($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue(), 0, strrpos($phpExcelObject->setActiveSheetIndex(0)->getCell('E'.$num)->getValue(), '.'));

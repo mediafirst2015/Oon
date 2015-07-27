@@ -121,7 +121,7 @@ class GemaParser extends MainParser
 //            if ($hot){
 //                $banner->setHot(true);
 //            }else{
-                $banner->setHot(false);
+                $banner->setHot(true);
 //            }
 
             $log = new Log();
