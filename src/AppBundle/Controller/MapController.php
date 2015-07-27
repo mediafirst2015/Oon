@@ -243,7 +243,8 @@ class MapController extends Controller
                         'coords' => [ $banner->getLatitude(), $banner->getLongitude()],
                         'alt' => $banner->getAdrs(),
                         'id' => $banner->getId(),
-                        'hot' => ( $banner->getHotMonth() == false ? 0 : 1),
+                        'hot' => ( $banner->getHot() == false ? 0 : 1),
+//                        'hot' => ( $banner->getHotMonth() == false ? 0 : 1),
                         'format' => $banner->getFormat(),
                         'type' => $banner->getType(),
 
