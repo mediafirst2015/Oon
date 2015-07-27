@@ -646,9 +646,9 @@ class Banner extends BaseEntity
             $currentDate = $currentDate->format('Y-m').'-01 00:00:00';
         }
 
-        $months = $this->months;
+        $months = $this->getCompany()->getSales();
         foreach ($months as $m){
-            if ( $m->getDate()->format('Y-m').'-01 00:00:00' == $currentDate AND $m->getSale() != 0 AND $m->getSale() != null){
+            if ( $m->getDate()->format('Y-m').'-01 00:00:00' == $currentDate AND $m->getPercent() != 0 AND $m->getPercent() != null){
                 return $m;
             }
         }

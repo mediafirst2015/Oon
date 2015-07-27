@@ -28,7 +28,7 @@
                 <td>Цена</td>
                 <td>
                     <span style="font-size: 14px; text-decoration: line-through">{{ b.price2 |number_format(1, '.', '') }} р.</span> <br />
-                    <b class="pink">{{ b.price2 * ((100-b.hotMonth.sale)/100) |number_format(1, '.', '') }} р.</b>
+                    <b class="pink">{{ b.price2 * ((100-b.hotMonth.percent)/100) |number_format(1, '.', '') }} р.</b>
                     {#{{ dump(b.hotMonth) }}#}
                 </td>
             </tr>

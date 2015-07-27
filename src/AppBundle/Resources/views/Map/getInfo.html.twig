@@ -71,7 +71,7 @@
                                         &nbsp;{{ object.price2  |number_format(1, '.', '') }}&nbsp;р.
                                     {% endif %}
                                 </span>
-                                <span style="color: #FF0000">&nbsp;{{ (object.price2 * ((100 - object.hotMonth.sale)/100))  |number_format(1, '.', '') }}&nbsp;р.</span>
+                                <span style="color: #FF0000">&nbsp;{{ (object.price2 * ((100 - object.hotMonth.percent)/100))  |number_format(1, '.', '') }}&nbsp;р.</span>
                             </td>
                         {% else %}
                             {% if monthlySales[column~'2015'] is defined %}
