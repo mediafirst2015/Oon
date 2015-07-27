@@ -336,13 +336,13 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Формат</td>
-                                                        <td style="text-align: right">{{ b.format }}</td>
+                                                        <td style="text-align: right">{{ b.type != null ? b.type : b.format }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Цена</td>
                                                         <td style="text-align: right">
                                                             <span style="font-size: 12px; text-decoration: line-through">{{ b.price2 |number_format(1, '.', '') }} р.</span> <br />
-                                                            <b class="pink">{{ b.price2 |number_format(1, '.', '') }}&nbsp;р.</b>
+                                                            <b class="pink">{{ (b.price2 * ((100 - b.hotMonth.sale)/100))  |number_format(1, '.', '') }}&nbsp;р.</b>
                                                         </td>
                                                     </tr>
                                                     <tr>
