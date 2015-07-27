@@ -144,7 +144,7 @@ class VeraParser extends MainParser
 //            if ($hot){
 //                $banner->setHot(true);
 //            }else{
-            $banner->setHot(false);
+            $banner->setHot(true);
             $banner2 = $em->getRepository('AppBundle:Banner2')->findOneByTitle($banner->getTitle());
             if ($banner2){
                 $banner->setLatitude($banner2->getLatitude());
@@ -219,7 +219,7 @@ class VeraParser extends MainParser
 //            if ($hot){
 //                $banner->setHot(true);
 //            }else{
-                $banner->setHot(false);
+            $banner->setHot(true);
 //            }
             $banner2 = $em->getRepository('AppBundle:Banner2')->findOneByTitle($banner->getTitle());
             if ($banner2){
@@ -291,7 +291,7 @@ class VeraParser extends MainParser
 //            if ($hot){
 //                $banner->setHot(true);
 //            }else{
-                $banner->setHot(false);
+            $banner->setHot(true);
 //            }
             $banner2 = $em->getRepository('AppBundle:Banner2')->findOneByTitle($banner->getTitle());
             if ($banner2){
@@ -363,7 +363,7 @@ class VeraParser extends MainParser
 //            if ($hot){
 //                $banner->setHot(true);
 //            }else{
-                $banner->setHot(false);
+            $banner->setHot(true);
 //            }
             $banner2 = $em->getRepository('AppBundle:Banner2')->findOneByTitle($banner->getTitle());
             if ($banner2){
@@ -434,7 +434,7 @@ class VeraParser extends MainParser
 //            if ($hot){
 //                $banner->setHot(true);
 //            }else{
-                $banner->setHot(false);
+            $banner->setHot(true);
 //            }
             $banner2 = $em->getRepository('AppBundle:Banner2')->findOneByTitle($banner->getTitle());
             if ($banner2){
