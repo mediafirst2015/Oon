@@ -145,11 +145,8 @@ class RosveroParserController extends Controller
 //                break;
 //            }
             $url = 'http://geocode-maps.yandex.ru/1.x/?geocode='.urlencode($url);
-            try{
-                $content = file_get_contents($url);
-            }catch (Exception $e){
-                $content = file_get_contents($url);
-            }
+
+            $content = @file_get_contents($url);
             $XmlObj = simplexml_load_string($content);
             if (isset($XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)){
                 $pos['x'] = explode(' ',$XmlObj->GeoObjectCollection->featureMember->GeoObject->Point->pos)[1];
@@ -163,7 +160,7 @@ class RosveroParserController extends Controller
             $em->persist($banner);
             $em->flush($banner);
             $num ++;
-            if ($num % 50 == 0){
+            if ($num % 30 == 0){
                 sleep(rand(1,5));
             }
         }
