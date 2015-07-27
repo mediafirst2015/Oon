@@ -96,7 +96,8 @@ class BannerRepository extends EntityRepository
             ->from('AppBundle:Banner','b')
             ->leftJoin('b.city', 'c')
             ->leftJoin('AppBundle:Month', 'm',"WITH","m.banner = b.id AND m.date = '".$currentDate."'")
-            ->where('b.enabled = 1 AND m.sale is not NULL AND m.sale != 0');
+            ->where('b.enabled = 1 AND b.hot = 1');
+//            ->where('b.enabled = 1 AND m.sale is not NULL AND m.sale != 0');
 
         if ($params['area'] != null && $params['area'] != 0 && $params['area'] != '0'){
             $qb->andWhere("b.area = '".$params['area']."'");
