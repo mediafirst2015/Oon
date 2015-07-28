@@ -319,8 +319,9 @@
                     {% if banners | length != 0 %}
                         <div class="title pink">Горящие предложения</div>
                         <br />
-                        {% for b in banners %}
-                            <div class="hot-box-mini">
+                        <div class="offers-block">
+                        {% for k,b in banners %}
+                            <div class="hot-box-mini offers-item" {{ k > 2 ? 'style="display:none"' : '' }}>
                                 <a href="{{ path('hot') }}">
                                     <table>
                                         <tr>
@@ -356,6 +357,7 @@
                                 </a>
                             </div>
                         {% endfor %}
+                        </div>
                         <div style="text-align: right">
                             <a href="{{ path('hot') }}" class="pink" style="font-size: 23px">Показать ВСЕ</a>
                         </div>

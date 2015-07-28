@@ -86,6 +86,18 @@ class BannerRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findHotIndex($count){
+        $result = $this->createQueryBuilder('b')
+            ->addSelect('RAND() as HIDDEN rand')
+            ->where('b.enabled = 1')
+            ->where('b.hot = 1')
+            ->orderBy('rand','DESC')
+            ->setMaxResults($count)
+            ->getQuery()
+            ->getResult();
+
+        return $result;
+    }
     public function filterHot($params, $page = null)
     {
         $currentDate = new \DateTime();
