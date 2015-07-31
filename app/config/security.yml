@@ -33,18 +33,18 @@ security:
                 target: /
             anonymous: ~
 
-        admin:
-            pattern: ^/admin/
-            provider: main
-            form_login:
-                check_path: /admin/login_check
-                login_path: /admin/login
-                use_referer: true
-            logout:
-                path:   /admin/logout
-                target: /
-            security: true
-            anonymous: true
+#        admin:
+#            pattern: ^/admin/
+#            provider: main
+#            form_login:
+#                check_path: /admin/login_check
+#                login_path: /admin/login
+#                use_referer: true
+#            logout:
+#                path:   /admin/logout
+#                target: /
+#            security: true
+#            anonymous: true
 
     access_control:
         - { path: /.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
