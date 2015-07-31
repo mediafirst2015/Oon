@@ -30,9 +30,12 @@ class BasketController extends Controller
 
     /**
      * @Route("/order-price", name="order_price", options={"expose" = true})
-     * @Security("has_role('ROLE_USER')")
      */
     public function orderPriceAction(Request $request){
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')){
+            return new Response(0);
+        }
+
         $session = $request->getSession();
         $fullprice = 0;
         $basket = $session->get('lists');

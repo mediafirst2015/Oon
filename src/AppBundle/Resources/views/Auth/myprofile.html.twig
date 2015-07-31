@@ -8,38 +8,42 @@
                 {#{{ form_widget(form) }}#}
                 <div style="width: 600px">
                     <div class="row">
+                        {{ form_errors(form) }}
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6 ">
-                            <input type="text" placeholder="Имя*" required="required" name="firstName">
+                            {{form_widget(form.firstName)}}
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" placeholder="Фаимлия*" required="required" name="lastName">
+                            {{form_widget(form.lastName)}}
                         </div>
                     </div>
                     <br />
                     <div class="row">
                         <div class="col-sm-6 ">
-                            <input type="text" placeholder="Телефон" name="phone">
+                            {{form_widget(form.phone)}}
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" placeholder="Email*" required="required" name="username">
+                            {{form_widget(form.username)}}
                         </div>
                     </div>
                     <br />
                     <div class="row">
                         <div class="col-sm-6 ">
-                            <input type="password" placeholder="Пароль*" required="required" name="password">
+                            {{form_widget(form.password.pass)}}
                         </div>
                         <div class="col-sm-6">
-                            <input type="password" placeholder="Повторите пароль*" required="required" name="password2">
+                            {{form_widget(form.password.confirm)}}
                         </div>
                     </div>
                     <br />
                     <div class="row">
                         <div class="col-sm-12 ">
-                            <input type="text" placeholder="Название организации" name="companyTitle">
+                            {{form_widget(form.company)}}
                         </div>
                     </div>
                     <br />
+                    {{form_widget(form._token)}}
                     <div class="row">
                         <div class="col-sm-6 "></div>
                         <div class="col-sm-6 ">

@@ -18,19 +18,34 @@ security:
             entity: { class: AppBundle:User, property: username }
 
     firewalls:
-        everything:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            pattern: ^/
+            provider: main
+            form_login:
+                login_path: /login
+                check_path: /login_check
+                failure_path: /
+            logout:
+                path:   /logout
+                target: /
+            anonymous: ~
+
+        admin:
             pattern: ^/admin/
+            provider: main
             form_login:
                 check_path: /admin/login_check
                 login_path: /admin/login
-                default_target_path: /admin
+                use_referer: true
             logout:
                 path:   /admin/logout
                 target: /
             security: true
             anonymous: true
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+
     access_control:
         - { path: /.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, role: ROLE_OPERATOR }

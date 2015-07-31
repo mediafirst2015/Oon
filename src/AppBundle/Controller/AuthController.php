@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,7 +69,7 @@ class AuthController extends Controller
      * @Template()
      */
     public function registerAction(Request $request){
-                if ($request->getMethod() == 'POST'){
+        if ($request->getMethod() == 'POST'){
             $manager = $this->getDoctrine()->getManager();
             $user = new User();
             $user->setUsername($request->request->get('username'));
@@ -86,7 +87,15 @@ class AuthController extends Controller
 
             $manager->persist($user);
             $manager->flush($user);
-            #@todo add mailsend;
+
+            $session = new Session();
+            $session->getFlashBag()->add('success','Ваша заявка принята. Пожалуйста, ожидайте подтверждения регистрации на указанный электронный адрес');
+
+            @$this->get('email.service')->send(
+                array('tulupov.m@gmail.com','ryabova.t@mediafirst.ru','kravtsova.m@mediafirst.ru'),
+                array('AppBundle:Email:registerNotify.html.twig'),
+                'Сообщение от navigator mediaFirst'
+            );
             return $this->redirect($this->generateUrl('homepage'));
         }
         return array();
@@ -99,7 +108,7 @@ class AuthController extends Controller
      */
     public function myprofileAction(Request $request){
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($this->getUser()->getId());
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneById($this->getUser()->getId());
         $form = $this->createForm(new ProfileType($em), $user);
         $formData = $form->handleRequest($request);
 
@@ -151,4 +160,6 @@ class AuthController extends Controller
         $order = $this->getDoctrine()->getRepository('AppBundle:Order')->orderList($this->getUser()->getId());
         return array('orders' => $order);
     }
+
+
 }

@@ -204,12 +204,22 @@
                 <div class="col-sm-4" style="text-align: right">
                     <br />
                     {#<span class="btn">#}
-                    <table style="float: right">
+                    {#{{ dump(app.user) }}#}
+                    {% if app.user %}
+                    <table style="float: right; margin-bottom: 15px">
                         <tr>
-                            <td><a href="{{ path('register') }}"><span class="btn3 ">Регистрация</span></a></td>
-                            <td><span class="btn3 " data-toggle="modal" data-target=".bs-auth">Вход на сайт</span></td>
+                            <td><a href="{{ path('my_profile') }}" style=" font-size: 20px; color: #333;">{{ app.user }}</a></td>
+                            <td style="padding-left: 20px"><a href="{{ path('_security_logout') }}" style=" font-size: 20px; color: #333;">Выйти</a></td>
                         </tr>
                     </table>
+                    {% else %}
+                        <table style="float: right">
+                            <tr>
+                                <td><a href="{{ path('register') }}"><span class="btn3 ">Регистрация</span></a></td>
+                                <td><span class="btn3 " data-toggle="modal" data-target=".bs-auth">Вход на сайт</span></td>
+                            </tr>
+                        </table>
+                    {% endif %}
                     <span class="btn" data-toggle="modal" data-target=".set-contacts">
                         СВЯЗАТЬСЯ С НАМИ
                     </span>
@@ -296,7 +306,10 @@
     {#{% include 'AppBundle:Auth:login.html.twig' %}#}
 {#{% endif %}#}
 {% include 'AppBundle::popup.html.twig' %}
-{% include 'AppBundle:Auth:login.html.twig' %}
+
+{% if not is_granted('ROLE_USER') %}
+    {% include 'AppBundle:Auth:login.html.twig' %}
+{% endif %}
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

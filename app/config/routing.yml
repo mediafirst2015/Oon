@@ -7,15 +7,39 @@ app:
     resource: @AppBundle/Controller/
     type:     annotation
 
+
+
 _security_login:
+    pattern:  /login
+    defaults: { _controller: AppBundle:Auth:login }
+
+_login_check:
+    path: /login_check
+
+_security_logout:
+    pattern:  /logout
+
+
+
+
+
+admin_security_login:
     pattern:  /admin/login
     defaults: { _controller: AppBundle:Auth:login }
 
-login_check:
-    path: /admin/login_check
+admin_login_check:
+    path: /login_check
 
-_security_logout:
+admin_security_logout:
     pattern:  /admin/logout
+
+
+
+
+
+
+
+
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
