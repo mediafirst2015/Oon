@@ -103,6 +103,31 @@ h1.pink {
 .top-menu {
   margin: 20px 0;
 }
+.btn3 {
+  width: 162px;
+  height: 34px;
+  display: inline-block;
+  line-height: 35px;
+  color: #333;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-image 0.2s ease-in-out, color 0.2s ease-in-out;
+  background-image: url("/bundles/app/images/btn3-act.png");
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+.btn3.act {
+  color: #e3007a;
+}
+.btn3:hover {
+  color: white;
+  background-image: url("/bundles/app/images/btn3.png");
+  transition: background-image 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.btn3:active {
+  color: #e3007a;
+}
 .btn-top-menu {
   width: 162px;
   height: 34px;

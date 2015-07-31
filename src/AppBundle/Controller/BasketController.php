@@ -17,6 +17,7 @@ class BasketController extends Controller
 {
     /**
      * @Route("/basket", name="basket")
+     * @Security("has_role('ROLE_USER')")
      * @Template()
      */
     public function listsAction(Request $request){
@@ -31,6 +32,10 @@ class BasketController extends Controller
      * @Route("/order-price", name="order_price", options={"expose" = true})
      */
     public function orderPriceAction(Request $request){
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')){
+            return new Response(0);
+        }
+
         $session = $request->getSession();
         $fullprice = 0;
         $basket = $session->get('lists');
@@ -47,6 +52,7 @@ class BasketController extends Controller
 
     /**
      * @Route("/basket-add/{itemId}/{month}/{year}", name="basket_add", options={"expose" = true}, defaults={"year" = null})
+     * @Security("has_role('ROLE_USER')")
      */
     public function addAction(Request $request, $itemId, $month, $year = null){
         $nowDate = new \DateTime();
@@ -173,6 +179,7 @@ class BasketController extends Controller
 
     /**
      * @Route("/basket-set-month/{itemId}/{year}/{month}", name="basket_set_month", options={"expose" = true})
+     * @Security("has_role('ROLE_USER')")
      * @Template()
      */
     public function setMonthAction(Request $request, $itemId, $year, $month){

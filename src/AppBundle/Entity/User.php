@@ -87,14 +87,14 @@ class User extends BaseEntity implements UserInterface
 
 
     public function __construct(){
-        $this->roles    = 'ROLE_USER';
+        $this->roles    = 'ROLE_UNCONFIRMED';
         $this->orders = new ArrayCollection();
         $this->banners = new ArrayCollection();
         $this->packages = new ArrayCollection();
     }
 
     public function __toString(){
-        return $this->lastName.' '.$this->firstName.' '.$this->surName;
+        return $this->lastName . ' ' . mb_substr($this->firstName, 0, 1, 'utf-8') . '.' . ($this->surName ? ' ' . mb_substr($this->surName, 0, 1, 'utf-8') . '.' : '');
     }
 
     static public function getRolesNames(){

@@ -102,4 +102,37 @@ class UserController extends Controller{
         }
         return $this->redirect($request->headers->get('referer'));
     }
+
+    /**
+     * @Security("has_role('ROLE_OPERATOR')")
+     * @Route("/success-user/{id}", name="success_user")
+     */
+    public function successUserAction(Request $request, $id){
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneById($id);
+        $user->setRoles('ROLE_USER');
+        $this->getDoctrine()->getManager()->flush($user);
+        $this->get('email.service')->send(
+            array($user->getUsername()),
+            array('AppBundle:Email:registerSuccess.html.twig'),
+            'Сообщение от navigator mediaFirst'
+        );
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Security("has_role('ROLE_OPERATOR')")
+     * @Route("/fail-user/{id}", name="fail_user")
+     */
+    public function failUserAction(Request $request, $id){
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneById($id);
+        $user->setRoles('ROLE_UNCONFIRMED');
+        $this->getDoctrine()->getManager()->flush($user);
+
+        @$this->get('email.service')->send(
+            array($user->getUsername()),
+            array('AppBundle:Email:registerFail.html.twig'),
+            'Сообщение от navigator mediaFirst'
+        );
+        return $this->redirect($request->headers->get('referer'));
+    }
 }

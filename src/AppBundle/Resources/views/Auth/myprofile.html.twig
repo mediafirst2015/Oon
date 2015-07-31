@@ -1,14 +1,61 @@
 {% extends 'AppBundle::layout.html.twig' %}
 
 {% block content %}
-    <div class="container">
-        <div style="padding: 10px">
-            <h2>Личный кабинет</h2>
-                <form method="post">
-                    {{ form_widget(form) }}
-                </form>
+    <div>
+        <div style="padding: 20px">
+            <h2 class="green">Личные данные</h2><br />
+            <form method="post">
+                {#{{ form_widget(form) }}#}
+                <div style="width: 600px">
+                    <div class="row">
+                        {{ form_errors(form) }}
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 ">
+                            {{form_widget(form.firstName)}}
+                        </div>
+                        <div class="col-sm-6">
+                            {{form_widget(form.lastName)}}
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-6 ">
+                            {{form_widget(form.phone)}}
+                        </div>
+                        <div class="col-sm-6">
+                            {{form_widget(form.username)}}
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-6 ">
+                            {{form_widget(form.password.pass)}}
+                        </div>
+                        <div class="col-sm-6">
+                            {{form_widget(form.password.confirm)}}
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 ">
+                            {{form_widget(form.company)}}
+                        </div>
+                    </div>
+                    <br />
+                    {{form_widget(form._token)}}
+                    <div class="row">
+                        <div class="col-sm-6 "></div>
+                        <div class="col-sm-6 ">
+                            <button type="submit" class="btn2" id="register-submit" style="float: right">Зарегистрироваться</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <br />
+            <br />
+            <br />
         </div>
-        {#<footer></footer>#}
     </div>
 {% endblock %}
 
@@ -39,6 +86,7 @@
             color: #1B3266;
         }
         .form-group input{
+
             width: 200px;
             padding: 5px;
             outline: none;
@@ -52,6 +100,13 @@
         }
         .checkbox label{
             width: 500px;
+        }
+        .register-block{
+            width: 300px;
+            /*float: left;*/
+        }
+        input{
+            width: 100%;
         }
     </style>
 {% endblock %}

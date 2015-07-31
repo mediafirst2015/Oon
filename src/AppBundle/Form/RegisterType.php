@@ -22,8 +22,7 @@ class RegisterType extends AbstractType
             ->add('firstName', null, array('label' => 'Имя'))
             ->add('surName', null, array('label' => 'Отчество'))
             ->add('company', null, array('label' => 'Название организации'))
-            ->add('phone', null, array('label' => 'Контактный телефон'))
-            ->add('hot', null, array('label' => 'Подписаться на горячие предложения'))
+            ->add('phone', null, array('label' => 'телефон'))
             ->add('submit', 'submit', array('label' => 'Зарегистрироваться'))
         ;
     }

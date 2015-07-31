@@ -113,6 +113,33 @@ h1.pink{
 .top-menu{
   margin: 20px 0;
 }
+.btn3{
+  width: 162px;
+  height: 34px;
+  display: inline-block;
+  line-height: 35px;
+  color: #333;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-image 0.2s ease-in-out,color 0.2s ease-in-out;
+  background-image: url("@{path}btn3-act.png");
+  margin-left: 10px;
+  margin-bottom: 10px;
+  &.act{
+    color: #e3007a;
+  }
+  &:hover{
+    color: white;
+    //    box-shadow: 0 1px 16px 0 rgba(1, 1, 1, 0.51);
+    background-image: url("@{path}btn3.png");
+    transition: background-image 0.2s ease-in-out,color 0.2s ease-in-out;
+  }
+  &:active{
+    color: #e3007a;
+  }
+}
+
 .btn-top-menu{
   width: 162px;
   height: 34px;

@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,25 +69,36 @@ class AuthController extends Controller
      * @Template()
      */
     public function registerAction(Request $request){
-        $em = $this->getDoctrine()->getManager();
-        $user = new User();
-        $form = $this->createForm(new RegisterType($em), $user);
-        $formData = $form->handleRequest($request);
-
         if ($request->getMethod() == 'POST'){
-            if ($formData->isValid()){
-                $user = $formData->getData();
-                $user->setSalt(md5(time()));
-                $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
-                $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
-                $user->setPassword($password);
-                $em->persist($user);
-                $em->flush();
-                $em->refresh($user);
-                return $this->redirect($this->generateUrl('my_profile'));
-            }
+            $manager = $this->getDoctrine()->getManager();
+            $user = new User();
+            $user->setUsername($request->request->get('username'));
+            $user->setSalt(md5(time()));
+            $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
+            $password = $encoder->encodePassword($request->request->get('password'), $user->getSalt());
+            $user->setPassword($password);
+
+            $user->setRoles('ROLE_USER');
+            $user->setLastName($request->request->get('lastName'));
+            $user->setFirstName($request->request->get('firstName'));
+            $user->setSurName('');
+            $user->setPhone($request->request->get('phone'));
+            $user->setCompany($request->request->get('companyTitle'));
+
+            $manager->persist($user);
+            $manager->flush($user);
+
+            $session = new Session();
+            $session->getFlashBag()->add('success','Ваша заявка принята. Пожалуйста, ожидайте подтверждения регистрации на указанный электронный адрес');
+
+            @$this->get('email.service')->send(
+                array('tulupov.m@gmail.com','ryabova.t@mediafirst.ru','kravtsova.m@mediafirst.ru'),
+                array('AppBundle:Email:registerNotify.html.twig'),
+                'Сообщение от navigator mediaFirst'
+            );
+            return $this->redirect($this->generateUrl('homepage'));
         }
-        return array('form' => $form->createView());
+        return array();
     }
 
     /**
@@ -96,7 +108,7 @@ class AuthController extends Controller
      */
     public function myprofileAction(Request $request){
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($this->getUser()->getId());
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneById($this->getUser()->getId());
         $form = $this->createForm(new ProfileType($em), $user);
         $formData = $form->handleRequest($request);
 
@@ -148,4 +160,6 @@ class AuthController extends Controller
         $order = $this->getDoctrine()->getRepository('AppBundle:Order')->orderList($this->getUser()->getId());
         return array('orders' => $order);
     }
+
+
 }

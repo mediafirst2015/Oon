@@ -32,13 +32,24 @@
                     <td>{{ item.roles[0] }}</td>
                     <td class="setting">
                         {% spaceless %}
-                            <a href="{{ path('order_list',{'userId' : item.id}) }}">
-                                <button type="button" class="btn btn-default btn-bg">
-                                    <span class="glyphicon glyphicon-th-list"></span>
-                                </button>
-                            </a>
-                            &nbsp;
-                            &nbsp;
+                            {% if item.roles[0] == 'ROLE_UNCONFIRMED' %}
+                                <a href="{{ path('success_user',{'id' : item.id}) }}">
+                                    <button type="button" class="btn btn-success btn-bg">
+                                        <span class="glyphicon glyphicon-th-list"></span>
+                                    </button>
+                                </a>
+                                &nbsp;
+                                &nbsp;
+                            {% endif %}
+                            {% if item.roles[0] == 'ROLE_USER' %}
+                                <a href="{{ path('fail_user',{'id' : item.id}) }}">
+                                    <button type="button" class="btn btn-danger btn-bg">
+                                        <span class="glyphicon glyphicon-th-list "></span>
+                                    </button>
+                                </a>
+                                &nbsp;
+                                &nbsp;
+                            {% endif %}
                             <a href="{{ path('user_edit',{'id' : item.id}) }}">
                                 <button type="button" class="btn btn-default btn-bg">
                                     <span class="glyphicon glyphicon-pencil"></span>

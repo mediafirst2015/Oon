@@ -48,6 +48,9 @@ class EmailService
             $templateName   = $template[0];
             $templateParams = array_merge($templateParams, $template[1]);
         }
+        if ($templateParams == null ){
+            $templateParams = array();
+        }
         $mail->Body = $this->templating->render($templateName, $templateParams);
         # устанавливаем получателя(ей) письма
         if (is_string($emails)) {

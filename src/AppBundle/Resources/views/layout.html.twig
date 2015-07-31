@@ -198,11 +198,28 @@
                     <a href="{{ path('homepage') }}"><img src="{{ asset('bundles/app/images/logo.png') }}" id="logo" style="  z-index: 999; position: absolute;"></a>
                 </div>
                 <div class="col-sm-4">
+                    <div id="s-phone" style="position: absolute; left: 55px">8 (495) 508-26-21</div>
                     <img src="{{ asset('bundles/app/images/top-img.png') }}" id="top-img">
                 </div>
                 <div class="col-sm-4" style="text-align: right">
-                    <span id="s-phone">8 (495) 508-26-21</span>
                     <br />
+                    {#<span class="btn">#}
+                    {#{{ dump(app.user) }}#}
+                    {% if app.user %}
+                    <table style="float: right; margin-bottom: 15px">
+                        <tr>
+                            <td><a href="{{ path('my_profile') }}" style=" font-size: 20px; color: #333;">{{ app.user }}</a></td>
+                            <td style="padding-left: 20px"><a href="{{ path('_security_logout') }}" style=" font-size: 20px; color: #333;">Выйти</a></td>
+                        </tr>
+                    </table>
+                    {% else %}
+                        <table style="float: right">
+                            <tr>
+                                <td><a href="{{ path('register') }}"><span class="btn3 ">Регистрация</span></a></td>
+                                <td><span class="btn3 " data-toggle="modal" data-target=".bs-auth">Вход на сайт</span></td>
+                            </tr>
+                        </table>
+                    {% endif %}
                     <span class="btn" data-toggle="modal" data-target=".set-contacts">
                         СВЯЗАТЬСЯ С НАМИ
                     </span>
@@ -231,9 +248,12 @@
                 <span class="btn-top-menu-search {{ url == 'search' or url == 'map' or url == 'hot' ? 'act' : '' }}">
                     Поиск щитов
                     <div class="dropdown">
-                        <a href="{{ path('search') }}"><span>Поиск по параметрам</span></a> <br />
-                        <a href="{{ path('map') }}"><span>Поиск по карте</span></a> <br />
-                        <a href="{{ path('hot') }}"><span>Горящие предложения</span></a>
+                        <a {% if app.user == null %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('search') }}" {% endif %}>
+                            <span>Поиск по параметрам</span></a> <br />
+                        <a {% if app.user == null %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('map') }}" {% endif %}>
+                            <span>Поиск по карте</span></a> <br />
+                        <a {% if app.user == null %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('hot') }}" {% endif %}>
+                            <span>Горящие предложения</span></a>
                     </div>
                 </span>
 
@@ -286,6 +306,10 @@
     {#{% include 'AppBundle:Auth:login.html.twig' %}#}
 {#{% endif %}#}
 {% include 'AppBundle::popup.html.twig' %}
+
+{% if not is_granted('ROLE_USER') %}
+    {% include 'AppBundle:Auth:login.html.twig' %}
+{% endif %}
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

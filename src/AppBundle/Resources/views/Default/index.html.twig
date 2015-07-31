@@ -171,9 +171,15 @@
                         </div>
                         <br />
                         <div style="text-align: right">
-                            <span class="btn2" id="form-map-submit">
-                                Найти
-                            </span>
+                            {% if app.user != null %}
+                                <span class="btn2" id="form-map-submit">
+                                    Найти
+                                </span>
+                            {% else %}
+                                <span class="btn2"  data-toggle="modal" data-target=".bs-auth">
+                                    Найти
+                                </span>
+                            {% endif %}
                         </div>
                         <br />
 
@@ -303,9 +309,15 @@
                         </div>
                         <br />
                         <div style="text-align: right">
-                            <span class="btn2" id="form-top-submit">
+                            {% if app.user != null %}
+                                <span class="btn2" id="form-top-submit">
                                 Заказать
                             </span>
+                            {% else %}
+                                <span class="btn2" data-toggle="modal" data-target=".bs-auth">
+                                Заказать
+                            </span>
+                            {% endif %}
                         </div>
                         <br />
                     </form>
@@ -322,7 +334,7 @@
                         <div class="offers-block">
                         {% for k,b in banners %}
                             <div class="hot-box-mini offers-item" {{ k > 2 ? 'style="display:none"' : '' }}>
-                                <a href="{{ path('hot') }}">
+                                <a {% if app.user == null %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('hot') }}" {% endif %}>
                                     <table>
                                         <tr>
                                             <td>
@@ -367,7 +379,7 @@
                         <div class="offers-block">
                             {% for k,b in offers %}
                                 <div class="hot-box-mini offers-item" {{ k > 2 ? 'style="display:none"' : '' }}>
-                                    <a href="{{ path('map') }}?bannerId={{ b.id }}">
+                                        <a {% if app.user == null %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('map') }}?bannerId={{ b.id }}" {% endif %}>
                                         <table style=" max-width: 310px;">
                                             <tr>
                                                 <td>
@@ -409,7 +421,7 @@
                     <div class="title" s>Поиск щитов на карте</div>
                     <br />
                     <div style="text-align: center">
-                        <a href="{{ path('map') }}">
+                        <a {% if app.user == null %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('map') }}" {% endif %}>
                             <img src="{{ asset('bundles/app/images/map.png') }}" class="round"/>
                         </a>
                     </div>

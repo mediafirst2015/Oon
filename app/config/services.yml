@@ -10,3 +10,8 @@ services:
     email.service:
         class: AppBundle\Service\EmailService
         arguments: [@service_container, @templating]
+
+    authentication_handler:
+            class: AppBundle\Handler\AuthenticationHandler
+            calls:
+                 - [ setContainer, [ @service_container ] ]
