@@ -371,7 +371,7 @@
                         {% endfor %}
                         </div>
                         <div style="text-align: right">
-                            <a href="{{ path('hot') }}" class="pink" style="font-size: 23px">Показать ВСЕ</a>
+                            <a {% if app.user == null %}  class="pink" style="font-size: 23px" href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('hot') }}" {% endif %}>Показать ВСЕ</a>
                         </div>
                     {% else %}
                         <div class="title pink">Предложение дня</div>
