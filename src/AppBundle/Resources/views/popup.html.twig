@@ -79,6 +79,12 @@
     </div>
 {% endfor %}
 
+{% if app.session.get('_security.last_error')  %}
+    <div class="flashbag-success">
+        <span style="color: #CC0000">Неправильный логин или пароль</span>
+    </div>
+{% endif %}
+
 
 <script>
     $(document).ready(function(){

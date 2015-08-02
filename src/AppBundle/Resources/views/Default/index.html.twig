@@ -171,7 +171,7 @@
                         </div>
                         <br />
                         <div style="text-align: right">
-                            {% if app.user != null %}
+                            {% if is_granted('ROLE_USER') %}
                                 <span class="btn2" id="form-map-submit">
                                     Найти
                                 </span>
@@ -309,7 +309,7 @@
                         </div>
                         <br />
                         <div style="text-align: right">
-                            {% if app.user != null %}
+                            {% if not  is_granted('ROLE_USER') %}
                                 <span class="btn2" id="form-top-submit">
                                 Заказать
                             </span>
@@ -334,7 +334,7 @@
                         <div class="offers-block">
                         {% for k,b in banners %}
                             <div class="hot-box-mini offers-item" {{ k > 2 ? 'style="display:none"' : '' }}>
-                                <a {% if app.user == null %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('hot') }}" {% endif %}>
+                                <a {% if not  is_granted('ROLE_USER') %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('hot') }}" {% endif %}>
                                     <table>
                                         <tr>
                                             <td>
@@ -371,7 +371,7 @@
                         {% endfor %}
                         </div>
                         <div style="text-align: right">
-                            <a {% if app.user == null %}  class="pink" style="font-size: 23px" href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('hot') }}" {% endif %}>Показать ВСЕ</a>
+                            <a {% if not  is_granted('ROLE_USER') %}  class="pink" style="font-size: 23px" href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('hot') }}" {% endif %}>Показать ВСЕ</a>
                         </div>
                     {% else %}
                         <div class="title pink">Предложение дня</div>
@@ -379,7 +379,7 @@
                         <div class="offers-block">
                             {% for k,b in offers %}
                                 <div class="hot-box-mini offers-item" {{ k > 2 ? 'style="display:none"' : '' }}>
-                                        <a {% if app.user == null %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('map') }}?bannerId={{ b.id }}" {% endif %}>
+                                        <a {% if not  is_granted('ROLE_USER') %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('map') }}?bannerId={{ b.id }}" {% endif %}>
                                         <table style=" max-width: 310px;">
                                             <tr>
                                                 <td>
@@ -418,10 +418,10 @@
         <div class="col-xs-4">
             <div class="box">
                 <div class="form">
-                    <div class="title" s>Поиск щитов на карте</div>
+                    <div class="title" >Поиск щитов на карте</div>
                     <br />
                     <div style="text-align: center">
-                        <a {% if app.user == null %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('map') }}" {% endif %}>
+                        <a {% if not is_granted('ROLE_USER') %} href=""  data-toggle="modal" data-target=".bs-auth" onclick="return false;"{% else %}href="{{ path('map') }}" {% endif %}>
                             <img src="{{ asset('bundles/app/images/map.png') }}" class="round"/>
                         </a>
                     </div>

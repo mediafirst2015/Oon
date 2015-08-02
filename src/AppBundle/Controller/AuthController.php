@@ -47,21 +47,33 @@ class AuthController extends Controller
 
     /**
      * @Route("/admin/login", name="login")
-     * @Template("AdminBundle:Auth:login.html.twig")
+     * @Route("/login", name="user_login")
+     * @Template("AdminBundle:Default:index.html.twig")
      */
-    public function loginAction()
+    public function loginAction( Request $request)
     {
         $manager = $this->getDoctrine()->getManager();
 
+        $session = new Session();
         if ($this->get('request')->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $this->get('request')->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+
+            $session->getFlashBag()->add('success','Неправильный логин или пароль');
         } else {
             $error = $this->get('request')->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
+
+            $session->getFlashBag()->add('success','Неправильный логин или пароль');
         }
 
-        return array(
-            'error' => $error,
-        );
+//        $referer = $request->headers->get('referer');
+//        return $this->redirect($referer);
+
+        if ($error){
+            return $this->redirect($this->generateUrl('homepage'));
+        }else{
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
     }
 
     /**
@@ -78,7 +90,7 @@ class AuthController extends Controller
             $password = $encoder->encodePassword($request->request->get('password'), $user->getSalt());
             $user->setPassword($password);
 
-            $user->setRoles('ROLE_USER');
+            $user->setRoles('ROLE_UNCONFIRMED');
             $user->setLastName($request->request->get('lastName'));
             $user->setFirstName($request->request->get('firstName'));
             $user->setSurName('');
