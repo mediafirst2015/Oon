@@ -71,7 +71,10 @@ class BasketController extends Controller
             if ($banner){
 
 
-                if ($banner->getHotMonth($month)){
+                $date = new \DateTime('now');
+                $date = $date->format('d');
+
+                if ($banner->getHotMonth($month) && $date >= 25){
 
                     $percent = $banner->getHotMonth($month)->getSale();
 
