@@ -62,7 +62,7 @@
                         <td>
                             <input type="checkbox" class="addBasket" data-id="{{ object.id }}" data-month="{{ column }}" {{ myBasket[object.id ~ '-' ~ column ~ '-2015'] is defined ? 'checked="checked"' }}>
                         </td>
-                        {% if object.hotMonth.date is defined and object.hotMonth.date | date('Y')~'-'~column~'-01' == "+1 month" | date('Y-n')~'-01' %}
+                        {% if object.hotMonth.date is defined and object.hotMonth.date | date('Y')~'-'~column~'-01' == "+1 month" | date('Y-n')~'-01' and 'now' | date('d') >= 25 %}
                             <td>
                                 <span style="text-decoration: line-through">
                                     {#{% if monthlySales[column~'2015'] is defined %}#}
