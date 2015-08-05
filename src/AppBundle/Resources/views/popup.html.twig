@@ -7,15 +7,15 @@
                     <div class="error get-media-plan-error"></div>
                     <div class="relative">
                         <span class="required"></span>
-                        <input type="text" name="name" id="media-name" placeholder="Имя">
+                        <input type="text" name="name" id="media-name" placeholder="Имя" value="{{ app.user ? app.user.lastName~' '~app.user.firstName : '' }}">
                     </div>
                     <div class="relative">
                         <span class="required"></span>
-                        <input type="text" name="email" id="media-email" placeholder="E-mail">
+                        <input type="text" name="email" id="media-email" placeholder="E-mail" value="{{ app.user ? app.user.username }}">
                     </div>
                     <div class="relative">
                         <span class="required"></span>
-                        <input type="text" name="phone" id="media-phone"  class="phone" placeholder="Телефон">
+                        <input type="text" name="phone" id="media-phone"  class="phone" placeholder="Телефон" value="{{ app.user ? app.user.phone }}">
                     </div>
                     <br />
                     <br />
@@ -39,15 +39,15 @@
                     <div class="error contact-error"></div>
                     <div class="relative">
                         <span class="required"></span>
-                        <input type="text" name="name" id="contact-name" placeholder="Имя">
+                        <input type="text" name="name" id="contact-name" placeholder="Имя" value="{{ app.user ? app.user.lastName~' '~app.user.firstName : '' }}">
                     </div>
                     <div class="relative">
                         <span class="required"></span>
-                        <input type="text" name="email" id="contact-email" placeholder="E-mail">
+                        <input type="text" name="email" id="contact-email" placeholder="E-mail" value="{{ app.user ? app.user.username }}">
                     </div>
                     <div class="relative">
                         <span class="required"></span>
-                        <input type="text" name="phone" class="phone" id="contact-phone" placeholder="Телефон">
+                        <input type="text" name="phone" class="phone" id="contact-phone" placeholder="Телефон" value="{{ app.user ? app.user.phone }}">
                     </div>
                     <br />
                     <br />

@@ -297,15 +297,15 @@
                         </div>
                         <div  class="relative">
                             <span class="required"></span>
-                            <input type="text" class="name" placeholder="Имя" name="name" id="name" required="required">
+                            <input type="text" class="name" placeholder="Имя" name="name" id="name" required="required" value="{{ app.user ? app.user.lastName~' '~app.user.firstName : '' }}">
                         </div>
                         <div  class="relative">
                             <span class="required"></span>
-                            <input type="text" class="email" placeholder="Email" name="email" id="email" required="required">
+                            <input type="text" class="email" placeholder="Email" name="email" id="email" required="required" value="{{ app.user ? app.user.username }}">
                         </div>
                         <div  class="relative">
                             <span class="required"></span>
-                            <input type="text" class="phone" placeholder="Телефон" name="phone" id="phone" required="required">
+                            <input type="text" class="phone" placeholder="Телефон" name="phone" id="phone" required="required" value="{{ app.user ? app.user.phone }}">
                         </div>
                         <br />
                         <div style="text-align: right">
