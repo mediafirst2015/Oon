@@ -99,9 +99,16 @@ class AuthController extends Controller
 
             $manager->persist($user);
             $manager->flush($user);
+            $manager->refresh($user);
 
             $session = new Session();
             $session->getFlashBag()->add('success','Ваша заявка принята. Пожалуйста, ожидайте подтверждения регистрации на указанный электронный адрес');
+
+            @$this->get('email.service')->send(
+                array($user->getUsername()),
+                array('AppBundle:Email:registerNotifyUser.html.twig'),
+                'Сообщение от navigator mediaFirst'
+            );
 
             @$this->get('email.service')->send(
                 array('tulupov.m@gmail.com','ryabova.t@mediafirst.ru','kravtsova.m@mediafirst.ru'),
