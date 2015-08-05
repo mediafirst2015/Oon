@@ -9,10 +9,10 @@
                 <div style="width: 600px">
                     <div class="row">
                         <div class="col-sm-6 ">
-                            <input type="text" placeholder="Имя*" required="required" name="firstName">
+                            <input type="text" placeholder="Имя*" required="required" name="firstName" id="firstname">
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" placeholder="Фамилия*" required="required" name="lastName">
+                            <input type="text" placeholder="Фамилия*" required="required" name="lastName" id="lastname">
                         </div>
                     </div>
                     <br />
@@ -21,25 +21,27 @@
                             <input type="text" placeholder="Телефон" name="phone" id="phone">
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" placeholder="Email*" required="required" name="username">
+                            <input type="text" placeholder="Email*" required="required" name="username" id="email">
                         </div>
                     </div>
                     <br />
                     <div class="row">
                         <div class="col-sm-6 ">
-                            <input type="password" placeholder="Пароль*" required="required" name="password">
+                            <input type="password" placeholder="Пароль*" required="required" name="password" id="password">
                         </div>
                         <div class="col-sm-6">
-                            <input type="password" placeholder="Повторите пароль*" required="required" name="password2">
+                            <input type="password" placeholder="Повторите пароль*" required="required" name="password2" id="password-confirmed">
                         </div>
                     </div>
                     <br />
                     <div class="row">
                         <div class="col-sm-12 ">
-                            <input type="text" placeholder="Название организации" name="companyTitle">
+                            <input type="text" placeholder="Название организации" name="companyTitle" id="company">
                         </div>
                     </div>
                     <br />
+                    <div class="row contact-error-register" style="color: #CC0000">
+                    </div>
                     <div class="row">
                         <div class="col-sm-6 "></div>
                         <div class="col-sm-6 ">
@@ -47,6 +49,7 @@
                         </div>
                     </div>
                 </div>
+
             </form>
             <br />
             <br />
@@ -62,6 +65,37 @@
     <script>
         $(document).ready(function(){
             $('#phone').inputmask('+7 (999) 999-99-99');
+
+            $('#register-submit').click(function(){
+                var error = '';
+                if ($('#firstname').val() == ''){
+                    error += 'Поле Имя обязательно для заполнения <br />';
+                }
+                if ($('#lastname').val() == ''){
+                    error += 'Поле Фамилия обязательно для заполнения <br />';
+                }
+                if ($('#email').val() == ''){
+                    error += 'Поле E-mail обязательно для заполнения <br />';
+                }else{
+                    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+                    if (!re.test($('#contact-email').val())){
+                        error += 'Поле E-mail Заполнено некорректно <br />';
+                    }
+                }
+                if ($('#phone').val() == ''){
+                    error += 'Поле Телефон обязательно для заполнения <br />';
+                }
+                if ($('#company').val() == ''){
+                    error += 'Поле Название организации обязательно для заполнения <br />';
+                }
+
+                if (error == ''){
+                    $('#contact-form').submit();
+                }else{
+                    $('.contact-error-register').html(error);
+                    return false;
+                }
+            });
         })
     </script>
 {% endblock %}
