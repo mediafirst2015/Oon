@@ -15,20 +15,19 @@ class ProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', null, array('label' => 'Email', 'attr' => array('placeholder' => 'Email') ))
-            ->add('lastName', null, array('label' => 'Фамилия', 'attr' => array('placeholder' => 'Фамилия*')))
-            ->add('firstName', null, array('label' => 'Имя', 'attr' => array('placeholder' => 'Имя*')))
-            ->add('surName', null, array('label' => 'Отчество', 'attr' => array('placeholder' => 'Отчество')))
-            ->add('company', null, array('label' => 'Название организации', 'attr' => array('placeholder' => 'Название организации')))
-            ->add('phone', null, array('label' => 'Контактный телефон', 'attr' => array('placeholder' => 'Телефон*')))
-            ->add('hot', null, array('label' => 'Подписаться на горячие предложения'))
+            ->add('username', null, array('label' => 'Email'))
             ->add('password', 'repeated', array(
-                'first_name' => 'pass',
-                'second_name' => 'confirm',
                 'type' => 'password',
                 'invalid_message' => 'пароли не совпадают',
-                'first_options'  => array('label' => 'Пароль', 'attr' => array('placeholder' => 'Пароль*')),
-                'second_options' => array('label' => 'Повторите пароль', 'attr' => array('placeholder' => 'Повторите парооль*')),))
+                'first_name'      => 'pass',
+                'second_name'     => 'confirm',
+                'first_options'  => array('label' => 'Пароль'),
+                'second_options' => array('label' => 'Повторите пароль'),))
+            ->add('lastName', null, array('label' => 'Фамилия'))
+            ->add('firstName', null, array('label' => 'Имя'))
+            ->add('surName', null, array('label' => 'Отчество'))
+            ->add('company', null, array('label' => 'Название организации'))
+            ->add('phone', null, array('label' => 'телефон'))
             ->add('submit', 'submit', array('label' => 'Сохранить'))
         ;
     }
