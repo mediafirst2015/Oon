@@ -4,7 +4,7 @@
     <div>
         <div style="padding: 20px">
             <h2 class="green">Личные данные</h2><br />
-            <form method="post">
+            <form method="post" id="prifile-form">
                 {#{{ form_widget(form) }}#}
                 <div style="width: 600px">
                     <div class="row">
@@ -44,10 +44,13 @@
                     </div>
                     <br />
                     {{form_widget(form._token)}}
+                    <br />
+                    <div class="row contact-error-profile" style="color: #CC0000">
+                    </div>
                     <div class="row">
                         <div class="col-sm-6 "></div>
                         <div class="col-sm-6 ">
-                            <button type="submit" class="btn2" id="register-submit" style="float: right">Сохранить</button>
+                            <button type="submit" class="btn2" id="profile-submit" style="float: right">Сохранить</button>
                         </div>
                     </div>
                 </div>
@@ -66,6 +69,38 @@
     <script>
         $(document).ready(function(){
             $('#appbundle_user_phone').inputmask('+7 (999) 999-99-99');
+
+            $('#profile-submit').click(function(){
+                var error = '';
+                if ($('#appbundle_user_firstName').val() == ''){
+                    error += 'Поле Имя обязательно для заполнения <br />';
+                }
+                if ($('#appbundle_user_lastName').val() == ''){
+                    error += 'Поле Фамилия обязательно для заполнения <br />';
+                }
+                if ($('#appbundle_user_username').val() == ''){
+                    error += 'Поле E-mail обязательно для заполнения <br />';
+                }else{
+                    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+                    if (!re.test($('#appbundle_user_username').val())){
+                        error += 'Поле E-mail Заполнено некорректно <br />';
+                    }
+                }
+                if ($('#appbundle_user_phone').val() == ''){
+                    error += 'Поле Телефон обязательно для заполнения <br />';
+                }
+                if ($('#appbundle_user_company').val() == ''){
+                    error += 'Поле Название организации обязательно для заполнения <br />';
+                }
+
+                if (error == ''){
+//                    $('#prifile-form').submit();
+                    return true;
+                }else{
+                    $('.contact-error-profile').html(error);
+                    return false;
+                }
+            });
         })
     </script>
 {% endblock %}
